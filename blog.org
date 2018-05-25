@@ -8,9 +8,9 @@
 #+Options: html-postamble:t
 
 * Header                                                                                    :ignore:
-#+HTML_HEAD: <link rel="stylesheet" href="../css/default.css" />
-#+HTML_HEAD: <link rel="stylesheet" href="../css/mathjax_fonts.css" />
-#+HTML_HEAD: <link rel="stylesheet" href="../css/syntax.css" />
+#+HTML_HEAD: <link rel="stylesheet" href="default.css" />
+#+HTML_HEAD: <link rel="stylesheet" href="mathjax_fonts.css" />
+#+HTML_HEAD: <link rel="stylesheet" href="syntax.css" />
 
 #+HTML_HEAD: <div id="header">
 #+HTML_HEAD:     <div id="logo">
