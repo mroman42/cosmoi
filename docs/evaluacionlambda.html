@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-05-25 Fri 18:45 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Evaluación en cálculo &lambda;</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Mario Román" />
+<link rel="stylesheet" href="../css/default.css" />
+<link rel="stylesheet" href="../css/mathjax_fonts.css" />
+<link rel="stylesheet" href="../css/syntax.css" />
+<div id="header">
+<div id="logo">
+<a href="index.html">Cosmoi</a>
+</div>
+<div id="navigation">
+<a href="index.html">Index</a>
+<a href="about.html">About</a>
+</div>
+</div>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Evaluación en cálculo &lambda;</h1>
+<p>
+Un repaso de los enunciados que nos llevan a usar la evaluación
+mediante &beta;-reducciones del cálculo &lambda; como un lenguaje
+de programación.
+</p>
+
+<p>
+Detallo todo esto con demostraciones en <a href="https://github.com/M42/lambda.notes">M42/lambda.notes</a>.
+</p>
+
+<div id="outline-container-org9eaeea4" class="outline-2">
+<h2 id="org9eaeea4">Forma normal</h2>
+<div class="outline-text-2" id="text-org9eaeea4">
+<p>
+Una expresión está en <b>forma normal</b> si no se le pueden aplicar más
+&beta;-reducciones. La forma normal es <i>única</i> como consecuencia del
+teorema de Church-Rosser.
+</p>
+
+<div class="exampleblock">
+<p>
+Si a un término se le aplican distintas reducciones, los términos
+que se obtienen pueden reducirse a uno común. Es decir,
+</p>
+
+<ul class="org-ul">
+<li>si \(A\) puede reducirse mediante &beta;-reducciones a otro término
+\(B\), lo que se nota por \(A \twoheadrightarrow_{\beta} B\),</li>
+<li>y \(A\) puede reducirse también mediante otras &beta;-reducciones,
+posiblemente distintas o en distinto orden, a \(C\), \(A \twoheadrightarrow_{\beta} C\),</li>
+<li>entonces existe un término \(D\) tal que ambos se pueden reducir
+mediante &beta;-reducciones a él; es decir, tal que \(B \twoheadrightarrow_{\beta} D\)
+y \(C \twoheadrightarrow_{\beta} D\).</li>
+</ul>
+
+</div>
+
+<p>
+En particular, esto implica que si un término tuviera dos formas
+normales, debería existir otro término al cual se pudieran reducir
+ambas; como son formas normales y no pueden reducirse, esto debe
+implicar que son iguales.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga91b984" class="outline-2">
+<h2 id="orga91b984">Divergencia</h2>
+<div class="outline-text-2" id="text-orga91b984">
+<p>
+Hemos visto que la forma normal es única, pero no que exista o que
+sepamos encontrarla de alguna forma.
+</p>
+
+<p>
+Puede ocurrir que un término no esté en forma normal y sin embargo
+las reducciones no lo lleven a ella. Por ejemplo,
+\[
+\Omega = (\lambda x.x\ x)(\lambda x.x\ x) \longrightarrow_{\beta} (\lambda x.x\ x)(\lambda x.x\ x)
+\]
+<b>no llega a forma normal</b>. O por ejemplo,
+\[
+(\lambda x.x\ x\ x)(\lambda x.x\ x\ x)
+\]
+se hace más complejo al aplicarle reducciones y <b>diverge</b>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org49b0269" class="outline-2">
+<h2 id="org49b0269">Evaluación a izquierda</h2>
+<div class="outline-text-2" id="text-org49b0269">
+<p>
+Hay expresiones que llegarán a una forma normal o no dependiendo de
+cómo los evaluemos. Por ejemplo,
+</p>
+
+<ul class="org-ul">
+<li>\(\mathtt{const}\ \mathtt{id}\ \Omega \quad\longrightarrow_{\beta}\quad \mathtt{id}\),
+llega a forma normal si evaluamos primero \(\mathtt{const}\);</li>
+
+<li>\(\mathtt{const}\ \mathtt{id}\ \Omega \quad\longrightarrow_{\beta}\quad \mathtt{const}\ \mathtt{id}\ \Omega\),
+no llega a forma normal nunca si empezamos evaluando primero \(\Omega\).</li>
+</ul>
+
+<p>
+Sin embargo, existe una estrategia de reducción que siempre encuentra
+una forma normal si esta existe.
+</p>
+
+<ul class="org-ul">
+<li>Si existe una forma normal, la estrategia que reduce a cada paso
+la aplicación más a la izquierda posible la encuentra.</li>
+</ul>
+
+<p>
+Y quizá sorprendentemente, existe otra estrategia de reducción que siempre
+encuentra la forma de no llegar a la forma normal si esta existe
+</p>
+
+<ul class="org-ul">
+<li>Si existe alguna sucesión que no llega a forma normal, la estrategia que reduce a cada paso
+la aplicación más a la derecha posible la encuentra.</li>
+</ul>
+
+<p>
+Estas dos formas de evaluación se suelen llamar <b>call-by-value</b> y
+<b>call-by-name</b>.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<div id="footer"><p class="postamble">Last edited 2018-05-25 Fri 18:02. Written by <a href="https://mroman42.github.com">@mroman42</a>.</p></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-05-25 Fri 18:45 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Distribuciones discretas con mónadas</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Mario Román" />
+<link rel="stylesheet" href="../css/default.css" />
+<link rel="stylesheet" href="../css/mathjax_fonts.css" />
+<link rel="stylesheet" href="../css/syntax.css" />
+<div id="header">
+<div id="logo">
+<a href="index.html">Cosmoi</a>
+</div>
+<div id="navigation">
+<a href="index.html">Index</a>
+<a href="about.html">About</a>
+</div>
+</div>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Distribuciones discretas con mónadas</h1>
+<div id="outline-container-org9ae9842" class="outline-2">
+<h2 id="org9ae9842">El modelo</h2>
+<div class="outline-text-2" id="text-org9ae9842">
+<p>
+Como parte de una serie de ejemplos sobre uso de mónadas, he escrito un
+poco de código para modelar distribuciones discretas usando mónadas.
+</p>
+
+<p>
+Por un lado, usa un <a href="https://math.dartmouth.edu/archive/m20f11/public_html/RANDOMNESS_LCG.pdf">generador congruencial lineal</a> para generar números
+aleatorios; y por otro, usa la mónada <a href="https://wiki.haskell.org/State_Monad">State</a> para pasar una semilla aleatoria
+de una función a otra que me permita seguir generado números aleatorios.
+</p>
+
+<p>
+Por último, aporta un método que deriva <a href="http://www.zvon.org/other/haskell/Outputprelude/Show_c.html">Show</a> para probar las distribuciones
+y dibujar un histograma de cualquiera de ella.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org81a060c" class="outline-2">
+<h2 id="org81a060c">Componiendo distribuciones</h2>
+<div class="outline-text-2" id="text-org81a060c">
+<p>
+Lo más útil de esta idea para mí ha sido el poder generar unas distribuciones
+a partir de otras. La primera que genero es un dado de <code>n</code> caras usando la
+semilla. Aquí es donde se implementa el generador congruencial:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #cae682;">dice</span> <span style="color: #cae682;">::</span> <span style="color: #92a65e; font-weight: bold;">Int</span> <span style="color: #cae682;">-&gt;</span> <span style="color: #92a65e; font-weight: bold;">Distribution</span> <span style="color: #92a65e; font-weight: bold;">Int</span>
+<span style="color: #cae682;">dice</span> n <span style="color: #cae682;">=</span> state <span style="color: #DCDCCC;">(</span><span style="color: #cae682;">\</span>s <span style="color: #cae682;">-&gt;</span> <span style="color: #BFEBBF;">(</span>s <span style="color: #cae682;">`mod`</span> n <span style="color: #cae682;">+</span> 1, 16807<span style="color: #cae682;">*</span>s <span style="color: #cae682;">`mod`</span> 2147483647<span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>
+</pre>
+</div>
+
+<p>
+Que funciona como una distribución uniforme:
+</p>
+
+<pre class="example">
+&gt;&gt;&gt; dice 6
+
+1:	 ################
+2:	 ################
+3:	 ################
+4:	 ################
+5:	 ################
+6:	 ################
+</pre>
+
+<p>
+Pero desde ella puedo generar fácilmente otras usando funciones que compongan
+distribuciones. Un ejemplo es usar <code>(⊕) = liftM2 (+)</code> para sumar dados:
+</p>
+
+<pre class="example">
+&gt;&gt;&gt; dice 6 ⊕ dice 6
+
+2:	 #####
+3:	 ##########
+4:	 ###############
+5:	 ####################
+6:	 ##########################
+7:	 ##############################
+8:	 #########################
+9:	 ####################
+10:	 ###############
+11:	 ##########
+12:	 #####
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orge31449d" class="outline-2">
+<h2 id="orge31449d">Otras distribuciones</h2>
+<div class="outline-text-2" id="text-orge31449d">
+<p>
+Y puedo crear otras distribuciones similares a partir de ellas, como la
+distribución de <b>Bernoulli</b> y la <b>Binomial</b> usando funciones para composición
+de mónadas:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #cae682;">bernoulli</span> <span style="color: #cae682;">::</span> <span style="color: #92a65e; font-weight: bold;">Double</span> <span style="color: #cae682;">-&gt;</span> <span style="color: #92a65e; font-weight: bold;">Distribution</span> <span style="color: #92a65e; font-weight: bold;">Int</span>
+<span style="color: #cae682;">bernoulli</span> p <span style="color: #cae682;">=</span> <span style="color: #8ac6f2; font-weight: bold;">do</span>
+  sample <span style="color: #cae682;">&lt;-</span> dice 1000000
+  <span style="color: #8ac6f2; font-weight: bold;">if</span> <span style="color: #DCDCCC;">(</span>fromIntegral sample <span style="color: #cae682;">/</span> 1000000.0 <span style="color: #cae682;">&lt;</span> p<span style="color: #DCDCCC;">)</span>
+    <span style="color: #8ac6f2; font-weight: bold;">then</span> return 1
+    <span style="color: #8ac6f2; font-weight: bold;">else</span> return 0
+
+<span style="color: #cae682;">binomial</span> <span style="color: #cae682;">::</span> <span style="color: #92a65e; font-weight: bold;">Int</span> <span style="color: #cae682;">-&gt;</span> <span style="color: #92a65e; font-weight: bold;">Double</span> <span style="color: #cae682;">-&gt;</span> <span style="color: #92a65e; font-weight: bold;">Distribution</span> <span style="color: #92a65e; font-weight: bold;">Int</span>
+<span style="color: #cae682;">binomial</span> k p <span style="color: #cae682;">=</span> sum <span style="color: #cae682;">&lt;$&gt;</span> replicateM k <span style="color: #DCDCCC;">(</span>bernoulli p<span style="color: #DCDCCC;">)</span>
+</pre>
+</div>
+
+<p>
+Lo que me gusta de este código es que dejamos a la estructura de mónada encargarse
+internamente de el paso de la semilla de aleatoriedad y podemos componer distribuciones
+más simples para crear distribuciones más complejas.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org639bdaa" class="outline-2">
+<h2 id="org639bdaa">El código</h2>
+<div class="outline-text-2" id="text-org639bdaa">
+<p>
+El código completo se presenta aquí. Es un pequeño código que dejé de ejemplo
+pero que seguramente pueda mejorarse bastante; lo dejo aquí como guión para esta 
+idea:
+</p>
+
+<script src="https://gist.github.com/mroman42/7d9d2ecf174bad73804e67fd5cb8de72.js"></script>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<div id="footer"><p class="postamble">Last edited 2018-05-25 Fri 18:34. Written by <a href="https://mroman42.github.com">@mroman42</a>.</p></div>
+</div>
+</body>
+</html>
