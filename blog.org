@@ -495,13 +495,11 @@ con más funcionalidad. Un tutorial básico sobre Elisp es
 
 [3] De hecho, podemos seleccionar qué párrafos dentro de un fichero
     queremos añadir al commit.
-** Capturando links en org-mode
+** Capturando links en org-mode                                                              :post:
 :PROPERTIES:
 :TITLE:    Capturando links en org-mode
-:HUGO_TAGS: emacs
-:HUGO_TOPICS: emacs
-:HUGO_FILE: post/capturelinks.md
-:HUGO_DATE: [2017-03-23 Thu 14:54]
+:EXPORT_FILE_NAME: docs/capturandolinksenorgmode.html
+:EXPORT_DATE: <2017-03-23 Thu 14:54>
 :END:
 
 *** Capturando links
@@ -664,13 +662,11 @@ pero que seguramente pueda mejorarse bastante; lo dejo aquí como guión para es
 idea:
 
 #+HTML: <script src="https://gist.github.com/mroman42/7d9d2ecf174bad73804e67fd5cb8de72.js"></script>
-** Inducción estructural
+** Inducción estructural                                                                     :post:
 :PROPERTIES:
 :TITLE:    Inducción estructural
-:HUGO_TAGS: logic
-:HUGO_TOPICS: logic
-:HUGO_FILE: post/induccionestructural.md
-:HUGO_DATE: [2015-03-14 Sat 15:02]
+:EXPORT_FILE_NAME: docs/induccionestructural.html
+:EXPORT_DATE: <2015-03-14 Sat 15:02>
 :END:
 
 Normalmente aplicamos inducción sobre los números naturales, y cuando
@@ -776,215 +772,12 @@ varias demostraciones por inducción sobre árboles binarios, explicados
 en lenguaje natural y demostrados luego sobre el asistente de
 demostraciones Coq.
 
-[1] Post sobre generalizaciones de la inducción [[http://math.blogoverflow.com/2015/03/10/when-can-we-do-induction/][en Stack Overflow]].
-
-** Matemáticas en emacs
-:PROPERTIES:
-:TITLE:    Matemáticas en emacs
-:HUGO_TAGS: emacs
-:HUGO_TOPICS: emacs
-:HUGO_FILE: post/matematicasemacs.md
-:HUGO_DATE: [2016-09-26 Mon 15:07]
-:END:
-
-/Actualizado a 06 de agosto de 2017./
-
-*** Apuntes a ordenador
-Tomar apuntes de matemáticas con el ordenador es una tarea difícil por
-lo complejo que es transcribir la notación (símbolos, letras en otros
-alfabetos, índices...) y la velocidad necesaria. Además, los
-diagramas, dibujos, flechas o anotaciones no textuales que tomamos
-parecen imposibles de transcribir fielmente a un fichero.
-
-*[[https://www.latex-project.org/about/][Latex]]* permite notación matemática pero no facilita la velocidad (al fin y
-al cabo, Latex estaría pensado para edición de libros, no para tomar apuntes).
-*[[https://daringfireball.net/projects/markdown/][Markdown]]*, por otro lado, simplifica mucho el poder escribir, pero pierde mucha 
-potencia respecto a Latex. Así que una solución es usar *[[http://orgmode.org/][org-mode]]* como lenguaje
-de marcado; es relativamente simple y fácilmente legible, como markdown, mientras
-que permite visualización de latex conforme se edita, programación literaria y
-exportación a latex y html, permitiendo la inclusión de código latex o html arbitrario
-para exportarlo.
-
-*** Ventajas de org-mode
-*org-mode* tiene internamente un lenguaje de marcado similar al de
-markdown, con la ventaja para el usuario de Emacs de que está adaptado
-especialmente al editor. Permite escribir fórmulas en Latex y exportar
-luego a =.tex= y =.pdf=, controlando las opciones de Latex.
-
-Una fórmula en Latex puede escribirse directamente en *org-mode*
-incluyéndola entre $\mathtt{\backslash\left( \dots \backslash\right)}$, si está dentro de una línea de texto 
-(como en \(i \ast x = x\)); o entre $\backslash[\ \dots\ \backslash]$, cuando
-queremos que se muestre aparte del texto como en el siguiente ejemplo
-
-\[ \sum_{n=0}^\infty \frac{1}{2^n}. \]
-
-Cuando terminamos de escribirla podemos [[http://orgmode.org/worg/org-tutorials/org-latex-preview.html][previsualizarla]] directamente con
-=C-c C-x C-l=, como si fuera un editor [[https://es.wikipedia.org/wiki/WYSIWYG][WYSIWYG]].
-
-Si vamos a acabar exportando a latex podemos insertar entornos como los
-que ofrece la biblioteca de la AMS con
-
-#+BEGIN_EXAMPLE
-#+begin_theorem
-[texto del teorema]
-#+end_theorem
-#+END_EXAMPLE
-
-o incluso definir nuestros propios entornos y usarlos después de la misma
-forma. Además, también permite la inclusión de bloques de código con
-
-#+BEGIN_EXAMPLE
-#+begin_src ruby
-[código en ruby]
-#+end_src
-#+END_EXAMPLE
-
-en la mayoría de lenguajes de programación y algunos especialmente útiles
-para matemáticas como =Sage=.
-
-*** Zoom
-Un problema menor (y quizá sólo mío) al configurar todo esto es que
-las fórmulas previsualizadas parecen demasiado pequeñas. Aunque estén
-en proporción con el texto, cuesta más leerlas; y cuando aumentamos el
-tamaño del texto con =C-x C-+=, las fórmulas no se amplían con
-él. Para conseguir que lo hagan hay que incluir el siguiente trozo de
-código en el archivo de configuración de Emacs, mezcla de dos
-respuestas de [[http://emacs.stackexchange.com/questions/3387/how-to-enlarge-latex-fragments-in-org-mode-at-the-same-time-as-the-buffer-text][thisirs y Mark]] en Stack Overflow:
-
-#+BEGIN_SRC lisp
-  (defun update-org-latex-fragment-scale ()
-    (let ((text-scale-factor
-           (expt text-scale-mode-step text-scale-mode-amount)))
-      (plist-put org-format-latex-options
-                 :scale (* 1.2 text-scale-factor)))
-  )
-  (add-hook
-   'text-scale-mode-hook
-   'update-org-latex-fragment-scale)
-#+END_SRC
-
-Después de volver a cargar el archivo de configuración, las fórmulas nuevas
-deberían volver a ajustarse con el texto.
-
-*** Aumentando la velocidad de escritura
-Mi objetivo principal con todo esto era escribir matemáticas más
-rápidamente, así que [[http://emacs.stackexchange.com/questions/26322/math-autocompletion-in-org-mode][pregunté sobre autocompletado]] y concluí en usar
-=latex-math-mode=. Esto permite incluir comandos de Latex con atajos
-de teclado. En su configuración original usa el caracter =`= para
-acceder a ellos, así que =`-a= escribe =\alpha=.  Yo he decidido
-cambiar el acento invertido, que ya cuesta dos pulsaciones en el
-teclado en español, por la =ç=, que no la suelo usar. Además de los
-que incluye el paquete por defecto, se pueden escribir atajos propios.
-
-Además de =latex-math-mode=, =cdlatex= es un modo de Emacs escrito
-por el mismo creador de org-mode, que facilita la escritura rápida
-de símbolos de latex. Puede añadirse a =org-mode= usando
-
-#+BEGIN_SRC emacs-lisp
-  (use-package cdlatex
-    :ensure t)
-
-  (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
-#+END_SRC
-
-y las instrucciones del paquete pueden encontrarse [[https://github.com/cdominik/cdlatex][aquí]].
-
-Por otro lado, empecé a usar *yasnippets* en Emacs. Son cómodos,
-fáciles de programar, y me permiten simplificar tareas como escribir
-diagramas conmutativos o complejos simpliciales en pocos pasos.
-
-*** Diagramas conmutativos
-Ahora estoy escribiendo sobre álgebra homológica y teoría de categorías, así que
-la mayoría de lo que escribo usa secuencias exactas y diagramas conmutativos.
-
-Para las secuencias exactas, por ejemplo, tengo simplemente
-una plantilla con =yasnippet=, que me deja 
-incluirlas escribiendo =complex_= y pulsando =<tab>=:
-
-#+BEGIN_EXAMPLE
-  # -*- mode: snippet -*-
-  # name: complex
-  # key: complex_
-  #--
-  \begin{aligned*} $1 \overset{$6}\longrightarrow 
-  $2 \overset{$7}\longrightarrow 
-  $3 \overset{$8}\longrightarrow 
-  $4 \overset{$9}\longrightarrow 
-  $5 \end{aligned*}
-#+END_EXAMPLE
-
-Para los diagramas conmutativos, la solución es un poco más
-compleja. El paquete *tikz* de Latex es muy útil para escribirlos pero
-tiene una sintaxis es demasiado recargada; así que existe *tikz-cd*, que
-simplifica esa sintaxis para centrarla en diagramas conmutativos. Para
-usarlo, hay que empezar por incluir en el archivo de configuración
-=init.el= las siguientes líneas
-
-#+BEGIN_SRC lisp
-(add-to-list
-  'org-latex-packages-alist '("" "tikz" t))
-
-(eval-after-load "preview"
-  '(add-to-list
-    'preview-default-preamble
-    "\\PreviewEnvironment{tikzpicture}"
-    t))
-#+END_SRC
-
-que pueden modificarse y escribirse de forma análoga si queremos que Emacs
-use internamente otros paquetes de Latex.
-
-Además en mi caso, tuve que cambiar el programa con el que generaba
-las imágenes. Parece funcionar sólo *imagemagick* cuando queremos
-usar diagramas conmutativos
-
-#+BEGIN_SRC lisp
-     (setq org-latex-create-formula-image-program 'imagemagick)
-   #+END_SRC
-
-*** Cabeceras en Latex
-Cuando necesitamos funcionalidad adicional que ofrece Latex en bibliotecas aparte,
-como usar =tikz-cd=, podemos incluirlas en la cabecera del archivo org como:
-   
-#+BEGIN_SRC 
-#+latex_header: \usepackage{amsthm}
-#+latex_header: \usepackage{amsmath}
-#+latex_header: \usepackage{tikz-cd}
-#+END_SRC
-
-Además, si queremos que sea funcionalidad que sólo se use en la exportación de
-latex pero no en la previsualización, podemos incluirla con =#+latex_header_extra=.
-
-*** Archivos de configuración de org
-Para evitar tener que repetir varias veces la misma cabecera en varios
-archivos, podemos usar un sólo archivo para escribir matemáticas y
-fraccionarlo en secciones temáticas. Cuando necesitamos tratar una
-sección, podemos usar la funcionalidad de /narrowing/ de [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Narrowing.html][org]] para
-tratar sólo una sección. 
-
-Otra opción es la de tener un sólo archivo de configuración
-=math.setup= con reglas de la forma
-
-#+BEGIN_SRC 
-#+latex_header: \usepackage{amsthm}
-#+latex_header: \usepackage{amsmath}
-#+latex_header: \usepackage{tikz-cd}
-#+END_SRC
-
-y cargarlo en cada archivo =org= con =#+SETUPFILE: math.setup=.
-
-*** Ejemplos
-Pueden encontrarse ejemplos de uso en [[https://github.com/mroman42/math][este repositorio]] con mis apuntes
-de matemáticas. Mi archivo de configuración de Emacs está disponible en
-[[https://github.com/M42/.emacs.d][mroman42/emacs.d]].
-   
-** Mónadas
+[1] Post sobre generalizaciones de la inducción [[http://math.blogoverflow.com/2015/03/10/when-can-we-do-induction/][en Stack Overflow]].   
+** Mónadas                                                                                   :post:
 :PROPERTIES:
 :TITLE:    Mónadas
-:HUGO_TAGS: haskell
-:HUGO_TOPICS: haskell
-:HUGO_FILE: post/monadas.md
-:HUGO_DATE: [2016-12-24 Mon 15:09]
+:EXPORT_FILE_NAME: docs/monadas.html
+:EXPORT_DATE: <2016-12-24 Mon 15:09>
 :END:
 
 #+BEGIN_QUOTE
@@ -1558,6 +1351,203 @@ como en teoría de categorías:
     categoría.
     [[https://ro-che.info/articles/2016-08-07-hask-category][Does it matter if Hask is (not) a category?]]
 
+** Matemáticas en emacs                                                                      :post:
+:PROPERTIES:
+:TITLE:    Matemáticas en emacs
+:EXPORT_FILE_NAME: docs/matematicasemacs.html
+:EXPORT_DATE: <2016-09-26 Mon 15:07>
+:END:
+
+/Actualizado a 06 de agosto de 2017./
+
+*** Apuntes a ordenador
+Tomar apuntes de matemáticas con el ordenador es una tarea difícil por
+lo complejo que es transcribir la notación (símbolos, letras en otros
+alfabetos, índices...) y la velocidad necesaria. Además, los
+diagramas, dibujos, flechas o anotaciones no textuales que tomamos
+parecen imposibles de transcribir fielmente a un fichero.
+
+*[[https://www.latex-project.org/about/][Latex]]* permite notación matemática pero no facilita la velocidad (al fin y
+al cabo, Latex estaría pensado para edición de libros, no para tomar apuntes).
+*[[https://daringfireball.net/projects/markdown/][Markdown]]*, por otro lado, simplifica mucho el poder escribir, pero pierde mucha 
+potencia respecto a Latex. Así que una solución es usar *[[http://orgmode.org/][org-mode]]* como lenguaje
+de marcado; es relativamente simple y fácilmente legible, como markdown, mientras
+que permite visualización de latex conforme se edita, programación literaria y
+exportación a latex y html, permitiendo la inclusión de código latex o html arbitrario
+para exportarlo.
+
+*** Ventajas de org-mode
+*org-mode* tiene internamente un lenguaje de marcado similar al de
+markdown, con la ventaja para el usuario de Emacs de que está adaptado
+especialmente al editor. Permite escribir fórmulas en Latex y exportar
+luego a =.tex= y =.pdf=, controlando las opciones de Latex.
+
+Una fórmula en Latex puede escribirse directamente en *org-mode*
+incluyéndola entre $\mathtt{\backslash\left( \dots \backslash\right)}$, si está dentro de una línea de texto 
+(como en \(i \ast x = x\)); o entre $\backslash[\ \dots\ \backslash]$, cuando
+queremos que se muestre aparte del texto como en el siguiente ejemplo
+
+\[ \sum_{n=0}^\infty \frac{1}{2^n}. \]
+
+Cuando terminamos de escribirla podemos [[http://orgmode.org/worg/org-tutorials/org-latex-preview.html][previsualizarla]] directamente con
+=C-c C-x C-l=, como si fuera un editor [[https://es.wikipedia.org/wiki/WYSIWYG][WYSIWYG]].
+
+Si vamos a acabar exportando a latex podemos insertar entornos como los
+que ofrece la biblioteca de la AMS con
+
+#+BEGIN_EXAMPLE
+#+begin_theorem
+[texto del teorema]
+#+end_theorem
+#+END_EXAMPLE
+
+o incluso definir nuestros propios entornos y usarlos después de la misma
+forma. Además, también permite la inclusión de bloques de código con
+
+#+BEGIN_EXAMPLE
+#+begin_src ruby
+[código en ruby]
+#+end_src
+#+END_EXAMPLE
+
+en la mayoría de lenguajes de programación y algunos especialmente útiles
+para matemáticas como =Sage=.
+
+*** Zoom
+Un problema menor (y quizá sólo mío) al configurar todo esto es que
+las fórmulas previsualizadas parecen demasiado pequeñas. Aunque estén
+en proporción con el texto, cuesta más leerlas; y cuando aumentamos el
+tamaño del texto con =C-x C-+=, las fórmulas no se amplían con
+él. Para conseguir que lo hagan hay que incluir el siguiente trozo de
+código en el archivo de configuración de Emacs, mezcla de dos
+respuestas de [[http://emacs.stackexchange.com/questions/3387/how-to-enlarge-latex-fragments-in-org-mode-at-the-same-time-as-the-buffer-text][thisirs y Mark]] en Stack Overflow:
+
+#+BEGIN_SRC lisp
+  (defun update-org-latex-fragment-scale ()
+    (let ((text-scale-factor
+           (expt text-scale-mode-step text-scale-mode-amount)))
+      (plist-put org-format-latex-options
+                 :scale (* 1.2 text-scale-factor)))
+  )
+  (add-hook
+   'text-scale-mode-hook
+   'update-org-latex-fragment-scale)
+#+END_SRC
+
+Después de volver a cargar el archivo de configuración, las fórmulas nuevas
+deberían volver a ajustarse con el texto.
+
+*** Aumentando la velocidad de escritura
+Mi objetivo principal con todo esto era escribir matemáticas más
+rápidamente, así que [[http://emacs.stackexchange.com/questions/26322/math-autocompletion-in-org-mode][pregunté sobre autocompletado]] y concluí en usar
+=latex-math-mode=. Esto permite incluir comandos de Latex con atajos
+de teclado. En su configuración original usa el caracter =`= para
+acceder a ellos, así que =`-a= escribe =\alpha=.  Yo he decidido
+cambiar el acento invertido, que ya cuesta dos pulsaciones en el
+teclado en español, por la =ç=, que no la suelo usar. Además de los
+que incluye el paquete por defecto, se pueden escribir atajos propios.
+
+Además de =latex-math-mode=, =cdlatex= es un modo de Emacs escrito
+por el mismo creador de org-mode, que facilita la escritura rápida
+de símbolos de latex. Puede añadirse a =org-mode= usando
+
+#+BEGIN_SRC emacs-lisp
+  (use-package cdlatex
+    :ensure t)
+
+  (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
+#+END_SRC
+
+y las instrucciones del paquete pueden encontrarse [[https://github.com/cdominik/cdlatex][aquí]].
+
+Por otro lado, empecé a usar *yasnippets* en Emacs. Son cómodos,
+fáciles de programar, y me permiten simplificar tareas como escribir
+diagramas conmutativos o complejos simpliciales en pocos pasos.
+
+*** Diagramas conmutativos
+Ahora estoy escribiendo sobre álgebra homológica y teoría de categorías, así que
+la mayoría de lo que escribo usa secuencias exactas y diagramas conmutativos.
+
+Para las secuencias exactas, por ejemplo, tengo simplemente
+una plantilla con =yasnippet=, que me deja 
+incluirlas escribiendo =complex_= y pulsando =<tab>=:
+
+#+BEGIN_EXAMPLE
+  # -*- mode: snippet -*-
+  # name: complex
+  # key: complex_
+  #--
+  \begin{aligned*} $1 \overset{$6}\longrightarrow 
+  $2 \overset{$7}\longrightarrow 
+  $3 \overset{$8}\longrightarrow 
+  $4 \overset{$9}\longrightarrow 
+  $5 \end{aligned*}
+#+END_EXAMPLE
+
+Para los diagramas conmutativos, la solución es un poco más
+compleja. El paquete *tikz* de Latex es muy útil para escribirlos pero
+tiene una sintaxis es demasiado recargada; así que existe *tikz-cd*, que
+simplifica esa sintaxis para centrarla en diagramas conmutativos. Para
+usarlo, hay que empezar por incluir en el archivo de configuración
+=init.el= las siguientes líneas
+
+#+BEGIN_SRC lisp
+(add-to-list
+  'org-latex-packages-alist '("" "tikz" t))
+
+(eval-after-load "preview"
+  '(add-to-list
+    'preview-default-preamble
+    "\\PreviewEnvironment{tikzpicture}"
+    t))
+#+END_SRC
+
+que pueden modificarse y escribirse de forma análoga si queremos que Emacs
+use internamente otros paquetes de Latex.
+
+Además en mi caso, tuve que cambiar el programa con el que generaba
+las imágenes. Parece funcionar sólo *imagemagick* cuando queremos
+usar diagramas conmutativos
+
+#+BEGIN_SRC lisp
+     (setq org-latex-create-formula-image-program 'imagemagick)
+   #+END_SRC
+
+*** Cabeceras en Latex
+Cuando necesitamos funcionalidad adicional que ofrece Latex en bibliotecas aparte,
+como usar =tikz-cd=, podemos incluirlas en la cabecera del archivo org como:
+   
+#+BEGIN_SRC 
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{tikz-cd}
+#+END_SRC
+
+Además, si queremos que sea funcionalidad que sólo se use en la exportación de
+latex pero no en la previsualización, podemos incluirla con =#+latex_header_extra=.
+
+*** Archivos de configuración de org
+Para evitar tener que repetir varias veces la misma cabecera en varios
+archivos, podemos usar un sólo archivo para escribir matemáticas y
+fraccionarlo en secciones temáticas. Cuando necesitamos tratar una
+sección, podemos usar la funcionalidad de /narrowing/ de [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Narrowing.html][org]] para
+tratar sólo una sección. 
+
+Otra opción es la de tener un sólo archivo de configuración
+=math.setup= con reglas de la forma
+
+#+BEGIN_SRC 
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{tikz-cd}
+#+END_SRC
+
+y cargarlo en cada archivo =org= con =#+SETUPFILE: math.setup=.
+
+*** Ejemplos
+Pueden encontrarse ejemplos de uso en [[https://github.com/mroman42/math][este repositorio]] con mis apuntes
+de matemáticas. Mi archivo de configuración de Emacs está disponible en
+[[https://github.com/M42/.emacs.d][mroman42/emacs.d]].
 ** Projective, injective and flat modules
 :PROPERTIES:
 :TITLE:    Projective, injective and flat modules
@@ -1845,16 +1835,20 @@ unless otherwise specified.
 
 This index is automagically generated by Emacs.
 
-#+BEGIN_SRC emacs-lisp :results output html :exports results
+#+begin_src emacs-lisp :results output html :exports results 
 (print-index)
-#+END_SRC
-#+RESULTS:
+#+end_src
+#+results:
 #+BEGIN_EXPORT html
 <ul>
  <li><a href=evaluacionlambda.html> Evaluación en cálculo lambda </a> - <em><2018-05-25 Fri 18:02></em><br></li>
  <li><a href=mikrokosmos.html> Mikrokosmos </a> - <em><2018-05-25 Fri 18:01></em><br></li>
  <li><a href=aprendiendoemacs.html> Aprendiendo Emacs </a> - <em><2018-05-25 Fri 18:34></em><br></li>
+ <li><a href=capturandolinksenorgmode.html> Capturando links en org-mode </a> - <em><2017-03-23 Thu 14:54></em><br></li>
  <li><a href=distribucionesmonadas.html> Distribuciones discretas con mónadas </a> - <em><2018-05-25 Fri 18:34></em><br></li>
+ <li><a href=induccionestructural.html> Inducción estructural </a> - <em><2015-03-14 Sat 15:02></em><br></li>
+ <li><a href=monadas.html> Mónadas </a> - <em><2016-12-24 Mon 15:09></em><br></li>
+ <li><a href=matematicasemacs.html> Matemáticas en emacs </a> - <em><2016-09-26 Mon 15:07></em><br></li>
 </ul>
 #+END_EXPORT
 

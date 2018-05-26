@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-05-26 Sat 22:48 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Matemáticas en emacs</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Mario Román" />
+<link rel="stylesheet" href="default.css" />
+<link rel="stylesheet" href="mathjax_fonts.css" />
+<link rel="stylesheet" href="syntax.css" />
+<div id="header">
+<div id="logo">
+<a href="index.html">Cosmoi</a>
+</div>
+<div id="navigation">
+<a href="index.html">Index</a>
+<a href="about.html">About</a>
+</div>
+</div>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Matemáticas en emacs</h1>
+<p>
+<i>Actualizado a 06 de agosto de 2017.</i>
+</p>
+
+<div id="outline-container-org84fc243" class="outline-2">
+<h2 id="org84fc243">Apuntes a ordenador</h2>
+<div class="outline-text-2" id="text-org84fc243">
+<p>
+Tomar apuntes de matemáticas con el ordenador es una tarea difícil por
+lo complejo que es transcribir la notación (símbolos, letras en otros
+alfabetos, índices&#x2026;) y la velocidad necesaria. Además, los
+diagramas, dibujos, flechas o anotaciones no textuales que tomamos
+parecen imposibles de transcribir fielmente a un fichero.
+</p>
+
+<p>
+<b><a href="https://www.latex-project.org/about/">Latex</a></b> permite notación matemática pero no facilita la velocidad (al fin y
+al cabo, Latex estaría pensado para edición de libros, no para tomar apuntes).
+<b><a href="https://daringfireball.net/projects/markdown/">Markdown</a></b>, por otro lado, simplifica mucho el poder escribir, pero pierde mucha 
+potencia respecto a Latex. Así que una solución es usar <b><a href="http://orgmode.org/">org-mode</a></b> como lenguaje
+de marcado; es relativamente simple y fácilmente legible, como markdown, mientras
+que permite visualización de latex conforme se edita, programación literaria y
+exportación a latex y html, permitiendo la inclusión de código latex o html arbitrario
+para exportarlo.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org630d613" class="outline-2">
+<h2 id="org630d613">Ventajas de org-mode</h2>
+<div class="outline-text-2" id="text-org630d613">
+<p>
+<b>org-mode</b> tiene internamente un lenguaje de marcado similar al de
+markdown, con la ventaja para el usuario de Emacs de que está adaptado
+especialmente al editor. Permite escribir fórmulas en Latex y exportar
+luego a <code>.tex</code> y <code>.pdf</code>, controlando las opciones de Latex.
+</p>
+
+<p>
+Una fórmula en Latex puede escribirse directamente en <b>org-mode</b>
+incluyéndola entre \(\mathtt{\backslash\left( \dots \backslash\right)}\), si está dentro de una línea de texto 
+(como en \(i \ast x = x\)); o entre \(\backslash[\ \dots\ \backslash]\), cuando
+queremos que se muestre aparte del texto como en el siguiente ejemplo
+</p>
+
+<p>
+\[ \sum_{n=0}^\infty \frac{1}{2^n}. \]
+</p>
+
+<p>
+Cuando terminamos de escribirla podemos <a href="http://orgmode.org/worg/org-tutorials/org-latex-preview.html">previsualizarla</a> directamente con
+<code>C-c C-x C-l</code>, como si fuera un editor <a href="https://es.wikipedia.org/wiki/WYSIWYG">WYSIWYG</a>.
+</p>
+
+<p>
+Si vamos a acabar exportando a latex podemos insertar entornos como los
+que ofrece la biblioteca de la AMS con
+</p>
+
+<pre class="example">
+#+begin_theorem
+[texto del teorema]
+#+end_theorem
+</pre>
+
+<p>
+o incluso definir nuestros propios entornos y usarlos después de la misma
+forma. Además, también permite la inclusión de bloques de código con
+</p>
+
+<pre class="example">
+#+begin_src ruby
+[código en ruby]
+#+end_src
+</pre>
+
+<p>
+en la mayoría de lenguajes de programación y algunos especialmente útiles
+para matemáticas como <code>Sage</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5965242" class="outline-2">
+<h2 id="org5965242">Zoom</h2>
+<div class="outline-text-2" id="text-org5965242">
+<p>
+Un problema menor (y quizá sólo mío) al configurar todo esto es que
+las fórmulas previsualizadas parecen demasiado pequeñas. Aunque estén
+en proporción con el texto, cuesta más leerlas; y cuando aumentamos el
+tamaño del texto con <code>C-x C-+</code>, las fórmulas no se amplían con
+él. Para conseguir que lo hagan hay que incluir el siguiente trozo de
+código en el archivo de configuración de Emacs, mezcla de dos
+respuestas de <a href="http://emacs.stackexchange.com/questions/3387/how-to-enlarge-latex-fragments-in-org-mode-at-the-same-time-as-the-buffer-text">thisirs y Mark</a> en Stack Overflow:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp"><span style="color: #DCDCCC;">(</span><span style="color: #8ac6f2; font-weight: bold;">defun</span> <span style="color: #cae682;">update-org-latex-fragment-scale</span> <span style="color: #BFEBBF;">()</span>
+  <span style="color: #BFEBBF;">(</span><span style="color: #8ac6f2; font-weight: bold;">let</span> <span style="color: #D0BF8F;">(</span><span style="color: #93E0E3;">(</span>text-scale-factor
+         <span style="color: #9FC59F;">(</span>expt text-scale-mode-step text-scale-mode-amount<span style="color: #9FC59F;">)</span><span style="color: #93E0E3;">)</span><span style="color: #D0BF8F;">)</span>
+    <span style="color: #D0BF8F;">(</span>plist-put org-format-latex-options
+               <span style="color: #e5786d; font-weight: bold;">:scale</span> <span style="color: #93E0E3;">(</span>* 1.2 text-scale-factor<span style="color: #93E0E3;">)</span><span style="color: #D0BF8F;">)</span><span style="color: #BFEBBF;">)</span>
+<span style="color: #DCDCCC;">)</span>
+<span style="color: #DCDCCC;">(</span>add-hook
+ 'text-scale-mode-hook
+ 'update-org-latex-fragment-scale<span style="color: #DCDCCC;">)</span>
+</pre>
+</div>
+
+<p>
+Después de volver a cargar el archivo de configuración, las fórmulas nuevas
+deberían volver a ajustarse con el texto.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0e74679" class="outline-2">
+<h2 id="org0e74679">Aumentando la velocidad de escritura</h2>
+<div class="outline-text-2" id="text-org0e74679">
+<p>
+Mi objetivo principal con todo esto era escribir matemáticas más
+rápidamente, así que <a href="http://emacs.stackexchange.com/questions/26322/math-autocompletion-in-org-mode">pregunté sobre autocompletado</a> y concluí en usar
+<code>latex-math-mode</code>. Esto permite incluir comandos de Latex con atajos
+de teclado. En su configuración original usa el caracter <code>`</code> para
+acceder a ellos, así que <code>`-a</code> escribe <code>\alpha</code>.  Yo he decidido
+cambiar el acento invertido, que ya cuesta dos pulsaciones en el
+teclado en español, por la <code>ç</code>, que no la suelo usar. Además de los
+que incluye el paquete por defecto, se pueden escribir atajos propios.
+</p>
+
+<p>
+Además de <code>latex-math-mode</code>, <code>cdlatex</code> es un modo de Emacs escrito
+por el mismo creador de org-mode, que facilita la escritura rápida
+de símbolos de latex. Puede añadirse a <code>org-mode</code> usando
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #DCDCCC;">(</span><span style="color: #8ac6f2; font-weight: bold;">use-package</span> <span style="color: #e5786d;">cdlatex</span>
+  <span style="color: #e5786d; font-weight: bold;">:ensure</span> t<span style="color: #DCDCCC;">)</span>
+
+<span style="color: #DCDCCC;">(</span>add-hook 'org-mode-hook 'turn-on-org-cdlatex<span style="color: #DCDCCC;">)</span>
+</pre>
+</div>
+
+<p>
+y las instrucciones del paquete pueden encontrarse <a href="https://github.com/cdominik/cdlatex">aquí</a>.
+</p>
+
+<p>
+Por otro lado, empecé a usar <b>yasnippets</b> en Emacs. Son cómodos,
+fáciles de programar, y me permiten simplificar tareas como escribir
+diagramas conmutativos o complejos simpliciales en pocos pasos.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdd4ac26" class="outline-2">
+<h2 id="orgdd4ac26">Diagramas conmutativos</h2>
+<div class="outline-text-2" id="text-orgdd4ac26">
+<p>
+Ahora estoy escribiendo sobre álgebra homológica y teoría de categorías, así que
+la mayoría de lo que escribo usa secuencias exactas y diagramas conmutativos.
+</p>
+
+<p>
+Para las secuencias exactas, por ejemplo, tengo simplemente
+una plantilla con <code>yasnippet</code>, que me deja 
+incluirlas escribiendo <code>complex_</code> y pulsando <code>&lt;tab&gt;</code>:
+</p>
+
+<pre class="example">
+# -*- mode: snippet -*-
+# name: complex
+# key: complex_
+#--
+\begin{aligned*} $1 \overset{$6}\longrightarrow 
+$2 \overset{$7}\longrightarrow 
+$3 \overset{$8}\longrightarrow 
+$4 \overset{$9}\longrightarrow 
+$5 \end{aligned*}
+</pre>
+
+<p>
+Para los diagramas conmutativos, la solución es un poco más
+compleja. El paquete <b>tikz</b> de Latex es muy útil para escribirlos pero
+tiene una sintaxis es demasiado recargada; así que existe <b>tikz-cd</b>, que
+simplifica esa sintaxis para centrarla en diagramas conmutativos. Para
+usarlo, hay que empezar por incluir en el archivo de configuración
+<code>init.el</code> las siguientes líneas
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp"><span style="color: #DCDCCC;">(</span>add-to-list
+  'org-latex-packages-alist '<span style="color: #BFEBBF;">(</span><span style="color: #95e454;">""</span> <span style="color: #95e454;">"tikz"</span> t<span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>
+
+<span style="color: #DCDCCC;">(</span>eval-after-load <span style="color: #95e454;">"preview"</span>
+  '<span style="color: #BFEBBF;">(</span>add-to-list
+    'preview-default-preamble
+    <span style="color: #95e454;">"\\PreviewEnvironment{tikzpicture}"</span>
+    t<span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>
+</pre>
+</div>
+
+<p>
+que pueden modificarse y escribirse de forma análoga si queremos que Emacs
+use internamente otros paquetes de Latex.
+</p>
+
+<p>
+Además en mi caso, tuve que cambiar el programa con el que generaba
+las imágenes. Parece funcionar sólo <b>imagemagick</b> cuando queremos
+usar diagramas conmutativos
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp"><span style="color: #DCDCCC;">(</span>setq org-latex-create-formula-image-program 'imagemagick<span style="color: #DCDCCC;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga4c9728" class="outline-2">
+<h2 id="orga4c9728">Cabeceras en Latex</h2>
+<div class="outline-text-2" id="text-orga4c9728">
+<p>
+Cuando necesitamos funcionalidad adicional que ofrece Latex en bibliotecas aparte,
+como usar <code>tikz-cd</code>, podemos incluirlas en la cabecera del archivo org como:
+</p>
+
+<pre class="example">
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{tikz-cd}
+</pre>
+
+<p>
+Además, si queremos que sea funcionalidad que sólo se use en la exportación de
+latex pero no en la previsualización, podemos incluirla con <code>#+latex_header_extra</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1ff6273" class="outline-2">
+<h2 id="org1ff6273">Archivos de configuración de org</h2>
+<div class="outline-text-2" id="text-org1ff6273">
+<p>
+Para evitar tener que repetir varias veces la misma cabecera en varios
+archivos, podemos usar un sólo archivo para escribir matemáticas y
+fraccionarlo en secciones temáticas. Cuando necesitamos tratar una
+sección, podemos usar la funcionalidad de <i>narrowing</i> de <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Narrowing.html">org</a> para
+tratar sólo una sección. 
+</p>
+
+<p>
+Otra opción es la de tener un sólo archivo de configuración
+<code>math.setup</code> con reglas de la forma
+</p>
+
+<pre class="example">
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{tikz-cd}
+</pre>
+
+<p>
+y cargarlo en cada archivo <code>org</code> con <code>#+SETUPFILE: math.setup</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org29b5fa9" class="outline-2">
+<h2 id="org29b5fa9">Ejemplos</h2>
+<div class="outline-text-2" id="text-org29b5fa9">
+<p>
+Pueden encontrarse ejemplos de uso en <a href="https://github.com/mroman42/math">este repositorio</a> con mis apuntes
+de matemáticas. Mi archivo de configuración de Emacs está disponible en
+<a href="https://github.com/M42/.emacs.d">mroman42/emacs.d</a>.</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<div id="footer"><p class="postamble">Last edited 2016-09-26 Mon 15:07. Written by <a href="https://mroman42.github.com">@mroman42</a>.</p></div>
+</div>
+</body>
+</html>
