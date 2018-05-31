@@ -23,27 +23,27 @@
 #+HTML_HEAD: </div>
 
 * Posts
-** Evaluación en cálculo \lambda                                                             :post:
+** Evaluación en cálculo lambda                                                              :post:
 :PROPERTIES:
 :TITLE: Evaluación en cálculo lambda
-:EXPORT_FILE_NAME: docs/evaluacionlambda.html
+:EXPORT_FILE_NAME: evaluacionlambda.html
 :EXPORT_DATE: <2018-05-25 Fri 18:02>
 :END:
-Un repaso de los enunciados que nos llevan a usar la evaluación
-mediante \beta-reducciones del cálculo \lambda como un lenguaje
-de programación.
-
-Detallo todo esto con demostraciones en [[https://github.com/M42/lambda.notes][M42/lambda.notes]].
+Esta es una recopilación de los enunciados que nos llevan a usar la
+evaluación mediante \beta-reducciones del cálculo lambda como un
+lenguaje de programación.  Los obtuve principalmente del libro de
+Barendregt y de las notas de Peter Selinger cuando buscaba la base
+teórica para implementar [[file:mikrokosmos.html][Mikrokosmos]] Detallo estos mismos
+enunciados recopilando sus demostraciones en [[https://github.com/M42/lambda.notes][M42/lambda.notes]].
 
 *** Forma normal
-Una expresión está en *forma normal* si no se le pueden aplicar más
+Una expresión está en /forma normal/ si no se le pueden aplicar más
 \beta-reducciones. La forma normal es /única/ como consecuencia del
 teorema de Church-Rosser.
 
-#+attr_latex: :options {Church-Rosser}
-#+begin_exampleblock
-Si a un término se le aplican distintas reducciones, los términos
-que se obtienen pueden reducirse a uno común. Es decir,
+*Teorema de Chuch-Rosser.* Si a un mismo término se le aplican dos
+cadenas de reducciones distintas, los términos que se obtienen pueden
+a su vez reducirse a un término común. Es decir,
 
  * si $A$ puede reducirse mediante \beta-reducciones a otro término
    $B$, lo que se nota por $A \twoheadrightarrow_{\beta} B$,
@@ -52,7 +52,6 @@ que se obtienen pueden reducirse a uno común. Es decir,
  * entonces existe un término $D$ tal que ambos se pueden reducir
    mediante \beta-reducciones a él; es decir, tal que $B \twoheadrightarrow_{\beta} D$
    y $C \twoheadrightarrow_{\beta} D$.
-#+end_exampleblock
 
 En particular, esto implica que si un término tuviera dos formas
 normales, debería existir otro término al cual se pudieran reducir
@@ -61,40 +60,30 @@ implicar que son iguales.
 
 *** Divergencia
 Hemos visto que la forma normal es única, pero no que exista o que
-sepamos encontrarla de alguna forma.
-
-Puede ocurrir que un término no esté en forma normal y sin embargo
-las reducciones no lo lleven a ella. Por ejemplo,
-\[
-\Omega = (\lambda x.x\ x)(\lambda x.x\ x) \longrightarrow_{\beta} (\lambda x.x\ x)(\lambda x.x\ x)
-\]
-*no llega a forma normal*. O por ejemplo,
-\[
-(\lambda x.x\ x\ x)(\lambda x.x\ x\ x)
-\]
-se hace más complejo al aplicarle reducciones y *diverge*.
+sepamos encontrarla de alguna forma. Puede ocurrir que un término no
+esté en forma normal y sin embargo las reducciones no lo lleven a
+ella. Por ejemplo, el término $\Omega = (\lambda x.x\ x)(\lambda x.x\ x)$
+es invariante a \beta-reducciones y *no llega a forma normal*. O por 
+ejemplo, el término $(\lambda x.x\ x\ x)(\lambda x.x\ x\ x)$ se hace cada vez más grande
+al aplicarle reducciones, decimos que /diverge/.
 
 *** Evaluación a izquierda
 Hay expresiones que llegarán a una forma normal o no dependiendo de
-cómo los evaluemos. Por ejemplo,
-
- * $\mathtt{const}\ \mathtt{id}\ \Omega \quad\longrightarrow_{\beta}\quad \mathtt{id}$,
-   llega a forma normal si evaluamos primero $\mathtt{const}$;
-
- * $\mathtt{const}\ \mathtt{id}\ \Omega \quad\longrightarrow_{\beta}\quad \mathtt{const}\ \mathtt{id}\ \Omega$,
-   no llega a forma normal nunca si empezamos evaluando primero $\Omega$.
-
+cómo los evaluemos. Por ejemplo, el término $(\mathtt{const}\ \mathtt{id}\ \Omega)$ llega a
+la forma normal $\mathtt{id}$ si evaluamos primero la aplicación de $\mathtt{const}$,
+pero diverge si empezamos intentando evaluar $\Omega$. 
 Sin embargo, existe una estrategia de reducción que siempre encuentra
-una forma normal si esta existe.
+una forma normal si esta existe. Tenemos el siguiente teorema.
 
  * Si existe una forma normal, la estrategia que reduce a cada paso
    la aplicación más a la izquierda posible la encuentra.
 
 Y quizá sorprendentemente, existe otra estrategia de reducción que siempre
-encuentra la forma de no llegar a la forma normal si esta existe
+encuentra la forma de *no* llegar a la forma normal si esta existiera.
 
- * Si existe alguna sucesión que no llega a forma normal, la estrategia que reduce a cada paso
-   la aplicación más a la derecha posible la encuentra.
+ * Si existe alguna sucesión que no llega a forma normal, la
+   estrategia que reduce a cada paso la aplicación más a la derecha
+   posible la encuentra.
 
 Estas dos formas de evaluación se suelen llamar *call-by-value* y
 *call-by-name*.
@@ -102,7 +91,7 @@ Estas dos formas de evaluación se suelen llamar *call-by-value* y
 ** Mikrokosmos                                                                               :post:
 :PROPERTIES:
 :TITLE: Mikrokosmos
-:EXPORT_FILE_NAME: docs/mikrokosmos.html
+:EXPORT_FILE_NAME: mikrokosmos.html
 :EXPORT_DATE: <2018-05-25 Fri 18:01>
 :END:
 
@@ -175,7 +164,7 @@ swap
 ** Aprendiendo Emacs                                                                         :post:
 :PROPERTIES:
 :TITLE:    Aprendiendo Emacs
-:EXPORT_FILE_NAME: docs/aprendiendoemacs.html
+:EXPORT_FILE_NAME: aprendiendoemacs.html
 :EXPORT_DATE: <2018-05-25 Fri 18:34>
 :END:
 
@@ -498,7 +487,7 @@ con más funcionalidad. Un tutorial básico sobre Elisp es
 ** Capturando links en org-mode                                                              :post:
 :PROPERTIES:
 :TITLE:    Capturando links en org-mode
-:EXPORT_FILE_NAME: docs/capturandolinksenorgmode.html
+:EXPORT_FILE_NAME: capturandolinksenorgmode.html
 :EXPORT_DATE: <2017-03-23 Thu 14:54>
 :END:
 
@@ -578,7 +567,7 @@ hasta que ese diálogo no ha terminado, no se ejecutan los hooks y el frame no s
 ** Distribuciones discretas con mónadas                                                      :post:
 :PROPERTIES:
 :TITLE: Distribuciones discretas con mónadas
-:EXPORT_FILE_NAME: docs/distribucionesmonadas.html
+:EXPORT_FILE_NAME: distribucionesmonadas.html
 :EXPORT_DATE: <2018-05-25 Fri 18:34>
 :END:
 
@@ -665,7 +654,7 @@ idea:
 ** Inducción estructural                                                                     :post:
 :PROPERTIES:
 :TITLE:    Inducción estructural
-:EXPORT_FILE_NAME: docs/induccionestructural.html
+:EXPORT_FILE_NAME: induccionestructural.html
 :EXPORT_DATE: <2015-03-14 Sat 15:02>
 :END:
 
@@ -776,7 +765,7 @@ demostraciones Coq.
 ** Mónadas                                                                                   :post:
 :PROPERTIES:
 :TITLE:    Mónadas
-:EXPORT_FILE_NAME: docs/monadas.html
+:EXPORT_FILE_NAME: monadas.html
 :EXPORT_DATE: <2016-12-24 Mon 15:09>
 :END:
 
@@ -1354,7 +1343,7 @@ como en teoría de categorías:
 ** Matemáticas en emacs                                                                      :post:
 :PROPERTIES:
 :TITLE:    Matemáticas en emacs
-:EXPORT_FILE_NAME: docs/matematicasemacs.html
+:EXPORT_FILE_NAME: matematicasemacs.html
 :EXPORT_DATE: <2016-09-26 Mon 15:07>
 :END:
 
@@ -1813,11 +1802,12 @@ Que viene de nuevo dada por $y(\tau) = \tau_A(1_A)$.
 * About
 :PROPERTIES:
 :TITLE:  About
-:EXPORT_FILE_NAME: docs/about.html
+:EXPORT_FILE_NAME: about.html
 :END:
 
-I'm *Mario Román*. I study Mathematics and Computer science in
-Granada. I also write in the [[http://tux.ugr.es/dgiim/][LibreIM]] blog.
+I'm *Mario Román*.  I am learning Mathematics and Computer science; my
+main interests being categories, types, and logic.  I sometimes write
+for the [[https://libreim.github.io/][LibreIM]] community.
 
   - GitHub: [[https://github.com/M42][@mroman42]].
   - CV: [[https://mroman42.github.io/friggeri-cv-a4/cv.pdf][My CV on Github pages]].
@@ -1829,7 +1819,7 @@ unless otherwise specified.
 * Index
 :PROPERTIES:
 :TITLE:  Index
-:EXPORT_FILE_NAME: docs/index.html
+:EXPORT_FILE_NAME: index.html
 :EXPORT_DATE: <2018-05-25 Fri 18:12>
 :END:
 
@@ -1840,10 +1830,10 @@ This index is automagically generated by Emacs.
     (princ (concat  
       " <li><a href=" 
       (substring (concat (org-entry-get (point) "EXPORT_FILE_NAME")  "> ") 5) 
-      (org-entry-get (point) "TITLE") " </a>" " - <em>" 
+      (org-entry-get (point) "TITLE") " </a> - <em>"
       (org-entry-get (point) "EXPORT_DATE") "</em><br></li>\n")))
 
-  (defun print-index () 
+  (defun print-index ()
     (progn 
       (princ "<ul>\n") 
       (org-map-entries (lambda () (print-post-at-point)) "+post" nil) 
