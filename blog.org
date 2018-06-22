@@ -87,7 +87,6 @@ encuentra la forma de *no* llegar a la forma normal si esta existiera.
 
 Estas dos formas de evaluación se suelen llamar /call-by-value/ y
 /call-by-name/.
-
 ** Mikrokosmos                                                                               :post:
 :PROPERTIES:
 :TITLE: Mikrokosmos
@@ -131,13 +130,13 @@ borrowing its name from the series of progressive piano études
 Mikrokosmos written by Bela Bartok. It aims to provide students with a
 tool to learn and understand the λ-calculus.
 
- * [[https://github.com/m42/mikrokosmos][GitHub repository]].
- * [[https://m42.github.io/mikrokosmos/][User's guide]].
- * [[https://github.com/M42/jupyter-mikrokosmos][Jupyter kernel]].
+ * [[https://github.com/mroman42/mikrokosmos][GitHub repository]].
+ * [[https://mroman42.github.io/mikrokosmos/][User's guide]].
+ * [[https://github.com/mroman42/jupyter-mikrokosmos][Jupyter kernel]].
 
 Since version 0.3.0, it comes bundled with a Jupyter Notebook kernel,
 a tutorial on lambda calculus and specific modes for SKI combinators.
-Thanks to [[https://github.com/ghcjs/ghcjs][GHCJS]] and [[http://codemirror.net/][Codemirror]], you can also try the [[https://github.com/M42/mikrokosmos][Mikrokosmos]]
+Thanks to [[https://github.com/ghcjs/ghcjs][GHCJS]] and [[http://codemirror.net/][Codemirror]], you can also try the [[https://github.com/mroman42/mikrokosmos][Mikrokosmos]]
 lambda interpreter in your browser. Press the *evaluate* button below
 and play with the code!
 
@@ -560,7 +559,6 @@ En la plantilla de captura, me gustaría poder usar además =%^g=, que crea un p
 diálogo donde insertar tags al link que se está guardando. El problema con esto es que,
 hasta que ese diálogo no ha terminado, no se ejecutan los hooks y el frame no se hace
 único (ni se reposiciona en i3).
-
 ** Distribuciones discretas con mónadas                                                      :post:
 :PROPERTIES:
 :TITLE: Distribuciones discretas con mónadas
@@ -771,7 +769,6 @@ count x = length . filter (x==)
 main :: IO ()
 main = return ()
 #+END_SRC
-
 ** Inducción estructural                                                                     :post:
 :PROPERTIES:
 :TITLE:    Inducción estructural
@@ -1455,7 +1452,6 @@ como en teoría de categorías:
 [5] Por qué en ocasiones puede ser útil pensar en ellos como una
     categoría.
     [[https://ro-che.info/articles/2016-08-07-hask-category][Does it matter if Hask is (not) a category?]]
-
 ** Matemáticas en emacs                                                                      :post:
 :PROPERTIES:
 :TITLE:    Matemáticas en emacs
@@ -1653,47 +1649,15 @@ y cargarlo en cada archivo =org= con =#+SETUPFILE: math.setup=.
 Pueden encontrarse ejemplos de uso en [[https://github.com/mroman42/math][este repositorio]] con mis apuntes
 de matemáticas. Mi archivo de configuración de Emacs está disponible en
 [[https://github.com/M42/.emacs.d][mroman42/emacs.d]].
-** Projective, injective and flat modules
-:PROPERTIES:
-:TITLE:    Projective, injective and flat modules
-:HUGO_TAGS: math
-:HUGO_TOPICS: math
-:HUGO_FILE: post/projectivemodules.md
-:HUGO_DATE: [2017-02-18 Sat 15:10]
-:END:
-
-*** Definitions
-An R-module $D$ is:
-
- 1. *Projective* if $Hom(D, -)$ is an exact functor.
- 2. *Injective* if $Hom(-,D)$ is an exact functor.
- 3. *Flat* if $D \otimes -$ is an exact functor.
-
-*** Characterization
-We know that $Hom(D,-)$ and $Hom(-,D)$ are left-exact and that
-$D\otimes -$ is right-exact; so for them to be exact, we only need:
-
-- A module $D$ is *projective* when every $f : B \longrightarrow C$ surjective induces
-  $(f\circ\_) :Hom(D,B) \longrightarrow Hom(D,C)$ surjective.
-  #+attr_html: :width 300px
-  https://raw.githubusercontent.com/mroman42/mroman42.github.io/images/projective.jpeg
-
-- A module $D$ is *injective* when $f : A \longrightarrow B$ surjective induces
-  $(\_\circ f) : Hom(B,D) \longrightarrow Hom(A,D)$ surjective.
-  #+attr_html: :width 300px
-  https://raw.githubusercontent.com/mroman42/mroman42.github.io/images/injective.jpeg
-   
-- A module $D$ is *flat* when $f : A \longrightarrow B$ injective induces 
-  $f' : D\otimes A \longrightarrow D \otimes B$ injective.
-
-** Ideas de teoría de tipos
+** Ideas de teoría de tipos                                                                  :post:
 :PROPERTIES:
 :TITLE:    Ideas de teoría de tipos
-:HUGO_TAGS: logic
-:HUGO_TOPICS: logic
-:HUGO_FILE: post/teoriatipos.md
-:HUGO_DATE: [2016-01-08 Fri 15:13]
+:EXPORT_FILE_NAME: ideasteoriatipos.html
+:EXPORT_DATE: <2016-01-08 Fri 15:13>
 :END:
+
+/Una recopilación de algunas ideas y enlaces después de haber empezado
+a leer sobre teoría de tipos./
 
 Los sistemas de tipos tienen su utilidad en las matemáticas. Sirven para
 modelar una fundamentación de las matemáticas distinta de la usual
@@ -1804,35 +1768,61 @@ Wadler:
 
 *** Teoría de tipos
 Los tipos pueden usarse para fundamentar las matemáticas, del mismo modo
-que lo hacen los conjuntos (en sistemas axiomáticos como
-[[https://en.wikipedia.org/wiki/Zermelo%E2%80%93Fraenkel_set_theory][ZFC]])
-o las categorías (en sistemas como
-[[https://ncatlab.org/nlab/show/ETCS][ETCS]]). En el siguiente artículo
+que lo hacen los conjuntos (en sistemas axiomáticos como [[https://en.wikipedia.org/wiki/Zermelo%E2%80%93Fraenkel_set_theory][ZFC]])
+o las categorías (en sistemas como [[https://ncatlab.org/nlab/show/ETCS][ETCS]]). En el siguiente artículo
 se discuten las diferencias de ambos con la *teoría de tipos
 dependientes de Martin-Löf*, que se expone por completo en las notas de
 Nordström, Petersson y Smith:
 
--  [[https://golem.ph.utexas.edu/category/2013/01/from_set_theory_to_type_theory.html][From
-   Set Theory to Type Theory - The n-Category Café]]
--  [[http://www.cse.chalmers.se/~bengt/papers/hlcs.pdf][Martin-Löf Type
-   Theory - B. Nordström, K. Petersson, J.M. Smith]]
+-  [[https://golem.ph.utexas.edu/category/2013/01/from_set_theory_to_type_theory.html][From Set Theory to Type Theory - The n-Category Café]]
+-  [[http://www.cse.chalmers.se/~bengt/papers/hlcs.pdf][Martin-Löf Type Theory - B. Nordström, K. Petersson, J.M. Smith]]
 
 Esto nos da una fundamentación de las matemáticas con una interpretación
 computacional clara.
 
-Una refinación de esas teorías para producir una fundamentación también
-constructivista de las matemáticas es el Cálculo de Construcciones
-(Calculus of constructions, COC) desarrollado por *Thierry Coquand* y
-*Gérard Huet*, que finalmente dará lugar al asistente de demostraciones
-*COQ*, desarrollado por el INRIA. El
-[[https://en.wikipedia.org/wiki/Lambda_cube][*\lambda-cubo*]] es un
-diagrama para exponer cómo este sistema amplía al /cálculo lambda
-tipado/ y al /Sistema $F_\omega$/ que usa Haskell.
+Una refinación de esas teorías para producir una fundamentación
+también constructivista de las matemáticas es el Cálculo de
+Construcciones (Calculus of constructions, COC) desarrollado por
+*Thierry Coquand* y *Gérard Huet*, que finalmente dará lugar al
+asistente de demostraciones *COQ*, desarrollado por el INRIA. El
+[[https://en.wikipedia.org/wiki/Lambda_cube][*\lambda-cubo*]] es un diagrama para exponer cómo este sistema amplía al
+/cálculo lambda tipado/ y al /Sistema $F_\omega$/ que usa Haskell.
 
--  [[http://ac.els-cdn.com/0890540188900053/1-s2.0-0890540188900053-main.pdf?_tid=3846e956-b301-11e5-8e78-00000aab0f02&acdnat=1451925532_87ac5a8e6a7bd6477746a55c17130f43][Calculus
-   of Constructions - T. Coquand, G. Huet]].
+-  [[http://ac.els-cdn.com/0890540188900053/1-s2.0-0890540188900053-main.pdf?_tid=3846e956-b301-11e5-8e78-00000aab0f02&acdnat=1451925532_87ac5a8e6a7bd6477746a55c17130f43][Calculus of Constructions - T. Coquand, G. Huet]].
 -  [[https://coq.inria.fr/][The Coq proof assistant - INRIA]]
 
+** Projective, injective and flat modules
+:PROPERTIES:
+:TITLE:    Projective, injective and flat modules
+:HUGO_TAGS: math
+:HUGO_TOPICS: math
+:HUGO_FILE: post/projectivemodules.md
+:HUGO_DATE: [2017-02-18 Sat 15:10]
+:END:
+
+*** Definitions
+An R-module $D$ is:
+
+ 1. *Projective* if $Hom(D, -)$ is an exact functor.
+ 2. *Injective* if $Hom(-,D)$ is an exact functor.
+ 3. *Flat* if $D \otimes -$ is an exact functor.
+
+*** Characterization
+We know that $Hom(D,-)$ and $Hom(-,D)$ are left-exact and that
+$D\otimes -$ is right-exact; so for them to be exact, we only need:
+
+- A module $D$ is *projective* when every $f : B \longrightarrow C$ surjective induces
+  $(f\circ\_) :Hom(D,B) \longrightarrow Hom(D,C)$ surjective.
+  #+attr_html: :width 300px
+  https://raw.githubusercontent.com/mroman42/mroman42.github.io/images/projective.jpeg
+
+- A module $D$ is *injective* when $f : A \longrightarrow B$ surjective induces
+  $(\_\circ f) : Hom(B,D) \longrightarrow Hom(A,D)$ surjective.
+  #+attr_html: :width 300px
+  https://raw.githubusercontent.com/mroman42/mroman42.github.io/images/injective.jpeg
+   
+- A module $D$ is *flat* when $f : A \longrightarrow B$ injective induces 
+  $f' : D\otimes A \longrightarrow D \otimes B$ injective.
 ** Wikipedia contributions
 :PROPERTIES:
 :TITLE:    Wikipedia contributions
@@ -1945,7 +1935,7 @@ This index is automagically generated by Emacs.
   (defun print-post-at-point () 
     (princ (concat  
       " <li><a href=" 
-      (substring (concat (org-entry-get (point) "EXPORT_FILE_NAME")  "> ") 5) 
+      (concat (org-entry-get (point) "EXPORT_FILE_NAME")  "> ") 
       (org-entry-get (point) "TITLE") " </a> - <em>"
       (org-entry-get (point) "EXPORT_DATE") "</em><br></li>\n")))
 
@@ -1968,6 +1958,7 @@ This index is automagically generated by Emacs.
  <li><a href=induccionestructural.html> Inducción estructural </a> - <em><2015-03-14 Sat 15:02></em><br></li>
  <li><a href=monadas.html> Mónadas </a> - <em><2016-12-24 Mon 15:09></em><br></li>
  <li><a href=matematicasemacs.html> Matemáticas en emacs </a> - <em><2016-09-26 Mon 15:07></em><br></li>
+ <li><a href=ideasteoriatipos.html> Ideas de teoría de tipos </a> - <em><2016-01-08 Fri 15:13></em><br></li>
 </ul>
 #+END_EXPORT
 
