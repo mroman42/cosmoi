@@ -95,6 +95,8 @@ $a \colon C \to A$ as a term $\Gamma \vdash a : A$.
 \end{prooftree}
 #+end_src
 
+#+RESULTS: cartesianclosed-introrules
+[[file:cartesianclosed-introrules.png]]
 
 ** Category theory and lambda calculus                                                       :post:
 :PROPERTIES:
