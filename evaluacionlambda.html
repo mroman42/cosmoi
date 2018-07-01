@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-07-01 Sun 22:10 -->
+<!-- 2018-07-01 Sun 22:43 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Evaluación en cálculo lambda</title>
@@ -67,28 +67,6 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        displayAlign: "center",
-        displayIndent: "0em",
-
-        "HTML-CSS": { scale: 100,
-                        linebreaks: { automatic: "false" },
-                        webFont: "TeX"
-                       },
-        SVG: {scale: 100,
-              linebreaks: { automatic: "false" },
-              font: "TeX"},
-        NativeMML: {scale: 100},
-        TeX: { equationNumbers: {autoNumber: "AMS"},
-               MultLineWidth: "85%",
-               TagSide: "right",
-               TagIndent: ".8em"
-             }
-});
-</script>
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
@@ -102,9 +80,9 @@ teórica para implementar <a href="mikrokosmos.html">Mikrokosmos</a> Detallo est
 enunciados recopilando sus demostraciones en <a href="https://github.com/M42/lambda.notes">M42/lambda.notes</a>.
 </p>
 
-<div id="outline-container-org446ba97" class="outline-2">
-<h2 id="org446ba97">Forma normal</h2>
-<div class="outline-text-2" id="text-org446ba97">
+<div id="outline-container-org6121964" class="outline-2">
+<h2 id="org6121964">Forma normal</h2>
+<div class="outline-text-2" id="text-org6121964">
 <p>
 Una expresión está en <i>forma normal</i> si no se le pueden aplicar más
 &beta;-reducciones. La forma normal es <i>única</i> como consecuencia del
@@ -118,13 +96,22 @@ a su vez reducirse a un término común. Es decir,
 </p>
 
 <ul class="org-ul">
-<li>si \(A\) puede reducirse mediante &beta;-reducciones a otro término
-\(B\), lo que se nota por \(A \twoheadrightarrow_{\beta} B\),</li>
-<li>y \(A\) puede reducirse también mediante otras &beta;-reducciones,
-posiblemente distintas o en distinto orden, a \(C\), \(A \twoheadrightarrow_{\beta} C\),</li>
-<li>entonces existe un término \(D\) tal que ambos se pueden reducir
-mediante &beta;-reducciones a él; es decir, tal que \(B \twoheadrightarrow_{\beta} D\)
-y \(C \twoheadrightarrow_{\beta} D\).</li>
+<li>si <object type="image/svg+xml" data="ltximg/blog_21344bba24ff3112e617b68a5f25d40e03695000.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object> puede reducirse mediante &beta;-reducciones a otro término
+<object type="image/svg+xml" data="ltximg/blog_208bc4d2c8ecfad9ee73e9cb353086cccab14a2a.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>, lo que se nota por <object type="image/svg+xml" data="ltximg/blog_09960ce4843763b6215b58e76c1e414372918a12.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>,</li>
+<li>y <object type="image/svg+xml" data="ltximg/blog_21344bba24ff3112e617b68a5f25d40e03695000.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object> puede reducirse también mediante otras &beta;-reducciones,
+posiblemente distintas o en distinto orden, a <object type="image/svg+xml" data="ltximg/blog_a700483f9037560aee3e39a93cbf928e72168696.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>, <object type="image/svg+xml" data="ltximg/blog_0830bbf766c1046407072e5d8a115a6869d8ee04.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>,</li>
+<li>entonces existe un término <object type="image/svg+xml" data="ltximg/blog_a782cd8071ccc4d4b071832381f8454d094e0661.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object> tal que ambos se pueden reducir
+mediante &beta;-reducciones a él; es decir, tal que <object type="image/svg+xml" data="ltximg/blog_e8150262c9769a037e6cd412803dcfccd81cd7b8.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+y <object type="image/svg+xml" data="ltximg/blog_fba2c25168edfcae26d3e151a9be8899bec36fcf.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>.</li>
 </ul>
 
 <p>
@@ -136,29 +123,35 @@ implicar que son iguales.
 </div>
 </div>
 
-<div id="outline-container-orgbd30d1b" class="outline-2">
-<h2 id="orgbd30d1b">Divergencia</h2>
-<div class="outline-text-2" id="text-orgbd30d1b">
+<div id="outline-container-org969df94" class="outline-2">
+<h2 id="org969df94">Divergencia</h2>
+<div class="outline-text-2" id="text-org969df94">
 <p>
 Hemos visto que la forma normal es única, pero no que exista o que
 sepamos encontrarla de alguna forma. Puede ocurrir que un término no
 esté en forma normal y sin embargo las reducciones no lo lleven a
-ella. Por ejemplo, el término \(\Omega = (\lambda x.x\ x)(\lambda x.x\ x)\)
+ella. Por ejemplo, el término <object type="image/svg+xml" data="ltximg/blog_e3faef7602eba225b029ffd52acffecfc5a6eb84.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
 es invariante a &beta;-reducciones y <b>no llega a forma normal</b>. O por 
-ejemplo, el término \((\lambda x.x\ x\ x)(\lambda x.x\ x\ x)\) se hace cada vez más grande
+ejemplo, el término <object type="image/svg+xml" data="ltximg/blog_0f9c02dc49d79fd8bf556d79647d658297f47585.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object> se hace cada vez más grande
 al aplicarle reducciones, decimos que <i>diverge</i>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgbe9d1fa" class="outline-2">
-<h2 id="orgbe9d1fa">Evaluación a izquierda</h2>
-<div class="outline-text-2" id="text-orgbe9d1fa">
+<div id="outline-container-orge37708c" class="outline-2">
+<h2 id="orge37708c">Evaluación a izquierda</h2>
+<div class="outline-text-2" id="text-orge37708c">
 <p>
 Hay expresiones que llegarán a una forma normal o no dependiendo de
-cómo los evaluemos. Por ejemplo, el término \((\mathtt{const}\ \mathtt{id}\ \Omega)\) llega a
-la forma normal \(\mathtt{id}\) si evaluamos primero la aplicación de \(\mathtt{const}\),
-pero diverge si empezamos intentando evaluar \(\Omega\). 
+cómo los evaluemos. Por ejemplo, el término <object type="image/svg+xml" data="ltximg/blog_5793cadc62566903972f51a7212fd8e8c61696bd.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object> llega a
+la forma normal <object type="image/svg+xml" data="ltximg/blog_35316630b01ab01d420a468dcfb4f22852efaa94.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object> si evaluamos primero la aplicación de <object type="image/svg+xml" data="ltximg/blog_77e1ae4fea24a5dc0bc89834400b00e89a8c12a6.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>,
+pero diverge si empezamos intentando evaluar <object type="image/svg+xml" data="ltximg/blog_acd9144fbf246ca05ab75d04ec4eabf012f5aa6b.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>. 
 Sin embargo, existe una estrategia de reducción que siempre encuentra
 una forma normal si esta existe. Tenemos el siguiente teorema.
 </p>

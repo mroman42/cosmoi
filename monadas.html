@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-07-01 Sun 22:10 -->
+<!-- 2018-07-01 Sun 22:43 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Mónadas</title>
@@ -67,28 +67,6 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        displayAlign: "center",
-        displayIndent: "0em",
-
-        "HTML-CSS": { scale: 100,
-                        linebreaks: { automatic: "false" },
-                        webFont: "TeX"
-                       },
-        SVG: {scale: 100,
-              linebreaks: { automatic: "false" },
-              font: "TeX"},
-        NativeMML: {scale: 100},
-        TeX: { equationNumbers: {autoNumber: "AMS"},
-               MultLineWidth: "85%",
-               TagSide: "right",
-               TagIndent: ".8em"
-             }
-});
-</script>
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
@@ -104,9 +82,9 @@ problem?
 </p>
 </blockquote>
 
-<div id="outline-container-org87c6709" class="outline-2">
-<h2 id="org87c6709">Prerrequisitos</h2>
-<div class="outline-text-2" id="text-org87c6709">
+<div id="outline-container-orgcca5fce" class="outline-2">
+<h2 id="orgcca5fce">Prerrequisitos</h2>
+<div class="outline-text-2" id="text-orgcca5fce">
 <p>
 Este artículo requiere un conocimiento previo de Haskell, o al menos, de
 otro lenguaje de programación funcional. Puedes consultar nuestra
@@ -124,12 +102,12 @@ leer sobre ese tema, puedes consultar nuestros apuntes de
 </div>
 </div>
 
-<div id="outline-container-org51382cf" class="outline-2">
-<h2 id="org51382cf">Motivación para las mónadas</h2>
-<div class="outline-text-2" id="text-org51382cf">
+<div id="outline-container-org491893d" class="outline-2">
+<h2 id="org491893d">Motivación para las mónadas</h2>
+<div class="outline-text-2" id="text-org491893d">
 </div>
-<div id="outline-container-org100ac87" class="outline-3">
-<h3 id="mónadas-en-haskell"><a id="org100ac87"></a>Mónadas en Haskell</h3>
+<div id="outline-container-org71fa096" class="outline-3">
+<h3 id="mónadas-en-haskell"><a id="org71fa096"></a>Mónadas en Haskell</h3>
 <div class="outline-text-3" id="text-mónadas-en-haskell">
 <p>
 Imaginemos que necesitamos controlar cuando una función interna devuelve
@@ -159,17 +137,19 @@ funcional.
 </div>
 </div>
 
-<div id="outline-container-orgbf94fa7" class="outline-3">
-<h3 id="orgbf94fa7">Calculando raíces cuadradas</h3>
-<div class="outline-text-3" id="text-orgbf94fa7">
+<div id="outline-container-org2d21206" class="outline-3">
+<h3 id="org2d21206">Calculando raíces cuadradas</h3>
+<div class="outline-text-3" id="text-org2d21206">
 <p>
 Por ejemplo, supongamos que intentamos sacar raíces cuadradas en los
-reales usando el <a href="https://en.wikipedia.org/wiki/Integer_square_root#Algorithm">método de Newton</a>. Si intentamos calcular \(\sqrt{n}\), 
+reales usando el <a href="https://en.wikipedia.org/wiki/Integer_square_root#Algorithm">método de Newton</a>. Si intentamos calcular <object type="image/svg+xml" data="ltximg/blog_fa9af5c4090619dbbc4d07b2e478b002340410ac.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>, 
 podemos tomar a cada paso la aproximación:
 </p>
 
 <p>
-\[ x_{k+1} = \frac{1}{2}\left( x_k+\frac{n}{x_k} \right) \]
+<object type="image/svg+xml" data="ltximg/blog_ac672e194262bb4ced85fd5a1bf18e33d25ed241.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
 </p>
 
 <p>
@@ -177,7 +157,8 @@ Y parar cuando estemos suficientemente cerca (más cerca que un ε dado):
 </p>
 
 <p>
-\[ |x_{k+1} - x_k| < \varepsilon \]
+<object type="image/svg+xml" data="ltximg/blog_b8a6212a357f9b098607eb21bc1a9be502583b80.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
 </p>
 
 <p>
@@ -203,11 +184,13 @@ listas infinitas en Haskell y del método de Newton, basado en la función
 
 <p>
 Ahora imaginemos que usamos esta raíz cuadrada recién definida para
-solucionar una ecuación de segundo grado \(x^2 + bx + c = 0\):
+solucionar una ecuación de segundo grado <object type="image/svg+xml" data="ltximg/blog_8cc02204ccd4f9773bc6a3a7c399e485e01622a2.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>:
 </p>
 
 <p>
-\[ x = \frac{-b \pm \sqrt{b^2 - 4c}}{2} \]
+<object type="image/svg+xml" data="ltximg/blog_0bdb9676da780ae2c375541cac6c739760171f68.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
 </p>
 
 <p>
@@ -240,9 +223,9 @@ Las soluciones de 1.0x² + -5.0x + 6.0 son (3.0,2.0)
 </div>
 </div>
 
-<div id="outline-container-org4c245b8" class="outline-3">
-<h3 id="org4c245b8">Controlando los errores</h3>
-<div class="outline-text-3" id="text-org4c245b8">
+<div id="outline-container-org8aa5dd9" class="outline-3">
+<h3 id="org8aa5dd9">Controlando los errores</h3>
+<div class="outline-text-3" id="text-org8aa5dd9">
 <p>
 Pero ¿qué ocurre cuando intentamos calcular la raíz cuadrada de un
 número no positivo? Este método no la encuentra, por lo que debería
@@ -317,9 +300,9 @@ Just 5.732143
 </div>
 </div>
 
-<div id="outline-container-org632f9ee" class="outline-3">
-<h3 id="org632f9ee">La mónada Maybe</h3>
-<div class="outline-text-3" id="text-org632f9ee">
+<div id="outline-container-org930eeb9" class="outline-3">
+<h3 id="org930eeb9">La mónada Maybe</h3>
+<div class="outline-text-3" id="text-org930eeb9">
 <p>
 Esta idea para simplificar el tratamiento de errores, realizada
 correctamente, es lo que nos va a proporcionar la estructura de mónada.
@@ -342,7 +325,8 @@ componer varias <code>sqroot'</code>, que era algo que hasta ahora no podíamos
 hacer sin tratar cada posible caso de error. Y la función <code>return</code>, que
 en este caso es simplemente <code>Just</code>, nos permite considerar una constante
 como un posible error. Podemos calcular fácilmente así
-\[\sqrt{\sqrt{3}}\] teniendo en cuenta los casos de error:
+<object type="image/svg+xml" data="ltximg/blog_81a975df2aa33213b2a1f1c24b749b457dadfa63.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object> teniendo en cuenta los casos de error:
 </p>
 
 <div class="org-src-container">
@@ -355,9 +339,9 @@ como un posible error. Podemos calcular fácilmente así
 </div>
 </div>
 
-<div id="outline-container-orgf344771" class="outline-3">
-<h3 id="orgf344771">Notación do</h3>
-<div class="outline-text-3" id="text-orgf344771">
+<div id="outline-container-org7f8a687" class="outline-3">
+<h3 id="org7f8a687">Notación do</h3>
+<div class="outline-text-3" id="text-org7f8a687">
 <p>
 Las mónadas definen las funciones anteriores y muchas más que no vamos a
 tratar ahora mismo, pero como resultado, nos acaban ofreciendo la
@@ -390,13 +374,13 @@ puramente funcionales. Existen críticas al uso de esta notación. [1]
 </div>
 </div>
 
-<div id="outline-container-orgb1ef41c" class="outline-2">
-<h2 id="orgb1ef41c">Mónadas en programación funcional</h2>
-<div class="outline-text-2" id="text-orgb1ef41c">
+<div id="outline-container-orga1e5c05" class="outline-2">
+<h2 id="orga1e5c05">Mónadas en programación funcional</h2>
+<div class="outline-text-2" id="text-orga1e5c05">
 </div>
-<div id="outline-container-org0f16b69" class="outline-3">
-<h3 id="org0f16b69">Mónadas como clase de tipos</h3>
-<div class="outline-text-3" id="text-org0f16b69">
+<div id="outline-container-org20fa77f" class="outline-3">
+<h3 id="org20fa77f">Mónadas como clase de tipos</h3>
+<div class="outline-text-3" id="text-org20fa77f">
 <p>
 Las mónadas en Haskell están definidas como una clase de tipos teniendo:
 </p>
@@ -452,9 +436,9 @@ en:
 </div>
 </div>
 
-<div id="outline-container-orgede8fa0" class="outline-3">
-<h3 id="orgede8fa0">Mónada lista</h3>
-<div class="outline-text-3" id="text-orgede8fa0">
+<div id="outline-container-orgc87b25d" class="outline-3">
+<h3 id="orgc87b25d">Mónada lista</h3>
+<div class="outline-text-3" id="text-orgc87b25d">
 <p>
 En las listas, por ejemplo, tenemos como candidato para
 <code>join :: [[a]] -&gt; [a]</code> la concatenación de listas, <code>concat</code>. Nuestro
@@ -500,9 +484,9 @@ elementos:[2]
 </div>
 </div>
 
-<div id="outline-container-org1dac5a2" class="outline-3">
-<h3 id="org1dac5a2">Mónada IO</h3>
-<div class="outline-text-3" id="text-org1dac5a2">
+<div id="outline-container-org7f72932" class="outline-3">
+<h3 id="org7f72932">Mónada IO</h3>
+<div class="outline-text-3" id="text-org7f72932">
 <p>
 La mónada IO surge como una solución al problema de implementar efectos
 secundarios (como la lectura o escritura) en un lenguaje puro y de forma
@@ -528,9 +512,9 @@ Pueden leerse más detalles sobre mónada IO y su implementación en:
 </div>
 </div>
 
-<div id="outline-container-org7e7238f" class="outline-3">
-<h3 id="org7e7238f">Mónada estado</h3>
-<div class="outline-text-3" id="text-org7e7238f">
+<div id="outline-container-org3f23e2c" class="outline-3">
+<h3 id="org3f23e2c">Mónada estado</h3>
+<div class="outline-text-3" id="text-org3f23e2c">
 <p>
 En ocasiones necesitamos que nuestras funciones conserven un estado
 además de realizar sus operaciones. Para esos casos existe la mónada
@@ -555,7 +539,8 @@ Existen tutoriales sobre la mónada estado en:
 Un uso de la mónada estado puede ser el guardar la semilla de una
 generación pseudoaleatoria de números usando
 <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator">generadores lineales congruenciales</a>. En concreto, usaremos la fórmula iterativa
-\(x_{i+1} \equiv 16807x_i \text{ mod } 2147483647\), que se expone <a href="https://math.dartmouth.edu/archive/m20f11/public_html/RANDOMNESS_LCG.pdf">aquí</a>.
+<object type="image/svg+xml" data="ltximg/blog_d653ac3d447ea044fd57cf58afc8d812bfeda101.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>, que se expone <a href="https://math.dartmouth.edu/archive/m20f11/public_html/RANDOMNESS_LCG.pdf">aquí</a>.
 Con este generador podremos escribir dados de un número dado de caras y
 llamarlos varias veces. El estado interno pasará la semilla aleatoria de
 un dado al siguiente:
@@ -628,9 +613,9 @@ distribuciones de dados:
 </div>
 </div>
 
-<div id="outline-container-org0f4a6cc" class="outline-2">
-<h2 id="org0f4a6cc">Mónadas en teoría de categorías</h2>
-<div class="outline-text-2" id="text-org0f4a6cc">
+<div id="outline-container-orgfeebdd1" class="outline-2">
+<h2 id="orgfeebdd1">Mónadas en teoría de categorías</h2>
+<div class="outline-text-2" id="text-orgfeebdd1">
 <p>
 Para entender cómo funcionan las <a href="https://es.wikipedia.org/wiki/M%C3%B3nada_(teor%C3%ADa_de_categor%C3%ADas)">mónadas</a>
 en teoría de categorías tenemos que entender dos conceptos: los
@@ -640,33 +625,39 @@ construcción en teoría de categorías.
 </p>
 </div>
 
-<div id="outline-container-org316289c" class="outline-3">
-<h3 id="org316289c">Categorías monoidales</h3>
-<div class="outline-text-3" id="text-org316289c">
+<div id="outline-container-orge4899fd" class="outline-3">
+<h3 id="orge4899fd">Categorías monoidales</h3>
+<div class="outline-text-3" id="text-orge4899fd">
 <p>
 Simplificando, una categoría monoidal es aquella donde, dados dos
-objetos \(A,B\), tenemos un objeto <i>"producto tensor"</i> de ambos,
-\(A \otimes B\), donde además existe un objeto identidad \(I\)
+objetos <object type="image/svg+xml" data="ltximg/blog_d3ce63e502e828262f06002e5cf9ff78ab84427f.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>, tenemos un objeto <i>"producto tensor"</i> de ambos,
+<object type="image/svg+xml" data="ltximg/blog_85fd36ba1f8df50b27c349f6b1f7de2be5fefc6d.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>, donde además existe un objeto identidad <object type="image/svg+xml" data="ltximg/blog_ebee767db3c23e665b6b44ce5317da9916444cbc.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
 cumpliendo propiedades como:
 </p>
 
 <p>
-\[A \otimes B \cong B \otimes A\]
+<object type="image/svg+xml" data="ltximg/blog_304cf2bb7f21cebc0a266bfdb2b3606dc1758e07.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
 </p>
 
 <p>
-\[A \otimes (B \otimes C) \cong (A \otimes B) \otimes C\]
+<object type="image/svg+xml" data="ltximg/blog_8bd552341d6926159c7ef69b6b3057bbefbe7b33.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
 </p>
 
 <p>
-\[A \otimes I \cong A\]
+<object type="image/svg+xml" data="ltximg/blog_8527c20fc9825023e18ed8d7e52e267c05578fae.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgeadae17" class="outline-3">
-<h3 id="orgeadae17">Ejemplos de categorías monoidales</h3>
-<div class="outline-text-3" id="text-orgeadae17">
+<div id="outline-container-orgd1507cc" class="outline-3">
+<h3 id="orgd1507cc">Ejemplos de categorías monoidales</h3>
+<div class="outline-text-3" id="text-orgd1507cc">
 <p>
 Los <b>conjuntos</b> con el producto cartesiano y el conjunto de un elemento
 forman ya una categoría monoidal. Puede comprobarse sobre ellos que
@@ -674,15 +665,18 @@ existen los isomorfismos:
 </p>
 
 <p>
-\[A \times B \cong B \times A\]
+<object type="image/svg+xml" data="ltximg/blog_12384413baaa69eaa316ae95898e37db1f51a4f1.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
 </p>
 
 <p>
-\[A \times (B \times C) \cong (A \times B) \times C\]
+<object type="image/svg+xml" data="ltximg/blog_e4422936dad1e6e7685be7424c373baf09536fc9.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
 </p>
 
 <p>
-\[A \times \{\bullet\} \cong A\]
+<object type="image/svg+xml" data="ltximg/blog_2fe0d30b80d448b7f48cdfcd81875d2e6a59af52.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
 </p>
 
 <p>
@@ -691,15 +685,18 @@ esta vez con la <a href="https://es.wikipedia.org/wiki/Uni%C3%B3n_disjunta">uni�
 </p>
 
 <p>
-\[A \sqcup B \cong B \sqcup A\]
+<object type="image/svg+xml" data="ltximg/blog_63059d57fa67e7577d4ae914504e7d308a25e7f3.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
 </p>
 
 <p>
-\[A \sqcup (B \sqcup C) \cong (A \sqcup B) \sqcup C\]
+<object type="image/svg+xml" data="ltximg/blog_c25dcc3cc86231bbccea0cf54b769332fdfa1aa6.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
 </p>
 
 <p>
-\[A \sqcup \varnothing \cong A\]
+<object type="image/svg+xml" data="ltximg/blog_490dfe8b99345c356c6a4964e99978fa8447eb83.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
 </p>
 
 <p>
@@ -711,22 +708,28 @@ con el coproducto categórico y el objeto inicial como unidad.
 
 <p>
 Otro ejemplo distinto lo forman los <b>espacios vectoriales</b> sobre un
-cuerpo \(K\) con el producto tensor y el propio cuerpo sirviendo como
-unidad; o los <b>grupos abelianos</b> con el producto tensor y \(\mathbb{Z}\)
+cuerpo <object type="image/svg+xml" data="ltximg/blog_929278d5f43254f32a08bea7fc2c4d86aed178b5.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object> con el producto tensor y el propio cuerpo sirviendo como
+unidad; o los <b>grupos abelianos</b> con el producto tensor y <object type="image/svg+xml" data="ltximg/blog_8bf17acde46605c6e2e5abbaf06723ca1f0dcd24.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
 siendo la unidad.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgb0bf307" class="outline-3">
-<h3 id="orgb0bf307">Objetos monoide</h3>
-<div class="outline-text-3" id="text-orgb0bf307">
+<div id="outline-container-org792468d" class="outline-3">
+<h3 id="org792468d">Objetos monoide</h3>
+<div class="outline-text-3" id="text-org792468d">
 <p>
-Un objeto \(A\) de una categoría monoidal es objeto monoide cuando puedo
+Un objeto <object type="image/svg+xml" data="ltximg/blog_21344bba24ff3112e617b68a5f25d40e03695000.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object> de una categoría monoidal es objeto monoide cuando puedo
 definir un morfismo desde el objeto identidad hacia él y un morfismo
-desde el producto tensor \(A \otimes A\) hacia él. Es decir, hay un
-morfismo <i>unidad</i>, \(I \overset{u}\longrightarrow A\); y hay un morfismo <i>multiplicación</i>,
-\(A \otimes A \overset{\mu}\longrightarrow A\).
+desde el producto tensor <object type="image/svg+xml" data="ltximg/blog_74bc74c6af7d8d09d4adfe8000e4fda07f5868e3.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object> hacia él. Es decir, hay un
+morfismo <i>unidad</i>, <object type="image/svg+xml" data="ltximg/blog_96fad39495f5f04156c6c96eaede92002f010e2e.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>; y hay un morfismo <i>multiplicación</i>,
+<object type="image/svg+xml" data="ltximg/blog_c1409b392ad3a62b99ec620510a1d1074f4c0070.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>.
 </p>
 
 <p>
@@ -738,9 +741,9 @@ corriente.
 </div>
 </div>
 
-<div id="outline-container-org3aba3f6" class="outline-3">
-<h3 id="org3aba3f6">Categorías de endofuntores</h3>
-<div class="outline-text-3" id="text-org3aba3f6">
+<div id="outline-container-orgdfae783" class="outline-3">
+<h3 id="orgdfae783">Categorías de endofuntores</h3>
+<div class="outline-text-3" id="text-orgdfae783">
 <p>
 El ejemplo que nos interesa ahora, sin embargo, es el de los
 <b>endofuntores</b> de una categoría. Un <b>funtor</b>, de forma simplificada, es
@@ -763,28 +766,32 @@ funtores.
 
 <p>
 Esta es además una categoría monoidal. El producto tensor de esta
-categoría monoidal será la composición \(\circ\), y el objeto identidad
+categoría monoidal será la composición <object type="image/svg+xml" data="ltximg/blog_6f2d8009adf9b6fc7501b7917c52a3803767b142.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>, y el objeto identidad
 el endofuntor identidad, que actúa dejando fijo cada objeto y cada
 morfismo.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org847c2e8" class="outline-3">
-<h3 id="org847c2e8">Mónadas</h3>
-<div class="outline-text-3" id="text-org847c2e8">
+<div id="outline-container-org3c75a59" class="outline-3">
+<h3 id="org3c75a59">Mónadas</h3>
+<div class="outline-text-3" id="text-org3c75a59">
 <p>
 Pues bien, una mónada es un objeto monoide en la categoría de los
 endofuntores con la composición como producto tensor. Esto quiere decir
-que es un endofuntor \(F\) con transformaciones naturales:
+que es un endofuntor <object type="image/svg+xml" data="ltximg/blog_b08f381f2e7ed52a2385bf24d9d4d502929461e5.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object> con transformaciones naturales:
 </p>
 
 <p>
-\[F \circ F \Rightarrow F\]
+<object type="image/svg+xml" data="ltximg/blog_428fcd1b46165384507dc458c268f3c989a2f41b.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
 </p>
 
 <p>
-\[I \Rightarrow F\]
+<object type="image/svg+xml" data="ltximg/blog_bc9b33ffd7b474262da4d04555072685127766b0.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
 </p>
 
 <p>
@@ -793,18 +800,20 @@ que se aplica el funtor, lo que tenemos son familias de morfismos:
 </p>
 
 <p>
-\[F(F(X)) \overset{\mu_x}\longrightarrow F(X)\]
+<object type="image/svg+xml" data="ltximg/blog_397d9b6ea271d2bbee819a9c3989a6410864de4e.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
 </p>
 
 <p>
-\[X \overset{r_x}\longrightarrow F(X)\]
+<object type="image/svg+xml" data="ltximg/blog_857d1c4c5d44e331154bf1c7a801c34587bdef98.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
 </p>
 </div>
 </div>
 
-<div id="outline-container-org0d1f9dc" class="outline-3">
-<h3 id="org0d1f9dc">Una categoría para la programación funcional</h3>
-<div class="outline-text-3" id="text-org0d1f9dc">
+<div id="outline-container-org78f9553" class="outline-3">
+<h3 id="org78f9553">Una categoría para la programación funcional</h3>
+<div class="outline-text-3" id="text-org78f9553">
 <p>
 Algunos sistemas de tipos, con las funciones entre ellos <code>A -&gt; B</code> como
 morfismos, forman una categoría[3]. No es el caso de Haskell, en el que,
@@ -836,9 +845,9 @@ Haskell.
 </div>
 </div>
 
-<div id="outline-container-org47135a3" class="outline-3">
-<h3 id="org47135a3">Monoides en la categoría de los endofuntores</h3>
-<div class="outline-text-3" id="text-org47135a3">
+<div id="outline-container-org1e2a7ee" class="outline-3">
+<h3 id="org1e2a7ee">Monoides en la categoría de los endofuntores</h3>
+<div class="outline-text-3" id="text-org1e2a7ee">
 <p>
 Entonces, si los funtores <code>f :: * -&gt; *</code> son endofuntores en alguna
 categoría, tiene sentido cuestionarse cuáles de ellos son monoides.
@@ -880,9 +889,9 @@ puede verse <a href="http://blog.sigfpe.com/2008/11/from-monoids-to-monads.html"
 </div>
 </div>
 
-<div id="outline-container-org7dfb372" class="outline-2">
-<h2 id="org7dfb372">Y más</h2>
-<div class="outline-text-2" id="text-org7dfb372">
+<div id="outline-container-orgfdb7f7d" class="outline-2">
+<h2 id="orgfdb7f7d">Y más</h2>
+<div class="outline-text-2" id="text-orgfdb7f7d">
 <p>
 Además de las enunciadas en este post, existen más otros temas
 relevantes en relación a las mónadas, tanto en programación funcional
@@ -900,9 +909,9 @@ relacionadas con la teoría de categorías.</li>
 </div>
 </div>
 
-<div id="outline-container-org5fdd197" class="outline-2">
-<h2 id="org5fdd197">Referencias</h2>
-<div class="outline-text-2" id="text-org5fdd197">
+<div id="outline-container-org6fe4221" class="outline-2">
+<h2 id="org6fe4221">Referencias</h2>
+<div class="outline-text-2" id="text-org6fe4221">
 <p>
 [1] Peligros de la notación do.
     <a href="https://wiki.haskell.org/Do_notation_considered_harmful">Do notation considered harmful</a>

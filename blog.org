@@ -6,6 +6,7 @@
 #+Options: toc:nil date:t num:nil
 #+Options: html-style:nil
 #+Options: html-postamble:t
+#+Options: tex:dvisvgm
 
 * Header                                                                                    :ignore:
 #+HTML_HEAD: <link rel="stylesheet" href="default.css" />
@@ -53,34 +54,21 @@ diagonal functor $\Delta \colon \mathbb{C} \to \mathbb{C} \times \mathbb{C}$, an
 each $A \in \mathbb{C}$. These three adjoints correspond to the existence of a /terminal/ object,
 binary /products/ and /exponentials/.
 
-#+name: cartesianclosed-adjoints
-#+header: :file cartesianclosed-adjoints.png
-#+header: :imagemagick :iminoptions -density 300 :imoutoptions -geometry 600
-#+header: :results output raw graphics :exports results :buffer no
-#+begin_src latex
- \begin{prooftree}
- \AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] \ast \rar{}\& \ast \end{tikzcd}}
- \UIC{\begin{tikzcd}[fragile,ampersand replacement=\&] C \rar{!}\& 1 \end{tikzcd}}
- \AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] C,C \rar{f,g}\& A,B \end{tikzcd}}
- \UIC{\begin{tikzcd}[fragile,ampersand replacement=\&] C \rar{\langle f,g \rangle}\& A \times B \end{tikzcd}}
- \AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] C \times A \rar{f}\& B \end{tikzcd}}
- \UIC{\begin{tikzcd}[fragile,ampersand replacement=\&] C \rar{\widetilde{f}}\& B^A \end{tikzcd}}
- \noLine
- \TIC{}
- \end{prooftree}
-#+end_src
-
-#+RESULTS: cartesianclosed-adjoints
-[[file:cartesianclosed-adjoints.png]]
+\begin{prooftree}
+\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] \ast \rar{}\& \ast \end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&] C \rar{!}\& 1 \end{tikzcd}}
+\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] C,C \rar{f,g}\& A,B \end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&] C \rar{\langle f,g \rangle}\& A \times B \end{tikzcd}}
+\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] C \times A \rar{f}\& B \end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&] C \rar{\widetilde{f}}\& B^A \end{tikzcd}}
+\noLine
+\TIC{}
+\end{prooftree}
 
 These three rules match the three introduction rules for the simply
 typed lambda calculus. We interpret $C$ as a context $\Gamma$ and each morphism
 $a \colon C \to A$ as a term $\Gamma \vdash a : A$.
 
-#+name: cartesianclosed-introrules
-#+header: :file cartesianclosed-introrules.png
-#+header: :results output raw graphics :exports results :buffer no
-#+begin_src latex
 \begin{prooftree}
 \AXC{}
 \UIC{$\Gamma \vdash \ast : 1$}
@@ -92,10 +80,6 @@ $a \colon C \to A$ as a term $\Gamma \vdash a : A$.
 \noLine
 \TIC{}
 \end{prooftree}
-#+end_src
-
-#+RESULTS: cartesianclosed-introrules
-[[file:cartesianclosed-introrules.png]]
 
 Now, we should discuss if \beta-equivalence corresponds to the equality between morphisms.
 
@@ -916,6 +900,7 @@ definimos un orden parcial:
    $b$ se construye con $a$ si el constructor de $b$ toma a $a$
    como argumento. La clausura transitiva de esta relación forma un
    orden parcial:
+
    \[ a \leq b \Rightarrow a \mbox{ se usa en la construcción de } b \]
 
 Y ahora tenemos una inducción sobre los constructores de los tipos, que
@@ -925,9 +910,10 @@ describimos ahora.
    $P :: A \rightarrow Bool$ una propiedad. Siendo
    $a_1, a_2 \dots a_i :: A$ argumentos del constructor, si se cumple
    la condición de inducción para cada constructor $C_i$:
+
    \[P(a_1) \wedge P(a_2) \wedge \dots P(a_i) \Rightarrow P(C_i(a_1,a_2,\dots,b_0,b_1\dots))\]
 
-Entonces $a::A \Rightarrow P(a)$
+Entonces $a::A \Rightarrow P(a)$.
 
 *** Ejemplo 1: Naturales
 Nuestro primer ejemplo va a ser obtener la inducción sobre los naturales

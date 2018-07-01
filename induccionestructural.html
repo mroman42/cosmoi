@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-07-01 Sun 22:10 -->
+<!-- 2018-07-01 Sun 22:43 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Inducción estructural</title>
@@ -67,28 +67,6 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        displayAlign: "center",
-        displayIndent: "0em",
-
-        "HTML-CSS": { scale: 100,
-                        linebreaks: { automatic: "false" },
-                        webFont: "TeX"
-                       },
-        SVG: {scale: 100,
-              linebreaks: { automatic: "false" },
-              font: "TeX"},
-        NativeMML: {scale: 100},
-        TeX: { equationNumbers: {autoNumber: "AMS"},
-               MultLineWidth: "85%",
-               TagSide: "right",
-               TagIndent: ".8em"
-             }
-});
-</script>
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
@@ -105,9 +83,9 @@ estructura de los tipos de datos para simplificar todas esas
 demostraciones.
 </p>
 
-<div id="outline-container-org1a0407e" class="outline-2">
-<h2 id="org1a0407e">Conjuntos bien fundados</h2>
-<div class="outline-text-2" id="text-org1a0407e">
+<div id="outline-container-orgd59206f" class="outline-2">
+<h2 id="orgd59206f">Conjuntos bien fundados</h2>
+<div class="outline-text-2" id="text-orgd59206f">
 <p>
 Vamos a definir las relaciones bien fundadas, que nos permitirán definir
 una inducción generalizada. [1]
@@ -127,24 +105,28 @@ bien fundada.
 
 <ul class="org-ul">
 <li><p>
-<b>Inducción noetheriana:</b> sea \(X\) un conjunto bien fundado con
-\(A \subset X\). Si se cumple:
+<b>Inducción noetheriana:</b> sea <object type="image/svg+xml" data="ltximg/blog_761de548dde0d89020fb4c792a6df9a881a85d7a.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object> un conjunto bien fundado con
+<object type="image/svg+xml" data="ltximg/blog_7066af34981bb79258ee9d23357337686cf9626e.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>. Si se cumple:
 </p>
 
 <p>
-\[ (y < x \Rightarrow y \in A) \Rightarrow x \in A \]
+<object type="image/svg+xml" data="ltximg/blog_f3490835764bc3b4fb4e18a7b1e6add50d55e247.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
 </p>
 
 <p>
-Entonces \(A = X\).
+Entonces <object type="image/svg+xml" data="ltximg/blog_532d3068163e91379ff5341ac35eca33b244c267.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>.
 </p></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orge564fc3" class="outline-2">
-<h2 id="orge564fc3">Inducción sobre tipos</h2>
-<div class="outline-text-2" id="text-orge564fc3">
+<div id="outline-container-org81708d2" class="outline-2">
+<h2 id="org81708d2">Inducción sobre tipos</h2>
+<div class="outline-text-2" id="text-org81708d2">
 <p>
 Ahora vamos a aplicar esto a teoría de tipos. Sea un tipo con sus
 constructores. Para todas las instancias constructibles del tipo (es decir,
@@ -154,11 +136,22 @@ definimos un orden parcial:
 </p>
 
 <ul class="org-ul">
-<li><b>Orden constructivo:</b> para dos instancias del tipo: \(a,b::A\),
-\(b\) se construye con \(a\) si el constructor de \(b\) toma a \(a\)
+<li><p>
+<b>Orden constructivo:</b> para dos instancias del tipo: <object type="image/svg+xml" data="ltximg/blog_1394ee24d321920734a209760dc9ab3faf4eaa60.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>,
+<object type="image/svg+xml" data="ltximg/blog_6afe29aa4ae0c30a4bfad26a4017113359e66e00.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object> se construye con <object type="image/svg+xml" data="ltximg/blog_f3803f993124b9e0bef1dde2d4c1213a70fe84ef.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object> si el constructor de <object type="image/svg+xml" data="ltximg/blog_6afe29aa4ae0c30a4bfad26a4017113359e66e00.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object> toma a <object type="image/svg+xml" data="ltximg/blog_f3803f993124b9e0bef1dde2d4c1213a70fe84ef.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
 como argumento. La clausura transitiva de esta relación forma un
 orden parcial:
-\[ a \leq b \Rightarrow a \mbox{ se usa en la construcción de } b \]</li>
+</p>
+
+<p>
+<object type="image/svg+xml" data="ltximg/blog_10887673ac686578544808f5db04be7548ce3c91.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+</p></li>
 </ul>
 
 <p>
@@ -167,22 +160,33 @@ describimos ahora.
 </p>
 
 <ul class="org-ul">
-<li><b>Inducción sobre tipos</b>: sea un tipo \(A\) con constructores y sea
-\(P :: A \rightarrow Bool\) una propiedad. Siendo
-\(a_1, a_2 \dots a_i :: A\) argumentos del constructor, si se cumple
-la condición de inducción para cada constructor \(C_i\):
-\[P(a_1) \wedge P(a_2) \wedge \dots P(a_i) \Rightarrow P(C_i(a_1,a_2,\dots,b_0,b_1\dots))\]</li>
+<li><p>
+<b>Inducción sobre tipos</b>: sea un tipo <object type="image/svg+xml" data="ltximg/blog_21344bba24ff3112e617b68a5f25d40e03695000.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object> con constructores y sea
+<object type="image/svg+xml" data="ltximg/blog_0dd7a7f3b3bb0165de5fd523dd1ffed2f276be96.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object> una propiedad. Siendo
+<object type="image/svg+xml" data="ltximg/blog_16c53592c5eb5b95087d752cac7edc33009575e3.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object> argumentos del constructor, si se cumple
+la condición de inducción para cada constructor <object type="image/svg+xml" data="ltximg/blog_dd2efb610d8c060c241c819ebf15a33c04f12778.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>:
+</p>
+
+<p>
+<object type="image/svg+xml" data="ltximg/blog_81dece34e4a3c6c84029263d32dda2c9de4cf3ff.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+</p></li>
 </ul>
 
 <p>
-Entonces \(a::A \Rightarrow P(a)\)
+Entonces <object type="image/svg+xml" data="ltximg/blog_777a5e7561c9b5085b5e68b4e0f40fcc7bdcdc5b.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org2033c77" class="outline-2">
-<h2 id="org2033c77">Ejemplo 1: Naturales</h2>
-<div class="outline-text-2" id="text-org2033c77">
+<div id="outline-container-org0330051" class="outline-2">
+<h2 id="org0330051">Ejemplo 1: Naturales</h2>
+<div class="outline-text-2" id="text-org0330051">
 <p>
 Nuestro primer ejemplo va a ser obtener la inducción sobre los naturales
 como caso particular. Damos una definición de los naturales en lenguaje
@@ -213,9 +217,9 @@ lo hemos demostrado para todos los naturales.
 </div>
 </div>
 
-<div id="outline-container-org9c46cde" class="outline-2">
-<h2 id="org9c46cde">Ejemplo 2: Árboles binarios</h2>
-<div class="outline-text-2" id="text-org9c46cde">
+<div id="outline-container-org78548a4" class="outline-2">
+<h2 id="org78548a4">Ejemplo 2: Árboles binarios</h2>
+<div class="outline-text-2" id="text-org78548a4">
 <p>
 Ahora vamos a intentar el ejemplo que motivó esta búsqueda. Definimos un
 árbol binario como un árbol vacío o como un nodo del que surgen dos

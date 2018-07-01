@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-07-01 Sun 22:10 -->
+<!-- 2018-07-01 Sun 22:43 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ideas de teoría de tipos</title>
@@ -67,28 +67,6 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        displayAlign: "center",
-        displayIndent: "0em",
-
-        "HTML-CSS": { scale: 100,
-                        linebreaks: { automatic: "false" },
-                        webFont: "TeX"
-                       },
-        SVG: {scale: 100,
-              linebreaks: { automatic: "false" },
-              font: "TeX"},
-        NativeMML: {scale: 100},
-        TeX: { equationNumbers: {autoNumber: "AMS"},
-               MultLineWidth: "85%",
-               TagSide: "right",
-               TagIndent: ".8em"
-             }
-});
-</script>
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
@@ -108,9 +86,9 @@ lógicos. Vamos a tratar esas aplicaciones referenciando en cada caso
 artículos donde se exponen en profundidad.
 </p>
 
-<div id="outline-container-org6552b0c" class="outline-2">
-<h2 id="org6552b0c">Inducción estructural</h2>
-<div class="outline-text-2" id="text-org6552b0c">
+<div id="outline-container-orge0b8364" class="outline-2">
+<h2 id="orge0b8364">Inducción estructural</h2>
+<div class="outline-text-2" id="text-orge0b8364">
 <p>
 La inducción estructural es una generalización de la inducción usual
 sobre los naturales que la extiende a otras estructuras representables
@@ -148,9 +126,9 @@ en este repositorio sobre <a href="https://github.com/mroman42/recorridosArboles
 </div>
 </div>
 
-<div id="outline-container-org7a52cc7" class="outline-2">
-<h2 id="org7a52cc7">Álgebra de tipos</h2>
-<div class="outline-text-2" id="text-org7a52cc7">
+<div id="outline-container-org666c55e" class="outline-2">
+<h2 id="org666c55e">Álgebra de tipos</h2>
+<div class="outline-text-2" id="text-org666c55e">
 <p>
 En un post anterior del blog de <b>LibreIM</b> hemos tratado el álgebra de
 tipos. Ese post se basó sobre otros tres publicados en el blog de Chris
@@ -201,9 +179,9 @@ type is its type of one-hole contexts - Conor McBride</a>.</li>
 </div>
 </div>
 
-<div id="outline-container-org1154238" class="outline-2">
-<h2 id="org1154238">Lógica con tipos</h2>
-<div class="outline-text-2" id="text-org1154238">
+<div id="outline-container-org938b018" class="outline-2">
+<h2 id="org938b018">Lógica con tipos</h2>
+<div class="outline-text-2" id="text-org938b018">
 <p>
 La aplicación de los tipos a la lógica y las demostraciones parte del
 isomorfismo de Curry-Howard, que relaciona los sistemas de tipos con
@@ -216,11 +194,13 @@ excluso</i> y la <i>doble negación</i> como axiomas:
 </p>
 
 <p>
-\[ A \vee \neg A\]
+<object type="image/svg+xml" data="ltximg/blog_f2025ea18406ebcca920a658ffdc1f3bbf3c19de.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
 </p>
 
 <p>
-\[ \neg \neg A \implies A \]
+<object type="image/svg+xml" data="ltximg/blog_95886016aa8ac4fc1814d17f3da27c1da4761b1c.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
 </p>
 
 <p>
@@ -247,9 +227,9 @@ Girard-Reynolds Isomorphism - Philip Wadler</a></li>
 </div>
 </div>
 
-<div id="outline-container-org79efc93" class="outline-2">
-<h2 id="org79efc93">Parametricidad</h2>
-<div class="outline-text-2" id="text-org79efc93">
+<div id="outline-container-org401fae3" class="outline-2">
+<h2 id="org401fae3">Parametricidad</h2>
+<div class="outline-text-2" id="text-org401fae3">
 <p>
 La parametricidad limita las instancias posibles de los tipos de la
 forma <code>forall a. p(a)</code>, y nos permite obtener teoremas sobre todas las
@@ -267,9 +247,9 @@ for free! - Philip Wadler</a></li>
 </div>
 </div>
 
-<div id="outline-container-org71d442f" class="outline-2">
-<h2 id="org71d442f">Teoría de tipos</h2>
-<div class="outline-text-2" id="text-org71d442f">
+<div id="outline-container-orgd7ed3f3" class="outline-2">
+<h2 id="orgd7ed3f3">Teoría de tipos</h2>
+<div class="outline-text-2" id="text-orgd7ed3f3">
 <p>
 Los tipos pueden usarse para fundamentar las matemáticas, del mismo modo
 que lo hacen los conjuntos (en sistemas axiomáticos como <a href="https://en.wikipedia.org/wiki/Zermelo%E2%80%93Fraenkel_set_theory">ZFC</a>)
@@ -296,7 +276,8 @@ Construcciones (Calculus of constructions, COC) desarrollado por
 <b>Thierry Coquand</b> y <b>Gérard Huet</b>, que finalmente dará lugar al
 asistente de demostraciones <b>COQ</b>, desarrollado por el INRIA. El
 <a href="https://en.wikipedia.org/wiki/Lambda_cube"><b>&lambda;-cubo</b></a> es un diagrama para exponer cómo este sistema amplía al
-<i>cálculo lambda tipado</i> y al <i>Sistema \(F_\omega\)</i> que usa Haskell.
+<i>cálculo lambda tipado</i> y al <i>Sistema <object type="image/svg+xml" data="ltximg/blog_705fd08238c1816cc3947da188fc17e4a360d89d.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object></i> que usa Haskell.
 </p>
 
 <ul class="org-ul">
