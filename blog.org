@@ -22,12 +22,80 @@
 #+HTML_HEAD:     </div>
 #+HTML_HEAD: </div>
 
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage{tikz-cd}
+#+LATEX_HEADER: \usepackage{amsmath}
+#+LATEX_HEADER: \usepackage{bussproofs}
+#+LATEX_HEADER: \EnableBpAbbreviations{}
+
 * Posts
+
+** TODO SVG latex output
+#+name: foo
+#+header: :file foo.svg :results output raw graphics
+#+begin_src latex
+bar
+#+end_src
+
 ** TODO A nice definition of "model of computation"
 # Bauer's thesis
 # Partial functions must appear in the definition anyway
 # SKI happen to correspond to logical tautologies
-** TODO Cartesian closed categories
+** Cartesian closed categories
+:PROPERTIES:
+:TITLE: Cartesian closed categories
+:EXPORT_FILE_NAME: cartesianclosedcategories.html
+:EXPORT_DATE: <2018-07-01 Sun 11:30>
+:END:
+
+A *cartesian closed category* $\mathbb{C}$ can be defined as a category having a right adjoint
+of the unique functor to the terminal category $\ast \colon \mathbb{C} \to 1$, a right adjoint of the
+diagonal functor $\Delta \colon \mathbb{C} \to \mathbb{C} \times \mathbb{C}$, and a right adjoint of $- \times A \colon \mathbb{C} \to \mathbb{C}$ for
+each $A \in \mathbb{C}$. These three adjoints correspond to the existence of a /terminal/ object,
+binary /products/ and /exponentials/.
+
+#+name: cartesianclosed-adjoints
+#+header: :file cartesianclosed-adjoints.png
+#+header: :imagemagick :iminoptions -density 300 :imoutoptions -geometry 600
+#+header: :results output raw graphics :exports results :buffer no
+#+begin_src latex
+ \begin{prooftree}
+ \AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] \ast \rar{}\& \ast \end{tikzcd}}
+ \UIC{\begin{tikzcd}[fragile,ampersand replacement=\&] C \rar{!}\& 1 \end{tikzcd}}
+ \AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] C,C \rar{f,g}\& A,B \end{tikzcd}}
+ \UIC{\begin{tikzcd}[fragile,ampersand replacement=\&] C \rar{\langle f,g \rangle}\& A \times B \end{tikzcd}}
+ \AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] C \times A \rar{f}\& B \end{tikzcd}}
+ \UIC{\begin{tikzcd}[fragile,ampersand replacement=\&] C \rar{\widetilde{f}}\& B^A \end{tikzcd}}
+ \noLine
+ \TIC{}
+ \end{prooftree}
+#+end_src
+
+#+RESULTS: cartesianclosed-adjoints
+[[file:cartesianclosed-adjoints.png]]
+
+These three rules match the three introduction rules for the simply
+typed lambda calculus. We interpret $C$ as a context $\Gamma$ and each morphism
+$a \colon C \to A$ as a term $\Gamma \vdash a : A$.
+
+#+name: cartesianclosed-introrules
+#+header: :file cartesianclosed-introrules.png
+#+header: :results output raw graphics :exports results :buffer no
+#+begin_src latex
+\begin{prooftree}
+\AXC{}
+\UIC{$\Gamma \vdash \ast : 1$}
+\AXC{$\Gamma \vdash a : A$}
+\AXC{$\Gamma \vdash b : B$}
+\BIC{$\Gamma \vdash \pair{a,b} : A \times B$}
+\AXC{$\Gamma, a : A \vdash b : B$}
+\UIC{$\Gamma \vdash (\lambda a.b) : A \to B$}
+\noLine
+\TIC{}
+\end{prooftree}
+#+end_src
+
+
 ** Category theory and lambda calculus                                                       :post:
 :PROPERTIES:
 :TITLE: Category theory and lambda calculus

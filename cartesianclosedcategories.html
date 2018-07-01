@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-07-01 Sun 12:42 -->
+<!-- 2018-07-01 Sun 15:25 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Category theory and lambda calculus</title>
+<title>Cartesian closed categories</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Mario Román" />
 <link rel="stylesheet" href="default.css" />
@@ -67,31 +67,60 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
-<h1 class="title">Category theory and lambda calculus</h1>
+<h1 class="title">Cartesian closed categories</h1>
 <p>
-<b>Category theory and lambda calculus</b> is the title of my bachelor's
-thesis.  It discusses the implementation of <a href="./mikrokosmos.html">Mikrokosmos</a> and
-categorical semantics for the simply typed lambda calculus in its
-first half. It later extends these notions to dependently typed
-programming languages (Agda is used as an example) and locally closed
-cartesian categories.  It must be seen as a summary of my study during
-these months and as a literature review: there is no claim of
-originality more than the way the ideas are presented.
+A <b>cartesian closed category</b> \(\mathbb{C}\) can be defined as a category having a right adjoint
+of the unique functor to the terminal category \(\ast \colon \mathbb{C} \to 1\), a right adjoint of the
+diagonal functor \(\Delta \colon \mathbb{C} \to \mathbb{C} \times \mathbb{C}\), and a right adjoint of \(- \times A \colon \mathbb{C} \to \mathbb{C}\) for
+each \(A \in \mathbb{C}\). These three adjoints correspond to the existence of a <i>terminal</i> object,
+binary <i>products</i> and <i>exponentials</i>.
 </p>
 
-<p>
-The complete thesis was written with Emacs in <a href="https://orgmode.org/">org-mode format</a> (highly
-recommended) and the source code is publicly available <a href="https://github.com/mroman42/ctlc">at GitHub</a>. The
-final <a href="https://mroman42.github.io/ctlc/ctlc.pdf">PDF</a> is also available, but if you are not that interested on the
-details, you may prefer to simply read the <a href="https://mroman42.github.io/ctlc-slides/slides.pdf">commented slides</a>, which are
-a reasonable summary of the ideas presented there.
+
+<div class="figure">
+<p><img src="cartesianclosed-adjoints.png" alt="cartesianclosed-adjoints.png" />
 </p>
 </div>
+
+<p>
+These three rules match the three introduction rules for the simply
+typed lambda calculus. We interpret \(C\) as a context \(\Gamma\) and each morphism
+\(a \colon C \to A\) as a term \(\Gamma \vdash a : A\).
+</p>
+
+
+<div class="figure">
+<p><img src="cartesianclosed-introrules.png" alt="cartesianclosed-introrules.png" />
+</p>
+</div>
+</div>
 <div id="postamble" class="status">
-<div id="footer"><p class="postamble">Last edited 2018-07-01 Sun 11:00. Written by <a href="https://mroman42.github.com">@mroman42</a>.</p></div>
+<div id="footer"><p class="postamble">Last edited 2018-07-01 Sun 11:30. Written by <a href="https://mroman42.github.com">@mroman42</a>.</p></div>
 </div>
 </body>
 </html>
