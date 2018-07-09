@@ -30,13 +30,6 @@
 #+LATEX_HEADER: \EnableBpAbbreviations{}
 
 * Posts
-** TODO SVG latex output
-#+name: foo
-#+header: :file foo.svg :results output raw graphics
-#+begin_src latex
-bar
-#+end_src
-
 ** TODO A nice definition of "model of computation"
 # Bauer's thesis
 # Partial functions must appear in the definition anyway

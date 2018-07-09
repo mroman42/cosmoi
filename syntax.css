@@ -58,8 +58,11 @@ td.sourceCode {
  font-weight:bold
 }
 .org-src-container  {
-  font-size: 10pt;
+    font-size: 10pt;
 }
 .example {
   font-size: 10pt;
+}
+.org-svg {
+    transform: scale(0.95);
 }
