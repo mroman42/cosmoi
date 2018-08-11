@@ -20,6 +20,7 @@
 #+HTML_HEAD:     <div id="navigation">
 #+HTML_HEAD:         <a href="index.html">Index</a>
 #+HTML_HEAD:         <a href="about.html">About</a>
+#+HTML_HEAD:         <a href="feed.xml">RSS</a>
 #+HTML_HEAD:     </div>
 #+HTML_HEAD: </div>
 
@@ -2132,7 +2133,7 @@ Categories, logic and types.
     "<title>" (org-entry-get (point) "TITLE") "</title>\n"
     "<link>" (concat "https://mroman42.github.io/cosmoi/" (org-entry-get (point) "EXPORT_FILE_NAME")) "</link>\n"
     "<guid>" (concat "https://mroman42.github.io/cosmoi/" (org-entry-get (point) "EXPORT_FILE_NAME")) "</guid>\n"
-    "<pubDate>" (format-time-string "%a, %d %b %Y %H:%M:%S GMT" (date-to-time (org-entry-get (point) "EXPORT_DATE")))  "</pubDate>"
+    "<pubDate>" (format-time-string "%a, %d %b %Y %H:%M:%S GMT" (date-to-time (org-entry-get (point) "EXPORT_DATE")))  "</pubDate>\n"
     "<description>" "</description>\n"
     "</item>\n"
     ) nil "feed.xml" 'append))
