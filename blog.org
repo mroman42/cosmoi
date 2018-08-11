@@ -2105,24 +2105,46 @@ have the tag :post: and must have the properties
 
 
 ** RSS
-<?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0">
+#+BEGIN_SRC emacs-lisp
+;; Writes the header
+
+(setq xmlstring "<?xml version=\"1.0\" encoding=\"utf-8\"?>
+<rss version=\"2.0\" 	
+  xmlns:atom=\"http://www.w3.org/2005/Atom\">
 <channel>
+
 <title>Cosmoi</title>
-<atom:link href="https://mroman42.github.io/cosmoi/rss" rel="self" type="application/rss+xml" />
-<link>[[https://mroman42.github.io/cosmoi/][https://mroman42.github.io/cosmoi/]]</link>
-<description>Mathematics and computer science. 
-Categories, logic and types.</description>
+<atom:link href=\"https://mroman42.github.io/cosmoi/rss\" rel=\"self\" type=\"application/rss+xml\" />
+<link>https://mroman42.github.io/cosmoi/</link>
+<description>
+Mathematics and computer science. 
+Categories, logic and types.
+</description>
+")
+(write-region xmlstring nil "feed.xml")
 
-<item>
-<title>Cartesian closed categories</title>
-<link>https://mroman42.github.io/cosmoi/cartesianclosedcategories.html</link>
-<guid>https://mroman42.github.io/cosmoi/cartesianclosedcategories.html</guid>
-<pubDate>Sun, 1 Jul 2018 11:30:00 GMT</pubDate>
-</item>
+;; Entries
 
-</channel>
-</rss>
+(defun cosmoi/rssentry ()
+  (interactive)
+  (write-region (concat 
+    "<item>\n"
+    "<title>" (org-entry-get (point) "TITLE") "</title>\n"
+    "<link>" (concat "https://mroman42.github.io/cosmoi/" (org-entry-get (point) "EXPORT_FILE_NAME")) "</link>\n"
+    "<description>" "</description>\n"
+    "</item>\n"
+    ) nil "feed.xml" 'append))
+
+(org-map-entries 
+    (lambda () (if (org-entry-get (point) "EXPORT_FILE_NAME") 
+      (funcall 'cosmoi/rssentry)))
+    "+post" nil)
+
+;; Closing tags
+(write-region "\n</channel>\n</rss>" nil "feed.xml" 'append)
+#+END_SRC
+
+#+RESULTS:
 
 * Local variables                                                                         :noexport:
 # Local Variables:

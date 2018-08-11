@@ -1,27 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"
-     xmlns:content="http://purl.org/rss/1.0/modules/content/"
-     xmlns:wfw="http://wellformedweb.org/CommentAPI/"
-     xmlns:dc="http://purl.org/dc/elements/1.1/"
-     xmlns:atom="http://www.w3.org/2005/Atom"
-     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
-     xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
-     >
-
+<rss version="2.0" 	
+  xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
-  <title>Cosmoi</title>
-  <atom:link href="https://mroman42.github.io/cosmoi/rss" rel="self" type="application/rss+xml" />
-  <link>https://mroman42.github.io/cosmoi/</link>
-  <description>Mathematics and computer science. 
-  Categories, logic and types.</description>
-  
-  <item>
-    <title>Cartesian closed categories</title>
-    <link>https://mroman42.github.io/cosmoi/cartesianclosedcategories.html</link>
-    <guid>https://mroman42.github.io/cosmoi/cartesianclosedcategories.html</guid>
-    <description> Description of the article </description>
-    <pubDate>Sun, 1 Jul 2018 11:30:00 GMT</pubDate>
-  </item>
+
+<title>Cosmoi</title>
+<atom:link href="https://mroman42.github.io/cosmoi/rss" rel="self" type="application/rss+xml" />
+<link>https://mroman42.github.io/cosmoi/</link>
+<description>
+Mathematics and computer science. 
+Categories, logic and types.
+</description>
+<item>
+<title>Cartesian closed categories</title>
+<link>https://mroman42.github.io/cosmoi/cartesianclosedcategories.html</link>
+<description></description>
+</item>
+<item>
+<title>Category theory and lambda calculus</title>
+<link>https://mroman42.github.io/cosmoi/categorytheoryandlambdacalculus.html</link>
+<description></description>
+</item>
+<item>
+<title>Evaluación en cálculo lambda</title>
+<link>https://mroman42.github.io/cosmoi/evaluacionlambda.html</link>
+<description></description>
+</item>
+<item>
+<title>Mikrokosmos</title>
+<link>https://mroman42.github.io/cosmoi/mikrokosmos.html</link>
+<description></description>
+</item>
+<item>
+<title>Aprendiendo Emacs</title>
+<link>https://mroman42.github.io/cosmoi/aprendiendoemacs.html</link>
+<description></description>
+</item>
+<item>
+<title>Capturando links en org-mode</title>
+<link>https://mroman42.github.io/cosmoi/capturandolinksenorgmode.html</link>
+<description></description>
+</item>
+<item>
+<title>Distribuciones discretas con mónadas</title>
+<link>https://mroman42.github.io/cosmoi/distribucionesmonadas.html</link>
+<description></description>
+</item>
+<item>
+<title>Inducción estructural</title>
+<link>https://mroman42.github.io/cosmoi/induccionestructural.html</link>
+<description></description>
+</item>
+<item>
+<title>Mónadas</title>
+<link>https://mroman42.github.io/cosmoi/monadas.html</link>
+<description></description>
+</item>
+<item>
+<title>Matemáticas en emacs</title>
+<link>https://mroman42.github.io/cosmoi/matematicasemacs.html</link>
+<description></description>
+</item>
+<item>
+<title>Ideas de teoría de tipos</title>
+<link>https://mroman42.github.io/cosmoi/ideasteoriatipos.html</link>
+<description></description>
+</item>
 
 </channel>
 </rss>
