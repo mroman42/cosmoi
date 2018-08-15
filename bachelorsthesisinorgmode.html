@@ -6,7 +6,7 @@
 <!-- 2018-08-15 Wed 23:39 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Coinduction</title>
+<title>Writing a bachelor's thesis in org-mode</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Mario Román" />
 <link rel="stylesheet" href="default.css" />
@@ -71,55 +71,34 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">Coinduction</h1>
+<h1 class="title">Writing a bachelor's thesis in org-mode</h1>
 <p>
-The following article by Jacobs and Rutten is a really nice
-introduction to the notion of coinduction.  It assumes almost no prior
-knowledge of categories and details algebras, initiality, coalgebras,
-finality, induction and bisimulation.
+My <a href="https://github.com/mroman42/ctlc/">bachelor's thesis</a> has been completely written in org-mode
+format. At first, I supposed that org-mode would not be powerful
+enough for a really long document with templates and lots of latex
+customizations, but I stand corrected. You can insert arbitrary latex
+code when needed and there is nothing preventing you to create a complex
+header for your org-mode document.
 </p>
 
-<ul class="org-ul">
-<li><a href="http://www.cs.ru.nl/~bart/PAPERS/JR.pdf">A tutorial on (Co)algebras and (Co)induction - Bart Jacobs, Jan Rutten</a></li>
-</ul>
-
 <p>
-Conatural numbers can be implemented in Agda using <a href="https://agda.readthedocs.io/en/v2.5.4.1/language/coinduction.html#coinduction">coinductive records</a>
-as in the following example.  If you are interested in understanding
-coinduction, it might be a good idea to experiment in Agda; I learnt a
-lot writing basic coinductive definitions.
+After the experience, I would recommend using org-mode. You can manage
+your tasks, your references and your text in a single file; and the
+org-mode format is much more pleasant to read and write than the usual
+tex format. The only problem I had was compilation: Emacs is really
+slow and freezes while compiling. My solution was to use a second
+Emacs instance which compiles on the background while I continue to
+use the first one; the relevant line on the makefile looks as follows
+(thanks to <a href="https://github.com/ncordon">@ncordon</a> for the idea!).
 </p>
 
 <div class="org-src-container">
-<pre class="src src-agda">data Maybe (A : Set) : Set where
-  Nothing : Maybe A
-  Just : A → Maybe A
-
-record coNat : Set where
-  coinductive
-  field
-    pred : Maybe coNat
-open coNat public    
-
-coZero : coNat
-pred coZero = Nothing
-
-coInf : coNat
-pred coInf = Just coInf
-
-succ : coNat → coNat
-pred (succ n) = Just n
-
-infixl 20 _+_
-_+_ : coNat → coNat → coNat
-pred (a + b) with pred a
-pred (a + b) | Nothing = pred b
-pred (a + b) | Just a' = Just (a' + b)
+<pre class="src src-bash">emacs ctlc.org --batch -u <span style="color: #CC9393;">`id -un`</span> --eval <span style="color: #95e454;">'(load user-init-file)'</span> -f org-latex-export-to-pdf
 </pre>
 </div>
 </div>
 <div id="postamble" class="status">
-<div id="footer"><p class="postamble">Last edited 2018-08-15 Wed 23:08. Written by <a href="https://mroman42.github.com">@mroman42</a>.</p></div>
+<div id="footer"><p class="postamble">Last edited 2018-08-15 Wed 23:37. Written by <a href="https://mroman42.github.com">@mroman42</a>.</p></div>
 </div>
 </body>
 </html>
