@@ -6,7 +6,7 @@
 <!-- 2018-08-15 Wed 23:10 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Index</title>
+<title>Coinduction</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Mario Román" />
 <link rel="stylesheet" href="default.css" />
@@ -71,24 +71,55 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">Index</h1>
-<ul>
- <li><a href=coinduction.html> Coinduction</a><em>, 15 August 2018</em><br></li>
- <li><a href=cartesianclosedcategories.html> Cartesian closed categories</a><em>, 01 July 2018</em><br></li>
- <li><a href=categorytheoryandlambdacalculus.html> Category theory and lambda calculus</a><em>, 01 July 2018</em><br></li>
- <li><a href=evaluacionlambda.html> Evaluación en cálculo lambda</a><em>, 25 May 2018</em><br></li>
- <li><a href=mikrokosmos.html> Mikrokosmos</a><em>, 25 May 2018</em><br></li>
- <li><a href=aprendiendoemacs.html> Aprendiendo Emacs</a><em>, 25 May 2018</em><br></li>
- <li><a href=capturandolinksenorgmode.html> Capturando links en org-mode</a><em>, 23 March 2017</em><br></li>
- <li><a href=distribucionesmonadas.html> Distribuciones discretas con mónadas</a><em>, 25 May 2018</em><br></li>
- <li><a href=induccionestructural.html> Inducción estructural</a><em>, 14 March 2015</em><br></li>
- <li><a href=monadas.html> Mónadas</a><em>, 24 December 2016</em><br></li>
- <li><a href=matematicasemacs.html> Matemáticas en emacs</a><em>, 26 September 2016</em><br></li>
- <li><a href=ideasteoriatipos.html> Ideas de teoría de tipos</a><em>, 08 January 2016</em><br></li>
+<h1 class="title">Coinduction</h1>
+<p>
+The following article by Jacobs and Rutten is a really nice
+introduction to the notion of coinduction.  It assumes almost no prior
+knowledge of categories and details algebras, initiality, coalgebras,
+finality, induction and bisimulation.
+</p>
+
+<ul class="org-ul">
+<li><a href="http://www.cs.ru.nl/~bart/PAPERS/JR.pdf">A tutorial on (Co)algebras and (Co)induction - Bart Jacobs, Jan Rutten</a></li>
 </ul>
+
+<p>
+Conatural numbers can be implemented in Agda using <a href="https://agda.readthedocs.io/en/v2.5.4.1/language/coinduction.html#coinduction">coinductive records</a>
+as in the following example.  If you are interested in understanding
+coinduction, it might be a good idea to experiment in Agda; I learnt a
+lot writing basic coinductive definitions.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-agda">data Maybe (A : Set) : Set where
+  Nothing : Maybe A
+  Just : A → Maybe A
+
+record coNat : Set where
+  coinductive
+  field
+    pred : Maybe coNat
+open coNat public    
+
+coZero : coNat
+pred coZero = Nothing
+
+coInf : coNat
+pred coInf = Just coInf
+
+succ : coNat → coNat
+pred (succ n) = Just n
+
+infixl 20 _+_
+_+_ : coNat → coNat → coNat
+pred (a + b) with pred a
+pred (a + b) | Nothing = pred b
+pred (a + b) | Just a' = Just (a' + b)
+</pre>
+</div>
 </div>
 <div id="postamble" class="status">
-<div id="footer"><p class="postamble">Last edited 2018-05-25 Fri 18:12. Written by <a href="https://mroman42.github.com">@mroman42</a>.</p></div>
+<div id="footer"><p class="postamble">Last edited 2018-08-15 Wed 23:08. Written by <a href="https://mroman42.github.com">@mroman42</a>.</p></div>
 </div>
 </body>
 </html>
