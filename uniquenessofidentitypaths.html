@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-08-25 Sat 21:57 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Uniqueness of identity paths</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Mario Román" />
+<link rel="stylesheet" href="default.css" />
+<link rel="stylesheet" href="mathjax_fonts.css" />
+<link rel="stylesheet" href="syntax.css" />
+<div id="header">
+<div id="logo">
+<a hrwef="index.html">Cosmoi</a>
+</div>
+<div id="navigation">
+<a href="index.html">Index</a>
+<a href="about.html">About</a>
+<a href="feed.xml">RSS</a>
+</div>
+</div>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Uniqueness of identity paths</h1>
+<blockquote>
+<p>
+<i>Attribution: this is only a summary, the original ideas exposed here
+can be found on the reference articles.</i>
+</p>
+</blockquote>
+
+<p>
+Equality in Martin-Löf type theory is a beautiful concept but it is
+notoriously tricky to understand.  This is the second time I feel like
+I get it; and it probably won't be the last one.  I have been reading
+the groupoid interpretation article, and at least the first sections
+are recommended lecture to anyone interested in the topic; it is
+really well-written and does not require any previous
+knowledge. <sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>
+</p>
+
+<p>
+Let's talk about <b>uniqueness of identity paths</b>. This is the principle
+that says that any two proofs of the same equality must be equal
+themselves. That is, for any type <object type="image/svg+xml" data="ltximg/blog_8c5c7b238da7a1cfc3df49d7bd6409b6bd865040.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>, the following type is inhabited
+</p>
+
+<p>
+<object type="image/svg+xml" data="ltximg/blog_9aadc4b697d9c7ae57341a099dc5f23d9ae03bf9.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+</p>
+
+<p>
+Idris and Agda allow the user to prove this proposition in general via
+pattern matching.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-agda">-- In Agda.
+uip : {A : Set} → {x y : A} → (p q : x ≡ y) → p ≡ q
+uip refl refl = refl
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-idris"><span style="color: #99968b;">-- In Idris</span>
+<span style="color: #f6f3e8; background-color: #242424;">uip</span> <span style="color: #cae682;">:</span> <span style="color: #DCDCCC;">(</span><span style="color: #f6f3e8; background-color: #242424;">t</span> <span style="color: #cae682;">:</span> <span style="color: #f6f3e8; background-color: #242424;">Type</span><span style="color: #DCDCCC;">)</span> 
+    <span style="color: #cae682;">-&gt;</span> <span style="color: #DCDCCC;">(</span><span style="color: #f6f3e8; background-color: #242424;">x</span> <span style="color: #cae682;">:</span> <span style="color: #f6f3e8; background-color: #242424;">t</span><span style="color: #DCDCCC;">)</span> <span style="color: #cae682;">-&gt;</span> <span style="color: #DCDCCC;">(</span><span style="color: #f6f3e8; background-color: #242424;">y</span> <span style="color: #cae682;">:</span> <span style="color: #f6f3e8; background-color: #242424;">t</span><span style="color: #DCDCCC;">)</span> 
+    <span style="color: #cae682;">-&gt;</span> <span style="color: #DCDCCC;">(</span><span style="color: #f6f3e8; background-color: #242424;">p</span> <span style="color: #cae682;">:</span> <span style="color: #f6f3e8; background-color: #242424;">x</span> <span style="color: #cae682;">=</span> <span style="color: #f6f3e8; background-color: #242424;">y</span><span style="color: #DCDCCC;">)</span> <span style="color: #cae682;">-&gt;</span> <span style="color: #DCDCCC;">(</span><span style="color: #f6f3e8; background-color: #242424;">q</span> <span style="color: #cae682;">:</span> <span style="color: #f6f3e8; background-color: #242424;">x</span> <span style="color: #cae682;">=</span> <span style="color: #f6f3e8; background-color: #242424;">y</span><span style="color: #DCDCCC;">)</span> 
+    <span style="color: #cae682;">-&gt;</span> <span style="color: #f6f3e8; background-color: #242424;">p</span> <span style="color: #cae682;">=</span> <span style="color: #f6f3e8; background-color: #242424;">q</span>
+<span style="color: #f6f3e8; background-color: #242424;">uip</span> <span style="color: #f6f3e8; background-color: #242424;">t</span> <span style="color: #f6f3e8; background-color: #242424;">x</span> <span style="color: #f6f3e8; background-color: #242424;">x</span> <span style="color: #f6f3e8; background-color: #242424;">Refl</span> <span style="color: #f6f3e8; background-color: #242424;">Refl</span> <span style="color: #cae682;">=</span> <span style="color: #f6f3e8; background-color: #242424;">Refl</span>
+</pre>
+</div>
+
+<p>
+However, UIP is not valid in general in Martin-Löf type theory.
+Hofmann and Streicher's groupoid interpretation provides a model where
+the UIP fails. In particular, this proves that pattern matching, in full
+generality, is not conservative over Martin-Löf type theory. <sup><a id="fnr.1.100" class="footref" href="#fn.1">1</a></sup>
+In Agda, we can disable this behaviour with the flag <code>--without-K</code>, this
+is necessary if we want to do Homotopy Type Theory, for example.
+</p>
+
+<p>
+In general, the rule we <i>can</i> use in Intensional Type Theory is the
+J-eliminator. The usual properties of equality, like the Leibniz'
+indiscernibility of identicals, are consequences of it. It is subtle
+to notice how it works as it should while not implying UIP. For
+any type <object type="image/svg+xml" data="ltximg/blog_38b42081de6fa2aab75a1a3260a8f37ba019acec.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object> depending two variables <object type="image/svg+xml" data="ltximg/blog_0bf6f7deb114a60758cd48651406e4c7d83c460a.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object> and <object type="image/svg+xml" data="ltximg/blog_0e0f3e3118b0c5aa1e523ab609ab8cf745431eb3.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object> we have the
+following rule.
+</p>
+
+
+<div class="figure">
+<p><object type="image/svg+xml" data="ltximg/blog_019e3499c79a32f04ff4041cbf7508329a0d2307.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object></p>
+</div>
+
+<p>
+There is also a nice justification of the rule from category theory
+and an adjoint characterization of equality due to Lawvere. More on
+this can be read on the Michael's Shulman article on homotopy type
+theory. <sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>
+</p>
+
+<div id="outline-container-orgc810591" class="outline-2">
+<h2 id="orgc810591">References</h2>
+<div class="outline-text-2" id="text-orgc810591">
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+: <b>The groupoid interpretation of type theory</b>, Martin
+Hofmann and Thomas Stricher, 1996.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+: <b>Homotopy type theory: the logic of space</b>, Michael
+Shulman, 2017.
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<div id="footer"><p class="postamble">Last edited 2018-08-25 Sat 21:57. Written by <a href="https://mroman42.github.com">@mroman42</a>.</p></div>
+</div>
+</body>
+</html>

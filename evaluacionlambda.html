@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-08-15 Wed 23:39 -->
+<!-- 2018-08-25 Sat 21:57 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Evaluación en cálculo lambda</title>
@@ -81,9 +81,9 @@ teórica para implementar <a href="mikrokosmos.html">Mikrokosmos</a> Detallo est
 enunciados recopilando sus demostraciones en <a href="https://github.com/M42/lambda.notes">M42/lambda.notes</a>.
 </p>
 
-<div id="outline-container-org14a1a92" class="outline-2">
-<h2 id="org14a1a92">Forma normal</h2>
-<div class="outline-text-2" id="text-org14a1a92">
+<div id="outline-container-orgcf78e03" class="outline-2">
+<h2 id="orgcf78e03">Forma normal</h2>
+<div class="outline-text-2" id="text-orgcf78e03">
 <p>
 Una expresión está en <i>forma normal</i> si no se le pueden aplicar más
 &beta;-reducciones. La forma normal es <i>única</i> como consecuencia del
@@ -97,21 +97,21 @@ a su vez reducirse a un término común. Es decir,
 </p>
 
 <ul class="org-ul">
-<li>si <object type="image/svg+xml" data="ltximg/blog_085c87a180827ca9d155c82e8136f5c97cbc45ee.svg" class="org-svg">
+<li>si <object type="image/svg+xml" data="ltximg/blog_8c5c7b238da7a1cfc3df49d7bd6409b6bd865040.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object> puede reducirse mediante &beta;-reducciones a otro término
-<object type="image/svg+xml" data="ltximg/blog_d5c572af5dd408e4bd6545b37bef72d972f0c610.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object>, lo que se nota por <object type="image/svg+xml" data="ltximg/blog_34d522cdc35439209a19ce5f4432d0e110d67dd0.svg" class="org-svg">
+<object type="image/svg+xml" data="ltximg/blog_ed462e54296ae5e9331ddf43b08272888a4b8276.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>, lo que se nota por <object type="image/svg+xml" data="ltximg/blog_5ada681bb09e71c70e78ae79d2e0992078ed5684.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>,</li>
-<li>y <object type="image/svg+xml" data="ltximg/blog_085c87a180827ca9d155c82e8136f5c97cbc45ee.svg" class="org-svg">
+<li>y <object type="image/svg+xml" data="ltximg/blog_8c5c7b238da7a1cfc3df49d7bd6409b6bd865040.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object> puede reducirse también mediante otras &beta;-reducciones,
-posiblemente distintas o en distinto orden, a <object type="image/svg+xml" data="ltximg/blog_05eb9f699a9c23c932dfaab5018457d36359893b.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object>, <object type="image/svg+xml" data="ltximg/blog_da627668c65a647a6d91db273f951773c06b007c.svg" class="org-svg">
+posiblemente distintas o en distinto orden, a <object type="image/svg+xml" data="ltximg/blog_38b42081de6fa2aab75a1a3260a8f37ba019acec.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>, <object type="image/svg+xml" data="ltximg/blog_29c63fd2682bf879ef78631ea484c81836c9fa06.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>,</li>
-<li>entonces existe un término <object type="image/svg+xml" data="ltximg/blog_dc732c5feae2f400f9321133015f405f1f4df474.svg" class="org-svg">
+<li>entonces existe un término <object type="image/svg+xml" data="ltximg/blog_8e6634756b7f26f1f7db0c9edc6ca3bfdbf74a68.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object> tal que ambos se pueden reducir
-mediante &beta;-reducciones a él; es decir, tal que <object type="image/svg+xml" data="ltximg/blog_75b21f9813e698e6f4beb80f8cf42dc8dafad672.svg" class="org-svg">
+mediante &beta;-reducciones a él; es decir, tal que <object type="image/svg+xml" data="ltximg/blog_7c8758499504215a8234d4f78f2bed49bc2de2f2.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>
-y <object type="image/svg+xml" data="ltximg/blog_319bc55272c7754e1dd47a55c0bfdfac20fb8223.svg" class="org-svg">
+y <object type="image/svg+xml" data="ltximg/blog_63c3a4775a93addd31eddf1edbf399fa4248fa7b.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>.</li>
 </ul>
 
@@ -124,34 +124,34 @@ implicar que son iguales.
 </div>
 </div>
 
-<div id="outline-container-orgad8abef" class="outline-2">
-<h2 id="orgad8abef">Divergencia</h2>
-<div class="outline-text-2" id="text-orgad8abef">
+<div id="outline-container-org95ee8d1" class="outline-2">
+<h2 id="org95ee8d1">Divergencia</h2>
+<div class="outline-text-2" id="text-org95ee8d1">
 <p>
 Hemos visto que la forma normal es única, pero no que exista o que
 sepamos encontrarla de alguna forma. Puede ocurrir que un término no
 esté en forma normal y sin embargo las reducciones no lo lleven a
-ella. Por ejemplo, el término <object type="image/svg+xml" data="ltximg/blog_4a439cff8af2fa5de645f24b12603995170f92c3.svg" class="org-svg">
+ella. Por ejemplo, el término <object type="image/svg+xml" data="ltximg/blog_6283b3afc3d9248951888b99b8484c3c6b932fbc.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>
 es invariante a &beta;-reducciones y <b>no llega a forma normal</b>. O por 
-ejemplo, el término <object type="image/svg+xml" data="ltximg/blog_b8a321455c456d6c8d8a3acdc681b8f65758bd00.svg" class="org-svg">
+ejemplo, el término <object type="image/svg+xml" data="ltximg/blog_5fcc402515e42a9aa557f996d7b0708b6cf49869.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object> se hace cada vez más grande
 al aplicarle reducciones, decimos que <i>diverge</i>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgc02b164" class="outline-2">
-<h2 id="orgc02b164">Evaluación a izquierda</h2>
-<div class="outline-text-2" id="text-orgc02b164">
+<div id="outline-container-org3aeaaa8" class="outline-2">
+<h2 id="org3aeaaa8">Evaluación a izquierda</h2>
+<div class="outline-text-2" id="text-org3aeaaa8">
 <p>
 Hay expresiones que llegarán a una forma normal o no dependiendo de
-cómo los evaluemos. Por ejemplo, el término <object type="image/svg+xml" data="ltximg/blog_a29663b25bf64c1de9370f38ee64afa0fd6674ec.svg" class="org-svg">
+cómo los evaluemos. Por ejemplo, el término <object type="image/svg+xml" data="ltximg/blog_eb42f20766d969772be7545a3a1a7510c81e6bb9.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object> llega a
-la forma normal <object type="image/svg+xml" data="ltximg/blog_a6c8121e219b4de1c60199cfc1d886b6e47ab5b9.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object> si evaluamos primero la aplicación de <object type="image/svg+xml" data="ltximg/blog_1f822a9c1089eb1d03105c73df9122b15caf7c05.svg" class="org-svg">
+la forma normal <object type="image/svg+xml" data="ltximg/blog_eda8581071d7d9ce09d53d0dc6db278c32c181cb.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object> si evaluamos primero la aplicación de <object type="image/svg+xml" data="ltximg/blog_52b8586dcd8c314557dccbd95ff9d871892cd17b.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>,
-pero diverge si empezamos intentando evaluar <object type="image/svg+xml" data="ltximg/blog_a1ca96f89bc70c9bf93b2f1020b7c42ef9ed7e74.svg" class="org-svg">
+pero diverge si empezamos intentando evaluar <object type="image/svg+xml" data="ltximg/blog_2b69dfe32e243f2f55f0794fd887cffc82fc33dd.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>. 
 Sin embargo, existe una estrategia de reducción que siempre encuentra
 una forma normal si esta existe. Tenemos el siguiente teorema.
