@@ -96,36 +96,6 @@ arithmetic statements.
 
  * http://math.andrej.com/2007/04/08/on-a-proof-of-cantors-theorem/
  * http://tac.mta.ca/tac/reprints/articles/15/tr15abs.html
-** TODO A quote by Ampère
-
-/Les langues commencent par être una musique, et finissent par être une
-algêbre./
-
-https://fr.wikisource.org/wiki/Essai_sur_l%E2%80%99histoire_de_la_langue_bretonne
-** TODO LibreIM, casi cinco años después
-Tengo un correo de diciembre de 2013 en el que David Charte consiguió
-meter un foro de Moot en una página de Github. En julio de 2014 entre
-Nacho Cordón, David Charte y yo perfilamos la idea de reunirnos en la
-facultad; y el 27 de septiembre de 2014 a las 10:00 en el A13 de
-Ciencias empezamos el primer seminario, sobre teoría de categorías y
-Haskell, con Pablo Baeyens en la segunda parte.
-
-Llevamos 48 seminarios, y la asistencia ha ido creciendo poco a poco.
-Me hace cierta ilusión que, aun con algún problema que otro, haya
-funcionado.  Mientras sirvan para seguir poniendo ideas en común y
-siga habiendo gente dispuesta a ir y a prepararlos, son una
-herramienta muy útil para tener en un grado.  Y me han servido para
-conocer un montón de gente con ganas de explorar y compartir las
-matemáticas y la informática.  Eso vale y motiva mucho.  Lo que más
-agradezco de estos años es la compañía, el doble grado hubiera sido
-muy árido de otra forma.
-
-No sé muy bien cómo hemos llegado a este equilibrio en el que el
-comportamiento por defecto es compartir, pero creo que se ha arraigado
-bien en el doble grado y merece mucho la pena cuidarlo.  Yo intentaré
-seguir contribuyendo dentro de mis posibilidades y estaría muy
-orgulloso de todo esto si colectivamente conseguimos mantenerlo en un
-futuro.
 
 ** TODO A nice definition of "model of computation"
 # Bauer's thesis
@@ -133,6 +103,111 @@ futuro.
 # SKI happen to correspond to logical tautologies
 
 ** TODO The type-theoretic axiom of choice
+** TODO Bach sonata
+** TODO A natural example of natural transformations
+Double dual of a vector space.
+** TODO Categorical programming with CAP
+** Picado's Interview with Lawvere                                                           :post:
+:PROPERTIES:
+:TITLE: Picado's Interview with Lawvere
+:EXPORT_FILE_NAME: picadolawvereinterview.html
+:EXPORT_DATE: <2018-09-03 Mon 21:55>
+:END:
+
+[[http://www.mat.uc.pt/~picado/][Jorge Picado]] (who is also coauthor of a great book on [[https://www.maa.org/press/maa-reviews/frames-and-locales-topology-without-points][locales]]) has
+many nice 'popularisation of mathematics' articles on his webpage. I
+have enjoyed a lot his interview with William Lawvere.
+
+ * http://www.mat.uc.pt/~picado/lawvere/interview.pdf
+
+Specially interesting is the criticism to the extra-mathematical publicity
+around Gödel's theorem.
+
+#+BEGIN_QUOTE
+In Diagonal arguments and Cartesian closed categories we demystified
+the incompleteness theorem of Gödel and the truth-definition theory of
+Tarski by showing that both are consequences of some very simple
+algebra in the Cartesian-closed setting. It was always hard for many
+to comprehend how Cantor’s mathematical theorem could be re-christened
+as a “paradox” by Russell and how Gödel’s theorem could be so often
+declared to be the most significant result of the 20th century.  There
+was always the suspicion among scientists that such extra-mathematical
+publicity movements concealed an agenda for re-establishing belief as
+a substitute for science. Now, one hundred years after Gödel’s birth,
+the organized attempts to harness his great mathematical work to such
+an agenda have become explicit.
+#+END_QUOTE
+
+** A quote by Ampère                                                                         :post:
+:PROPERTIES:
+:TITLE: A quote by Ampère
+:EXPORT_FILE_NAME: quoteampere.html
+:EXPORT_DATE: <2018-09-03 Mon 21:55>
+:END:
+
+/[Les langues] commencent par être una musique, et finissent par être une algèbre./ 
+  -- [[https://fr.wikisource.org/wiki/Essai_sur_l%25E2%2580%2599histoire_de_la_langue_bretonne][M. Ampère]].
+
+I am having a bit of trouble locating the exact source of this
+sentence and I am also not sure in which sense should be interpreted;
+but I imagined somehow that the idea of languages as algebras would
+be more modern than this.
+
+** LibreIM, casi cinco años después                                                          :post:
+:PROPERTIES:
+:TITLE: LibreIM, casi cinco años después
+:EXPORT_FILE_NAME: libreimquintoaniversario.html
+:EXPORT_DATE: <2018-09-03 Mon 21:54>
+:END:
+
+Tengo un correo de diciembre de 2013 en el que David Charte consiguió
+meter un foro de Moot en una página de Github. En julio de 2014 entre
+Nacho Cordón, David Charte y yo perfilamos la idea de reunirnos en la
+facultad; tuvimos mucha ayuda del departamento de álgebra; y el 27 de
+septiembre de 2014 a las 10:00 en el A13 de Ciencias empezamos el
+primer seminario, sobre teoría de categorías y Haskell, con Pablo
+Baeyens en la segunda parte.
+
+Llevamos 48 seminarios, y la asistencia ha ido creciendo poco a poco.
+Me hace cierta ilusión que, aun con algún problema que otro, haya
+funcionado.  Mientras sirvan para seguir poniendo ideas en común y
+siga habiendo gente dispuesta a ir y a prepararlos, son una
+herramienta muy útil para tener en un grado.  Han servido para
+conocer un montón de gente con ganas de explorar y compartir las
+matemáticas y la informática.  Y la comunidad motiva mucho; el doble
+grado hubiera sido muy árido de otra forma.
+
+No sé muy bien cómo hemos llegado a este equilibrio en el que el
+comportamiento por defecto es compartir, pero creo que se ha arraigado
+bien en el doble grado y merece mucho la pena cuidarlo.  Estaría muy
+orgulloso de todo esto si colectivamente conseguimos mantenerlo en un
+futuro.
+
+** Org-drill and spaced repetition                                                           :post:
+:PROPERTIES:
+:TITLE: Org-drill and spaced repetition
+:EXPORT_FILE_NAME: orgdrillspacedrepetition.html
+:EXPORT_DATE: <2018-09-03 Mon 21:53>
+:END:
+
+When it comes to [[https://www.gwern.net/Spaced-repetition][spaced]] [[https://codual.github.io/2016/07/07/repeticion-espaciada/][repetition]] software, [[https://ankiweb.net/about][Anki]] is probably the most
+popular option. It is free software, provides syncronization with an
+online server, has both desktop and Android applications, and it is
+capable of rendering arbitrary Latex and multimedia. I would recommend
+Anki to anyone starting with spaced repetition.
+
+However, I do not myself use Anki; I have been using [[https://orgmode.org/worg/org-contrib/org-drill.html][org-drill]] for a
+few months. The primary reason being Emacs. I really like having all
+the cards in plain text and editing them from the text
+editor. Org-mode has latex and multimedia support, and most of my math
+notes are already there. Its big drawback is that it currently cannot
+be used directly from the mobile phone ([[https://termux.com/][Termux]] is an option, but it
+won't render Latex); a spaced repetition Android app supporting the
+org-drill format would be great.
+
+If you are not yet committed to Anki and you are already confortable
+with Emacs, it could be a good idea to try both before settling on one.
+
 ** Uniqueness of identity paths                                                              :post:
 :PROPERTIES:
 :TITLE: Uniqueness of identity paths
@@ -208,11 +283,10 @@ and an adjoint characterization of equality due to Lawvere. More on
 this can be read on the Michael's Shulman article on homotopy type
 theory. [fn:logicofspace]
 
-*** References
-[fn:groupoid]: *The groupoid interpretation of type theory*, Martin
+[fn:groupoid] *The groupoid interpretation of type theory*, Martin
 Hofmann and Thomas Stricher, 1996.
 
-[fn:logicofspace]: *Homotopy type theory: the logic of space*, Michael
+[fn:logicofspace] *Homotopy type theory: the logic of space*, Michael
 Shulman, 2017.
 
 ** Writing a bachelor's thesis in org-mode                                                   :post:
@@ -2300,6 +2374,10 @@ unless otherwise specified.
 #+RESULTS:
 #+BEGIN_EXPORT html
 <ul>
+ <li><a href=picadolawvereinterview.html> Picado's Interview with Lawvere</a><em>, 03 September 2018</em><br></li>
+ <li><a href=quoteampere.html> A quote by Ampère</a><em>, 03 September 2018</em><br></li>
+ <li><a href=libreimquintoaniversario.html> LibreIM, casi cinco años después</a><em>, 03 September 2018</em><br></li>
+ <li><a href=orgdrillspacedrepetition.html> Org-drill and spaced repetition</a><em>, 03 September 2018</em><br></li>
  <li><a href=uniquenessofidentitypaths.html> Uniqueness of identity paths</a><em>, 25 August 2018</em><br></li>
  <li><a href=bachelorsthesisinorgmode.html> Writing a bachelor's thesis in org-mode</a><em>, 15 August 2018</em><br></li>
  <li><a href=bloggingwithasingleorgfile.html> Blogging with a single org-file</a><em>, 15 August 2018</em><br></li>
