@@ -301,6 +301,128 @@ arithmetic statements.
 Double dual of a vector space.
 ** TODO Categorical programming with CAP
 
+** Hom is continuous and then all right adjoints are                                         :post:
+:PROPERTIES:
+:TITLE: Hom is continuous
+:EXPORT_FILE_NAME: homcontinuous.pdf
+:EXPORT_DATE: <2018-12-23 Sun 16:20>
+:END:
+
+/This is an exercise on Samson Abramsky's notes/
+/on the course Categories, Proofs and Processes./ cite:abramsky10 \\
+
+#+begin_statement
+Let $A$ be an object in the category ${\cal C}$. Show that the covariant $\mathrm{hom}$ functor
+${\cal C}(A,-)$, as defined in Lecture III, preserves all limits.
+#+end_statement
+#+begin_proof
+Let ${\cal I}$ be a small category, $F \colon {\cal I} \to {\cal C}$ a functor and let $L$ with the
+morphisms $(l_{I})_{I \in {\cal I}}$ be the limit of that functor. We know that for every
+morphism $i \colon I \to J$ in ${\cal I}$, we have $l_J = Fi\circ l_I$.
+
+Let $Z$ be a set with a family of morphisms $f_I \colon Z \to {\cal C}(A,FI)$ determining
+a cone to ${\cal C}(A,F-) \colon {\cal I} \to \mathbf{Sets}$; that is, such that for each $i \colon I \to J$ in ${\cal I}$, we 
+have that $f_J = (Fi \circ -) \circ f_I$; or, in other words, for each $z \in Z$ we have
+$f_J(z) = Fi \circ f_I(z)$. Thus, fixing any $z \in Z$ gives as a family of morphisms
+$f_I(z) \in {\cal C}(A,FI)$ defining a cone. This implies that there exists some
+unique morphism $a(z) \colon A \to L$ such that $l_{I} \circ a(z) = f_I(z)$.
+
+Repeating this for every $z \in Z$ we have obtained a function $a \colon Z \to {\cal C}(A,L)$
+with the property $l_I \circ a = f_I$. This function must be the unique one with this
+property, because for any other $a' \colon Z \to {\cal C}(A,L)$, for each $z \in Z$ 
+we would have $l_I \circ a'(z) = f_I(z)$ and that would imply that $a'(z) = a(z)$.
+#+end_proof
+
+#+begin_proposition
+Right adjoints preserve limits.
+#+end_proposition
+#+begin_proof
+(From cite:awodey10) Let $L \colon \mathbb{C} \to \mathbb{D}$ and $R \colon \mathbb{D} \to \mathbb{C}$ be a pair of adjoints
+$L \dashv R$. Let $X_i$ be objects determining any diagram and $Y$ an arbitrary object.
+We have the following chain of natural transformations between
+hom-sets.
+\[\begin{aligned}
+\hom(Y,R \lim X_i) &\cong \hom(LY,\lim X_i) \\
+&\cong \lim\hom(LY,X_i) \\
+&\cong \lim\hom(Y,RX_i) \\
+&\cong \hom(Y,\lim RX_i)
+\end{aligned}\]
+By Yoneda Lemma, $R\lim X_i \cong \lim RX_i$.
+#+end_proof
+
+*** references                                                                            :ignore:
+bibliographystyle:alpha
+bibliography:Math.bib
+
+** Pasting pullbacks                                                                         :post:
+:PROPERTIES:
+:TITLE: Pasting pullbacks
+:EXPORT_FILE_NAME: pastingpullbacks.pdf
+:EXPORT_DATE: <2018-12-23 Sun 16:09>
+:END:
+
+/This is an exercise on Samson Abramsky's notes/
+/on the course Categories, Proofs and Processes./ cite:abramsky10 \\
+
+#+begin_proposition
+In the following commutative diagram, 
+if $ABCD$ and $BEDF$ are pullback squares, so is $AECF$.
+\[\begin{tikzcd}
+A \rar\dar & B \rar\dar & E \dar \\
+C \rar & D \rar & F
+\end{tikzcd}\]
+#+end_proposition
+#+begin_proof
+Given some $u \colon Z \to E$ and $v \colon Z \to C$ such that $tu = dcv$, we can use 
+the pullback to construct some $Z \to B$ and the other pullback to construct
+some $Z \to A$. This proves existence.  Given two morphisms $z$ and $z'$ such that
+$baz = u = baz'$ and $rz = v = rz'$, as in the following diagram, we will prove
+they are equal.
+\[\begin{tikzcd}
+Z\ar[dashed,bend left]{drr}{w} \drar[dashed,bend left]{z} \drar[dashed,bend right]{z'} \ar[bend left]{rrrd}{u} \ar[bend right]{ddr}{v} &&&\\
+& A \rar{a}\dar{r} & B \rar{b}\dar{s} & E \dar{t} \\
+& C \rar{c} & D \rar{d} & F
+\end{tikzcd}\]
+By the universal property of the pullback $BEDF$ there is a unique morphism
+$w \colon Z \to B$ such that $bw = u$ and $sw = cv$, but $baz = baz' = u$ and
+$saz = crz = cv = crz' = saz'$, so $az = az'$. Then using the pullback $ABCD$,
+there would be a unique morphism $y \colon Z \to A$ such that $ay = az$ and $v = ry$, 
+but both $z$ and $z'$ satisfy this condition and thus they are equal.
+#+end_proof
+
+#+begin_proposition
+In the following commutative diagram, 
+if $BEDF$ and $AECF$ are pullback squares, so is $ABCD$.
+\[\begin{tikzcd}
+A \rar\dar & B \rar\dar & E \dar \\
+C \rar & D \rar & F
+\end{tikzcd}\]
+#+end_proposition
+#+begin_proof
+Given some $u \colon Z \to B$ and $v \colon Z \to C$ such that $su = cv$, we
+can apply the universal property of the pullback $AECF$ to the
+maps $bu$ and $v$, which satisfy $tbu = dsu = dcv$, to construct some
+$z \colon Z \to A$ such that $baz = bu$ and $v = rz$.
+
+By the universal property of $BEDF$, there exists a unique $y$
+such that $by = bu$ and $sy = cv$, but both $az$ and $u$ satisfy that,
+and thus they are equal. This proves existence.
+\[\begin{tikzcd}
+Z\drar[dashed,bend left]{z} \drar[dashed,bend right]{z'} \ar[bend left]{rrd}{u} \ar[bend right]{ddr}{v} &&&\\
+& A \rar{a}\dar{r} & B \rar{b}\dar{s} & E \dar{t} \\
+& C \rar{c} & D \rar{d} & F
+\end{tikzcd}\]
+Given two morphisms $z,z' \colon Z \to A$ such that $az = u = az'$ and
+$rz = rz' = v$; we know by the universal property of the pullback
+$AECF$ applied to $bu$ and $v$ that there is a unique morphism $x \colon Z \to A$
+such that $bax = bu$ and $v = rx$; and thus they must be equal.
+#+end_proof
+
+
+*** references                                                                            :ignore:
+bibliographystyle:alpha
+bibliography:Math.bib
+
 ** Linear logic is quantity-sensitive                                                        :post:
 :PROPERTIES:
 :TITLE: Linear logic is quantity-sensitive
@@ -2726,6 +2848,8 @@ unless otherwise specified.
 #+RESULTS:
 #+BEGIN_EXPORT html
 <ul>
+ <li><a href=homcontinuous.pdf> Hom is continuous</a><em>, 23 December 2018</em><br></li>
+ <li><a href=pastingpullbacks.pdf> Pasting pullbacks</a><em>, 23 December 2018</em><br></li>
  <li><a href=countinginlinearlogic.pdf> Linear logic is quantity-sensitive</a><em>, 23 December 2018</em><br></li>
  <li><a href=powersetalgebrascompletesemilattices.pdf> Powerset-algebras are complete semilattices</a><em>, 23 December 2018</em><br></li>
  <li><a href=picadolawvereinterview.html> Picado's Interview with Lawvere</a><em>, 08 September 2018</em><br></li>
