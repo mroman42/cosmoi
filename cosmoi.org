@@ -26,11 +26,202 @@
 #+HTML_HEAD: </div>
 
 ** latex-header                                                                            :ignore:
-#+LATEX_HEADER: \usepackage{tikz}
-#+LATEX_HEADER: \usepackage{tikz-cd}
-#+LATEX_HEADER: \usepackage{amsmath}
-#+LATEX_HEADER: \usepackage{bussproofs}
-#+LATEX_HEADER: \EnableBpAbbreviations{}
+#+latex_header: \usepackage{libertine}
+#+latex_header: \usepackage[scale=0.85]{FiraMono}
+#+latex_header: \usepackage{unicode-math}
+
+#+latex_class_options: [11pt]
+#+latex_header_extra: %\usepackage[top=1in, bottom=1.5in, left=1.4in, right=1.5in]{geometry}
+
+#+latex_header_extra: \usepackage{minted} \usemintedstyle{colorful}
+#+latex_header_extra: \setminted{fontsize=\small}
+#+latex_header_extra: \setminted[haskell]{linenos=false,fontsize=\small}
+#+latex_header_extra: \renewcommand{\theFancyVerbLine}{\sffamily\textcolor[rgb]{0.5,0.5,1.0}{\oldstylenums{\arabic{FancyVerbLine}}}}
+
+#+latex_header: \BeforeBeginEnvironment{minted}{\vspace{-0.5cm}}
+#+latex_header: \AfterEndEnvironment{minted}{\vspace{-0.2cm}}
+
+#+latex_header: \usepackage[utf8]{inputenc} 
+#+latex_header: \setcounter{secnumdepth}{0}
+#+latex_header: %\setlength{\parindent}{0pt}
+#+latex_header: \usepackage{physics}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}\usepackage{bbm}
+#+latex_header: \usepackage{amsbsy}
+#+latex_header: \usepackage{bm}
+#+latex_header: \usepackage{stmaryrd}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{mathabx}
+#+latex_header: \usepackage{color}
+#+latex_header: \usepackage{bussproofs}\EnableBpAbbreviations{}
+#+latex_header: \usepackage{tikz}
+#+latex_header: \usepackage{tikz-cd}
+#+latex_header: \usepackage{bussproofs} \EnableBpAbbreviations{}
+#+latex_header: \usepackage[makeroom]{cancel}
+#+latex_header: \usepackage{multicol}
+#+latex_header: \usepackage{pmboxdraw}\usepackage{ucs}
+#+latex_header: \usepackage{pdfpages} \usepackage[export]{adjustbox}
+#+latex_header: \usepackage{wrapfig}
+
+#+latex_header: \DeclareMathOperator{\im}{Im}
+#+latex_header: \DeclareMathOperator{\coker}{Coker}
+#+latex_header: \DeclareMathOperator{\spec}{Spec}
+#+latex_header: \DeclarePairedDelimiter\bbk{\llbracket}{\rrbracket}
+#+latex_header: \newcommand{\vertiii}[1]{{\left\vert\kern-0.25ex\left\vert\kern-0.25ex\left\vert #1 \right\vert\kern-0.25ex\right\vert\kern-0.25ex\right\vert}}
+#+latex_header: \newcommand{\nnorm}[1]{{\left\vert\kern-0.25ex\left\vert\kern-0.25ex\left\vert #1 \right\vert\kern-0.25ex\right\vert\kern-0.25ex\right\vert}}
+
+#+latex_header: \newcommand\id{\mathrm{id}}
+#+latex_header: \newcommand\Id{\mathrm{Id}}
+#+latex_header: \newcommand\hom{\mathrm{hom}}
+#+latex_header: \newcommand\Nat{\mathrm{Nat}}
+#+latex_header: \newcommand\Grp{\mathsf{Grp}}
+#+latex_header: \newcommand\Set{\mathsf{Set}}
+#+latex_header: \newcommand\zet{\mathbb{Z}}
+#+latex_header: \newcommand\nat{\mathbb{N}}
+#+latex_header: \newcommand\rat{\mathbb{Q}}
+#+latex_header: \newcommand\reals{\mathbb{R}}
+#+latex_header: \newcommand\com{\mathbb{C}}
+#+latex_header: \newcommand\hC{\widehat{\cal C}}
+#+latex_header: \newcommand\todot{\xrightarrow{.}}
+#+latex_header: \newcommand\tonat{\Rightarrow}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \DeclarePairedDelimiter\pair{\langle}{\rangle}
+
+#+latex_header: \DeclarePairedDelimiter\abs{\lvert}{\rvert}%
+#+latex_header: \DeclarePairedDelimiter\norm{\lVert}{\rVert}%
+#+latex_header: \DeclarePairedDelimiter\brck{\llbracket}{\rrbracket}%
+
+#+latex_header: \newcommand\twoheaduparrow{\mathrel{\rotatebox{90}{$\twoheadrightarrow$}}}
+#+latex_header: \newcommand\twoheaddownarrow{\mathrel{\rotatebox{90}{$\twoheadleftarrow$}}}
+
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \newtheorem*{statement}{Statement}
+
+*** Theorem styles                                                                        :ignore:
+#+latex_header_extra: \theoremstyle{plain}
+#+latex_header_extra: \newtheorem{theorem}{Theorem}
+#+latex_header_extra: \newtheorem{proposition}[theorem]{Proposition}
+#+latex_header_extra: \newtheorem{lemma}[theorem]{Lemma}
+#+latex_header_extra: \newtheorem{corollary}[theorem]{Corollary}
+#+latex_header_extra: \theoremstyle{definition}
+#+latex_header_extra: \newtheorem{definition}[theorem]{Definition}
+#+latex_header_extra: \newtheorem{axiom}[theorem]{Axiom}
+#+latex_header_extra: \newtheorem{proofs}{Proof}
+#+latex_header_extra: \theoremstyle{remark}
+#+latex_header_extra: \newtheorem{remark}[theorem]{Remark}
+#+latex_header_extra: \newtheorem{exampleth}[theorem]{Example}
+#+latex_header_extra: \begingroup\makeatletter\@for\theoremstyle:=definition,remark,plain\do{\expandafter\g@addto@macro\csname th@\theoremstyle\endcsname{\addtolength\thm@preskip\parskip}}\endgroup
+
+#+latex_header_extra: \definecolor{greenPRL}{HTML}{078f60}
+#+latex_header_extra: \hypersetup{colorlinks=true, linktocpage=true, pdfstartpage=3, pdfstartview=FitV,breaklinks=true, pdfpagemode=UseNone, pageanchor=true, pdfpagemode=UseOutlines,plainpages=false, bookmarksnumbered, bookmarksopen=true, bookmarksopenlevel=1,hypertexnames=true, pdfhighlight=/O,urlcolor=greenPRL,linkcolor=greenPRL,citecolor=greenPRL}
+
+*** Macros on HoTT                                                                        :ignore:
+#+latex_header: \newcommand\ap{\mathsf{ap}}
+#+latex_header: \newcommand\apd{\mathsf{apd}}
+#+latex_header: \newcommand\refl{\mathsf{refl}}
+#+latex_header: \newcommand\id{\mathsf{id}}
+#+latex_header: \newcommand\transport{\mathsf{transport}}
+#+latex_header: \newcommand\happly{\mathsf{happly}}
+#+latex_header: \newcommand\funext{\mathsf{funext}}
+#+latex_header: \newcommand\proj{\mathsf{pr}}
+#+latex_header: \newcommand\rec{\mathsf{rec}}
+#+latex_header: \newcommand\pr{\mathsf{pr}}
+#+latex_header: \newcommand\idtoeqv{\mathsf{idtoeqv}}
+#+latex_header: \newcommand\ua{\mathsf{ua}}
+#+latex_header: \newcommand\isSet{\mathsf{isSet}}
+#+latex_header: \newcommand\isProp{\mathsf{isProp}}
+#+latex_header: \newcommand\Set{\mathsf{Set}}
+#+latex_header: \newcommand\Prop{\mathsf{Prop}}
+#+latex_header: \newcommand\fnot{\mathsf{not}}
+#+latex_header: \newcommand\LEM{\mathsf{LEM}}
+#+latex_header: \newcommand\trunc[1]{\left\lVert#1\right\rVert}
+#+latex_header: \newcommand\isContr{\mathsf{isContr}}
+#+latex_header: \newcommand\ishae{\mathsf{ishae}}
+#+latex_header: \newcommand\qinv{\mathsf{qinv}}
+#+latex_header: \newcommand\fib{\mathsf{fib}}
+#+latex_header: \newcommand\biinv{\mathsf{biinv}}
+#+latex_header: \newcommand\linv{\mathsf{linv}}
+#+latex_header: \newcommand\rinv{\mathsf{rinv}}
+#+latex_header: \renewcommand\succ{\mathsf{succ}}
+#+latex_header: \newcommand\isequiv{\mathsf{isequiv}}
+#+latex_header: \newcommand\isHinit{\mathsf{isHinit}}
+#+latex_header: \newcommand\isEmbedding{\mathsf{isEmbedding}}
+#+latex_header: \newcommand\isSurjective{\mathsf{isSurjective}}
+#+latex_header: \newcommand\pair{\mathsf{pair}}
+#+latex_header: \newcommand\inl{\mathsf{inl}}
+#+latex_header: \newcommand\inr{\mathsf{inr}}
+#+latex_header: \newcommand\seg{\mathsf{seg}}
+#+latex_header: \newcommand\base{\mathsf{base}}
+#+latex_header: \newcommand\N{\mathsf{N}}
+#+latex_header: \newcommand\conn{\mathsf{conn}}
+#+latex_header: \newcommand\code{\mathsf{code}}
+#+latex_header: \newcommand\encode{\mathsf{encode}}
+#+latex_header: \newcommand\decode{\mathsf{decode}}
+#+latex_header: \newcommand\merid{\mathsf{merid}}
+#+latex_header: \newcommand\isCut{\mathsf{isCut}}
+#+latex_header: \newcommand\apart{\mathbin{\#}}
+#+latex_header: \newcommand\istype[1]{\mathop{\mbox{$\mathsf{is}$-$#1$-$\mathsf{type}$}}}
+
+*** Logic macros                                                                          :ignore:
+#+latex_header: \newcommand\land{\wedge}
+#+latex_header: \newcommand\lor{\vee}
+#+latex_header: \newcommand\model{\mathfrak{M}}
+#+latex_header: \newcommand\entail{\models}
+#+latex_header: \newcommand\seq{\Rightarrow}
+
+*** Analysis                                                                              :ignore:
+#+latex_header: \newcommand\oy{\overline{y}}
+#+latex_header: \newcommand\tf{\tilde{f}}
+#+latex_header: %\newcommand\bV{\overset{\bullet}{V}}
+#+latex_header: \newcommand\bV{\dot{V}}
+
+*** Type theory macros                                                                    :ignore:
+#+latex_header: \newcommand\ap{\mathsf{ap}}
+#+latex_header: \newcommand\apd{\mathsf{apd}}
+#+latex_header: \newcommand\refl{\mathsf{refl}}
+#+latex_header: \newcommand\id{\mathsf{id}}
+#+latex_header: \newcommand\transport{\mathsf{transport}}
+#+latex_header: \newcommand\happly{\mathsf{happly}}
+#+latex_header: \newcommand\funext{\mathsf{funext}}
+#+latex_header: \newcommand\proj{\mathsf{pr}}
+#+latex_header: \newcommand\rec{\mathsf{rec}}
+#+latex_header: \newcommand\pr{\mathsf{pr}}
+#+latex_header: \newcommand\idtoeqv{\mathsf{idtoeqv}}
+#+latex_header: \newcommand\ua{\mathsf{ua}}
+#+latex_header: \newcommand\isSet{\mathsf{isSet}}
+#+latex_header: \newcommand\isProp{\mathsf{isProp}}
+#+latex_header: \newcommand\Set{\mathsf{Set}}
+#+latex_header: \newcommand\Prop{\mathsf{Prop}}
+#+latex_header: \newcommand\fnot{\mathsf{not}}
+#+latex_header: \newcommand\LEM{\mathsf{LEM}}
+#+latex_header: \newcommand\trunc[1]{\left\lVert#1\right\rVert}
+#+latex_header: \newcommand\isContr{\mathsf{isContr}}
+#+latex_header: \newcommand\ishae{\mathsf{ishae}}
+#+latex_header: \newcommand\qinv{\mathsf{qinv}}
+#+latex_header: \newcommand\fib{\mathsf{fib}}
+#+latex_header: \newcommand\biinv{\mathsf{biinv}}
+#+latex_header: \newcommand\linv{\mathsf{linv}}
+#+latex_header: \newcommand\rinv{\mathsf{rinv}}
+#+latex_header: \renewcommand\succ{\mathsf{succ}}
+#+latex_header: \newcommand\isequiv{\mathsf{isequiv}}
+#+latex_header: \newcommand\isHinit{\mathsf{isHinit}}
+#+latex_header: \newcommand\isEmbedding{\mathsf{isEmbedding}}
+#+latex_header: \newcommand\isSurjective{\mathsf{isSurjective}}
+#+latex_header: \newcommand\pair{\mathsf{pair}}
+#+latex_header: \newcommand\inl{\mathsf{inl}}
+#+latex_header: \newcommand\inr{\mathsf{inr}}
+#+latex_header: \newcommand\seg{\mathsf{seg}}
+#+latex_header: \newcommand\base{\mathsf{base}}
+#+latex_header: \newcommand\N{\mathsf{N}}
+#+latex_header: \newcommand\merid{\mathsf{merid}}
+#+latex_header: \newcommand\istype[1]{\mathop{\mbox{$\mathsf{is}$-$#1$-$\mathsf{type}$}}}
+
+*** Category theory macros                                                                :ignore:
+#+latex_header: \newcommand\hom{\mathrm{hom}}
+#+latex_header: \newcommand\Sets{\mathsf{Sets}}
+#+latex_header: \newcommand\Set{\mathsf{Set}}
+#+latex_header: \newcommand\todot{\xrightarrow{.}}
 
 * Posts
 ** TODO Diagonal arguments since Epimenides

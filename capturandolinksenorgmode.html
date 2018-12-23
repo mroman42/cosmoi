@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-23 Sun 15:24 -->
+<!-- 2018-12-23 Sun 15:37 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Capturando links en org-mode</title>
@@ -72,9 +72,9 @@ for the JavaScript code in this tag.
 <body>
 <div id="content">
 <h1 class="title">Capturando links en org-mode</h1>
-<div id="outline-container-orgc6d515a" class="outline-2">
-<h2 id="orgc6d515a">Capturando links</h2>
-<div class="outline-text-2" id="text-orgc6d515a">
+<div id="outline-container-org330a532" class="outline-2">
+<h2 id="org330a532">Capturando links</h2>
+<div class="outline-text-2" id="text-org330a532">
 <p>
 El objetivo de este post es describir el proceso que uso para capturar links
 desde Firefox y almacenarlos en un archivo de org-mode, que puede leerse luego
@@ -83,9 +83,9 @@ desde el propio navegador.
 </div>
 </div>
 
-<div id="outline-container-org4c92ec1" class="outline-2">
-<h2 id="org4c92ec1">Org-capture</h2>
-<div class="outline-text-2" id="text-org4c92ec1">
+<div id="outline-container-orgb8241c7" class="outline-2">
+<h2 id="orgb8241c7">Org-capture</h2>
+<div class="outline-text-2" id="text-orgb8241c7">
 <p>
 La primera parte será activar <code>org-capture</code> y <code>org-protocol</code> en Emacs. <a href="https://www.gnu.org/software/emacs/manual/html_node/org/Capture.html#Capture">org-capture</a>
 puede ser usado también para escribir pequeñas ideas y almacenarlas en ficheros org
@@ -119,9 +119,9 @@ queremos insertar el link una vez lo capturemos.
 </div>
 </div>
 
-<div id="outline-container-org822f95d" class="outline-2">
-<h2 id="org822f95d">Extensión de firefox</h2>
-<div class="outline-text-2" id="text-org822f95d">
+<div id="outline-container-orgb9b48c3" class="outline-2">
+<h2 id="orgb9b48c3">Extensión de firefox</h2>
+<div class="outline-text-2" id="text-orgb9b48c3">
 <p>
 El uso de <code>org-protocol</code> desde Firefox puede gestionarse más detalladamente usando
 <a href="http://orgmode.org/worg/org-contrib/org-protocol.html#sec-4">marcadores</a> que activen la captura. En nuestro caso, como sólo necesitamos la configuración
@@ -141,9 +141,9 @@ Una vez activemos la extensión, podremos capturar enlaces pulsando el atajo.
 </div>
 </div>
 
-<div id="outline-container-org46bad9a" class="outline-2">
-<h2 id="org46bad9a">Cerrando ventanas</h2>
-<div class="outline-text-2" id="text-org46bad9a">
+<div id="outline-container-orgbfe87ab" class="outline-2">
+<h2 id="orgbfe87ab">Cerrando ventanas</h2>
+<div class="outline-text-2" id="text-orgbfe87ab">
 <p>
 Un problema menor al usar esta extensión es que crea ventanas de Emacs que no cierra
 al terminar. Otro problema es que suele crear también un buffer inicial al lado de nuestro
@@ -158,9 +158,9 @@ buffer de captura. Podemos usar <b>hooks</b> para forzarlo a corregir ese compor
 </div>
 </div>
 
-<div id="outline-container-orge981966" class="outline-2">
-<h2 id="orge981966">Integrándolo en i3</h2>
-<div class="outline-text-2" id="text-orge981966">
+<div id="outline-container-org6c3e36c" class="outline-2">
+<h2 id="org6c3e36c">Integrándolo en i3</h2>
+<div class="outline-text-2" id="text-org6c3e36c">
 <p>
 Para los usuarios de i3, puede ser útil poder controlar dónde y cómo se crea la ventana
 de captura de Emacs. Un ejemplo de configuración es la siguiente, que coloca la ventana
@@ -176,9 +176,9 @@ for_window <span style="color: #DCDCCC;">[</span><span style="color: #cae682;">c
 </div>
 </div>
 
-<div id="outline-container-orgedd3e54" class="outline-2">
-<h2 id="orgedd3e54">Mostrando los links en el navegador</h2>
-<div class="outline-text-2" id="text-orgedd3e54">
+<div id="outline-container-orgca128bb" class="outline-2">
+<h2 id="orgca128bb">Mostrando los links en el navegador</h2>
+<div class="outline-text-2" id="text-orgca128bb">
 <p>
 Para que además los links se muestren en el navegador, pueden usarse también <b>hooks</b> que
 se activen al guardado para exportar a HTML. En este post de <a href="https://rafaelleru.github.io/2017/01/22/to_read_list_emacs/">@rafaelleru</a> se explica el
@@ -187,9 +187,9 @@ proceso en detalle.
 </div>
 </div>
 
-<div id="outline-container-orgab460f0" class="outline-2">
-<h2 id="orgab460f0">Un detalle sin solucionar</h2>
-<div class="outline-text-2" id="text-orgab460f0">
+<div id="outline-container-org4606e94" class="outline-2">
+<h2 id="org4606e94">Un detalle sin solucionar</h2>
+<div class="outline-text-2" id="text-org4606e94">
 <p>
 En la plantilla de captura, me gustaría poder usar además <code>%^g</code>, que crea un pequeño
 diálogo donde insertar tags al link que se está guardando. El problema con esto es que,
