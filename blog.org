@@ -9,6 +9,7 @@
 #+Options: tex:dvisvgm
 
 * Header                                                                                    :ignore:
+** html-header                                                                             :ignore:
 #+HTML_HEAD: <link rel="stylesheet" href="default.css" />
 #+HTML_HEAD: <link rel="stylesheet" href="mathjax_fonts.css" />
 #+HTML_HEAD: <link rel="stylesheet" href="syntax.css" />
@@ -24,6 +25,7 @@
 #+HTML_HEAD:     </div>
 #+HTML_HEAD: </div>
 
+** latex-header                                                                            :ignore:
 #+LATEX_HEADER: \usepackage{tikz}
 #+LATEX_HEADER: \usepackage{tikz-cd}
 #+LATEX_HEADER: \usepackage{amsmath}
@@ -107,16 +109,15 @@ arithmetic statements.
 ** TODO The natural example of natural transformation
 Double dual of a vector space.
 ** TODO Categorical programming with CAP
-
 ** Powerset-algebras are complete semilattices                                               :post:
 :PROPERTIES:
 :TITLE: Powerset-algebras are complete semilattices
-:EXPORT_FILE_NAME: powersetalgebrascompletesemilattices.html
+:EXPORT_FILE_NAME: powersetalgebrascompletesemilattices.pdf
 :EXPORT_DATE: <2018-12-23 Sun 13:10>
 :END:
 
 /This is a combination of two exercises from Samson Abramsky's notes/
-/on the course Categories, Proofs and Processes./
+/on the course Categories, Proofs and Processes./ \\
 
 #+begin_definition
 We take a *complete semilattice* to mean a poset $(P, \leq)$ where every
@@ -343,7 +344,7 @@ online server, has both desktop and Android applications, and it is
 capable of rendering arbitrary Latex and multimedia. I would recommend
 Anki to anyone starting with spaced repetition.
 
-However, I do not myself use Anki; I have been using [[https://orgmode.org/worg/org-contrib/org-drill.html][org-drill]] for a
+However, I do not myself use Anki; I have been using [[https://orgmode.org/worg/org-contrib/org-drill.pdf][org-drill]] for a
 few months. The primary reason being Emacs. I really like having all
 the cards in plain text and editing them from the text
 editor. Org-mode has latex and multimedia support, and most of my math
@@ -358,7 +359,7 @@ with Emacs, it could be a good idea to try both before settling on one.
 ** Uniqueness of identity paths                                                              :post:
 :PROPERTIES:
 :TITLE: Uniqueness of identity paths
-:EXPORT_FILE_NAME: uniquenessofidentitypaths.html
+:EXPORT_FILE_NAME: uniquenessofidentitypaths.pdf
 :EXPORT_DATE: <2018-08-25 Sat 21:57>
 :END:
 
@@ -386,13 +387,13 @@ themselves. That is, for any type $A$, the following type is inhabited
 Idris and Agda allow the user to prove this proposition in general via
 pattern matching.
 
-#+BEGIN_SRC agda
+#+BEGIN_SRC bash
 -- In Agda.
-uip : {A : Set} → {x y : A} → (p q : x ≡ y) → p ≡ q
+uip : {A : Set} -> {x y : A} -> (p q : x ≡ y) -> p ≡ q
 uip refl refl = refl
 #+END_SRC
 
-#+BEGIN_SRC agda
+#+BEGIN_SRC bash
 -- In Idris
 uip : (t : Type) 
     -> (x : t) -> (y : t) 
@@ -482,7 +483,7 @@ headers.
 ** Coinduction                                                                               :post:
 :PROPERTIES:
 :TITLE: Coinduction
-:EXPORT_FILE_NAME: coinduction.html
+:EXPORT_FILE_NAME: coinduction.pdf
 :EXPORT_DATE: <2018-08-15 Wed 23:08>
 :ID:       174d185e-2269-40f2-935c-e8d45e08bfc8
 :END:
@@ -499,10 +500,10 @@ as in the following example.  If you are interested in understanding
 coinduction, it might be a good idea to experiment in Agda; I learnt a
 lot writing basic coinductive definitions.
 
-#+BEGIN_SRC agda
+#+BEGIN_SRC haskell
 data Maybe (A : Set) : Set where
   Nothing : Maybe A
-  Just : A → Maybe A
+  Just : A -> Maybe A
 
 record coNat : Set where
   coinductive
@@ -516,11 +517,11 @@ pred coZero = Nothing
 coInf : coNat
 pred coInf = Just coInf
 
-succ : coNat → coNat
+succ : coNat -> coNat
 pred (succ n) = Just n
 
 infixl 20 _+_
-_+_ : coNat → coNat → coNat
+_+_ : coNat -> coNat -> coNat
 pred (a + b) with pred a
 pred (a + b) | Nothing = pred b
 pred (a + b) | Just a' = Just (a' + b)
@@ -529,7 +530,7 @@ pred (a + b) | Just a' = Just (a' + b)
 ** Cartesian closed categories                                                               :post:
 :PROPERTIES:
 :TITLE: Cartesian closed categories
-:EXPORT_FILE_NAME: cartesianclosedcategories.html
+:EXPORT_FILE_NAME: cartesianclosedcategories.pdf
 :EXPORT_DATE: <2018-07-01 Sun 11:30>
 :ID:       3d52d110-822a-4f85-a1c4-57d868b527d5
 :END:
@@ -663,37 +664,6 @@ Estas dos formas de evaluación se suelen llamar /call-by-value/ y
 :ID:       5e645152-8b35-4236-bf9a-95b0d3bcb85d
 :END:
 
-#+BEGIN_EXPORT HTML
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.29.0/codemirror.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.29.0/codemirror.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.29.0/addon/mode/simple.min.js"></script>
-<script src="https://mroman42.github.io/mikrokosmos-js/codemirrormkr.js"></script>
-<script language="javascript" src="https://mroman42.github.io/mikrokosmos-js/rts.js"></script>
-<script language="javascript" src="https://mroman42.github.io/mikrokosmos-js/lib.js"></script>
-<script language="javascript" src="https://mroman42.github.io/mikrokosmos-js/out.js"></script>
-<script language="javascript" src="https://mroman42.github.io/mikrokosmos-js/runmain.js"></script>
-<script language="javascript" src="https://mroman42.github.io/mikrokosmos-js/mikrobox.js" defer></script>
-
-<style>
-.CodeMirror {
-  border: 1px solid #eee;
-  height: auto;
-  overflow-y: hidden;
-}
-.CodeMirror-scroll {
-  height: auto;
-  overflow-y: hidden;
-  overflow-x: auto;
-}
-.mikrojs-console {
-  height: auto;
-}
-pre {
-    box-shadow: 0px 0px 1px #eee;
-}
-</style>
-#+END_EXPORT
-
 *Mikrokosmos* is an untyped and simply typed λ-calculus interpreter,
 borrowing its name from the series of progressive piano études
 Mikrokosmos written by Bela Bartok. It aims to provide students with a
@@ -706,29 +676,8 @@ tool to learn and understand the λ-calculus.
 Since version 0.3.0, it comes bundled with a Jupyter Notebook kernel,
 a tutorial on lambda calculus and specific modes for SKI combinators.
 Thanks to [[https://github.com/ghcjs/ghcjs][GHCJS]] and [[http://codemirror.net/][Codemirror]], you can also try the [[https://github.com/mroman42/mikrokosmos][Mikrokosmos]]
-lambda interpreter in your browser. Press the *evaluate* button below
+lambda interpreter in your browser. Press the *evaluate* button there
 and play with the code!
-
-#+BEGIN_EXPORT HTML
-<div class="mikrojs-console">
-<script type="text/mikrokosmos">
-# Lambda expressions are written with \ or λ, as in
-(λx.x)
-(\x.\y.x)(\x.x)
-
-# Libraries available
-plus 2 3
-sum (cons 1 (cons 2 (cons 3 nil)))
-
-# Untyped, but also simply-typed λ-calculus
-:types on
-swap = \m.(snd m, fst m)
-swap
-
-# Gentzen-style deduction trees
-@@ \z.(snd z,fst z)</script>
-</div>
-#+END_EXPORT
 
 ** Aprendiendo Emacs                                                                         :post:
 :PROPERTIES:
@@ -967,9 +916,9 @@ definitivamente con =x=.
 /jekor/]]
 
 **** org-mode
-    :PROPERTIES:
-    :CUSTOM_ID: org-mode
-    :END:
+:PROPERTIES:
+:CUSTOM_ID: org-mode
+:END:
 
 *org-mode* es un modo de Emacs que se creó originalmente para gestionar
 listas de tareas, agendas y calendarios; pero además, contiene en su
@@ -1158,7 +1107,7 @@ código se implementa el generador congruencial.
 
 Vemos que funciona como una distribución uniforme.
 
-#+BEGIN_SRC
+#+BEGIN_SRC bash
 >>> dice 6
 
 1:	 ################
@@ -1173,7 +1122,7 @@ Y desde ella generar fácilmente otras usando funciones que
 compongan distribuciones. Un ejemplo es usar =(⊕) = liftM2 (+)= para
 sumar dados.
 
-#+BEGIN_SRC 
+#+BEGIN_SRC bash
 >>> dice 6 ⊕ dice 6
 
 2:	 #####
@@ -2189,7 +2138,7 @@ usar diagramas conmutativos
 Cuando necesitamos funcionalidad adicional que ofrece Latex en bibliotecas aparte,
 como usar =tikz-cd=, podemos incluirlas en la cabecera del archivo org como:
    
-#+BEGIN_SRC 
+#+BEGIN_SRC latex 
 #+latex_header: \usepackage{amsthm}
 #+latex_header: \usepackage{amsmath}
 #+latex_header: \usepackage{tikz-cd}
@@ -2208,7 +2157,7 @@ tratar sólo una sección.
 Otra opción es la de tener un sólo archivo de configuración
 =math.setup= con reglas de la forma
 
-#+BEGIN_SRC 
+#+BEGIN_SRC latex
 #+latex_header: \usepackage{amsthm}
 #+latex_header: \usepackage{amsmath}
 #+latex_header: \usepackage{tikz-cd}
@@ -2412,10 +2361,8 @@ $D\otimes -$ is right-exact; so for them to be exact, we only need:
 ** Wikipedia contributions
 :PROPERTIES:
 :TITLE:    Wikipedia contributions
-:HUGO_TAGS: libre
-:HUGO_TOPICS: libre
-:HUGO_FILE: post/wikipediacontributions.md
-:HUGO_DATE: [2016-10-29 Sat 15:15]
+:EXPORT_FILE_NAME: wikipediacontributions.pdf
+:EXPORT_DATE: <2018-02-17 Tue 12:00>
 :END:
 
 The majority of my math-related contributions to Wikipedia are translations from the English language
@@ -2431,10 +2378,8 @@ Wikipedia to the Spanish one:
 ** Yoneda lemma
 :PROPERTIES:
 :TITLE:    Yoneda lemma
-:HUGO_TAGS: math
-:HUGO_TOPICS: math
-:HUGO_FILE: post/yonedalemma.md
-:HUGO_DATE: [2017-02-17 Fri 15:18]
+:EXPORT_FILE_NAME: wikipediacontributions.pdf
+:EXPORT_DATE: <2018-02-17 Tue 12:00>
 :END:
 
 *** Lema de Yoneda
@@ -2536,16 +2481,16 @@ unless otherwise specified.
 #+RESULTS:
 #+BEGIN_EXPORT html
 <ul>
- <li><a href=powersetalgebrascompletesemilattices.html> Powerset-algebras are complete semilattices</a><em>, 23 December 2018</em><br></li>
+ <li><a href=powersetalgebrascompletesemilattices.pdf> Powerset-algebras are complete semilattices</a><em>, 23 December 2018</em><br></li>
  <li><a href=picadolawvereinterview.html> Picado's Interview with Lawvere</a><em>, 08 September 2018</em><br></li>
  <li><a href=quoteampere.html> A quote by Ampère</a><em>, 03 September 2018</em><br></li>
  <li><a href=libreimquintoaniversario.html> LibreIM, casi cinco años después</a><em>, 03 September 2018</em><br></li>
  <li><a href=orgdrillspacedrepetition.html> Org-drill and spaced repetition</a><em>, 03 September 2018</em><br></li>
- <li><a href=uniquenessofidentitypaths.html> Uniqueness of identity paths</a><em>, 25 August 2018</em><br></li>
+ <li><a href=uniquenessofidentitypaths.pdf> Uniqueness of identity paths</a><em>, 25 August 2018</em><br></li>
  <li><a href=bachelorsthesisinorgmode.html> Writing a bachelor's thesis in org-mode</a><em>, 15 August 2018</em><br></li>
  <li><a href=bloggingwithasingleorgfile.html> Blogging with a single org-file</a><em>, 15 August 2018</em><br></li>
- <li><a href=coinduction.html> Coinduction</a><em>, 15 August 2018</em><br></li>
- <li><a href=cartesianclosedcategories.html> Cartesian closed categories</a><em>, 01 July 2018</em><br></li>
+ <li><a href=coinduction.pdf> Coinduction</a><em>, 15 August 2018</em><br></li>
+ <li><a href=cartesianclosedcategories.pdf> Cartesian closed categories</a><em>, 01 July 2018</em><br></li>
  <li><a href=categorytheoryandlambdacalculus.html> Category theory and lambda calculus</a><em>, 01 July 2018</em><br></li>
  <li><a href=evaluacionlambda.html> Evaluación en cálculo lambda</a><em>, 25 May 2018</em><br></li>
  <li><a href=mikrokosmos.html> Mikrokosmos</a><em>, 25 May 2018</em><br></li>
@@ -2574,11 +2519,18 @@ have the tag :post: and must have the properties
 (setq org-html-postamble-format 
   '(("en" "<div id=\"footer\"><p class=\"postamble\">Last edited %d. Written by %c</p></div>")))
 
+(defun cosmoi/export ()
+  (interactive)
+  (setq extension-name (file-name-extension (org-entry-get (point) "EXPORT_FILE_NAME")))
+  (if (string-equal extension-name "html")
+    (funcall 'org-html-export-to-html nil t)
+    (funcall 'org-latex-export-to-pdf nil t)))
+
 (defun cosmoi/publish ()
   (interactive) 
-  (org-map-entries 
+  (org-map-entries
     (lambda () (if (org-entry-get (point) "EXPORT_FILE_NAME") 
-      (funcall 'org-html-export-to-html nil t)))
+         (cosmoi/export)))
     "-noexport" nil))
 
 (cosmoi/publish)

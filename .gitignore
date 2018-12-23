@@ -1,2 +1,9 @@
 /blog.html
 ltximg/*.png
+_minted*
+*.bbl
+*.tex
+*.aux
+*.log
+*.out
+*.pyg

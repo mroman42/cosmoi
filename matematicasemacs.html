@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-09-08 Sat 17:21 -->
+<!-- 2018-12-23 Sun 15:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Matemáticas en emacs</title>
@@ -76,9 +76,9 @@ for the JavaScript code in this tag.
 <i>Actualizado a 06 de agosto de 2017.</i>
 </p>
 
-<div id="outline-container-org4eea537" class="outline-2">
-<h2 id="org4eea537">Apuntes a ordenador</h2>
-<div class="outline-text-2" id="text-org4eea537">
+<div id="outline-container-orgc2d6ded" class="outline-2">
+<h2 id="orgc2d6ded">Apuntes a ordenador</h2>
+<div class="outline-text-2" id="text-orgc2d6ded">
 <p>
 Tomar apuntes de matemáticas con el ordenador es una tarea difícil por
 lo complejo que es transcribir la notación (símbolos, letras en otros
@@ -100,9 +100,9 @@ para exportarlo.
 </div>
 </div>
 
-<div id="outline-container-org830c5f0" class="outline-2">
-<h2 id="org830c5f0">Ventajas de org-mode</h2>
-<div class="outline-text-2" id="text-org830c5f0">
+<div id="outline-container-org9a8a174" class="outline-2">
+<h2 id="org9a8a174">Ventajas de org-mode</h2>
+<div class="outline-text-2" id="text-org9a8a174">
 <p>
 <b>org-mode</b> tiene internamente un lenguaje de marcado similar al de
 markdown, con la ventaja para el usuario de Emacs de que está adaptado
@@ -159,9 +159,9 @@ para matemáticas como <code>Sage</code>.
 </div>
 </div>
 
-<div id="outline-container-org886390a" class="outline-2">
-<h2 id="org886390a">Zoom</h2>
-<div class="outline-text-2" id="text-org886390a">
+<div id="outline-container-orge1f02d9" class="outline-2">
+<h2 id="orge1f02d9">Zoom</h2>
+<div class="outline-text-2" id="text-orge1f02d9">
 <p>
 Un problema menor (y quizá sólo mío) al configurar todo esto es que
 las fórmulas previsualizadas parecen demasiado pequeñas. Aunque estén
@@ -192,9 +192,9 @@ deberían volver a ajustarse con el texto.
 </div>
 </div>
 
-<div id="outline-container-org78d5490" class="outline-2">
-<h2 id="org78d5490">Aumentando la velocidad de escritura</h2>
-<div class="outline-text-2" id="text-org78d5490">
+<div id="outline-container-org0cf1793" class="outline-2">
+<h2 id="org0cf1793">Aumentando la velocidad de escritura</h2>
+<div class="outline-text-2" id="text-org0cf1793">
 <p>
 Mi objetivo principal con todo esto era escribir matemáticas más
 rápidamente, así que <a href="http://emacs.stackexchange.com/questions/26322/math-autocompletion-in-org-mode">pregunté sobre autocompletado</a> y concluí en usar
@@ -232,9 +232,9 @@ diagramas conmutativos o complejos simpliciales en pocos pasos.
 </div>
 </div>
 
-<div id="outline-container-org4310d5d" class="outline-2">
-<h2 id="org4310d5d">Diagramas conmutativos</h2>
-<div class="outline-text-2" id="text-org4310d5d">
+<div id="outline-container-orgebf8fd8" class="outline-2">
+<h2 id="orgebf8fd8">Diagramas conmutativos</h2>
+<div class="outline-text-2" id="text-orgebf8fd8">
 <p>
 Ahora estoy escribiendo sobre álgebra homológica y teoría de categorías, así que
 la mayoría de lo que escribo usa secuencias exactas y diagramas conmutativos.
@@ -297,19 +297,13 @@ usar diagramas conmutativos
 </div>
 </div>
 
-<div id="outline-container-orgdc57692" class="outline-2">
-<h2 id="orgdc57692">Cabeceras en Latex</h2>
-<div class="outline-text-2" id="text-orgdc57692">
+<div id="outline-container-org45745f3" class="outline-2">
+<h2 id="org45745f3">Cabeceras en Latex</h2>
+<div class="outline-text-2" id="text-org45745f3">
 <p>
 Cuando necesitamos funcionalidad adicional que ofrece Latex en bibliotecas aparte,
 como usar <code>tikz-cd</code>, podemos incluirlas en la cabecera del archivo org como:
 </p>
-
-<pre class="example">
-#+latex_header: \usepackage{amsthm}
-#+latex_header: \usepackage{amsmath}
-#+latex_header: \usepackage{tikz-cd}
-</pre>
 
 <p>
 Además, si queremos que sea funcionalidad que sólo se use en la exportación de
@@ -318,9 +312,9 @@ latex pero no en la previsualización, podemos incluirla con <code>#+latex_heade
 </div>
 </div>
 
-<div id="outline-container-orge3e2bf2" class="outline-2">
-<h2 id="orge3e2bf2">Archivos de configuración de org</h2>
-<div class="outline-text-2" id="text-orge3e2bf2">
+<div id="outline-container-org63730ef" class="outline-2">
+<h2 id="org63730ef">Archivos de configuración de org</h2>
+<div class="outline-text-2" id="text-org63730ef">
 <p>
 Para evitar tener que repetir varias veces la misma cabecera en varios
 archivos, podemos usar un sólo archivo para escribir matemáticas y
@@ -334,21 +328,15 @@ Otra opción es la de tener un sólo archivo de configuración
 <code>math.setup</code> con reglas de la forma
 </p>
 
-<pre class="example">
-#+latex_header: \usepackage{amsthm}
-#+latex_header: \usepackage{amsmath}
-#+latex_header: \usepackage{tikz-cd}
-</pre>
-
 <p>
 y cargarlo en cada archivo <code>org</code> con <code>#+SETUPFILE: math.setup</code>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org0ed11e3" class="outline-2">
-<h2 id="org0ed11e3">Ejemplos</h2>
-<div class="outline-text-2" id="text-org0ed11e3">
+<div id="outline-container-orgbf57be0" class="outline-2">
+<h2 id="orgbf57be0">Ejemplos</h2>
+<div class="outline-text-2" id="text-orgbf57be0">
 <p>
 Pueden encontrarse ejemplos de uso en <a href="https://github.com/mroman42/math">este repositorio</a> con mis apuntes
 de matemáticas. Mi archivo de configuración de Emacs está disponible en

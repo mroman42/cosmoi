@@ -11,10 +11,17 @@ Mathematics and computer science.
 Categories, logic and types.
 </description>
 <item>
+<title>Powerset-algebras are complete semilattices</title>
+<link>https://mroman42.github.io/cosmoi/powersetalgebrascompletesemilattices.pdf</link>
+<guid>https://mroman42.github.io/cosmoi/powersetalgebrascompletesemilattices.pdf</guid>
+<pubDate>Sun, 23 Dec 2018 13:10:00 GMT</pubDate>
+<description></description>
+</item>
+<item>
 <title>Picado's Interview with Lawvere</title>
 <link>https://mroman42.github.io/cosmoi/picadolawvereinterview.html</link>
 <guid>https://mroman42.github.io/cosmoi/picadolawvereinterview.html</guid>
-<pubDate>Mon, 03 Sep 2018 21:55:00 GMT</pubDate>
+<pubDate>Sat, 08 Sep 2018 17:20:00 GMT</pubDate>
 <description></description>
 </item>
 <item>
@@ -40,8 +47,8 @@ Categories, logic and types.
 </item>
 <item>
 <title>Uniqueness of identity paths</title>
-<link>https://mroman42.github.io/cosmoi/uniquenessofidentitypaths.html</link>
-<guid>https://mroman42.github.io/cosmoi/uniquenessofidentitypaths.html</guid>
+<link>https://mroman42.github.io/cosmoi/uniquenessofidentitypaths.pdf</link>
+<guid>https://mroman42.github.io/cosmoi/uniquenessofidentitypaths.pdf</guid>
 <pubDate>Sat, 25 Aug 2018 21:57:00 GMT</pubDate>
 <description></description>
 </item>
@@ -61,15 +68,15 @@ Categories, logic and types.
 </item>
 <item>
 <title>Coinduction</title>
-<link>https://mroman42.github.io/cosmoi/coinduction.html</link>
-<guid>https://mroman42.github.io/cosmoi/coinduction.html</guid>
+<link>https://mroman42.github.io/cosmoi/coinduction.pdf</link>
+<guid>https://mroman42.github.io/cosmoi/coinduction.pdf</guid>
 <pubDate>Wed, 15 Aug 2018 23:08:00 GMT</pubDate>
 <description></description>
 </item>
 <item>
 <title>Cartesian closed categories</title>
-<link>https://mroman42.github.io/cosmoi/cartesianclosedcategories.html</link>
-<guid>https://mroman42.github.io/cosmoi/cartesianclosedcategories.html</guid>
+<link>https://mroman42.github.io/cosmoi/cartesianclosedcategories.pdf</link>
+<guid>https://mroman42.github.io/cosmoi/cartesianclosedcategories.pdf</guid>
 <pubDate>Sun, 01 Jul 2018 11:30:00 GMT</pubDate>
 <description></description>
 </item>
@@ -141,6 +148,13 @@ Categories, logic and types.
 <link>https://mroman42.github.io/cosmoi/ideasteoriatipos.html</link>
 <guid>https://mroman42.github.io/cosmoi/ideasteoriatipos.html</guid>
 <pubDate>Fri, 08 Jan 2016 15:13:00 GMT</pubDate>
+<description></description>
+</item>
+<item>
+<title>Informal CV</title>
+<link>https://mroman42.github.io/cosmoi/informalcv.html</link>
+<guid>https://mroman42.github.io/cosmoi/informalcv.html</guid>
+<pubDate>Sun, 21 Oct 2018 01:00:00 GMT</pubDate>
 <description></description>
 </item>
 

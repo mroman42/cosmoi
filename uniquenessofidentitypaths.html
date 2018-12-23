@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-09-08 Sat 17:21 -->
+<!-- 2018-12-23 Sun 14:54 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Uniqueness of identity paths</title>
@@ -107,19 +107,19 @@ pattern matching.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-agda">-- In Agda.
-uip : {A : Set} → {x y : A} → (p q : x ≡ y) → p ≡ q
-uip refl refl = refl
+<pre class="src src-haskell"><span style="color: #5F7F5F;">-- </span><span style="color: #99968b;">In Agda.</span>
+uip <span style="color: #cae682;">:</span> <span style="color: #DCDCCC;">{</span><span style="color: #92a65e; font-weight: bold;">A</span> <span style="color: #92a65e; font-weight: bold;">:</span> <span style="color: #92a65e; font-weight: bold;">Set</span><span style="color: #DCDCCC;">}</span> <span style="color: #cae682;">&#8594;</span> <span style="color: #DCDCCC;">{</span>x y <span style="color: #92a65e; font-weight: bold;">:</span> <span style="color: #92a65e; font-weight: bold;">A</span><span style="color: #DCDCCC;">}</span> <span style="color: #cae682;">&#8594;</span> <span style="color: #DCDCCC;">(</span>p q <span style="color: #92a65e; font-weight: bold;">:</span> x <span style="color: #cae682;">&#8801;</span> y<span style="color: #DCDCCC;">)</span> <span style="color: #cae682;">&#8594;</span> p <span style="color: #cae682;">&#8801;</span> q
+<span style="color: #cae682;">uip</span> refl refl <span style="color: #cae682;">=</span> refl
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-idris"><span style="color: #99968b;">-- In Idris</span>
-<span style="color: #f6f3e8; background-color: #242424;">uip</span> <span style="color: #cae682;">:</span> <span style="color: #DCDCCC;">(</span><span style="color: #f6f3e8; background-color: #242424;">t</span> <span style="color: #cae682;">:</span> <span style="color: #f6f3e8; background-color: #242424;">Type</span><span style="color: #DCDCCC;">)</span> 
-    <span style="color: #cae682;">-&gt;</span> <span style="color: #DCDCCC;">(</span><span style="color: #f6f3e8; background-color: #242424;">x</span> <span style="color: #cae682;">:</span> <span style="color: #f6f3e8; background-color: #242424;">t</span><span style="color: #DCDCCC;">)</span> <span style="color: #cae682;">-&gt;</span> <span style="color: #DCDCCC;">(</span><span style="color: #f6f3e8; background-color: #242424;">y</span> <span style="color: #cae682;">:</span> <span style="color: #f6f3e8; background-color: #242424;">t</span><span style="color: #DCDCCC;">)</span> 
-    <span style="color: #cae682;">-&gt;</span> <span style="color: #DCDCCC;">(</span><span style="color: #f6f3e8; background-color: #242424;">p</span> <span style="color: #cae682;">:</span> <span style="color: #f6f3e8; background-color: #242424;">x</span> <span style="color: #cae682;">=</span> <span style="color: #f6f3e8; background-color: #242424;">y</span><span style="color: #DCDCCC;">)</span> <span style="color: #cae682;">-&gt;</span> <span style="color: #DCDCCC;">(</span><span style="color: #f6f3e8; background-color: #242424;">q</span> <span style="color: #cae682;">:</span> <span style="color: #f6f3e8; background-color: #242424;">x</span> <span style="color: #cae682;">=</span> <span style="color: #f6f3e8; background-color: #242424;">y</span><span style="color: #DCDCCC;">)</span> 
-    <span style="color: #cae682;">-&gt;</span> <span style="color: #f6f3e8; background-color: #242424;">p</span> <span style="color: #cae682;">=</span> <span style="color: #f6f3e8; background-color: #242424;">q</span>
-<span style="color: #f6f3e8; background-color: #242424;">uip</span> <span style="color: #f6f3e8; background-color: #242424;">t</span> <span style="color: #f6f3e8; background-color: #242424;">x</span> <span style="color: #f6f3e8; background-color: #242424;">x</span> <span style="color: #f6f3e8; background-color: #242424;">Refl</span> <span style="color: #f6f3e8; background-color: #242424;">Refl</span> <span style="color: #cae682;">=</span> <span style="color: #f6f3e8; background-color: #242424;">Refl</span>
+<pre class="src src-haskell"><span style="color: #5F7F5F;">-- </span><span style="color: #99968b;">In Idris</span>
+uip <span style="color: #cae682;">:</span> <span style="color: #DCDCCC;">(</span>t <span style="color: #92a65e; font-weight: bold;">:</span> <span style="color: #92a65e; font-weight: bold;">Type</span><span style="color: #DCDCCC;">)</span> 
+    <span style="color: #cae682;">-&gt;</span> <span style="color: #DCDCCC;">(</span>x <span style="color: #92a65e; font-weight: bold;">:</span> t<span style="color: #DCDCCC;">)</span> <span style="color: #cae682;">-&gt;</span> <span style="color: #DCDCCC;">(</span>y <span style="color: #92a65e; font-weight: bold;">:</span> t<span style="color: #DCDCCC;">)</span> 
+    <span style="color: #cae682;">-&gt;</span> <span style="color: #DCDCCC;">(</span>p <span style="color: #92a65e; font-weight: bold;">:</span> x <span style="color: #cae682;">=</span> y<span style="color: #DCDCCC;">)</span> <span style="color: #cae682;">-&gt;</span> <span style="color: #DCDCCC;">(</span>q <span style="color: #92a65e; font-weight: bold;">:</span> x <span style="color: #cae682;">=</span> y<span style="color: #DCDCCC;">)</span> 
+    <span style="color: #cae682;">-&gt;</span> p <span style="color: #cae682;">=</span> q
+<span style="color: #cae682;">uip</span> t x x <span style="color: #92a65e; font-weight: bold;">Refl</span> <span style="color: #92a65e; font-weight: bold;">Refl</span> <span style="color: #cae682;">=</span> <span style="color: #92a65e; font-weight: bold;">Refl</span>
 </pre>
 </div>
 
@@ -162,7 +162,7 @@ theory. <sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>
 
 <div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
 <b>The groupoid interpretation of type theory</b>, Martin
-Hofmann and Thomas Stricher, 1996.
+Hofmann and Thomas Streicher, 1996.
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
