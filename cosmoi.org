@@ -300,6 +300,56 @@ arithmetic statements.
 ** TODO The natural example of natural transformation
 Double dual of a vector space.
 ** TODO Categorical programming with CAP
+
+** Linear logic is quantity-sensitive                                                        :post:
+:PROPERTIES:
+:TITLE: Linear logic is quantity-sensitive
+:EXPORT_FILE_NAME: countinginlinearlogic.pdf
+:EXPORT_DATE: <2018-12-23 Sun 15:50>
+:END:
+
+/This is an exercise on Samson Abramsky's notes/
+/on the course Categories, Proofs and Processes./ cite:abramsky10 \\
+
+The main idea here is that we can formalize the notion that linear
+logic is sensitive to the number of ocurrences of each variable
+using the model it has on groups, which are particular cases of
+symmetric monoidal closed categories.
+
+#+begin_statement
+Can you construct proofs in Linear Logic of the following sequents?
+
+ * $A \vdash A \otimes A$
+ * $\vdash (A \multimap (A \multimap B)) \multimap (A \multimap B)$
+ * $\vdash A \multimap (B \multimap A)$
+#+end_statement
+
+Consider the discrete category of the integers with the monoidal
+structure given by addition, which is associative, and $0$ as the unit.
+With this we can construct the structural isomorphisms as identities.
+This is a symmetric category because addition is commutative. It
+is monoidal closed with $(a \multimap b) = b - a$ because we have the following
+adjunction, where morphisms represent equalities.
+\begin{prooftree}
+\AXC{$a + b = c$}
+\UIC{$a = c - b$}
+\end{prooftree}
+Naturality of the structural isomorphisms and of the
+adjunction follow from the fact that we are in a discrete category. \\
+
+Now, neither $a = a + a$, $0 = (b-a) - ((b-a)-a) = a$, nor $0 = (a-b)-a = -b$
+are true in general. It is impossible to create a morphism of
+these types in a symmetric monoidal closed category in general. \\
+
+This shows that linear logic is resource sensitive.  We could assume
+that each object has a weight and that morphisms have to be
+balanced.  The interpretation on integers precisely reflects this
+'weight'.
+
+*** references                                                                            :ignore:
+bibliographystyle:alpha
+bibliography:Math.bib
+
 ** Powerset-algebras are complete semilattices                                               :post:
 :PROPERTIES:
 :TITLE: Powerset-algebras are complete semilattices
@@ -308,7 +358,7 @@ Double dual of a vector space.
 :END:
 
 /This is a combination of two exercises from Samson Abramsky's notes/
-/on the course Categories, Proofs and Processes./ \\
+/on the course Categories, Proofs and Processes./ cite:abramsky10 \\
 
 #+begin_definition
 We take a *complete semilattice* to mean a poset $(P, \leq)$ where every
@@ -444,6 +494,10 @@ satisfying, $f \left( \bigvee A \right) = \bigvee f(A)$; that is, a complete sem
 This is also a consequence of Beck's monadicity theorem. The adjunction ${\cal P} \dashv U$ is
 monadic and that implies that the comparison functor $\mathbf{SL} \to \mathbf{Set}^{{\cal P}}$ between complete
 semilattices and powerset-algebras is an equivalence.
+
+*** references                                                                            :ignore:
+bibliographystyle:alpha
+bibliography:Math.bib
 
 ** Picado's Interview with Lawvere                                                           :post:
 :PROPERTIES:
@@ -2672,6 +2726,7 @@ unless otherwise specified.
 #+RESULTS:
 #+BEGIN_EXPORT html
 <ul>
+ <li><a href=countinginlinearlogic.pdf> Linear logic is quantity-sensitive</a><em>, 23 December 2018</em><br></li>
  <li><a href=powersetalgebrascompletesemilattices.pdf> Powerset-algebras are complete semilattices</a><em>, 23 December 2018</em><br></li>
  <li><a href=picadolawvereinterview.html> Picado's Interview with Lawvere</a><em>, 08 September 2018</em><br></li>
  <li><a href=quoteampere.html> A quote by Ampère</a><em>, 03 September 2018</em><br></li>
