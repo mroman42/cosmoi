@@ -104,24 +104,171 @@ arithmetic statements.
 
 ** TODO The type-theoretic axiom of choice
 ** TODO Bach sonata
-** TODO A natural example of natural transformations
+** TODO The natural example of natural transformation
 Double dual of a vector space.
 ** TODO Categorical programming with CAP
+
+** Powerset-algebras are complete semilattices                                               :post:
+:PROPERTIES:
+:TITLE: Powerset-algebras are complete semilattices
+:EXPORT_FILE_NAME: powersetalgebrascompletesemilattices.html
+:EXPORT_DATE: <2018-12-23 Sun 13:10>
+:END:
+
+/This is a combination of two exercises from Samson Abramsky's notes/
+/on the course Categories, Proofs and Processes./
+
+#+begin_definition
+We take a *complete semilattice* to mean a poset $(P, \leq)$ where every
+subset $S \subseteq P$ has a least upper bound we write as $\bigvee S$. That is to
+say that it is a category with at most one morphism between any two
+objects that has all coproducts.
+#+end_definition
+
+A morphism between complete semilattices is a map between posets that
+preserves all least upper bounds, that is $h \left( \bigvee S \right) = \bigvee h(S)$, where we
+write $h(S) = \left\{ h(x) \mid x \in S \right\}$. This property implies monotonicity: note
+that from $x \leq y$ we get $h(y) = h(x \vee y) = h(x) \vee h(y)$, and thus $h(x) \leq h(y)$.
+We have created a category of complete semilattices with morphisms
+between them that we call $\mathbf{SL}$. There is a forgetful functor $U \colon \mathbf{SL} \to \mathbf{Set}$
+assigning the underlying set to each poset.
+
+*** Free-forgetful adjunction
+#+begin_proposition
+The forgetful functor $U \colon \mathbf{SL} \to \mathbf{Set}$ has a left adjoint.
+#+end_proposition
+#+begin_proof
+We will show that the left adjoint is the functor ${\cal P} \colon \mathbf{Set} \to \mathbf{SL}$ sending each set to its powerset
+ordered by inclusion, which is a complete semilattice because
+the union of a family of sets is its least upper bound. Given 
+two sets $A$ and $B$, any
+function $f \colon A \to B$ induces a $f^{\ast} \colon {\cal P}A \to {\cal P}B$
+sending a subset to its image under $f$; this constitutes the action
+of the functor on morphisms. We can check that this
+is a morphism of complete semilattices because, for any family
+${\cal X} \subseteq {\cal P}(A)$, we have
+
+\[
+f^{\ast} \left( \bigcup_{Y \in {\cal X}} Y \right) = 
+\left\{ f(y) \;\middle|\; y \in \bigcup_{Y \in {\cal X}} Y \right\} =
+\bigcup_{Y \in {\cal X}} \left\{ f(y) \mid y \in  Y \right\} =
+\bigcup_{Y \in {\cal X}} f^{\ast}(Y).
+\]
+
+To construct the adjunction, we start by defining an isomorphism $\mathbf{Set}(A,UB) \to \mathbf{SL}({\cal P}A,B)$ that sends
+$f \colon A \to B$ to the function that acts on some $Y \subseteq A$ as
+
+\[
+\overline{f}(Y) = \bigvee_{y \in Y} f(y).
+\]
+
+This is a morphism of complete semilattices because for any family
+of subsets ${\cal X} \subseteq {\cal P}(A)$ we have
+
+\[
+\overline{f} \left( \bigcup_{Y \in {\cal X}} Y  \right) =
+\bigvee_{y \in \bigcup_{Y \in {\cal X}} Y} f(y) =
+\bigvee_{Y \in {\cal X}} \bigvee_{y \in Y} f(y) =
+\bigvee_{Y \in {\cal X}} \overline{f}(Y)
+\]
+
+This isomorphism has an inverse sending each morphism $h \colon {\cal P}(A) \to B$ to
+the function $A \to B$ defined as $a \mapsto h(\left\{ a \right\})$. We
+can check that these are in fact inverses because for any $f \colon A \to B$
+and $a \in A$ we have
+
+\[
+\overline{f}(\left\{ a \right\}) = \bigvee_{a \in \left\{ a \right\}} f(a) = f(a)
+\]
+
+and for any semilattice morphism $h \colon {\cal P}(A) \to B$ we have for any $X \subseteq A$,
+using that it preserves least upper bounds, that
+
+\[
+\overline{h(\{-\})}(X) =
+\bigvee_{x \in X} h(\left\{ x \right\}) = 
+h \left( \bigvee_{x \in X} \left\{ x \right\} \right) = 
+h(X).
+\]
+
+We now show that the isomorphism is in fact natural. Given any
+$f \colon A \to UB$, any function $a \colon A' \to A$ and any morphism of semilattices
+$b \colon B \to B'$, we have for a given $Y \in {\cal P}(A)$ that
+
+\[
+b \overline{f} a^{\ast}(Y) = b \left( \bigvee_{y \in Y}f(a(y))  \right) =
+\bigvee_{y \in Y} b f a(y) = \overline{b f a}(Y),
+\]
+
+because $b$ preserves least upper bounds. This proves that
+$b\circ \overline{f} \circ a^{\ast} = \overline{b \circ f \circ a}$ and the isomorphism is thus natural.
+#+end_proof
+
+*** Powerset-algebras
+Note that the powerset monad acts on objects as $U{\cal P}$, simply
+taking the powerset and forgetting about its semilattice structure.
+The unit of the adjunction, $a \mapsto \left\{ a \right\}$ is precisely the unit of the
+monad, and the counit of the adjunction, the lattice homomorphism
+$\bigvee \colon {\cal P}L \to L$ for any lattice $L$, is such that $U\bigvee_{{\cal P}} = \bigcup \colon {\cal P}{\cal P}A \to {\cal P}A$
+is precisely the multiplication of the monad for any set $A$. \\
+
+We can now prove that ${\cal P}\mbox{-algebras}$ are complete semilattices.
+Note that an algebra would be a function $f \colon {\cal P}A \to A$ such that
+
+\[
+f \left\{ a \right\} = a, \qquad f \left( \bigcup_{i \in I} A_i \right) = f \left\{ f(A_i) \mid i \in I \right\},
+\]
+
+for any element $a \in A$ and any family of subsets $A_i \subseteq A$. We can define
+a partial order where for any two elements $x,y \in A$, we have that $x \leq y$
+when $f \left\{ x,y \right\} = y$. This satisfies
+
+ * *reflexivity*, because $f \left\{ x,x \right\} = x$;
+ * *transitivity*, because if $x \leq y \leq z$, then we have
+   $f \left\{ x,z \right\} = f \left\{ f\{x\}, f\{y,z\} \right\} = f \left\{ x,y,z \right\} = f \left\{ f\{x,y\},f\{z\} \right\} = z$;
+ * and *antisymmetry*, because $x \leq y \leq x$ implies $x = f \left\{ x,y \right\} = y$.
+
+For this particular preorder, the function $f$ is the lowest great bound
+$\bigvee$; this can be proved checking that, for any subset $S \subseteq A$,
+
+ * for each $s \in S$, we have $f \left\{ s , f(S) \right\} = f(S \cup \left\{ s \right\})= f(S)$,
+   so $s \leq f(S)$;
+ * and given some $x \in A$ such that $s \leq x$ for all $s \in S$, we have
+   $f \left\{ f(S),x \right\} = f \left( \bigcup_{s \in S} \left\{ s,x \right\} \right) = f \left\{ x \right\} = x$, and thus $f(S) \leq x$.
+
+Finally, we can check that taking the lowest great bound on a subset
+of a poset provides a valid algebra.
+
+\[
+\bigvee \left\{ a \right\} = a, \qquad
+\bigvee \left( \bigcup_{i \in I} A_i \right) = \bigvee \left\{ \bigvee A_i \mid i \in I \right\}.
+\]
+
+Note that once we know that all algebras are of this form, a ${\cal P}\mbox{-algebra}$
+morphism is precisely a function between complete semilattices $f \colon A \to B$
+satisfying, $f \left( \bigvee A \right) = \bigvee f(A)$; that is, a complete semilattice morphism.
+
+*** Monadicity theorem
+This is also a consequence of Beck's monadicity theorem. The adjunction ${\cal P} \dashv U$ is
+monadic and that implies that the comparison functor $\mathbf{SL} \to \mathbf{Set}^{{\cal P}}$ between complete
+semilattices and powerset-algebras is an equivalence.
+
 ** Picado's Interview with Lawvere                                                           :post:
 :PROPERTIES:
 :TITLE: Picado's Interview with Lawvere
 :EXPORT_FILE_NAME: picadolawvereinterview.html
-:EXPORT_DATE: <2018-09-03 Mon 21:55>
+:EXPORT_DATE: <2018-09-08 Sat 17:20>
 :END:
 
-[[http://www.mat.uc.pt/~picado/][Jorge Picado]] (who is also coauthor of a great book on [[https://www.maa.org/press/maa-reviews/frames-and-locales-topology-without-points][locales]]) has
+[[http://www.mat.uc.pt/~picado/][Jorge Picado]] (who is also coauthor of the book on [[https://www.maa.org/press/maa-reviews/frames-and-locales-topology-without-points][locales]] I am reading) has
 many nice 'popularisation of mathematics' articles on his webpage. I
 have enjoyed a lot his interview with William Lawvere.
 
  * http://www.mat.uc.pt/~picado/lawvere/interview.pdf
 
-Specially interesting is the criticism to the extra-mathematical publicity
-around Gödel's theorem.
+Specially interesting is this criticism to the extra-mathematical
+publicity around Gödel's theorem. However, I cannot locate exactly
+what 'organized attempts' is he referring to.
 
 #+BEGIN_QUOTE
 In Diagonal arguments and Cartesian closed categories we demystified
@@ -150,7 +297,7 @@ an agenda have become explicit.
 
 I am having a bit of trouble locating the exact source of this
 sentence and I am also not sure in which sense should be interpreted;
-but I imagined somehow that the idea of languages as algebras would
+but I somehow imagined that the idea of languages as algebras would
 be more modern than this.
 
 ** LibreIM, casi cinco años después                                                          :post:
@@ -245,13 +392,13 @@ uip : {A : Set} → {x y : A} → (p q : x ≡ y) → p ≡ q
 uip refl refl = refl
 #+END_SRC
 
-#+BEGIN_SRC idris
-  -- In Idris
-  uip : (t : Type) 
-      -> (x : t) -> (y : t) 
-      -> (p : x = y) -> (q : x = y) 
-      -> p = q
-  uip t x x Refl Refl = Refl
+#+BEGIN_SRC agda
+-- In Idris
+uip : (t : Type) 
+    -> (x : t) -> (y : t) 
+    -> (p : x = y) -> (q : x = y) 
+    -> p = q
+uip t x x Refl Refl = Refl
 #+END_SRC
 
 However, UIP is not valid in general in Martin-Löf type theory.
@@ -284,7 +431,7 @@ this can be read on the Michael's Shulman article on homotopy type
 theory. [fn:logicofspace]
 
 [fn:groupoid] *The groupoid interpretation of type theory*, Martin
-Hofmann and Thomas Stricher, 1996.
+Hofmann and Thomas Streicher, 1996.
 
 [fn:logicofspace] *Homotopy type theory: the logic of space*, Michael
 Shulman, 2017.
@@ -2215,6 +2362,21 @@ asistente de demostraciones *COQ*, desarrollado por el INRIA. El
 -  [[http://ac.els-cdn.com/0890540188900053/1-s2.0-0890540188900053-main.pdf?_tid=3846e956-b301-11e5-8e78-00000aab0f02&acdnat=1451925532_87ac5a8e6a7bd6477746a55c17130f43][Calculus of Constructions - T. Coquand, G. Huet]].
 -  [[https://coq.inria.fr/][The Coq proof assistant - INRIA]]
 
+** Informal CV                                                                               :post:
+:PROPERTIES:
+:TITLE:    Informal CV
+:EXPORT_FILE_NAME: informalcv.html
+:EXPORT_DATE: <2018-10-21 Sun>
+:END:
+
+ * October 2018. Started a [[https://www.ox.ac.uk/admissions/graduate/courses/msc-mathematics-and-foundations-computer-science?wssl=1][MSc in Mathematics and Foundations of Computer Science]]. (University of Oxford)
+ * August 2018. [[https://homalg-project.github.io/capdays-2018/][CAP days]]. (Universität Siegen)
+ * June 2018. Finished my double degree on Mathematics and Computer Engineering. (University of Granada)
+ * June 2018. Presented my bachelor's thesis. [[https://mroman42.github.io/ctlc/ctlc.pdf][Category theory and lambda calculus]]. (University of Granada)
+ * December 2017. [[https://unimath.github.io/bham2017/][School and Workshop on Univalent Mathematics]]. (University of Birmingham)
+ * July 2017. [[https://sites.google.com/view/summerschool2017-eutypes/][EUTypes Summer School]]. (Ohrid, Macedonia)
+ * March 2017. [[https://sites.google.com/unizar.es/affine-group-schemes-seminar/inicio][Seminar. Affine group schemes, an introduction]]. (University of Zaragoza)
+
 ** Projective, injective and flat modules
 :PROPERTIES:
 :TITLE:    Projective, injective and flat modules
@@ -2374,7 +2536,8 @@ unless otherwise specified.
 #+RESULTS:
 #+BEGIN_EXPORT html
 <ul>
- <li><a href=picadolawvereinterview.html> Picado's Interview with Lawvere</a><em>, 03 September 2018</em><br></li>
+ <li><a href=powersetalgebrascompletesemilattices.html> Powerset-algebras are complete semilattices</a><em>, 23 December 2018</em><br></li>
+ <li><a href=picadolawvereinterview.html> Picado's Interview with Lawvere</a><em>, 08 September 2018</em><br></li>
  <li><a href=quoteampere.html> A quote by Ampère</a><em>, 03 September 2018</em><br></li>
  <li><a href=libreimquintoaniversario.html> LibreIM, casi cinco años después</a><em>, 03 September 2018</em><br></li>
  <li><a href=orgdrillspacedrepetition.html> Org-drill and spaced repetition</a><em>, 03 September 2018</em><br></li>
@@ -2393,6 +2556,7 @@ unless otherwise specified.
  <li><a href=monadas.html> Mónadas</a><em>, 24 December 2016</em><br></li>
  <li><a href=matematicasemacs.html> Matemáticas en emacs</a><em>, 26 September 2016</em><br></li>
  <li><a href=ideasteoriatipos.html> Ideas de teoría de tipos</a><em>, 08 January 2016</em><br></li>
+ <li><a href=informalcv.html> Informal CV</a><em>, 21 October 2018</em><br></li>
 </ul>
 #+END_EXPORT
 
