@@ -2856,7 +2856,7 @@ I'm *Mario Román*.  I am learning Mathematics and Computer science; my
 main interests being [[https://en.wikipedia.org/wiki/Category_theory][categories]], [[https://en.wikipedia.org/wiki/Type_theory][types]], and logic.  I sometimes write
 for the [[https://libreim.github.io/][LibreIM]] community.
 
-  - GitHub: [[https://github.com/M42][@mroman42]]
+  - GitHub: [[https://github.com/mroman42][@mroman42]]
   - GitLab: [[https://gitlab.com/mroman42][@mroman42]]
   - CV: [[https://mroman42.github.io/friggeri-cv-a4/cv.pdf][My CV on Github pages]].
   - Email: [[mailto:mromang08+blog@gmail.com][mromang08+blog@gmail.com]]

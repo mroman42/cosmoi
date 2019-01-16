@@ -11,6 +11,34 @@ Mathematics and computer science.
 Categories, logic and types.
 </description>
 <item>
+<title>Every surjection to a projective R-module is split</title>
+<link>https://mroman42.github.io/cosmoi/everysurjectiontoprojectiveissplit.pdf</link>
+<guid>https://mroman42.github.io/cosmoi/everysurjectiontoprojectiveissplit.pdf</guid>
+<pubDate>Mon, 24 Dec 2018 09:07:00 GMT</pubDate>
+<description></description>
+</item>
+<item>
+<title>Hom is continuous</title>
+<link>https://mroman42.github.io/cosmoi/homcontinuous.pdf</link>
+<guid>https://mroman42.github.io/cosmoi/homcontinuous.pdf</guid>
+<pubDate>Sun, 23 Dec 2018 16:20:00 GMT</pubDate>
+<description></description>
+</item>
+<item>
+<title>Pasting pullbacks</title>
+<link>https://mroman42.github.io/cosmoi/pastingpullbacks.pdf</link>
+<guid>https://mroman42.github.io/cosmoi/pastingpullbacks.pdf</guid>
+<pubDate>Sun, 23 Dec 2018 16:09:00 GMT</pubDate>
+<description></description>
+</item>
+<item>
+<title>Linear logic is quantity-sensitive</title>
+<link>https://mroman42.github.io/cosmoi/countinginlinearlogic.pdf</link>
+<guid>https://mroman42.github.io/cosmoi/countinginlinearlogic.pdf</guid>
+<pubDate>Sun, 23 Dec 2018 15:50:00 GMT</pubDate>
+<description></description>
+</item>
+<item>
 <title>Powerset-algebras are complete semilattices</title>
 <link>https://mroman42.github.io/cosmoi/powersetalgebrascompletesemilattices.pdf</link>
 <guid>https://mroman42.github.io/cosmoi/powersetalgebrascompletesemilattices.pdf</guid>
@@ -46,9 +74,9 @@ Categories, logic and types.
 <description></description>
 </item>
 <item>
-<title>Uniqueness of identity paths</title>
-<link>https://mroman42.github.io/cosmoi/uniquenessofidentitypaths.pdf</link>
-<guid>https://mroman42.github.io/cosmoi/uniquenessofidentitypaths.pdf</guid>
+<title>Uniqueness of identity proofs</title>
+<link>https://mroman42.github.io/cosmoi/uniquenessofidentityproofs.pdf</link>
+<guid>https://mroman42.github.io/cosmoi/uniquenessofidentityproofs.pdf</guid>
 <pubDate>Sat, 25 Aug 2018 21:57:00 GMT</pubDate>
 <description></description>
 </item>
@@ -155,6 +183,13 @@ Categories, logic and types.
 <link>https://mroman42.github.io/cosmoi/informalcv.html</link>
 <guid>https://mroman42.github.io/cosmoi/informalcv.html</guid>
 <pubDate>Sun, 21 Oct 2018 01:00:00 GMT</pubDate>
+<description></description>
+</item>
+<item>
+<title>Wikipedia contributions</title>
+<link>https://mroman42.github.io/cosmoi/wikipediacontributions.html</link>
+<guid>https://mroman42.github.io/cosmoi/wikipediacontributions.html</guid>
+<pubDate>Sat, 17 Feb 2018 12:00:00 GMT</pubDate>
 <description></description>
 </item>
 
