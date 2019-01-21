@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-01-21 Mon 19:10 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>dotfiles in a single org-file</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Mario Román" />
+<link rel="stylesheet" href="default.css" />
+<link rel="stylesheet" href="mathjax_fonts.css" />
+<link rel="stylesheet" href="syntax.css" />
+<div id="header">
+<div id="logo">
+<a hrwef="index.html">Cosmoi</a>
+</div>
+<div id="navigation">
+<a href="index.html">Index</a>
+<a href="about.html">About</a>
+<a href="feed.xml">RSS</a>
+</div>
+</div>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">dotfiles in a single org-file</h1>
+<p>
+I was thinking that it would be nice to have all your configuration
+files on a single, literate, org-mode file&#x2026; and actually it should
+be really easy to make it work: take an org file and create an org-babel block 
+for the contents of each configuration file. They can be tangled
+back into the filesystem using the property <code>:tangle /path/tofile</code>,
+where <code>/path/tofile</code> is the desired location of the config file.
+If <code>sudo</code> is needed, <code>tramp</code> can be used with <code>:tangle /sudo::/path/tofile</code>.
+</p>
+
+<p>
+For instance, this is how <code>.Xresources</code> looks now inside my org file.
+Highlighting works perfectly thanks to org-babel.
+</p>
+
+<pre class="example">
+** X resources
+
+Configuration parameters for X client applications.
+
+#+BEGIN_SRC conf /home/mario/.Xresources
+xterm*font: *-fixed-*-*-*-24-*
+Xft.dpi:    192
+#+END_SRC
+</pre>
+
+<p>
+This file can be put under version control and a <i>dotfiles repository</i>
+can be created without having to use hard links (yep, I was doing that
+until now).
+</p>
+
+<p>
+As always with Emacs, this use case is obvious in retrospect, but <i>why
+didn't anyone tell me?</i>
+</p>
+</div>
+<div id="postamble" class="status">
+<div id="footer"><p class="postamble">Last edited 2019-01-21 Mon 19:01. Written by <a href="https://mroman42.github.com">@mroman42</a>.</p></div>
+</div>
+</body>
+</html>
