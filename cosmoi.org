@@ -300,6 +300,145 @@ Every term in untyped \lambda-calculus has a fixed point.
 ** TODO The natural example of natural transformation
 Double dual of a vector space.
 ** TODO Categorical programming with CAP
+** TODO A geodesic to Freyd-Mitchell
+** TODO Etimología para Mikrokosmos
+# Bartok
+# Cosmoi -> Benabou
+
+** TODO Monoides, grupos, grupoides, categorías
+# Definiciones
+# Motivación
+# Estructura coloreada
+# Topología y topología dirigida
+
+*** Monoides
+Un *monoide* es una estructura $A$ en la que (1) podemos /componer/
+cualesquiera dos elementos en uno nuevo con una operación 
+$\circ \colon A \times A \to A$ y en la que (2) existe un elemento neutro $e$
+que no afecta al componerse con otro, $a \circ e = e \circ a = a$ para
+cualquier $a : A$, y (3) la composición es asociativa, siendo
+$a \circ (b \circ c) = (a \circ b) \circ c$ para cualesquiera $a,b,c : A$.
+
+Ejemplos son:
+
+ 1. Los números naturales con la suma como operación y el cero
+    como elemento neutro. $n + 0 = 0 + n = n$
+ 2. Las cadenas de texto, con la concatenación como operación y
+    la cadena vacía como elemento neutro. $a \circ "" = "" \circ a = a$
+
+*** Grupo
+Un *grupo* es un monoide donde cada elemento $a : A$ tiene una
+inversa $a^{-1} : A$ tal que $a \circ a^{-1} = a^{-1} \circ a = e$.
+
+Ejemplos son:
+
+ 1. Los números enteros con la suma como operación, el cero como
+    elemento neutro y el elemento opuesto como negación.
+
+*** Categoría
+Una *categoría* es un monoide coloreado. Eso significa que no podemos
+componer elementos libremente, sino que cada elemento $a : A$ tiene un
+dominio $\mathrm{dom}(a)$ y un codominio $\mathrm{cod}(a)$. Sólo podemos componer $a \circ b$ 
+si $\mathrm{cod}(b) = \mathrm{dom}(a)$, y la composición tendrá dominio $\mathrm{dom}(b)$ y 
+codominio $\mathrm{cod}(b)$.
+
+Ejemplos son:
+
+ 1. Las funciones con la composición de funciones.
+
+*** Grupoide
+Un *grupoide* es un grupo coloreado. 
+
+** TODO Adjunciones
+** TODO Media 2018
+** Diagramas para categorías monoidales                                                      :post:
+:PROPERTIES:
+:TITLE: Diagramas para categorías monoidales
+:EXPORT_FILE_NAME: diagramascategoriasmonoidales.pdf
+:EXPORT_DATE: <2019-01-21 Mon 19:01>
+:END:
+
+Este es un post de enlaces sobre lenguajes diagramáticos. Me temo que
+todo el material está en inglés, pero quería tener una nota sobre el
+tema que no estuviera en inglés. \\
+
+Vamos a motivarlos primero siguiendo un ejemplo de cite:coecke17; la
+explicación de todo está en el libro, aquí sólo quiero dar una idea.
+Supongamos que tenemos los siguientes ingredientes representados en un
+diagrama. Dos partes (Alice y Bob) comparten un /estado/ común
+representado como un cable en forma de U. Alice tiene además cierta información propia
+ψ que quiere enviar a Bob. Por último,
+Alice puede tomar dos estados y hacerlos iguales introduciendo un
+error en el proceso.  Bob puede corregir este error una vez Alice le
+informa de él. Todos los procesos se representan como cajas con una
+serie de entradas (abajo) y salidas (arriba). El eje y se interpreta
+como una línea temporal de abajo a arriba.
+
+#+attr_latex: :width 5cm
+#+caption: Los ingredientes.
+[[./alicebob1.jpg]]
+
+¿Cómo combinamos estas piezas? La respuesta obvia es el siguiente
+diagrama. Aquí, Alice toma el estado que quiere enviar y el estado
+compartido y los hace iguales introduciendo un error; Bob corrige
+este error. Las siguientes igualdades son válidas en el cálculo
+diagramático y muestran que esto es equivalente a que Bob acabe
+teniendo la información que Alice le quería mandar.
+
+#+caption: La solución.
+[[./alicebob2.jpg]]
+
+Este diagrama puede traducirse formalmente a un morfismo en una
+categoría con suficiente estructura (explícitamente, a una categoría
+monoidal cerrada compacta, pero no necesitamos detalles).  La
+categoría de conjuntos cuyos morfismos son relaciones, *Rel*, tiene esa
+estructura; y cuando interpretamos este diagrama obtenemos el
+protocolo de /libreta de un sólo uso/ (one-time pad).  La categoría de
+espacios de Hilbert con matrices unitarias tiene esa estructura
+también, y cuando interpretamos el morfismo ¡obtenemos un protocolo de
+/teleportación cuántica/!  Es decir, un poco de razonamiento
+diagramático nos ha servido para obtener en abstracto un protocolo y
+descubrir que dos protocolos conocidos son dos de sus instancias
+particulares en distintas categorías. Podríamos estudiar otros
+protocolos, y podríamos interpretarlos en otras categorías. ¿Qué más
+podemos hacer con diagramas?, lo que sigue es una lista no exhaustiva.
+
+ * *Álgebra lineal.* Un ejemplo perfecto de categorías con esta estructura
+   son los espacios vectoriales. En el blog [[https://graphicallinearalgebra.net/][Graphical Linear Algebra]],
+   [[https://www.southampton.ac.uk/~ps1a06/][Pawel Sobocinski]] da una introducción informal al álgebra
+   lineal y al razonamiento diagramático.
+
+ * *Mecánica cuántica.* /Picturing Quantum Processes/, de [[https://www.cs.ox.ac.uk/people/bob.coecke/][Coecke]] y [[http://www.cs.ru.nl/A.Kissinger/][Kissinger]]
+   cite:coecke17, de donde viene el primer ejemplo. Es una introducción
+   elemental que no asume prácticamente ningún conocimiento previo: ni de
+   mecánica cuántica ni de diagramas. Profundiza mucho en los diagramas en sí y
+   no requiere conocer la teoría de categorías subyacente.
+
+ * *Mecánica cuántica categórica.* /Categorical Quantum Mechanics,/ de
+   [[https://www.cs.ox.ac.uk/people/jamie.vicary/][Vicary]] y [[http://homepages.inf.ed.ac.uk/cheunen/teaching.html][Heunen]] ([[https://www.cs.ox.ac.uk/files/10510/notes.pdf][link]]) da otra introducción a las aplicaciones en
+   mecánica cuántica. Enfatiza mucho más la teoría de categorías, aquí
+   sí es un prerrequisito haber leído teoría de categorías. Como bonus,
+   hay un estudio muy detallado de cómo las categorías justifican el
+   razonamiento diagramático.
+
+ * *Teoría de categorías*. /Category theory with string diagrams/, de [[https://www.cs.ox.ac.uk/people/dan.marsden/][Marsden]],
+   es muy accesible y explica 2-categorías, adjunciones, mónadas e incluso 
+   límites; usando razonamiento gráfico.
+
+ * *Lingüística.* /Distributional compositional categorical semantics,/ es
+   un marco teórico para calcular el significado de las frases en función
+   del significado de las palabras. Es /distribucional/ porque el significado
+   de una palabra se calcula según las palabras que aparecen cerca de ella
+   en un corpus de texto suficientemente grande; es /composicional/ porque
+   podemos componer esos significados usando la estructura categórica para
+   calcular el significado de frases completas. Una introducción es
+   cite:coecke10 de [[https://www.cs.ox.ac.uk/people/bob.coecke/][Coecke]], [[http://www.eecs.qmul.ac.uk/profiles/sadrzadehmehrnoosh.html][Sadrzadeh]] y [[https://sites.google.com/site/stephenclark609/][Clark]].
+   
+Por último, una visión general de los lenguages diagramáticos es cite:selinger10.
+
+*** references                                                                            :ignore:
+bibliographystyle:alpha
+bibliography:Math.bib
 
 ** dotfiles in a single org-file                                                             :post:
 :PROPERTIES:
@@ -785,7 +924,7 @@ org-drill format would be great.
 If you are not yet committed to Anki and you are already confortable
 with Emacs, it could be a good idea to try both before settling on one.
 
-** Uniqueness of identity proofs                                                              :post:
+** Uniqueness of identity proofs                                                             :post:
 :PROPERTIES:
 :TITLE: Uniqueness of identity proofs
 :EXPORT_FILE_NAME: uniquenessofidentityproofs.pdf
@@ -2927,6 +3066,7 @@ unless otherwise specified.
 #+RESULTS:
 #+BEGIN_EXPORT html
 <ul>
+ <li><a href=diagramascategoriasmonoidales.pdf> Diagramas para categorías monoidales</a><em>, 21 January 2019</em><br></li>
  <li><a href=dotfilesinasingleorg.html> dotfiles in a single org-file</a><em>, 21 January 2019</em><br></li>
  <li><a href=everysurjectiontoprojectiveissplit.pdf> Every surjection to a projective R-module is split</a><em>, 24 December 2018</em><br></li>
  <li><a href=homcontinuous.pdf> Hom is continuous</a><em>, 23 December 2018</em><br></li>
@@ -2958,9 +3098,9 @@ unless otherwise specified.
 #+END_EXPORT
 
 * Publishing                                                                              :noexport:
-The =cosmoi/publish= command exports all posts into HTML on the =docs=
-folder. You may want to regenerate the index first. Every post must
-have the tag :post: and must have the properties
+The =cosmoi/publish= command exports all posts into HTML and PDF on the
+main folder. You may want to regenerate the index first. Every post
+must have the tag :post: and must have the properties
 
  - :TITLE:
  - :EXPORT_FILE_NAME:
