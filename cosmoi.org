@@ -393,7 +393,7 @@ categoría con suficiente estructura (explícitamente, a una categoría
 monoidal cerrada compacta, pero no necesitamos detalles).  La
 categoría de conjuntos cuyos morfismos son relaciones, *Rel*, tiene esa
 estructura; y cuando interpretamos este diagrama obtenemos el
-protocolo de /libreta de un sólo uso/ (one-time pad).  La categoría de
+protocolo de /libreta de un solo uso/ (one-time pad).  La categoría de
 espacios de Hilbert con matrices unitarias tiene esa estructura
 también, y cuando interpretamos el morfismo ¡obtenemos un protocolo de
 /teleportación cuántica/!  Es decir, un poco de razonamiento
@@ -414,8 +414,8 @@ podemos hacer con diagramas?, lo que sigue es una lista no exhaustiva.
    mecánica cuántica ni de diagramas. Profundiza mucho en los diagramas en sí y
    no requiere conocer la teoría de categorías subyacente.
 
- * *Mecánica cuántica categórica.* /Categorical Quantum Mechanics,/ de
-   [[https://www.cs.ox.ac.uk/people/jamie.vicary/][Vicary]] y [[http://homepages.inf.ed.ac.uk/cheunen/teaching.html][Heunen]] ([[https://www.cs.ox.ac.uk/files/10510/notes.pdf][link]]) da otra introducción a las aplicaciones en
+ * *Mecánica cuántica categórica.* /Categorical Quantum Mechanics ([[https://www.cs.ox.ac.uk/files/10510/notes.pdf][link]]),/ de
+   [[https://www.cs.ox.ac.uk/people/jamie.vicary/][Vicary]] y [[http://homepages.inf.ed.ac.uk/cheunen/teaching.html][Heunen]] da otra introducción a las aplicaciones en
    mecánica cuántica. Enfatiza mucho más la teoría de categorías, aquí
    sí es un prerrequisito haber leído teoría de categorías. Como bonus,
    hay un estudio muy detallado de cómo las categorías justifican el
@@ -425,7 +425,7 @@ podemos hacer con diagramas?, lo que sigue es una lista no exhaustiva.
    es muy accesible y explica 2-categorías, adjunciones, mónadas e incluso 
    límites; usando razonamiento gráfico.
 
- * *Lingüística.* /Distributional compositional categorical semantics,/ es
+ * *Lingüística.* /Distributional compositional categorical semantics/ es
    un marco teórico para calcular el significado de las frases en función
    del significado de las palabras. Es /distribucional/ porque el significado
    de una palabra se calcula según las palabras que aparecen cerca de ella
