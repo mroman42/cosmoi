@@ -3041,7 +3041,7 @@ Que viene de nuevo dada por $y(\tau) = \tau_A(1_A)$.
 :EXPORT_FILE_NAME: about.html
 :END:
 
-I'm *Mario Román*.  I am studying an MSc on Mathematics and Computer
+Hi! I'm *Mario Román*.  I am studying an MSc on Mathematics and Computer
 Science at the University of Oxford; my main interests being
 [[https://en.wikipedia.org/wiki/Category_theory][categories]], [[https://en.wikipedia.org/wiki/Type_theory][types]], [[https://en.wikipedia.org/wiki/Functional_programming][functional programming]] and logic.  I completed my bachelor's
 degree at the [[https://www.ugr.es/en/][University of Granada]] (Spain).  I am a founder and ex-organizer
