@@ -3046,9 +3046,10 @@ Que viene de nuevo dada por $y(\tau) = \tau_A(1_A)$.
 
 Hi! I'm *Mario Román*.  I am studying an MSc on Mathematics and Computer
 Science at the University of Oxford; my main interests being
-[[https://en.wikipedia.org/wiki/Category_theory][categories]], [[https://en.wikipedia.org/wiki/Type_theory][types]], [[https://en.wikipedia.org/wiki/Functional_programming][functional programming]] and logic.  I completed my bachelor's
-degree at the [[https://www.ugr.es/en/][University of Granada]] (Spain).  I am a founder and ex-organizer
-of the [[https://libreim.github.io/][LibreIM]] community, for which I still write articles and organize seminars.
+[[https://en.wikipedia.org/wiki/Category_theory][categories]], [[https://en.wikipedia.org/wiki/Type_theory][types]], [[https://en.wikipedia.org/wiki/Functional_programming][functional programming]] and logic.  I completed my
+bachelor's degree at the [[https://www.ugr.es/en/][University of Granada]] (Spain).  I am a
+founder and ex-organizer of the [[https://libreim.github.io/][LibreIM]] community, for which I still
+write articles and organize seminars.
 
   - GitHub: [[https://github.com/mroman42][@mroman42]]
   - GitLab: [[https://gitlab.com/mroman42][@mroman42]]
@@ -3056,7 +3057,7 @@ of the [[https://libreim.github.io/][LibreIM]] community, for which I still writ
   - Email: [[mailto:mromang08+blog@gmail.com][mromang08+cosmoi@gmail.com]]
   - Mastodon: [[https://mastodon.social/@mroman42][@mroman42@mastodon.social]]
 
-All the articles in this page are licensed in [[https://creativecommons.org/licenses/by-sa/2.0/][Creative Commons BY-SA 2.0]]
+All the articles in this page are licensed under [[https://creativecommons.org/licenses/by-sa/2.0/][Creative Commons BY-SA 2.0]]
 unless otherwise specified.
 
 * Index
