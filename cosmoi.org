@@ -422,7 +422,7 @@ podemos hacer con diagramas?, lo que sigue es una lista no exhaustiva.
    [[https://www.southampton.ac.uk/~ps1a06/][Pawel Sobocinski]] da una introducción informal al álgebra
    lineal y al razonamiento diagramático.
 
- * *Mecánica cuántica.* /Picturing Quantum Processes/, de [[https://www.cs.ox.ac.uk/people/bob.coecke/][Coecke]] y [[http://www.cs.ru.nl/A.Kissinger/][Kissinger]]
+ * *Mecánica cuántica diagramática.* /Picturing Quantum Processes/, de [[https://www.cs.ox.ac.uk/people/bob.coecke/][Coecke]] y [[http://www.cs.ru.nl/A.Kissinger/][Kissinger]]
    cite:coecke17, de donde viene el primer ejemplo. Es una introducción
    elemental que no asume prácticamente ningún conocimiento previo: ni de
    mecánica cuántica ni de diagramas. Profundiza mucho en los diagramas en sí y
@@ -447,6 +447,9 @@ podemos hacer con diagramas?, lo que sigue es una lista no exhaustiva.
    podemos componer esos significados usando la estructura categórica para
    calcular el significado de frases completas. Una introducción es
    cite:coecke10 de [[https://www.cs.ox.ac.uk/people/bob.coecke/][Coecke]], [[http://www.eecs.qmul.ac.uk/profiles/sadrzadehmehrnoosh.html][Sadrzadeh]] y [[https://sites.google.com/site/stephenclark609/][Clark]].
+
+ * *Teoría de juegos*, usando una categoría de [[https://julesh.com/2018/08/16/lenses-for-philosophers/][lentes]]. Hay una [[https://www.youtube.com/watch?v=C64905vTT3s&feature=youtu.be][charla introductoria]]
+   de Jules Hedges y varios artículos como cite:hedges18.
    
 Por último, una visión general de los lenguages diagramáticos es cite:selinger10.
 
