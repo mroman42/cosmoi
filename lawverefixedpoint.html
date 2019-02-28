@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-02-28 Thu 10:26 -->
+<!-- 2019-02-28 Thu 15:21 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Lawvere's fixed point theorem</title>
@@ -73,6 +73,12 @@ for the JavaScript code in this tag.
 <div id="content">
 <h1 class="title">Lawvere's fixed point theorem</h1>
 <p>
+This is a note stating the main result 
+from <a href="http://tac.mta.ca/tac/reprints/articles/15/tr15.pdf">Diagonal arguments and Cartesian Closed Categories</a> by
+William Lawvere.
+</p>
+
+<p>
 <b>Definition.</b> A morphism s : X → Y is <i>point-surjective</i> if for each y : 1
 → Y, there exists some x : 1 → X such that sx = y.
 </p>
@@ -81,12 +87,16 @@ for the JavaScript code in this tag.
 <b>Theorem</b> (Lawvere, 1969). In any cartesian closed category, if there exists a
 point-surjective morphism d : A → (A → B), then each morphism f : B →
 B has a fixed point, that is, some b : B such that f b = b.
-<a class='org-ref-reference' href="#lawvere06">lawvere06</a>
 </p>
 
 <p>
 <b>Proof.</b> As d is point-surjective, there exists x : A such that dx =
 λa.f(daa), but then, dxx = (λa.f(daa)) x = f(dxx) is a fixed point.
+</p>
+
+<p>
+
+<a href="Math.bib">Math.bib</a>
 </p>
 </div>
 <div id="postamble" class="status">
