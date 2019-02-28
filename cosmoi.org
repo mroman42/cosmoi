@@ -225,17 +225,6 @@
 
 * Posts
 
-** TODO Lawvere's diagonal
-(Point-surjective) A morphism s : X → Y is point-surjective if 
-for each y : 1 → Y, there exists some x : 1 → X such that sx = y.
-
-(Lawvere's fixed point theorem). In any cartesian closed category, if
-there exists a point-surjective morphism d : A → (A → B), then each
-morphism f : B → B has a fixed point, that is, some b : B such that f b = b.
-
-(Proof) As d is point-surjective, there exists x : A such that dx = λa.f(daa),
-but then, dxx = (λa.f(daa)) x = f(dxx) is a fixed point.
-
 ** TODO Diagonal arguments since Epimenides
 *** Epimenides
 #+begin_quote
@@ -360,11 +349,56 @@ Ejemplos son:
 
 *** Grupoide
 Un *grupoide* es un grupo coloreado. 
-
 ** TODO Adjunciones
 ** TODO Media 2018
 ** TODO Three Emacs
 ** TODO Notes and spaced repetition cards in org-mode
+** TODO Applicative functors
+** TODO Integral calculus with Yoneda
+*** on V-enriched categories
+*** Day convolution
+** TODO Van Laarhoven representation for lenses
+# Derive it from Yoneda.
+# Live code.
+
+** TODO A quote by Conor McBride
+#+begin_quote
+"The task of the academic is not to scale great intellectual
+mountains, but to flatten them." -- Conor McBride
+#+end_quote
+
+** TODO Reals in Agda
+** Lawvere's fixed point theorem                                                             :post:
+:PROPERTIES:
+:TITLE: Lawvere's fixed point theorem
+:EXPORT_FILE_NAME: lawverefixedpoint.html
+:EXPORT_DATE: <2019-02-28 Mon 10:23>
+:END:
+
+*Definition.* A morphism s : X → Y is /point-surjective/ if for each y : 1
+→ Y, there exists some x : 1 → X such that sx = y.
+
+*Theorem* (Lawvere, 1969). In any cartesian closed category, if there exists a
+point-surjective morphism d : A → (A → B), then each morphism f : B →
+B has a fixed point, that is, some b : B such that f b = b.
+cite:lawvere06
+
+*Proof.* As d is point-surjective, there exists x : A such that dx =
+λa.f(daa), but then, dxx = (λa.f(daa)) x = f(dxx) is a fixed point.
+
+** Apuntes de Haskell                                                                        :post:
+:PROPERTIES:
+:TITLE: Apuntes de Haskell
+:EXPORT_FILE_NAME: apuntesdehaskell.html
+:EXPORT_DATE: <2019-02-27 Mon 21:00>
+:END:
+
+Hace ya un tiempo, [[https://github.com/mx-psi][@mx-psi]] y yo escribimos estos 
+[[https://github.com/libreim/haskell][apuntes de introducción a Haskell]].  Los hemos usado varias veces
+en los seminarios de LibreIM, [[https://github.com/pedritomelenas][Pedro García-Sánchez]] añadió un 
+[[https://github.com/libreim/haskell/blob/3acbc2f7088483d3ba69ecdc00891c8419341aaf/PrimeraParte/PrimeraParte.ipynb][cuaderno de Jupyter]] para acompañarlos, y finalmente [[https://github.com/mx-psi][@mx-psi]] ha vuelto a revisarlos
+y dejarlos listos para otro seminario este año. 
+
 ** Diagramas para categorías monoidales                                                      :post:
 :PROPERTIES:
 :TITLE: Diagramas para categorías monoidales
@@ -3086,6 +3120,8 @@ unless otherwise specified.
 #+RESULTS:
 #+BEGIN_EXPORT html
 <ul>
+ <li><a href=lawverefixedpoint.html> Lawvere's fixed point theorem</a><em>, 28 February 2019</em><br></li>
+ <li><a href=apuntesdehaskell.html> Apuntes de Haskell</a><em>, 27 February 2019</em><br></li>
  <li><a href=diagramascategoriasmonoidales.pdf> Diagramas para categorías monoidales</a><em>, 21 January 2019</em><br></li>
  <li><a href=dotfilesinasingleorg.html> dotfiles in a single org-file</a><em>, 21 January 2019</em><br></li>
  <li><a href=everysurjectiontoprojectiveissplit.pdf> Every surjection to a projective R-module is split</a><em>, 24 December 2018</em><br></li>
@@ -3127,66 +3163,76 @@ must have the tag :post: and must have the properties
  - :EXPORT_DATA:
 
 #+BEGIN_SRC emacs-lisp
-(setq org-tags-exclude-from-inheritance '("post"))
-(setq org-html-postamble-format 
-  '(("en" "<div id=\"footer\"><p class=\"postamble\">Last edited %d. Written by %c</p></div>")))
+  ;; The exporter only works on the headers tagged as :post:. This tag
+  ;; should not be inherited because we do not want subheaders to be
+  ;; also exported independently.
+  (setq org-tags-exclude-from-inheritance '("post"))
 
-(defun cosmoi/export ()
-  (interactive)
-  (setq extension-name (file-name-extension (org-entry-get (point) "EXPORT_FILE_NAME")))
-  (if (string-equal extension-name "html")
-    (funcall 'org-html-export-to-html nil t)
-    (funcall 'org-latex-export-to-pdf nil t)))
+  ;; Format for the footer of each post.
+  (setq org-html-postamble-format 
+    '(("en" "<div id=\"footer\"><p class=\"postamble\">Last edited %d. Written by %c</p></div>")))
 
-(defun cosmoi/publish ()
-  (interactive) 
-  (org-map-entries
-    (lambda () (if (org-entry-get (point) "EXPORT_FILE_NAME") 
-         (cosmoi/export)))
-    "-noexport" nil))
+  ;; This function exports the header at point.  It checks if an HTML or
+  ;; a PDF should be generated from the :EXPORT_FILE_NAME: extension and
+  ;; acts accordingly.
+  (defun cosmoi/export ()
+    (interactive)
+    (setq extension-name (file-name-extension (org-entry-get (point) "EXPORT_FILE_NAME")))
+    (if (string-equal extension-name "html")
+      (funcall 'org-html-export-to-html nil t)
+      (funcall 'org-latex-export-to-pdf nil t)))
 
-(cosmoi/publish)
+  ;; This function publishes the whole blog. It maps the exporter
+  ;; function over all headers.
+  (defun cosmoi/publish ()
+    (interactive) 
+    (org-map-entries
+      (lambda () (if (org-entry-get (point) "EXPORT_FILE_NAME") 
+           (cosmoi/export)))
+      "-noexport" nil))
+
+  (cosmoi/publish)
 
 
-;;;;;;;;;;;;;;;;;;;;
-;; RSS Feed
-;;;;;;;;;;;;;;;;;;;;
-;; Writes the header
-(setq xmlstring "<?xml version=\"1.0\" encoding=\"utf-8\"?>
-<rss version=\"2.0\" 	
-  xmlns:atom=\"http://www.w3.org/2005/Atom\">
-<channel>
+  ;;;;;;;;;;;;;;;;;;;;
+  ;; RSS Feed
+  ;;;;;;;;;;;;;;;;;;;;
+  ;; Writes the header
+  (setq xmlstring "<?xml version=\"1.0\" encoding=\"utf-8\"?>
+  <rss version=\"2.0\" 	
+    xmlns:atom=\"http://www.w3.org/2005/Atom\">
+  <channel>
 
-<title>Cosmoi</title>
-<atom:link href=\"https://mroman42.github.io/cosmoi/rss\" rel=\"self\" type=\"application/rss+xml\" />
-<link>https://mroman42.github.io/cosmoi/</link>
-<description>
-Mathematics and computer science. 
-Categories, logic and types.
-</description>
-")
-(write-region xmlstring nil "feed.xml")
+  <title>Cosmoi</title>
+  <atom:link href=\"https://mroman42.github.io/cosmoi/rss\" rel=\"self\" type=\"application/rss+xml\" />
+  <link>https://mroman42.github.io/cosmoi/</link>
+  <description>
+  Mathematics and computer science. 
+  Categories, logic and types.
+  </description>
+  ")
+  (write-region xmlstring nil "feed.xml")
 
-;; Entries
-(defun cosmoi/rssentry ()
-  (interactive)
-  (write-region (concat 
-    "<item>\n"
-    "<title>" (org-entry-get (point) "TITLE") "</title>\n"
-    "<link>" (concat "https://mroman42.github.io/cosmoi/" (org-entry-get (point) "EXPORT_FILE_NAME")) "</link>\n"
-    "<guid>" (concat "https://mroman42.github.io/cosmoi/" (org-entry-get (point) "EXPORT_FILE_NAME")) "</guid>\n"
-    "<pubDate>" (format-time-string "%a, %d %b %Y %H:%M:%S GMT" (date-to-time (org-entry-get (point) "EXPORT_DATE")))  "</pubDate>\n"
-    "<description>" "</description>\n"
-    "</item>\n"
-    ) nil "feed.xml" 'append))
+  ;; Entries.
+  (defun cosmoi/rssentry ()
+    (interactive)
+    (write-region (concat 
+      "<item>\n"
+      "<title>" (org-entry-get (point) "TITLE") "</title>\n"
+      "<link>" (concat "https://mroman42.github.io/cosmoi/" (org-entry-get (point) "EXPORT_FILE_NAME")) "</link>\n"
+      "<guid>" (concat "https://mroman42.github.io/cosmoi/" (org-entry-get (point) "EXPORT_FILE_NAME")) "</guid>\n"
+      "<pubDate>" (format-time-string "%a, %d %b %Y %H:%M:%S GMT" (date-to-time (org-entry-get (point) "EXPORT_DATE")))  "</pubDate>\n"
+      "<description>" "</description>\n"
+      "</item>\n"
+      ) nil "feed.xml" 'append))
 
-(org-map-entries 
-    (lambda () (if (org-entry-get (point) "EXPORT_FILE_NAME") 
-      (funcall 'cosmoi/rssentry)))
-    "+post" nil)
+  (org-map-entries 
+      (lambda () (if (org-entry-get (point) "EXPORT_FILE_NAME") 
+        (funcall 'cosmoi/rssentry)))
+      "+post" nil)
 
-;; Closing tags
-(write-region "\n</channel>\n</rss>" nil "feed.xml" 'append)
+  ;; Closing tags
+  (write-region "\n</channel>\n</rss>" nil "feed.xml" 'append)
 #+END_SRC
 
 #+RESULTS:

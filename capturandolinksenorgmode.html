@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-02-08 Fri 14:42 -->
+<!-- 2019-02-28 Thu 10:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Capturando links en org-mode</title>
@@ -72,9 +72,9 @@ for the JavaScript code in this tag.
 <body>
 <div id="content">
 <h1 class="title">Capturando links en org-mode</h1>
-<div id="outline-container-org92a75e8" class="outline-2">
-<h2 id="org92a75e8">Capturando links</h2>
-<div class="outline-text-2" id="text-org92a75e8">
+<div id="outline-container-orgee6957d" class="outline-2">
+<h2 id="orgee6957d">Capturando links</h2>
+<div class="outline-text-2" id="text-orgee6957d">
 <p>
 El objetivo de este post es describir el proceso que uso para capturar links
 desde Firefox y almacenarlos en un archivo de org-mode, que puede leerse luego
@@ -83,9 +83,9 @@ desde el propio navegador.
 </div>
 </div>
 
-<div id="outline-container-org173c30d" class="outline-2">
-<h2 id="org173c30d">Org-capture</h2>
-<div class="outline-text-2" id="text-org173c30d">
+<div id="outline-container-org1681d50" class="outline-2">
+<h2 id="org1681d50">Org-capture</h2>
+<div class="outline-text-2" id="text-org1681d50">
 <p>
 La primera parte será activar <code>org-capture</code> y <code>org-protocol</code> en Emacs. <a href="https://www.gnu.org/software/emacs/manual/html_node/org/Capture.html#Capture">org-capture</a>
 puede ser usado también para escribir pequeñas ideas y almacenarlas en ficheros org
@@ -93,7 +93,7 @@ rápidamente; pero, en este caso, lo usaremos sólo para recibir el link desde F
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #DCDCCC;">(</span><span style="color: #8ac6f2; font-weight: bold;">require</span> '<span style="color: #e5786d;">org-protocol</span><span style="color: #DCDCCC;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">require</span> '<span style="color: #a45bad;">org-protocol</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -104,10 +104,10 @@ las opciones que usa después:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #DCDCCC;">(</span><span style="color: #8ac6f2; font-weight: bold;">setq</span> org-capture-templates
-      <span style="color: #BFEBBF;">(</span><span style="color: #8ac6f2; font-weight: bold;">quote</span> <span style="color: #D0BF8F;">(</span>
-              <span style="color: #93E0E3;">(</span><span style="color: #95e454;">"x"</span> <span style="color: #95e454;">"org-protocol"</span> entry <span style="color: #9FC59F;">(</span>file <span style="color: #95e454;">"~/links.org"</span><span style="color: #9FC59F;">)</span>
-               <span style="color: #95e454;">"** %c %?"</span> <span style="color: #e5786d; font-weight: bold;">:kill-buffer</span> t <span style="color: #e5786d; font-weight: bold;">:prepend</span> t<span style="color: #93E0E3;">)</span><span style="color: #D0BF8F;">)</span><span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> org-capture-templates
+      <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">quote</span> <span style="color: #2d9574;">(</span>
+              <span style="color: #67b11d;">(</span><span style="color: #2d9574;">"x"</span> <span style="color: #2d9574;">"org-protocol"</span> entry <span style="color: #b1951d;">(</span>file <span style="color: #2d9574;">"~/links.org"</span><span style="color: #b1951d;">)</span>
+               <span style="color: #2d9574;">"** %c %?"</span> <span style="color: #4f97d7;">:kill-buffer</span> t <span style="color: #4f97d7;">:prepend</span> t<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -119,9 +119,9 @@ queremos insertar el link una vez lo capturemos.
 </div>
 </div>
 
-<div id="outline-container-orgc415a39" class="outline-2">
-<h2 id="orgc415a39">Extensión de firefox</h2>
-<div class="outline-text-2" id="text-orgc415a39">
+<div id="outline-container-orga9ccf85" class="outline-2">
+<h2 id="orga9ccf85">Extensión de firefox</h2>
+<div class="outline-text-2" id="text-orga9ccf85">
 <p>
 El uso de <code>org-protocol</code> desde Firefox puede gestionarse más detalladamente usando
 <a href="http://orgmode.org/worg/org-contrib/org-protocol.html#sec-4">marcadores</a> que activen la captura. En nuestro caso, como sólo necesitamos la configuración
@@ -141,9 +141,9 @@ Una vez activemos la extensión, podremos capturar enlaces pulsando el atajo.
 </div>
 </div>
 
-<div id="outline-container-org68268c6" class="outline-2">
-<h2 id="org68268c6">Cerrando ventanas</h2>
-<div class="outline-text-2" id="text-org68268c6">
+<div id="outline-container-org4ba9f60" class="outline-2">
+<h2 id="org4ba9f60">Cerrando ventanas</h2>
+<div class="outline-text-2" id="text-org4ba9f60">
 <p>
 Un problema menor al usar esta extensión es que crea ventanas de Emacs que no cierra
 al terminar. Otro problema es que suele crear también un buffer inicial al lado de nuestro
@@ -151,16 +151,16 @@ buffer de captura. Podemos usar <b>hooks</b> para forzarlo a corregir ese compor
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #DCDCCC;">(</span>add-hook 'org-capture-mode-hook 'delete-other-windows<span style="color: #DCDCCC;">)</span>
-<span style="color: #DCDCCC;">(</span>add-hook 'org-capture-after-finalize-hook 'delete-frame<span style="color: #DCDCCC;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span>add-hook 'org-capture-mode-hook 'delete-other-windows<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span>add-hook 'org-capture-after-finalize-hook 'delete-frame<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgd6f967c" class="outline-2">
-<h2 id="orgd6f967c">Integrándolo en i3</h2>
-<div class="outline-text-2" id="text-orgd6f967c">
+<div id="outline-container-orge0187ec" class="outline-2">
+<h2 id="orge0187ec">Integrándolo en i3</h2>
+<div class="outline-text-2" id="text-orge0187ec">
 <p>
 Para los usuarios de i3, puede ser útil poder controlar dónde y cómo se crea la ventana
 de captura de Emacs. Un ejemplo de configuración es la siguiente, que coloca la ventana
@@ -168,17 +168,17 @@ como flotante y en el centro de la pantalla; como si fuera un popup:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash">for_window <span style="color: #DCDCCC;">[</span><span style="color: #cae682;">class</span>=<span style="color: #95e454;">"Emacs"</span> <span style="color: #cae682;">title</span>=<span style="color: #95e454;">"CAPTURE"</span><span style="color: #DCDCCC;">]</span> floating enable
-for_window <span style="color: #DCDCCC;">[</span><span style="color: #cae682;">class</span>=<span style="color: #95e454;">"Emacs"</span> <span style="color: #cae682;">title</span>=<span style="color: #95e454;">"CAPTURE"</span><span style="color: #DCDCCC;">]</span> resize set 1880 480
-for_window <span style="color: #DCDCCC;">[</span><span style="color: #cae682;">class</span>=<span style="color: #95e454;">"Emacs"</span> <span style="color: #cae682;">title</span>=<span style="color: #95e454;">"CAPTURE"</span><span style="color: #DCDCCC;">]</span> move position center
+<pre class="src src-bash">for_window <span style="color: #4f97d7;">[</span><span style="color: #7590db;">class</span>=<span style="color: #2d9574;">"Emacs"</span> <span style="color: #7590db;">title</span>=<span style="color: #2d9574;">"CAPTURE"</span><span style="color: #4f97d7;">]</span> floating enable
+for_window <span style="color: #4f97d7;">[</span><span style="color: #7590db;">class</span>=<span style="color: #2d9574;">"Emacs"</span> <span style="color: #7590db;">title</span>=<span style="color: #2d9574;">"CAPTURE"</span><span style="color: #4f97d7;">]</span> resize set 1880 480
+for_window <span style="color: #4f97d7;">[</span><span style="color: #7590db;">class</span>=<span style="color: #2d9574;">"Emacs"</span> <span style="color: #7590db;">title</span>=<span style="color: #2d9574;">"CAPTURE"</span><span style="color: #4f97d7;">]</span> move position center
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgc432d78" class="outline-2">
-<h2 id="orgc432d78">Mostrando los links en el navegador</h2>
-<div class="outline-text-2" id="text-orgc432d78">
+<div id="outline-container-org9cfb059" class="outline-2">
+<h2 id="org9cfb059">Mostrando los links en el navegador</h2>
+<div class="outline-text-2" id="text-org9cfb059">
 <p>
 Para que además los links se muestren en el navegador, pueden usarse también <b>hooks</b> que
 se activen al guardado para exportar a HTML. En este post de <a href="https://rafaelleru.github.io/2017/01/22/to_read_list_emacs/">@rafaelleru</a> se explica el
@@ -187,9 +187,9 @@ proceso en detalle.
 </div>
 </div>
 
-<div id="outline-container-orgacad0d8" class="outline-2">
-<h2 id="orgacad0d8">Un detalle sin solucionar</h2>
-<div class="outline-text-2" id="text-orgacad0d8">
+<div id="outline-container-orgb9dd92f" class="outline-2">
+<h2 id="orgb9dd92f">Un detalle sin solucionar</h2>
+<div class="outline-text-2" id="text-orgb9dd92f">
 <p>
 En la plantilla de captura, me gustaría poder usar además <code>%^g</code>, que crea un pequeño
 diálogo donde insertar tags al link que se está guardando. El problema con esto es que,

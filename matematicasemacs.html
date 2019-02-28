@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-02-08 Fri 14:44 -->
+<!-- 2019-02-28 Thu 10:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Matemáticas en emacs</title>
@@ -76,9 +76,9 @@ for the JavaScript code in this tag.
 <i>Actualizado a 06 de agosto de 2017.</i>
 </p>
 
-<div id="outline-container-org302b07e" class="outline-2">
-<h2 id="org302b07e">Apuntes a ordenador</h2>
-<div class="outline-text-2" id="text-org302b07e">
+<div id="outline-container-org98aac94" class="outline-2">
+<h2 id="org98aac94">Apuntes a ordenador</h2>
+<div class="outline-text-2" id="text-org98aac94">
 <p>
 Tomar apuntes de matemáticas con el ordenador es una tarea difícil por
 lo complejo que es transcribir la notación (símbolos, letras en otros
@@ -100,9 +100,9 @@ para exportarlo.
 </div>
 </div>
 
-<div id="outline-container-orgd35c29c" class="outline-2">
-<h2 id="orgd35c29c">Ventajas de org-mode</h2>
-<div class="outline-text-2" id="text-orgd35c29c">
+<div id="outline-container-org8f5c0a4" class="outline-2">
+<h2 id="org8f5c0a4">Ventajas de org-mode</h2>
+<div class="outline-text-2" id="text-org8f5c0a4">
 <p>
 <b>org-mode</b> tiene internamente un lenguaje de marcado similar al de
 markdown, con la ventaja para el usuario de Emacs de que está adaptado
@@ -112,16 +112,16 @@ luego a <code>.tex</code> y <code>.pdf</code>, controlando las opciones de Latex
 
 <p>
 Una fórmula en Latex puede escribirse directamente en <b>org-mode</b>
-incluyéndola entre <object type="image/svg+xml" data="ltximg/cosmoi_e29780d7704d19391ef763a87a21bce53e386c81.svg" class="org-svg">
+incluyéndola entre <object type="image/svg+xml" data="ltximg/cosmoi_9fa94e9600cb176b5203925be63cc9be476d0172.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>, si está dentro de una línea de texto 
-(como en <object type="image/svg+xml" data="ltximg/cosmoi_e4f110e7036fcbc5007a52c666c1d2640729e65a.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object>); o entre <object type="image/svg+xml" data="ltximg/cosmoi_11759cf06465f95bc5644565829a6e45a4471631.svg" class="org-svg">
+(como en <object type="image/svg+xml" data="ltximg/cosmoi_fb18959b32f23e24f75bd66c082534155a577b3a.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>); o entre <object type="image/svg+xml" data="ltximg/cosmoi_4f9349fe4a208d4f4e45a2820be3dd01438612b6.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>, cuando
 queremos que se muestre aparte del texto como en el siguiente ejemplo
 </p>
 
 <p>
-<object type="image/svg+xml" data="ltximg/cosmoi_64e659085352e1a66088ce8db2848d1c6eb66e07.svg" class="org-svg">
+<object type="image/svg+xml" data="ltximg/cosmoi_092aff408e07c309c94346338e422472bee4cae1.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>
 </p>
 
@@ -159,9 +159,9 @@ para matemáticas como <code>Sage</code>.
 </div>
 </div>
 
-<div id="outline-container-org8d43d85" class="outline-2">
-<h2 id="org8d43d85">Zoom</h2>
-<div class="outline-text-2" id="text-org8d43d85">
+<div id="outline-container-org2aa9f40" class="outline-2">
+<h2 id="org2aa9f40">Zoom</h2>
+<div class="outline-text-2" id="text-org2aa9f40">
 <p>
 Un problema menor (y quizá sólo mío) al configurar todo esto es que
 las fórmulas previsualizadas parecen demasiado pequeñas. Aunque estén
@@ -173,15 +173,15 @@ respuestas de <a href="http://emacs.stackexchange.com/questions/3387/how-to-enla
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #DCDCCC;">(</span><span style="color: #8ac6f2; font-weight: bold;">defun</span> <span style="color: #cae682;">update-org-latex-fragment-scale</span> <span style="color: #BFEBBF;">()</span>
-  <span style="color: #BFEBBF;">(</span><span style="color: #8ac6f2; font-weight: bold;">let</span> <span style="color: #D0BF8F;">(</span><span style="color: #93E0E3;">(</span>text-scale-factor
-         <span style="color: #9FC59F;">(</span>expt text-scale-mode-step text-scale-mode-amount<span style="color: #9FC59F;">)</span><span style="color: #93E0E3;">)</span><span style="color: #D0BF8F;">)</span>
-    <span style="color: #D0BF8F;">(</span>plist-put org-format-latex-options
-               <span style="color: #e5786d; font-weight: bold;">:scale</span> <span style="color: #93E0E3;">(</span>* 1.2 text-scale-factor<span style="color: #93E0E3;">)</span><span style="color: #D0BF8F;">)</span><span style="color: #BFEBBF;">)</span>
-<span style="color: #DCDCCC;">)</span>
-<span style="color: #DCDCCC;">(</span>add-hook
+<pre class="src src-lisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defun</span> <span style="color: #bc6ec5; font-weight: bold;">update-org-latex-fragment-scale</span> <span style="color: #bc6ec5;">()</span>
+  <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>text-scale-factor
+         <span style="color: #b1951d;">(</span>expt text-scale-mode-step text-scale-mode-amount<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
+    <span style="color: #2d9574;">(</span>plist-put org-format-latex-options
+               <span style="color: #4f97d7;">:scale</span> <span style="color: #67b11d;">(</span>* 1.2 text-scale-factor<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
+<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span>add-hook
  'text-scale-mode-hook
- 'update-org-latex-fragment-scale<span style="color: #DCDCCC;">)</span>
+ 'update-org-latex-fragment-scale<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -192,9 +192,9 @@ deberían volver a ajustarse con el texto.
 </div>
 </div>
 
-<div id="outline-container-orgf70a569" class="outline-2">
-<h2 id="orgf70a569">Aumentando la velocidad de escritura</h2>
-<div class="outline-text-2" id="text-orgf70a569">
+<div id="outline-container-org7788e88" class="outline-2">
+<h2 id="org7788e88">Aumentando la velocidad de escritura</h2>
+<div class="outline-text-2" id="text-org7788e88">
 <p>
 Mi objetivo principal con todo esto era escribir matemáticas más
 rápidamente, así que <a href="http://emacs.stackexchange.com/questions/26322/math-autocompletion-in-org-mode">pregunté sobre autocompletado</a> y concluí en usar
@@ -213,10 +213,10 @@ de símbolos de latex. Puede añadirse a <code>org-mode</code> usando
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><span style="color: #DCDCCC;">(</span><span style="color: #8ac6f2; font-weight: bold;">use-package</span> <span style="color: #e5786d;">cdlatex</span>
-  <span style="color: #e5786d; font-weight: bold;">:ensure</span> t<span style="color: #DCDCCC;">)</span>
+<pre class="src src-emacs-lisp"><span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">use-package</span> <span style="color: #a45bad;">cdlatex</span>
+  <span style="color: #4f97d7;">:ensure</span> t<span style="color: #4f97d7;">)</span>
 
-<span style="color: #DCDCCC;">(</span>add-hook 'org-mode-hook 'turn-on-org-cdlatex<span style="color: #DCDCCC;">)</span>
+<span style="color: #4f97d7;">(</span>add-hook 'org-mode-hook 'turn-on-org-cdlatex<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -232,9 +232,9 @@ diagramas conmutativos o complejos simpliciales en pocos pasos.
 </div>
 </div>
 
-<div id="outline-container-org2d8227c" class="outline-2">
-<h2 id="org2d8227c">Diagramas conmutativos</h2>
-<div class="outline-text-2" id="text-org2d8227c">
+<div id="outline-container-org369fec3" class="outline-2">
+<h2 id="org369fec3">Diagramas conmutativos</h2>
+<div class="outline-text-2" id="text-org369fec3">
 <p>
 Ahora estoy escribiendo sobre álgebra homológica y teoría de categorías, así que
 la mayoría de lo que escribo usa secuencias exactas y diagramas conmutativos.
@@ -268,14 +268,14 @@ usarlo, hay que empezar por incluir en el archivo de configuración
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #DCDCCC;">(</span>add-to-list
-  'org-latex-packages-alist '<span style="color: #BFEBBF;">(</span><span style="color: #95e454;">""</span> <span style="color: #95e454;">"tikz"</span> t<span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>
+<pre class="src src-lisp"><span style="color: #4f97d7;">(</span>add-to-list
+  'org-latex-packages-alist '<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">""</span> <span style="color: #2d9574;">"tikz"</span> t<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 
-<span style="color: #DCDCCC;">(</span>eval-after-load <span style="color: #95e454;">"preview"</span>
-  '<span style="color: #BFEBBF;">(</span>add-to-list
+<span style="color: #4f97d7;">(</span>eval-after-load <span style="color: #2d9574;">"preview"</span>
+  '<span style="color: #bc6ec5;">(</span>add-to-list
     'preview-default-preamble
-    <span style="color: #95e454;">"\\PreviewEnvironment{tikzpicture}"</span>
-    t<span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>
+    <span style="color: #2d9574;">"\\PreviewEnvironment{tikzpicture}"</span>
+    t<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -291,15 +291,15 @@ usar diagramas conmutativos
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #DCDCCC;">(</span>setq org-latex-create-formula-image-program 'imagemagick<span style="color: #DCDCCC;">)</span>
+<pre class="src src-lisp"><span style="color: #4f97d7;">(</span>setq org-latex-create-formula-image-program 'imagemagick<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgdc31360" class="outline-2">
-<h2 id="orgdc31360">Cabeceras en Latex</h2>
-<div class="outline-text-2" id="text-orgdc31360">
+<div id="outline-container-org56c6286" class="outline-2">
+<h2 id="org56c6286">Cabeceras en Latex</h2>
+<div class="outline-text-2" id="text-org56c6286">
 <p>
 Cuando necesitamos funcionalidad adicional que ofrece Latex en bibliotecas aparte,
 como usar <code>tikz-cd</code>, podemos incluirlas en la cabecera del archivo org como:
@@ -312,9 +312,9 @@ latex pero no en la previsualización, podemos incluirla con <code>#+latex_heade
 </div>
 </div>
 
-<div id="outline-container-orgda70a36" class="outline-2">
-<h2 id="orgda70a36">Archivos de configuración de org</h2>
-<div class="outline-text-2" id="text-orgda70a36">
+<div id="outline-container-org6476d30" class="outline-2">
+<h2 id="org6476d30">Archivos de configuración de org</h2>
+<div class="outline-text-2" id="text-org6476d30">
 <p>
 Para evitar tener que repetir varias veces la misma cabecera en varios
 archivos, podemos usar un sólo archivo para escribir matemáticas y
@@ -334,9 +334,9 @@ y cargarlo en cada archivo <code>org</code> con <code>#+SETUPFILE: math.setup</c
 </div>
 </div>
 
-<div id="outline-container-org36ddcb1" class="outline-2">
-<h2 id="org36ddcb1">Ejemplos</h2>
-<div class="outline-text-2" id="text-org36ddcb1">
+<div id="outline-container-org17d5f36" class="outline-2">
+<h2 id="org17d5f36">Ejemplos</h2>
+<div class="outline-text-2" id="text-org17d5f36">
 <p>
 Pueden encontrarse ejemplos de uso en <a href="https://github.com/mroman42/math">este repositorio</a> con mis apuntes
 de matemáticas. Mi archivo de configuración de Emacs está disponible en

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-02-08 Fri 14:44 -->
+<!-- 2019-02-28 Thu 10:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Mónadas</title>
@@ -83,9 +83,9 @@ problem?
 </p>
 </blockquote>
 
-<div id="outline-container-org0c915d9" class="outline-2">
-<h2 id="org0c915d9">Prerrequisitos</h2>
-<div class="outline-text-2" id="text-org0c915d9">
+<div id="outline-container-org9569c43" class="outline-2">
+<h2 id="org9569c43">Prerrequisitos</h2>
+<div class="outline-text-2" id="text-org9569c43">
 <p>
 Este artículo requiere un conocimiento previo de Haskell, o al menos, de
 otro lenguaje de programación funcional. Puedes consultar nuestra
@@ -103,12 +103,12 @@ leer sobre ese tema, puedes consultar nuestros apuntes de
 </div>
 </div>
 
-<div id="outline-container-org7ab43ed" class="outline-2">
-<h2 id="org7ab43ed">Motivación para las mónadas</h2>
-<div class="outline-text-2" id="text-org7ab43ed">
+<div id="outline-container-org252516d" class="outline-2">
+<h2 id="org252516d">Motivación para las mónadas</h2>
+<div class="outline-text-2" id="text-org252516d">
 </div>
-<div id="outline-container-org0a064a2" class="outline-3">
-<h3 id="mónadas-en-haskell"><a id="org0a064a2"></a>Mónadas en Haskell</h3>
+<div id="outline-container-orgd861ccd" class="outline-3">
+<h3 id="mónadas-en-haskell"><a id="orgd861ccd"></a>Mónadas en Haskell</h3>
 <div class="outline-text-3" id="text-mónadas-en-haskell">
 <p>
 Imaginemos que necesitamos controlar cuando una función interna devuelve
@@ -138,18 +138,18 @@ funcional.
 </div>
 </div>
 
-<div id="outline-container-org34c6b65" class="outline-3">
-<h3 id="org34c6b65">Calculando raíces cuadradas</h3>
-<div class="outline-text-3" id="text-org34c6b65">
+<div id="outline-container-org6eace9d" class="outline-3">
+<h3 id="org6eace9d">Calculando raíces cuadradas</h3>
+<div class="outline-text-3" id="text-org6eace9d">
 <p>
 Por ejemplo, supongamos que intentamos sacar raíces cuadradas en los
-reales usando el <a href="https://en.wikipedia.org/wiki/Integer_square_root#Algorithm">método de Newton</a>. Si intentamos calcular <object type="image/svg+xml" data="ltximg/cosmoi_685250cc8c5cac3e7bf955c671866bab3756205f.svg" class="org-svg">
+reales usando el <a href="https://en.wikipedia.org/wiki/Integer_square_root#Algorithm">método de Newton</a>. Si intentamos calcular <object type="image/svg+xml" data="ltximg/cosmoi_c47676a7bcd7862a6033311a75b095ebb281950b.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>, 
 podemos tomar a cada paso la aproximación:
 </p>
 
 <p>
-<object type="image/svg+xml" data="ltximg/cosmoi_721711f85c7f7b8a57dd9dcd8767a998e26a009d.svg" class="org-svg">
+<object type="image/svg+xml" data="ltximg/cosmoi_eba2ff38a4e7fe125dcfd3cb0e45f21875d13a4c.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>
 </p>
 
@@ -158,7 +158,7 @@ Y parar cuando estemos suficientemente cerca (más cerca que un ε dado):
 </p>
 
 <p>
-<object type="image/svg+xml" data="ltximg/cosmoi_bca1645026624a657182c5e580b1ba5d48cfcba3.svg" class="org-svg">
+<object type="image/svg+xml" data="ltximg/cosmoi_161cfd13cd99c55ce77007beb4cf017a342a3c70.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>
 </p>
 
@@ -169,28 +169,28 @@ listas infinitas en Haskell y del método de Newton, basado en la función
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #cae682;">limit</span> <span style="color: #cae682;">::</span> <span style="color: #92a65e; font-weight: bold;">Float</span> <span style="color: #cae682;">-&gt;</span> <span style="color: #DCDCCC;">[</span><span style="color: #92a65e; font-weight: bold;">Float</span><span style="color: #DCDCCC;">]</span> <span style="color: #cae682;">-&gt;</span> <span style="color: #92a65e; font-weight: bold;">Float</span>
-<span style="color: #cae682;">limit</span> epsilon <span style="color: #DCDCCC;">(</span>x<span style="color: #92a65e; font-weight: bold;">:</span>y<span style="color: #92a65e; font-weight: bold;">:</span>xs<span style="color: #DCDCCC;">)</span>
-  <span style="color: #cae682;">|</span> abs <span style="color: #DCDCCC;">(</span>x<span style="color: #cae682;">-</span>y<span style="color: #DCDCCC;">)</span> <span style="color: #cae682;">&lt;</span> epsilon <span style="color: #cae682;">=</span> y
-  <span style="color: #cae682;">|</span> otherwise           <span style="color: #cae682;">=</span> limit epsilon <span style="color: #DCDCCC;">(</span>y<span style="color: #92a65e; font-weight: bold;">:</span>xs<span style="color: #DCDCCC;">)</span>
+<pre class="src src-haskell"><span style="color: #bc6ec5; font-weight: bold;">limit</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Float</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">[</span><span style="color: #ce537a; font-weight: bold;">Float</span><span style="color: #4f97d7;">]</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Float</span>
+<span style="color: #bc6ec5; font-weight: bold;">limit</span> epsilon <span style="color: #4f97d7;">(</span>x<span style="color: #ce537a; font-weight: bold;">:</span>y<span style="color: #ce537a; font-weight: bold;">:</span>xs<span style="color: #4f97d7;">)</span>
+  <span style="color: #7590db;">|</span> abs <span style="color: #4f97d7;">(</span>x<span style="color: #7590db;">-</span>y<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">&lt;</span> epsilon <span style="color: #7590db;">=</span> y
+  <span style="color: #7590db;">|</span> otherwise           <span style="color: #7590db;">=</span> limit epsilon <span style="color: #4f97d7;">(</span>y<span style="color: #ce537a; font-weight: bold;">:</span>xs<span style="color: #4f97d7;">)</span>
 
-<span style="color: #cae682;">newtonaprox</span> <span style="color: #cae682;">::</span> <span style="color: #92a65e; font-weight: bold;">Float</span> <span style="color: #cae682;">-&gt;</span> <span style="color: #92a65e; font-weight: bold;">Float</span> <span style="color: #cae682;">-&gt;</span> <span style="color: #92a65e; font-weight: bold;">Float</span>
-<span style="color: #cae682;">newtonaprox</span> n x <span style="color: #cae682;">=</span> <span style="color: #DCDCCC;">(</span>x <span style="color: #cae682;">+</span> n<span style="color: #cae682;">/</span>x<span style="color: #DCDCCC;">)</span><span style="color: #cae682;">/</span>2
+<span style="color: #bc6ec5; font-weight: bold;">newtonaprox</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Float</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Float</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Float</span>
+<span style="color: #bc6ec5; font-weight: bold;">newtonaprox</span> n x <span style="color: #7590db;">=</span> <span style="color: #4f97d7;">(</span>x <span style="color: #7590db;">+</span> n<span style="color: #7590db;">/</span>x<span style="color: #4f97d7;">)</span><span style="color: #7590db;">/</span>2
 
-<span style="color: #cae682;">sqroot</span> <span style="color: #cae682;">::</span> <span style="color: #92a65e; font-weight: bold;">Float</span> <span style="color: #cae682;">-&gt;</span> <span style="color: #92a65e; font-weight: bold;">Float</span>
-<span style="color: #cae682;">sqroot</span> 0 <span style="color: #cae682;">=</span> 0
-<span style="color: #cae682;">sqroot</span> x <span style="color: #cae682;">=</span> limit 0.03 <span style="color: #DCDCCC;">(</span>iterate <span style="color: #BFEBBF;">(</span>newtonaprox x<span style="color: #BFEBBF;">)</span> x<span style="color: #DCDCCC;">)</span>
+<span style="color: #bc6ec5; font-weight: bold;">sqroot</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Float</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Float</span>
+<span style="color: #bc6ec5; font-weight: bold;">sqroot</span> 0 <span style="color: #7590db;">=</span> 0
+<span style="color: #bc6ec5; font-weight: bold;">sqroot</span> x <span style="color: #7590db;">=</span> limit 0.03 <span style="color: #4f97d7;">(</span>iterate <span style="color: #bc6ec5;">(</span>newtonaprox x<span style="color: #bc6ec5;">)</span> x<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
 <p>
 Ahora imaginemos que usamos esta raíz cuadrada recién definida para
-solucionar una ecuación de segundo grado <object type="image/svg+xml" data="ltximg/cosmoi_92fc529c74a8f5b8ae0a49536ca3e63f71b24a45.svg" class="org-svg">
+solucionar una ecuación de segundo grado <object type="image/svg+xml" data="ltximg/cosmoi_8b01f59e13881718fc76db150af57366bd7853ab.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>:
 </p>
 
 <p>
-<object type="image/svg+xml" data="ltximg/cosmoi_c0622a92353af3795de87ebbfdde49c3cca307a4.svg" class="org-svg">
+<object type="image/svg+xml" data="ltximg/cosmoi_d56879862bc6ab81a169fdd6af183bff44ea3d9d.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>
 </p>
 
@@ -200,15 +200,15 @@ función que lo resuelva obteniendo sus dos raíces:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #8ac6f2; font-weight: bold;">data</span> <span style="color: #92a65e; font-weight: bold;">QPol</span> <span style="color: #cae682;">=</span> <span style="color: #92a65e; font-weight: bold;">QPol</span> <span style="color: #92a65e; font-weight: bold;">Float</span> <span style="color: #92a65e; font-weight: bold;">Float</span> <span style="color: #92a65e; font-weight: bold;">Float</span>
+<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">data</span> <span style="color: #ce537a; font-weight: bold;">QPol</span> <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">QPol</span> <span style="color: #ce537a; font-weight: bold;">Float</span> <span style="color: #ce537a; font-weight: bold;">Float</span> <span style="color: #ce537a; font-weight: bold;">Float</span>
 
-<span style="color: #8ac6f2; font-weight: bold;">instance</span> <span style="color: #92a65e; font-weight: bold;">Show</span> <span style="color: #92a65e; font-weight: bold;">QPol</span> <span style="color: #8ac6f2; font-weight: bold;">where</span>
-    show <span style="color: #DCDCCC;">(</span><span style="color: #92a65e; font-weight: bold;">Qpol</span> a b c<span style="color: #DCDCCC;">)</span> <span style="color: #cae682;">=</span> show a <span style="color: #cae682;">++</span> <span style="color: #95e454;">"x&#178; + "</span> <span style="color: #cae682;">++</span> show b <span style="color: #cae682;">++</span> <span style="color: #95e454;">"x + "</span> show c
+<span style="color: #4f97d7; font-weight: bold;">instance</span> <span style="color: #ce537a; font-weight: bold;">Show</span> <span style="color: #ce537a; font-weight: bold;">QPol</span> <span style="color: #4f97d7; font-weight: bold;">where</span>
+    show <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Qpol</span> a b c<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> show a <span style="color: #7590db;">++</span> <span style="color: #2d9574;">"x&#178; + "</span> <span style="color: #7590db;">++</span> show b <span style="color: #7590db;">++</span> <span style="color: #2d9574;">"x + "</span> show c
 
-<span style="color: #cae682;">solve</span> <span style="color: #cae682;">::</span> <span style="color: #92a65e; font-weight: bold;">QPol</span> <span style="color: #cae682;">-&gt;</span> <span style="color: #DCDCCC;">(</span><span style="color: #92a65e; font-weight: bold;">Float</span>,<span style="color: #92a65e; font-weight: bold;">Float</span><span style="color: #DCDCCC;">)</span>
-<span style="color: #cae682;">solve</span> <span style="color: #DCDCCC;">(</span><span style="color: #92a65e; font-weight: bold;">QPol</span> a b c<span style="color: #DCDCCC;">)</span> <span style="color: #cae682;">=</span> <span style="color: #DCDCCC;">(</span>sol1 sol2<span style="color: #DCDCCC;">)</span>
-    <span style="color: #8ac6f2; font-weight: bold;">where</span> sol1 <span style="color: #cae682;">=</span> <span style="color: #DCDCCC;">(</span><span style="color: #BFEBBF;">(</span><span style="color: #cae682;">-</span>b<span style="color: #BFEBBF;">)</span> <span style="color: #cae682;">+</span> sqroot<span style="color: #BFEBBF;">(</span>b<span style="color: #cae682;">*</span>b<span style="color: #cae682;">-</span>4<span style="color: #cae682;">*</span>c<span style="color: #cae682;">*</span>a<span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span><span style="color: #cae682;">/</span><span style="color: #DCDCCC;">(</span>2<span style="color: #cae682;">*</span>a<span style="color: #DCDCCC;">)</span>
-          sol2 <span style="color: #cae682;">=</span> <span style="color: #DCDCCC;">(</span><span style="color: #BFEBBF;">(</span><span style="color: #cae682;">-</span>b<span style="color: #BFEBBF;">)</span> <span style="color: #cae682;">-</span> sqroot<span style="color: #BFEBBF;">(</span>b<span style="color: #cae682;">*</span>b<span style="color: #cae682;">-</span>4<span style="color: #cae682;">*</span>c<span style="color: #cae682;">*</span>a<span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span><span style="color: #cae682;">/</span><span style="color: #DCDCCC;">(</span>2<span style="color: #cae682;">*</span>a<span style="color: #DCDCCC;">)</span>
+<span style="color: #bc6ec5; font-weight: bold;">solve</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">QPol</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Float</span>,<span style="color: #ce537a; font-weight: bold;">Float</span><span style="color: #4f97d7;">)</span>
+<span style="color: #bc6ec5; font-weight: bold;">solve</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">QPol</span> a b c<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> <span style="color: #4f97d7;">(</span>sol1 sol2<span style="color: #4f97d7;">)</span>
+    <span style="color: #4f97d7; font-weight: bold;">where</span> sol1 <span style="color: #7590db;">=</span> <span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">(</span><span style="color: #7590db;">-</span>b<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">+</span> sqroot<span style="color: #bc6ec5;">(</span>b<span style="color: #7590db;">*</span>b<span style="color: #7590db;">-</span>4<span style="color: #7590db;">*</span>c<span style="color: #7590db;">*</span>a<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span><span style="color: #7590db;">/</span><span style="color: #4f97d7;">(</span>2<span style="color: #7590db;">*</span>a<span style="color: #4f97d7;">)</span>
+          sol2 <span style="color: #7590db;">=</span> <span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">(</span><span style="color: #7590db;">-</span>b<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">-</span> sqroot<span style="color: #bc6ec5;">(</span>b<span style="color: #7590db;">*</span>b<span style="color: #7590db;">-</span>4<span style="color: #7590db;">*</span>c<span style="color: #7590db;">*</span>a<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span><span style="color: #7590db;">/</span><span style="color: #4f97d7;">(</span>2<span style="color: #7590db;">*</span>a<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -224,9 +224,9 @@ Las soluciones de 1.0x² + -5.0x + 6.0 son (3.0,2.0)
 </div>
 </div>
 
-<div id="outline-container-org71e425b" class="outline-3">
-<h3 id="org71e425b">Controlando los errores</h3>
-<div class="outline-text-3" id="text-org71e425b">
+<div id="outline-container-org3f7a639" class="outline-3">
+<h3 id="org3f7a639">Controlando los errores</h3>
+<div class="outline-text-3" id="text-org3f7a639">
 <p>
 Pero ¿qué ocurre cuando intentamos calcular la raíz cuadrada de un
 número no positivo? Este método no la encuentra, por lo que debería
@@ -236,11 +236,11 @@ cuadrada.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #cae682;">sqroot'</span> <span style="color: #cae682;">::</span> <span style="color: #92a65e; font-weight: bold;">Float</span> <span style="color: #cae682;">-&gt;</span> <span style="color: #92a65e; font-weight: bold;">Maybe</span> <span style="color: #92a65e; font-weight: bold;">Float</span>
-<span style="color: #cae682;">sqroot'</span> x
-  <span style="color: #cae682;">|</span> x <span style="color: #cae682;">&lt;</span> 0     <span style="color: #cae682;">=</span> <span style="color: #92a65e; font-weight: bold;">Nothing</span>
-  <span style="color: #cae682;">|</span> x <span style="color: #cae682;">==</span> 0    <span style="color: #cae682;">=</span> <span style="color: #92a65e; font-weight: bold;">Just</span> 0.0
-  <span style="color: #cae682;">|</span> otherwise <span style="color: #cae682;">=</span> <span style="color: #92a65e; font-weight: bold;">Just</span> <span style="color: #DCDCCC;">(</span> limit 0.03 <span style="color: #BFEBBF;">(</span>iterate <span style="color: #D0BF8F;">(</span>newtonsqrt x<span style="color: #D0BF8F;">)</span> x<span style="color: #BFEBBF;">)</span> <span style="color: #DCDCCC;">)</span>
+<pre class="src src-haskell"><span style="color: #bc6ec5; font-weight: bold;">sqroot'</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Float</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Maybe</span> <span style="color: #ce537a; font-weight: bold;">Float</span>
+<span style="color: #bc6ec5; font-weight: bold;">sqroot'</span> x
+  <span style="color: #7590db;">|</span> x <span style="color: #7590db;">&lt;</span> 0     <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Nothing</span>
+  <span style="color: #7590db;">|</span> x <span style="color: #7590db;">==</span> 0    <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Just</span> 0.0
+  <span style="color: #7590db;">|</span> otherwise <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Just</span> <span style="color: #4f97d7;">(</span> limit 0.03 <span style="color: #bc6ec5;">(</span>iterate <span style="color: #2d9574;">(</span>newtonsqrt x<span style="color: #2d9574;">)</span> x<span style="color: #bc6ec5;">)</span> <span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -255,10 +255,10 @@ involucrando a <code>sqroot'</code>:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #DCDCCC;">(</span><span style="color: #cae682;">+.</span><span style="color: #DCDCCC;">)</span> <span style="color: #cae682;">::</span> <span style="color: #92a65e; font-weight: bold;">Maybe</span> <span style="color: #92a65e; font-weight: bold;">Float</span> <span style="color: #cae682;">-&gt;</span> <span style="color: #92a65e; font-weight: bold;">Maybe</span> <span style="color: #92a65e; font-weight: bold;">Float</span> <span style="color: #cae682;">-&gt;</span> <span style="color: #92a65e; font-weight: bold;">Maybe</span> <span style="color: #92a65e; font-weight: bold;">Float</span>
-<span style="color: #DCDCCC;">(</span><span style="color: #cae682;">+.</span><span style="color: #DCDCCC;">)</span> <span style="color: #92a65e; font-weight: bold;">Nothing</span> <span style="color: #8ac6f2; font-weight: bold;">_</span> <span style="color: #cae682;">=</span> <span style="color: #92a65e; font-weight: bold;">Nothing</span>
-<span style="color: #DCDCCC;">(</span><span style="color: #cae682;">+.</span><span style="color: #DCDCCC;">)</span> <span style="color: #8ac6f2; font-weight: bold;">_</span> <span style="color: #92a65e; font-weight: bold;">Nothing</span> <span style="color: #cae682;">=</span> <span style="color: #92a65e; font-weight: bold;">Nothing</span>
-<span style="color: #DCDCCC;">(</span><span style="color: #cae682;">+.</span><span style="color: #DCDCCC;">)</span> <span style="color: #DCDCCC;">(</span><span style="color: #92a65e; font-weight: bold;">Just</span> a<span style="color: #DCDCCC;">)</span> <span style="color: #DCDCCC;">(</span><span style="color: #92a65e; font-weight: bold;">Just</span> b<span style="color: #DCDCCC;">)</span> <span style="color: #cae682;">=</span> <span style="color: #92a65e; font-weight: bold;">Just</span> <span style="color: #DCDCCC;">(</span>a <span style="color: #cae682;">+</span> b<span style="color: #DCDCCC;">)</span>
+<pre class="src src-haskell"><span style="color: #4f97d7;">(</span><span style="color: #bc6ec5; font-weight: bold;">+.</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Maybe</span> <span style="color: #ce537a; font-weight: bold;">Float</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Maybe</span> <span style="color: #ce537a; font-weight: bold;">Float</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Maybe</span> <span style="color: #ce537a; font-weight: bold;">Float</span>
+<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5; font-weight: bold;">+.</span><span style="color: #4f97d7;">)</span> <span style="color: #ce537a; font-weight: bold;">Nothing</span> <span style="color: #4f97d7; font-weight: bold;">_</span> <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Nothing</span>
+<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5; font-weight: bold;">+.</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7; font-weight: bold;">_</span> <span style="color: #ce537a; font-weight: bold;">Nothing</span> <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Nothing</span>
+<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5; font-weight: bold;">+.</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Just</span> a<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Just</span> b<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Just</span> <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">+</span> b<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -277,14 +277,14 @@ y definir las demás en función suya:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #cae682;">errorAware</span> <span style="color: #cae682;">::</span> <span style="color: #DCDCCC;">(</span>a <span style="color: #cae682;">-&gt;</span> b <span style="color: #cae682;">-&gt;</span> c<span style="color: #DCDCCC;">)</span> <span style="color: #cae682;">-&gt;</span> <span style="color: #92a65e; font-weight: bold;">Maybe</span> a <span style="color: #cae682;">-&gt;</span> <span style="color: #92a65e; font-weight: bold;">Maybe</span> b <span style="color: #cae682;">-&gt;</span> <span style="color: #92a65e; font-weight: bold;">Maybe</span> c
-<span style="color: #cae682;">errorAware</span> op <span style="color: #92a65e; font-weight: bold;">Nothing</span> <span style="color: #8ac6f2; font-weight: bold;">_</span> <span style="color: #cae682;">=</span> <span style="color: #92a65e; font-weight: bold;">Nothing</span>
-<span style="color: #cae682;">errorAware</span> op <span style="color: #8ac6f2; font-weight: bold;">_</span> <span style="color: #92a65e; font-weight: bold;">Nothing</span> <span style="color: #cae682;">=</span> <span style="color: #92a65e; font-weight: bold;">Nothing</span>
-<span style="color: #cae682;">errorAware</span> op <span style="color: #DCDCCC;">(</span><span style="color: #92a65e; font-weight: bold;">Just</span> a<span style="color: #DCDCCC;">)</span> <span style="color: #DCDCCC;">(</span><span style="color: #92a65e; font-weight: bold;">Just</span> b<span style="color: #DCDCCC;">)</span> <span style="color: #cae682;">=</span> <span style="color: #92a65e; font-weight: bold;">Just</span> <span style="color: #DCDCCC;">(</span>op a b<span style="color: #DCDCCC;">)</span>
+<pre class="src src-haskell"><span style="color: #bc6ec5; font-weight: bold;">errorAware</span> <span style="color: #7590db;">::</span> <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">-&gt;</span> b <span style="color: #7590db;">-&gt;</span> c<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Maybe</span> a <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Maybe</span> b <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Maybe</span> c
+<span style="color: #bc6ec5; font-weight: bold;">errorAware</span> op <span style="color: #ce537a; font-weight: bold;">Nothing</span> <span style="color: #4f97d7; font-weight: bold;">_</span> <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Nothing</span>
+<span style="color: #bc6ec5; font-weight: bold;">errorAware</span> op <span style="color: #4f97d7; font-weight: bold;">_</span> <span style="color: #ce537a; font-weight: bold;">Nothing</span> <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Nothing</span>
+<span style="color: #bc6ec5; font-weight: bold;">errorAware</span> op <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Just</span> a<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Just</span> b<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Just</span> <span style="color: #4f97d7;">(</span>op a b<span style="color: #4f97d7;">)</span>
 
-<span style="color: #DCDCCC;">(</span><span style="color: #cae682;">+.</span><span style="color: #DCDCCC;">)</span>, <span style="color: #DCDCCC;">(</span><span style="color: #cae682;">*.</span><span style="color: #DCDCCC;">)</span> <span style="color: #cae682;">::</span> <span style="color: #92a65e; font-weight: bold;">Maybe</span> <span style="color: #92a65e; font-weight: bold;">Float</span> <span style="color: #cae682;">-&gt;</span> <span style="color: #92a65e; font-weight: bold;">Maybe</span> <span style="color: #92a65e; font-weight: bold;">Float</span> <span style="color: #cae682;">-&gt;</span> <span style="color: #92a65e; font-weight: bold;">Maybe</span> <span style="color: #92a65e; font-weight: bold;">Float</span>
-<span style="color: #DCDCCC;">(</span><span style="color: #cae682;">+.</span><span style="color: #DCDCCC;">)</span> <span style="color: #cae682;">=</span> errorAware <span style="color: #DCDCCC;">(</span><span style="color: #cae682;">+</span><span style="color: #DCDCCC;">)</span>
-<span style="color: #DCDCCC;">(</span><span style="color: #cae682;">*.</span><span style="color: #DCDCCC;">)</span> <span style="color: #cae682;">=</span> errorAware <span style="color: #DCDCCC;">(</span><span style="color: #cae682;">*</span><span style="color: #DCDCCC;">)</span>
+<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5; font-weight: bold;">+.</span><span style="color: #4f97d7;">)</span>, <span style="color: #4f97d7;">(</span><span style="color: #7590db;">*.</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Maybe</span> <span style="color: #ce537a; font-weight: bold;">Float</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Maybe</span> <span style="color: #ce537a; font-weight: bold;">Float</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Maybe</span> <span style="color: #ce537a; font-weight: bold;">Float</span>
+<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5; font-weight: bold;">+.</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> errorAware <span style="color: #4f97d7;">(</span><span style="color: #7590db;">+</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5; font-weight: bold;">*.</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> errorAware <span style="color: #4f97d7;">(</span><span style="color: #7590db;">*</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -301,9 +301,9 @@ Just 5.732143
 </div>
 </div>
 
-<div id="outline-container-orgd06d35b" class="outline-3">
-<h3 id="orgd06d35b">La mónada Maybe</h3>
-<div class="outline-text-3" id="text-orgd06d35b">
+<div id="outline-container-org2b387ae" class="outline-3">
+<h3 id="org2b387ae">La mónada Maybe</h3>
+<div class="outline-text-3" id="text-org2b387ae">
 <p>
 Esta idea para simplificar el tratamiento de errores, realizada
 correctamente, es lo que nos va a proporcionar la estructura de mónada.
@@ -311,9 +311,9 @@ En Haskell, podemos definir una mónada como:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #8ac6f2; font-weight: bold;">class</span> <span style="color: #92a65e; font-weight: bold;">Monad</span> m <span style="color: #8ac6f2; font-weight: bold;">where</span>
-  <span style="color: #DCDCCC;">(</span><span style="color: #cae682;">&gt;&gt;=</span><span style="color: #DCDCCC;">)</span>  <span style="color: #cae682;">::</span> m a <span style="color: #cae682;">-&gt;</span> <span style="color: #DCDCCC;">(</span>a <span style="color: #cae682;">-&gt;</span> m b<span style="color: #DCDCCC;">)</span> <span style="color: #cae682;">-&gt;</span> m b
-  return <span style="color: #cae682;">::</span> a <span style="color: #cae682;">-&gt;</span> m a
+<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">class</span> <span style="color: #ce537a; font-weight: bold;">Monad</span> m <span style="color: #4f97d7; font-weight: bold;">where</span>
+  <span style="color: #4f97d7;">(</span><span style="color: #7590db;">&gt;&gt;=</span><span style="color: #4f97d7;">)</span>  <span style="color: #7590db;">::</span> m a <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">-&gt;</span> m b<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> m b
+  return <span style="color: #7590db;">::</span> a <span style="color: #7590db;">-&gt;</span> m a
 </pre>
 </div>
 
@@ -326,23 +326,23 @@ componer varias <code>sqroot'</code>, que era algo que hasta ahora no podíamos
 hacer sin tratar cada posible caso de error. Y la función <code>return</code>, que
 en este caso es simplemente <code>Just</code>, nos permite considerar una constante
 como un posible error. Podemos calcular fácilmente así
-<object type="image/svg+xml" data="ltximg/cosmoi_233e00098f1e98b0f4b0e0b5cab89f1643278668.svg" class="org-svg">
+<object type="image/svg+xml" data="ltximg/cosmoi_f30a3f4f8c41427a1679b4783e4f1744a248b35d.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object> teniendo en cuenta los casos de error:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #cae682;">sqroot'</span> <span style="color: #DCDCCC;">(</span>sqroot' 3<span style="color: #DCDCCC;">)</span>              <span style="color: #5F7F5F;">-- </span><span style="color: #99968b;">&#161;Error de tipos!</span>
-<span style="color: #cae682;">sqroot'</span> 3 <span style="color: #cae682;">&gt;&gt;=</span> sqroot'            <span style="color: #5F7F5F;">-- </span><span style="color: #99968b;">Usando m&#243;nadas</span>
-<span style="color: #92a65e; font-weight: bold;">Just</span>   3 <span style="color: #cae682;">&gt;&gt;=</span> sqroot' <span style="color: #cae682;">&gt;&gt;=</span> sqroot' <span style="color: #5F7F5F;">-- </span><span style="color: #99968b;">Usando Just</span>
-<span style="color: #cae682;">return</span> 3 <span style="color: #cae682;">&gt;&gt;=</span> sqroot' <span style="color: #cae682;">&gt;&gt;=</span> sqroot' <span style="color: #5F7F5F;">-- </span><span style="color: #99968b;">Equivalente a lo anterior</span>
+<pre class="src src-haskell"><span style="color: #bc6ec5; font-weight: bold;">sqroot'</span> <span style="color: #4f97d7;">(</span>sqroot' 3<span style="color: #4f97d7;">)</span>              <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">&#161;Error de tipos!</span>
+<span style="color: #bc6ec5; font-weight: bold;">sqroot'</span> 3 <span style="color: #7590db;">&gt;&gt;=</span> sqroot'            <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">Usando m&#243;nadas</span>
+<span style="color: #ce537a; font-weight: bold;">Just</span>   3 <span style="color: #7590db;">&gt;&gt;=</span> sqroot' <span style="color: #7590db;">&gt;&gt;=</span> sqroot' <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">Usando Just</span>
+<span style="color: #bc6ec5; font-weight: bold;">return</span> 3 <span style="color: #7590db;">&gt;&gt;=</span> sqroot' <span style="color: #7590db;">&gt;&gt;=</span> sqroot' <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">Equivalente a lo anterior</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgf02d5f0" class="outline-3">
-<h3 id="orgf02d5f0">Notación do</h3>
-<div class="outline-text-3" id="text-orgf02d5f0">
+<div id="outline-container-org7cc9b9b" class="outline-3">
+<h3 id="org7cc9b9b">Notación do</h3>
+<div class="outline-text-3" id="text-org7cc9b9b">
 <p>
 Las mónadas definen las funciones anteriores y muchas más que no vamos a
 tratar ahora mismo, pero como resultado, nos acaban ofreciendo la
@@ -352,10 +352,10 @@ que es la que podemos usar para acabar escribiendo nuestra función
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #cae682;">solve</span> <span style="color: #cae682;">::</span> <span style="color: #92a65e; font-weight: bold;">QPol</span> <span style="color: #cae682;">-&gt;</span> <span style="color: #92a65e; font-weight: bold;">Maybe</span> <span style="color: #DCDCCC;">(</span><span style="color: #92a65e; font-weight: bold;">Float</span>,<span style="color: #92a65e; font-weight: bold;">Float</span><span style="color: #DCDCCC;">)</span>
-<span style="color: #cae682;">solve</span> <span style="color: #DCDCCC;">(</span><span style="color: #92a65e; font-weight: bold;">QPol</span> a b c<span style="color: #DCDCCC;">)</span> <span style="color: #cae682;">=</span> <span style="color: #8ac6f2; font-weight: bold;">do</span>
-  discriminant <span style="color: #cae682;">&lt;-</span> sqroot' <span style="color: #DCDCCC;">(</span>b<span style="color: #cae682;">*</span>b <span style="color: #cae682;">-</span> 4<span style="color: #cae682;">*</span>c<span style="color: #cae682;">*</span>a<span style="color: #DCDCCC;">)</span>
-  return <span style="color: #DCDCCC;">(</span><span style="color: #BFEBBF;">(</span><span style="color: #D0BF8F;">(</span><span style="color: #cae682;">-</span>b<span style="color: #D0BF8F;">)</span> <span style="color: #cae682;">+</span> discriminant<span style="color: #BFEBBF;">)</span><span style="color: #cae682;">/</span><span style="color: #BFEBBF;">(</span>2<span style="color: #cae682;">*</span>a<span style="color: #BFEBBF;">)</span>, <span style="color: #BFEBBF;">(</span><span style="color: #D0BF8F;">(</span><span style="color: #cae682;">-</span>b<span style="color: #D0BF8F;">)</span> <span style="color: #cae682;">-</span> discriminant<span style="color: #BFEBBF;">)</span><span style="color: #cae682;">/</span><span style="color: #BFEBBF;">(</span>2<span style="color: #cae682;">*</span>a<span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>
+<pre class="src src-haskell"><span style="color: #bc6ec5; font-weight: bold;">solve</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">QPol</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Maybe</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Float</span>,<span style="color: #ce537a; font-weight: bold;">Float</span><span style="color: #4f97d7;">)</span>
+<span style="color: #bc6ec5; font-weight: bold;">solve</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">QPol</span> a b c<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> <span style="color: #4f97d7; font-weight: bold;">do</span>
+  discriminant <span style="color: #7590db;">&lt;-</span> sqroot' <span style="color: #4f97d7;">(</span>b<span style="color: #7590db;">*</span>b <span style="color: #7590db;">-</span> 4<span style="color: #7590db;">*</span>c<span style="color: #7590db;">*</span>a<span style="color: #4f97d7;">)</span>
+  return <span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">(</span><span style="color: #7590db;">-</span>b<span style="color: #2d9574;">)</span> <span style="color: #7590db;">+</span> discriminant<span style="color: #bc6ec5;">)</span><span style="color: #7590db;">/</span><span style="color: #bc6ec5;">(</span>2<span style="color: #7590db;">*</span>a<span style="color: #bc6ec5;">)</span>, <span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">(</span><span style="color: #7590db;">-</span>b<span style="color: #2d9574;">)</span> <span style="color: #7590db;">-</span> discriminant<span style="color: #bc6ec5;">)</span><span style="color: #7590db;">/</span><span style="color: #bc6ec5;">(</span>2<span style="color: #7590db;">*</span>a<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -375,13 +375,13 @@ puramente funcionales. Existen críticas al uso de esta notación. [1]
 </div>
 </div>
 
-<div id="outline-container-org2ee5339" class="outline-2">
-<h2 id="org2ee5339">Mónadas en programación funcional</h2>
-<div class="outline-text-2" id="text-org2ee5339">
+<div id="outline-container-orgdb197cf" class="outline-2">
+<h2 id="orgdb197cf">Mónadas en programación funcional</h2>
+<div class="outline-text-2" id="text-orgdb197cf">
 </div>
-<div id="outline-container-orgf8f2129" class="outline-3">
-<h3 id="orgf8f2129">Mónadas como clase de tipos</h3>
-<div class="outline-text-3" id="text-orgf8f2129">
+<div id="outline-container-org217975a" class="outline-3">
+<h3 id="org217975a">Mónadas como clase de tipos</h3>
+<div class="outline-text-3" id="text-org217975a">
 <p>
 Las mónadas en Haskell están definidas como una clase de tipos teniendo:
 </p>
@@ -410,18 +410,18 @@ ahora:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #5F7F5F;">-- </span><span style="color: #99968b;">Return de la m&#243;nada Maybe</span>
-<span style="color: #cae682;">return</span> x <span style="color: #cae682;">=</span> <span style="color: #92a65e; font-weight: bold;">Just</span> x
+<pre class="src src-haskell"><span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">Return de la m&#243;nada Maybe</span>
+<span style="color: #bc6ec5; font-weight: bold;">return</span> x <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Just</span> x
 
-<span style="color: #5F7F5F;">-- </span><span style="color: #99968b;">Bind de la m&#243;nada Maybe</span>
-<span style="color: #DCDCCC;">(</span><span style="color: #92a65e; font-weight: bold;">Just</span> x<span style="color: #DCDCCC;">)</span> <span style="color: #cae682;">&gt;&gt;=</span> k <span style="color: #cae682;">=</span> k x
-<span style="color: #92a65e; font-weight: bold;">Nothing</span>  <span style="color: #cae682;">&gt;&gt;=</span> <span style="color: #8ac6f2; font-weight: bold;">_</span> <span style="color: #cae682;">=</span> <span style="color: #92a65e; font-weight: bold;">Nothing</span>
+<span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">Bind de la m&#243;nada Maybe</span>
+<span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Just</span> x<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">&gt;&gt;=</span> k <span style="color: #7590db;">=</span> k x
+<span style="color: #ce537a; font-weight: bold;">Nothing</span>  <span style="color: #bc6ec5; font-weight: bold;">&gt;&gt;=</span> <span style="color: #4f97d7; font-weight: bold;">_</span> <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Nothing</span>
 
-<span style="color: #5F7F5F;">-- </span><span style="color: #99968b;">Return de la m&#243;nada List</span>
-<span style="color: #cae682;">return</span> x <span style="color: #cae682;">=</span> <span style="color: #DCDCCC;">[</span>x<span style="color: #DCDCCC;">]</span>
+<span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">Return de la m&#243;nada List</span>
+<span style="color: #bc6ec5; font-weight: bold;">return</span> x <span style="color: #7590db;">=</span> <span style="color: #4f97d7;">[</span>x<span style="color: #4f97d7;">]</span>
 
-<span style="color: #5F7F5F;">-- </span><span style="color: #99968b;">Bind de la m&#243;nada List</span>
-xs <span style="color: #cae682;">&gt;&gt;=</span> f <span style="color: #cae682;">=</span> <span style="color: #DCDCCC;">[</span>y <span style="color: #cae682;">|</span> x <span style="color: #cae682;">&lt;-</span> xs, y <span style="color: #cae682;">&lt;-</span> f x<span style="color: #DCDCCC;">]</span>
+<span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">Bind de la m&#243;nada List</span>
+xs <span style="color: #bc6ec5; font-weight: bold;">&gt;&gt;=</span> f <span style="color: #7590db;">=</span> <span style="color: #4f97d7;">[</span>y <span style="color: #7590db;">|</span> x <span style="color: #7590db;">&lt;-</span> xs, y <span style="color: #7590db;">&lt;-</span> f x<span style="color: #4f97d7;">]</span>
 </pre>
 </div>
 
@@ -437,9 +437,9 @@ en:
 </div>
 </div>
 
-<div id="outline-container-orga6a2670" class="outline-3">
-<h3 id="orga6a2670">Mónada lista</h3>
-<div class="outline-text-3" id="text-orga6a2670">
+<div id="outline-container-org20862cf" class="outline-3">
+<h3 id="org20862cf">Mónada lista</h3>
+<div class="outline-text-3" id="text-org20862cf">
 <p>
 En las listas, por ejemplo, tenemos como candidato para
 <code>join :: [[a]] -&gt; [a]</code> la concatenación de listas, <code>concat</code>. Nuestro
@@ -465,29 +465,29 @@ elementos:[2]
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #8ac6f2; font-weight: bold;">import</span> <span style="color: #92a65e; font-weight: bold;">Data.List</span>
-<span style="color: #8ac6f2; font-weight: bold;">import</span> <span style="color: #92a65e; font-weight: bold;">Data.Ratio</span>
+<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Data.List</span>
+<span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Data.Ratio</span>
 
-<span style="color: #5F7F5F;">-- </span><span style="color: #99968b;">Crea los racionales con denominador n</span>
-<span style="color: #cae682;">withDenom</span> <span style="color: #cae682;">::</span> <span style="color: #92a65e; font-weight: bold;">Integral</span> <span style="color: #cae682;">-&gt;</span> <span style="color: #DCDCCC;">[</span><span style="color: #92a65e; font-weight: bold;">Rational</span><span style="color: #DCDCCC;">]</span>
-<span style="color: #cae682;">withDenom</span> n <span style="color: #cae682;">=</span> map <span style="color: #DCDCCC;">(</span><span style="color: #cae682;">%</span>n<span style="color: #DCDCCC;">)</span> <span style="color: #DCDCCC;">[</span>1<span style="color: #cae682;">..</span><span style="color: #DCDCCC;">]</span>
+<span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">Crea los racionales con denominador n</span>
+<span style="color: #bc6ec5; font-weight: bold;">withDenom</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Integral</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">[</span><span style="color: #ce537a; font-weight: bold;">Rational</span><span style="color: #4f97d7;">]</span>
+<span style="color: #bc6ec5; font-weight: bold;">withDenom</span> n <span style="color: #7590db;">=</span> map <span style="color: #4f97d7;">(</span><span style="color: #7590db;">%</span>n<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">[</span>1<span style="color: #7590db;">..</span><span style="color: #4f97d7;">]</span>
 
-<span style="color: #5F7F5F;">-- </span><span style="color: #99968b;">Para cada entero, crea los racionales que lo</span>
-<span style="color: #5F7F5F;">-- </span><span style="color: #99968b;">tienen como denominador</span>
-<span style="color: #cae682;">rationalsDup</span> <span style="color: #cae682;">::</span> <span style="color: #DCDCCC;">[</span><span style="color: #92a65e; font-weight: bold;">Rational</span><span style="color: #DCDCCC;">]</span>
-<span style="color: #cae682;">rationalsDup</span> <span style="color: #cae682;">=</span> withDenom <span style="color: #cae682;">=&lt;&lt;</span> <span style="color: #DCDCCC;">[</span>1<span style="color: #cae682;">..</span><span style="color: #DCDCCC;">]</span>
+<span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">Para cada entero, crea los racionales que lo</span>
+<span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">tienen como denominador</span>
+<span style="color: #bc6ec5; font-weight: bold;">rationalsDup</span> <span style="color: #7590db;">::</span> <span style="color: #4f97d7;">[</span><span style="color: #ce537a; font-weight: bold;">Rational</span><span style="color: #4f97d7;">]</span>
+<span style="color: #bc6ec5; font-weight: bold;">rationalsDup</span> <span style="color: #7590db;">=</span> withDenom <span style="color: #7590db;">=&lt;&lt;</span> <span style="color: #4f97d7;">[</span>1<span style="color: #7590db;">..</span><span style="color: #4f97d7;">]</span>
 
-<span style="color: #5F7F5F;">-- </span><span style="color: #99968b;">Evita duplicados con 'nub'</span>
-<span style="color: #cae682;">rationals</span> <span style="color: #cae682;">::</span> <span style="color: #DCDCCC;">[</span><span style="color: #92a65e; font-weight: bold;">Rational</span><span style="color: #DCDCCC;">]</span>
-<span style="color: #cae682;">rationals</span> <span style="color: #cae682;">=</span> nub rationalsDup
+<span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">Evita duplicados con 'nub'</span>
+<span style="color: #bc6ec5; font-weight: bold;">rationals</span> <span style="color: #7590db;">::</span> <span style="color: #4f97d7;">[</span><span style="color: #ce537a; font-weight: bold;">Rational</span><span style="color: #4f97d7;">]</span>
+<span style="color: #bc6ec5; font-weight: bold;">rationals</span> <span style="color: #7590db;">=</span> nub rationalsDup
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgf6ba0a7" class="outline-3">
-<h3 id="orgf6ba0a7">Mónada IO</h3>
-<div class="outline-text-3" id="text-orgf6ba0a7">
+<div id="outline-container-orgda00edf" class="outline-3">
+<h3 id="orgda00edf">Mónada IO</h3>
+<div class="outline-text-3" id="text-orgda00edf">
 <p>
 La mónada IO surge como una solución al problema de implementar efectos
 secundarios (como la lectura o escritura) en un lenguaje puro y de forma
@@ -496,8 +496,8 @@ orden en el que queremos que se ejecuten.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #cae682;">greeting</span> <span style="color: #cae682;">::</span> <span style="color: #92a65e; font-weight: bold;">IO</span> <span style="color: #DCDCCC; font-weight: bold;">()</span>
-<span style="color: #cae682;">greeting</span> <span style="color: #cae682;">=</span> fmap <span style="color: #DCDCCC;">(</span><span style="color: #95e454;">"Hola, "</span><span style="color: #cae682;">++</span><span style="color: #DCDCCC;">)</span> getLine <span style="color: #cae682;">&gt;&gt;=</span> print
+<pre class="src src-haskell"><span style="color: #bc6ec5; font-weight: bold;">greeting</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">IO</span> <span style="color: #4f97d7; font-weight: bold;">()</span>
+<span style="color: #bc6ec5; font-weight: bold;">greeting</span> <span style="color: #7590db;">=</span> fmap <span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"Hola, "</span><span style="color: #7590db;">++</span><span style="color: #4f97d7;">)</span> getLine <span style="color: #7590db;">&gt;&gt;=</span> print
 </pre>
 </div>
 
@@ -513,9 +513,9 @@ Pueden leerse más detalles sobre mónada IO y su implementación en:
 </div>
 </div>
 
-<div id="outline-container-org80fe767" class="outline-3">
-<h3 id="org80fe767">Mónada estado</h3>
-<div class="outline-text-3" id="text-org80fe767">
+<div id="outline-container-org683f943" class="outline-3">
+<h3 id="org683f943">Mónada estado</h3>
+<div class="outline-text-3" id="text-org683f943">
 <p>
 En ocasiones necesitamos que nuestras funciones conserven un estado
 además de realizar sus operaciones. Para esos casos existe la mónada
@@ -540,7 +540,7 @@ Existen tutoriales sobre la mónada estado en:
 Un uso de la mónada estado puede ser el guardar la semilla de una
 generación pseudoaleatoria de números usando
 <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator">generadores lineales congruenciales</a>. En concreto, usaremos la fórmula iterativa
-<object type="image/svg+xml" data="ltximg/cosmoi_3c70e09b5043beb3be183d464a45780821b07538.svg" class="org-svg">
+<object type="image/svg+xml" data="ltximg/cosmoi_90f45ab9fa569634c21521061bff7463e273ab09.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>, que se expone <a href="https://math.dartmouth.edu/archive/m20f11/public_html/RANDOMNESS_LCG.pdf">aquí</a>.
 Con este generador podremos escribir dados de un número dado de caras y
 llamarlos varias veces. El estado interno pasará la semilla aleatoria de
@@ -548,11 +548,11 @@ un dado al siguiente:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #8ac6f2; font-weight: bold;">import</span> <span style="color: #92a65e; font-weight: bold;">Control.Monad.State</span>
-<span style="color: #8ac6f2; font-weight: bold;">type</span> <span style="color: #92a65e; font-weight: bold;">Seed</span> <span style="color: #cae682;">=</span> <span style="color: #92a65e; font-weight: bold;">Int</span>
+<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Control.Monad.State</span>
+<span style="color: #4f97d7; font-weight: bold;">type</span> <span style="color: #ce537a; font-weight: bold;">Seed</span> <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Int</span>
 
-<span style="color: #cae682;">dice</span> <span style="color: #cae682;">::</span> <span style="color: #92a65e; font-weight: bold;">Int</span> <span style="color: #cae682;">-&gt;</span> <span style="color: #92a65e; font-weight: bold;">State</span> <span style="color: #92a65e; font-weight: bold;">Seed</span> <span style="color: #92a65e; font-weight: bold;">Int</span>
-<span style="color: #cae682;">dice</span> n <span style="color: #cae682;">=</span> state <span style="color: #DCDCCC;">(</span><span style="color: #cae682;">\</span>s <span style="color: #cae682;">-&gt;</span> <span style="color: #BFEBBF;">(</span>s <span style="color: #cae682;">`mod`</span> n <span style="color: #cae682;">+</span> 1, 16807<span style="color: #cae682;">*</span>s <span style="color: #cae682;">`mod`</span> 2147483647<span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>
+<span style="color: #bc6ec5; font-weight: bold;">dice</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Int</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">State</span> <span style="color: #ce537a; font-weight: bold;">Seed</span> <span style="color: #ce537a; font-weight: bold;">Int</span>
+<span style="color: #bc6ec5; font-weight: bold;">dice</span> n <span style="color: #7590db;">=</span> state <span style="color: #4f97d7;">(</span><span style="color: #7590db;">\</span>s <span style="color: #7590db;">-&gt;</span> <span style="color: #bc6ec5;">(</span>s <span style="color: #7590db;">`mod`</span> n <span style="color: #7590db;">+</span> 1, 16807<span style="color: #7590db;">*</span>s <span style="color: #7590db;">`mod`</span> 2147483647<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -588,11 +588,11 @@ anteriores con las operaciones usuales:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #cae682;">twodices</span> <span style="color: #cae682;">::</span> <span style="color: #92a65e; font-weight: bold;">State</span> <span style="color: #92a65e; font-weight: bold;">Seed</span> <span style="color: #92a65e; font-weight: bold;">Int</span>
-<span style="color: #cae682;">twodices</span> <span style="color: #cae682;">=</span> <span style="color: #8ac6f2; font-weight: bold;">do</span>
-    a <span style="color: #cae682;">&lt;-</span> dice 6
-    b <span style="color: #cae682;">&lt;-</span> dice 6
-    return <span style="color: #DCDCCC;">(</span>a<span style="color: #cae682;">+</span>b<span style="color: #DCDCCC;">)</span>
+<pre class="src src-haskell"><span style="color: #bc6ec5; font-weight: bold;">twodices</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">State</span> <span style="color: #ce537a; font-weight: bold;">Seed</span> <span style="color: #ce537a; font-weight: bold;">Int</span>
+<span style="color: #bc6ec5; font-weight: bold;">twodices</span> <span style="color: #7590db;">=</span> <span style="color: #4f97d7; font-weight: bold;">do</span>
+    a <span style="color: #7590db;">&lt;-</span> dice 6
+    b <span style="color: #7590db;">&lt;-</span> dice 6
+    return <span style="color: #4f97d7;">(</span>a<span style="color: #7590db;">+</span>b<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -614,9 +614,9 @@ distribuciones de dados:
 </div>
 </div>
 
-<div id="outline-container-orge32edfb" class="outline-2">
-<h2 id="orge32edfb">Mónadas en teoría de categorías</h2>
-<div class="outline-text-2" id="text-orge32edfb">
+<div id="outline-container-orgf4caa6f" class="outline-2">
+<h2 id="orgf4caa6f">Mónadas en teoría de categorías</h2>
+<div class="outline-text-2" id="text-orgf4caa6f">
 <p>
 Para entender cómo funcionan las <a href="https://es.wikipedia.org/wiki/M%C3%B3nada_(teor%C3%ADa_de_categor%C3%ADas)">mónadas</a>
 en teoría de categorías tenemos que entender dos conceptos: los
@@ -626,39 +626,39 @@ construcción en teoría de categorías.
 </p>
 </div>
 
-<div id="outline-container-org7ac6cfb" class="outline-3">
-<h3 id="org7ac6cfb">Categorías monoidales</h3>
-<div class="outline-text-3" id="text-org7ac6cfb">
+<div id="outline-container-orgc09a3ce" class="outline-3">
+<h3 id="orgc09a3ce">Categorías monoidales</h3>
+<div class="outline-text-3" id="text-orgc09a3ce">
 <p>
 Simplificando, una categoría monoidal es aquella donde, dados dos
-objetos <object type="image/svg+xml" data="ltximg/cosmoi_78b295302331be85f0b6f34d4fe3e54b34b5fe82.svg" class="org-svg">
+objetos <object type="image/svg+xml" data="ltximg/cosmoi_a01269075d90dce237e31285ae88426ba0677115.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>, tenemos un objeto <i>"producto tensor"</i> de ambos,
-<object type="image/svg+xml" data="ltximg/cosmoi_1544b2c026ac83ca5ea9085b95b496c96a953011.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object>, donde además existe un objeto identidad <object type="image/svg+xml" data="ltximg/cosmoi_d26da0a6e9513ff632bc1839334fee1a1f4bc51e.svg" class="org-svg">
+<object type="image/svg+xml" data="ltximg/cosmoi_8d17961032dc1a3881c2602b066e2b290f01f42f.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>, donde además existe un objeto identidad <object type="image/svg+xml" data="ltximg/cosmoi_4b0d568b291c427030e103d3984e36cdd99dd2da.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>
 cumpliendo propiedades como:
 </p>
 
 <p>
-<object type="image/svg+xml" data="ltximg/cosmoi_406e073c61ecb8411912b643385845309d9e5817.svg" class="org-svg">
+<object type="image/svg+xml" data="ltximg/cosmoi_ee69ffa08697825fb4cacd05965751a00ab16435.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>
 </p>
 
 <p>
-<object type="image/svg+xml" data="ltximg/cosmoi_e69ee9527dbe417c543da1921220969b92643fe5.svg" class="org-svg">
+<object type="image/svg+xml" data="ltximg/cosmoi_31cb068f9dd4e118a230fa3d91afc81604aceb8e.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>
 </p>
 
 <p>
-<object type="image/svg+xml" data="ltximg/cosmoi_b46033c10abd7f3d6481343699e9d5fa5792befd.svg" class="org-svg">
+<object type="image/svg+xml" data="ltximg/cosmoi_eca81a277fd6133b46309f2cf57a1fb662a8075d.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>
 </p>
 </div>
 </div>
 
-<div id="outline-container-org5b6e829" class="outline-3">
-<h3 id="org5b6e829">Ejemplos de categorías monoidales</h3>
-<div class="outline-text-3" id="text-org5b6e829">
+<div id="outline-container-orge36bf05" class="outline-3">
+<h3 id="orge36bf05">Ejemplos de categorías monoidales</h3>
+<div class="outline-text-3" id="text-orge36bf05">
 <p>
 Los <b>conjuntos</b> con el producto cartesiano y el conjunto de un elemento
 forman ya una categoría monoidal. Puede comprobarse sobre ellos que
@@ -666,17 +666,17 @@ existen los isomorfismos:
 </p>
 
 <p>
-<object type="image/svg+xml" data="ltximg/cosmoi_a23c9387ce79b96787e2a4cde0969a7f2e589647.svg" class="org-svg">
+<object type="image/svg+xml" data="ltximg/cosmoi_a89fef5526eb908192438c8979c1d814f54d14e9.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>
 </p>
 
 <p>
-<object type="image/svg+xml" data="ltximg/cosmoi_4e8a00f02329987e37a79bbec6b28adbfe87104d.svg" class="org-svg">
+<object type="image/svg+xml" data="ltximg/cosmoi_c14962ab886de6d033f92a8e1dc7fe2624fc32d2.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>
 </p>
 
 <p>
-<object type="image/svg+xml" data="ltximg/cosmoi_46a6202c6721222cf69ab3abdc2a5d6ff17737f8.svg" class="org-svg">
+<object type="image/svg+xml" data="ltximg/cosmoi_11b9441f9f8f5f2c43f9350001558cebbeb1b41e.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>
 </p>
 
@@ -686,17 +686,17 @@ esta vez con la <a href="https://es.wikipedia.org/wiki/Uni%C3%B3n_disjunta">uni�
 </p>
 
 <p>
-<object type="image/svg+xml" data="ltximg/cosmoi_9d8efeca2134afc6e6774e54bcd60658fa8f4c2b.svg" class="org-svg">
+<object type="image/svg+xml" data="ltximg/cosmoi_83666981f52a4c2856bce7e96ba2d0152f33b3fb.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>
 </p>
 
 <p>
-<object type="image/svg+xml" data="ltximg/cosmoi_552f13e9c033245f7219319617d5eafbe34aed16.svg" class="org-svg">
+<object type="image/svg+xml" data="ltximg/cosmoi_124b4b0d821fade7175eddcd46958c4261595388.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>
 </p>
 
 <p>
-<object type="image/svg+xml" data="ltximg/cosmoi_ed914ba2ddc6ec9f94d0ad73cad520fca52c97b9.svg" class="org-svg">
+<object type="image/svg+xml" data="ltximg/cosmoi_6f3c0a282991ded7d0ba17aaf1d174f769bfd8ae.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>
 </p>
 
@@ -709,27 +709,27 @@ con el coproducto categórico y el objeto inicial como unidad.
 
 <p>
 Otro ejemplo distinto lo forman los <b>espacios vectoriales</b> sobre un
-cuerpo <object type="image/svg+xml" data="ltximg/cosmoi_b2a577252e1ef54bc03ee069961bad2a96a73440.svg" class="org-svg">
+cuerpo <object type="image/svg+xml" data="ltximg/cosmoi_59ec631c3bfe0a0ae9a98d858abd9a2ab62d3250.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object> con el producto tensor y el propio cuerpo sirviendo como
-unidad; o los <b>grupos abelianos</b> con el producto tensor y <object type="image/svg+xml" data="ltximg/cosmoi_97dd05c3548825d352bce54aa963eb17075d6b26.svg" class="org-svg">
+unidad; o los <b>grupos abelianos</b> con el producto tensor y <object type="image/svg+xml" data="ltximg/cosmoi_9c4152584560b3c62a78252d0bbe2c6612470f3b.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>
 siendo la unidad.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgacfbadb" class="outline-3">
-<h3 id="orgacfbadb">Objetos monoide</h3>
-<div class="outline-text-3" id="text-orgacfbadb">
+<div id="outline-container-orgdb85aca" class="outline-3">
+<h3 id="orgdb85aca">Objetos monoide</h3>
+<div class="outline-text-3" id="text-orgdb85aca">
 <p>
-Un objeto <object type="image/svg+xml" data="ltximg/cosmoi_085c87a180827ca9d155c82e8136f5c97cbc45ee.svg" class="org-svg">
+Un objeto <object type="image/svg+xml" data="ltximg/cosmoi_8c5c7b238da7a1cfc3df49d7bd6409b6bd865040.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object> de una categoría monoidal es objeto monoide cuando puedo
 definir un morfismo desde el objeto identidad hacia él y un morfismo
-desde el producto tensor <object type="image/svg+xml" data="ltximg/cosmoi_a6d25f5c64aa7339318a73d2b173596654e1baf8.svg" class="org-svg">
+desde el producto tensor <object type="image/svg+xml" data="ltximg/cosmoi_be94d5e6e7475a5ef4249be332e604819baac630.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object> hacia él. Es decir, hay un
-morfismo <i>unidad</i>, <object type="image/svg+xml" data="ltximg/cosmoi_c4a6dff1159da80b804fb2a4c85b7102182a85ca.svg" class="org-svg">
+morfismo <i>unidad</i>, <object type="image/svg+xml" data="ltximg/cosmoi_b10b6bb20388a132325cc20b898be4de63a2a3da.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>; y hay un morfismo <i>multiplicación</i>,
-<object type="image/svg+xml" data="ltximg/cosmoi_759fd7924a46d6a9bf0e7ffb2f298d634f5352bf.svg" class="org-svg">
+<object type="image/svg+xml" data="ltximg/cosmoi_6cd58b727261b7bec4ac04aad9e154789c0a0dc3.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>.
 </p>
 
@@ -742,9 +742,9 @@ corriente.
 </div>
 </div>
 
-<div id="outline-container-orgf92b7a0" class="outline-3">
-<h3 id="orgf92b7a0">Categorías de endofuntores</h3>
-<div class="outline-text-3" id="text-orgf92b7a0">
+<div id="outline-container-org75342cc" class="outline-3">
+<h3 id="org75342cc">Categorías de endofuntores</h3>
+<div class="outline-text-3" id="text-org75342cc">
 <p>
 El ejemplo que nos interesa ahora, sin embargo, es el de los
 <b>endofuntores</b> de una categoría. Un <b>funtor</b>, de forma simplificada, es
@@ -767,7 +767,7 @@ funtores.
 
 <p>
 Esta es además una categoría monoidal. El producto tensor de esta
-categoría monoidal será la composición <object type="image/svg+xml" data="ltximg/cosmoi_3c5fe831d905fdf1073a66083c5bc92ce1412dbb.svg" class="org-svg">
+categoría monoidal será la composición <object type="image/svg+xml" data="ltximg/cosmoi_91d39062fc87cf599cc62e6534a7a22583a3be5f.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>, y el objeto identidad
 el endofuntor identidad, que actúa dejando fijo cada objeto y cada
 morfismo.
@@ -775,23 +775,23 @@ morfismo.
 </div>
 </div>
 
-<div id="outline-container-orgcb97a36" class="outline-3">
-<h3 id="orgcb97a36">Mónadas</h3>
-<div class="outline-text-3" id="text-orgcb97a36">
+<div id="outline-container-orgda3d1cb" class="outline-3">
+<h3 id="orgda3d1cb">Mónadas</h3>
+<div class="outline-text-3" id="text-orgda3d1cb">
 <p>
 Pues bien, una mónada es un objeto monoide en la categoría de los
 endofuntores con la composición como producto tensor. Esto quiere decir
-que es un endofuntor <object type="image/svg+xml" data="ltximg/cosmoi_030119e4e506083b0b60527335633a57f1cd5ed0.svg" class="org-svg">
+que es un endofuntor <object type="image/svg+xml" data="ltximg/cosmoi_260cb28a7ffd1e67e4783000df3f911c669b0f06.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object> con transformaciones naturales:
 </p>
 
 <p>
-<object type="image/svg+xml" data="ltximg/cosmoi_b397d6ea79823f4f71e1c53bcdc60c3dcc74b62f.svg" class="org-svg">
+<object type="image/svg+xml" data="ltximg/cosmoi_eedcac8f0cea3ebbefa0762da3bf7814c47efc6e.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>
 </p>
 
 <p>
-<object type="image/svg+xml" data="ltximg/cosmoi_70cb42c49f5d61bc223fa64fb4a886e5c3bea70f.svg" class="org-svg">
+<object type="image/svg+xml" data="ltximg/cosmoi_8ed3e38519a607eb9b038a1a865d8622be0d982e.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>
 </p>
 
@@ -801,20 +801,20 @@ que se aplica el funtor, lo que tenemos son familias de morfismos:
 </p>
 
 <p>
-<object type="image/svg+xml" data="ltximg/cosmoi_e248bb3ede7a4fd0a17d4529e5d4b0b1cbc33324.svg" class="org-svg">
+<object type="image/svg+xml" data="ltximg/cosmoi_a27e056c623e964a8ffa6e5d8d6b63fc273db68f.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>
 </p>
 
 <p>
-<object type="image/svg+xml" data="ltximg/cosmoi_52d59496398773ee51ae73d38ba203d8f4ea8825.svg" class="org-svg">
+<object type="image/svg+xml" data="ltximg/cosmoi_b18b4f5c1a0e5bf7808083217bbf7d501dd97dc9.svg" class="org-svg">
 Sorry, your browser does not support SVG.</object>
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgc80ce1d" class="outline-3">
-<h3 id="orgc80ce1d">Una categoría para la programación funcional</h3>
-<div class="outline-text-3" id="text-orgc80ce1d">
+<div id="outline-container-orgee9ae63" class="outline-3">
+<h3 id="orgee9ae63">Una categoría para la programación funcional</h3>
+<div class="outline-text-3" id="text-orgee9ae63">
 <p>
 Algunos sistemas de tipos, con las funciones entre ellos <code>A -&gt; B</code> como
 morfismos, forman una categoría[3]. No es el caso de Haskell, en el que,
@@ -829,8 +829,8 @@ define como:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #8ac6f2; font-weight: bold;">class</span> <span style="color: #92a65e; font-weight: bold;">Functor</span> f <span style="color: #8ac6f2; font-weight: bold;">where</span> 
-  fmap <span style="color: #cae682;">::</span> <span style="color: #DCDCCC;">(</span>a <span style="color: #cae682;">-&gt;</span> b<span style="color: #DCDCCC;">)</span> <span style="color: #cae682;">-&gt;</span> f a <span style="color: #cae682;">-&gt;</span> f b 
+<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">class</span> <span style="color: #ce537a; font-weight: bold;">Functor</span> f <span style="color: #4f97d7; font-weight: bold;">where</span> 
+  fmap <span style="color: #7590db;">::</span> <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">-&gt;</span> b<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> f a <span style="color: #7590db;">-&gt;</span> f b 
 </pre>
 </div>
 
@@ -846,9 +846,9 @@ Haskell.
 </div>
 </div>
 
-<div id="outline-container-orgdb0d842" class="outline-3">
-<h3 id="orgdb0d842">Monoides en la categoría de los endofuntores</h3>
-<div class="outline-text-3" id="text-orgdb0d842">
+<div id="outline-container-orgdf77a9f" class="outline-3">
+<h3 id="orgdf77a9f">Monoides en la categoría de los endofuntores</h3>
+<div class="outline-text-3" id="text-orgdf77a9f">
 <p>
 Entonces, si los funtores <code>f :: * -&gt; *</code> son endofuntores en alguna
 categoría, tiene sentido cuestionarse cuáles de ellos son monoides.
@@ -859,8 +859,8 @@ morfismos de tipos <code>a -&gt; m a</code> y <code>m (m a) -&gt; m a</code>:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #cae682;">return</span> <span style="color: #cae682;">::</span> a <span style="color: #cae682;">-&gt;</span> m a
-<span style="color: #cae682;">join</span> <span style="color: #cae682;">::</span> m <span style="color: #DCDCCC;">(</span>m a<span style="color: #DCDCCC;">)</span> <span style="color: #cae682;">-&gt;</span> m a
+<pre class="src src-haskell"><span style="color: #bc6ec5; font-weight: bold;">return</span> <span style="color: #7590db;">::</span> a <span style="color: #7590db;">-&gt;</span> m a
+<span style="color: #bc6ec5; font-weight: bold;">join</span> <span style="color: #7590db;">::</span> m <span style="color: #4f97d7;">(</span>m a<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> m a
 </pre>
 </div>
 
@@ -871,11 +871,11 @@ implementarse desde <code>join</code> y viceversa, como:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #DCDCCC;">(</span><span style="color: #cae682;">&gt;&gt;=</span><span style="color: #DCDCCC;">)</span> <span style="color: #cae682;">::</span> m a <span style="color: #cae682;">-&gt;</span> <span style="color: #DCDCCC;">(</span>a <span style="color: #cae682;">-&gt;</span> m b<span style="color: #DCDCCC;">)</span> <span style="color: #cae682;">-&gt;</span> m b
-<span style="color: #DCDCCC;">(</span><span style="color: #cae682;">&gt;&gt;=</span><span style="color: #DCDCCC;">)</span> x f <span style="color: #cae682;">=</span> join <span style="color: #DCDCCC;">(</span>fmap f a<span style="color: #DCDCCC;">)</span>
+<pre class="src src-haskell"><span style="color: #4f97d7;">(</span><span style="color: #bc6ec5; font-weight: bold;">&gt;&gt;=</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">::</span> m a <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">-&gt;</span> m b<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> m b
+<span style="color: #4f97d7;">(</span><span style="color: #bc6ec5; font-weight: bold;">&gt;&gt;=</span><span style="color: #4f97d7;">)</span> x f <span style="color: #7590db;">=</span> join <span style="color: #4f97d7;">(</span>fmap f a<span style="color: #4f97d7;">)</span>
 
-<span style="color: #cae682;">join</span> <span style="color: #cae682;">::</span> m <span style="color: #DCDCCC;">(</span>m a<span style="color: #DCDCCC;">)</span> <span style="color: #cae682;">-&gt;</span> m a
-<span style="color: #cae682;">join</span> x <span style="color: #cae682;">=</span> x <span style="color: #cae682;">&gt;&gt;=</span> id
+<span style="color: #bc6ec5; font-weight: bold;">join</span> <span style="color: #7590db;">::</span> m <span style="color: #4f97d7;">(</span>m a<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> m a
+<span style="color: #bc6ec5; font-weight: bold;">join</span> x <span style="color: #7590db;">=</span> x <span style="color: #7590db;">&gt;&gt;=</span> id
 </pre>
 </div>
 
@@ -890,9 +890,9 @@ puede verse <a href="http://blog.sigfpe.com/2008/11/from-monoids-to-monads.html"
 </div>
 </div>
 
-<div id="outline-container-org0b3009c" class="outline-2">
-<h2 id="org0b3009c">Y más</h2>
-<div class="outline-text-2" id="text-org0b3009c">
+<div id="outline-container-org0c00ea5" class="outline-2">
+<h2 id="org0c00ea5">Y más</h2>
+<div class="outline-text-2" id="text-org0c00ea5">
 <p>
 Además de las enunciadas en este post, existen más otros temas
 relevantes en relación a las mónadas, tanto en programación funcional
@@ -910,9 +910,9 @@ relacionadas con la teoría de categorías.</li>
 </div>
 </div>
 
-<div id="outline-container-org8b9f697" class="outline-2">
-<h2 id="org8b9f697">Referencias</h2>
-<div class="outline-text-2" id="text-org8b9f697">
+<div id="outline-container-org984cfb3" class="outline-2">
+<h2 id="org984cfb3">Referencias</h2>
+<div class="outline-text-2" id="text-org984cfb3">
 <p>
 [1] Peligros de la notación do.
     <a href="https://wiki.haskell.org/Do_notation_considered_harmful">Do notation considered harmful</a>
