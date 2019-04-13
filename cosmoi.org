@@ -41,7 +41,8 @@
 #+latex_header: \BeforeBeginEnvironment{minted}{\vspace{-0.5cm}}
 #+latex_header: \AfterEndEnvironment{minted}{\vspace{-0.2cm}}
 
-#+latex_header: \usepackage[utf8]{inputenc} 
+#+latex_header: \usepackage{CJKutf8}\usepackage[utf8]{inputenc} 
+#+latex_header: \newcommand{\hirayo}{\text{\usefont{U}{min}{m}{n}\symbol{'210}}} \DeclareFontFamily{U}{min}{} \DeclareFontShape{U}{min}{m}{n}{<-> udmj30}{}
 #+latex_header: \setcounter{secnumdepth}{0}
 #+latex_header: %\setlength{\parindent}{0pt}
 #+latex_header: \usepackage{physics}
@@ -106,11 +107,13 @@
 #+latex_header_extra: \newtheorem{corollary}[theorem]{Corollary}
 #+latex_header_extra: \theoremstyle{definition}
 #+latex_header_extra: \newtheorem{definition}[theorem]{Definition}
+#+latex_header_extra: \newtheorem{definicion}[theorem]{Definición}
 #+latex_header_extra: \newtheorem{axiom}[theorem]{Axiom}
 #+latex_header_extra: \newtheorem{proofs}{Proof}
 #+latex_header_extra: \theoremstyle{remark}
 #+latex_header_extra: \newtheorem{remark}[theorem]{Remark}
 #+latex_header_extra: \newtheorem{exampleth}[theorem]{Example}
+#+latex_header_extra: \newtheorem{ejemplo}[theorem]{Ejemplo}
 #+latex_header_extra: \begingroup\makeatletter\@for\theoremstyle:=definition,remark,plain\do{\expandafter\g@addto@macro\csname th@\theoremstyle\endcsname{\addtolength\thm@preskip\parskip}}\endgroup
 
 #+latex_header_extra: \definecolor{greenPRL}{HTML}{078f60}
@@ -223,6 +226,211 @@
 #+latex_header: \newcommand\Set{\mathsf{Set}}
 #+latex_header: \newcommand\todot{\xrightarrow{.}}
 
+*** tikz-pictures                                                                         :ignore:
+# I am using Spivak-Schultz's string diagrams library! It is really
+# cool and the results look very nice.
+
+# Creative commons Attribution CC BY Work by David I. Spivak and Patrick Schultz
+#
+#  You are free to:
+#    Share Ñ copy and redistribute the material in any medium or format
+#    Adapt Ñ remix, transform, and build upon the material for any purpose, even commercially.
+#
+#  Under the following terms:
+#    Attribution Ñ You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
+#    No additional restrictions Ñ You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
+#
+#  Use at your own risk. 
+
+#+latex_header: \usetikzlibrary{
+#+latex_header:   cd,
+#+latex_header:   math,
+#+latex_header:   decorations.markings,
+#+latex_header:   decorations.pathreplacing,
+#+latex_header:   positioning,
+#+latex_header:   arrows.meta,
+#+latex_header:   circuits.logic.US,
+#+latex_header:   shapes,
+#+latex_header:   calc,
+#+latex_header:   fit,
+#+latex_header:   quotes}
+
+#+latex_header: \newcommand{\tn}{\textnormal}
+#+latex_header: \newcommand{\inp}[1]{#1^{\tn{in}}}
+#+latex_header: \newcommand{\outp}[1]{#1^{\tn{out}}}
+#+latex_header: \newcommand{\upd}[1]{#1^{\tn{upd}}}
+#+latex_header: \newcommand{\rdt}[1]{#1^{\tn{rdt}}}
+
+
+#+latex_header:   \tikzset{
+#+latex_header:      oriented WD/.style={%everything after equals replaces "oriented WD" in key.
+#+latex_header:         every to/.style={out=0,in=180,draw},
+#+latex_header:         label/.style={
+#+latex_header:            font=\everymath\expandafter{\the\everymath\scriptstyle},
+#+latex_header:            inner sep=0pt,
+#+latex_header:            node distance=2pt and -2pt},
+#+latex_header:         semithick,
+#+latex_header:         node distance=1 and 1,
+#+latex_header:         decoration={markings, mark=at position \stringdecpos with \stringdec},
+#+latex_header:         ar/.style={postaction={decorate}},
+#+latex_header:         execute at begin picture={\tikzset{
+#+latex_header:            x=\bbx, y=\bby,
+#+latex_header:            every fit/.style={inner xsep=\bbx, inner ysep=\bby}}}
+#+latex_header:         },
+#+latex_header:      string decoration/.store in=\stringdec,
+#+latex_header:      string decoration={\arrow{stealth};},
+#+latex_header:      string decoration pos/.store in=\stringdecpos,
+#+latex_header:      string decoration pos=.7,
+#+latex_header:      bbx/.store in=\bbx,
+#+latex_header:      bbx = 1.5cm,
+#+latex_header:      bby/.store in=\bby,
+#+latex_header:      bby = 1.5ex,
+#+latex_header:      bb port sep/.store in=\bbportsep,
+#+latex_header:      bb port sep=1.5,
+#+latex_header:      % bb wire sep/.store in=\bbwiresep,
+#+latex_header:      % bb wire sep=1.75ex,
+#+latex_header:      bb port length/.store in=\bbportlen,
+#+latex_header:      bb port length=4pt,
+#+latex_header:      bb penetrate/.store in=\bbpenetrate,
+#+latex_header:      bb penetrate=0,
+#+latex_header:      bb min width/.store in=\bbminwidth,
+#+latex_header:      bb min width=1cm,
+#+latex_header:      bb rounded corners/.store in=\bbcorners,
+#+latex_header:      bb rounded corners=2pt,
+#+latex_header:      bb small/.style={bb port sep=1, bb port length=2.5pt, bbx=.4cm, bb min width=.4cm, 
+#+latex_header: bby=.7ex},
+#+latex_header: 		 bb medium/.style={bb port sep=1, bb port length=2.5pt, bbx=.4cm, bb min width=.4cm, 
+#+latex_header: bby=.9ex},
+#+latex_header:      bb/.code 2 args={%When you see this key, run the code below:
+#+latex_header:         \pgfmathsetlengthmacro{\bbheight}{\bbportsep * (max(#1,#2)+1) * \bby}
+#+latex_header:         \pgfkeysalso{draw,minimum height=\bbheight,minimum width=\bbminwidth,outer 
+#+latex_header: sep=0pt,
+#+latex_header:            rounded corners=\bbcorners,thick,
+#+latex_header:            prefix after command={\pgfextra{\let\fixname\tikzlastnode}},
+#+latex_header:            append after command={\pgfextra{\draw
+#+latex_header:               \ifnum #1=0{} \else foreach \i in {1,...,#1} {
+#+latex_header:                  ($(\fixname.north west)!{\i/(#1+1)}!(\fixname.south west)$) +(-
+#+latex_header: \bbportlen,0) 
+#+latex_header:   coordinate (\fixname_in\i) -- +(\bbpenetrate,0) coordinate (\fixname_in\i')}\fi 
+#+latex_header:   %Define the endpoints of tickmarks
+#+latex_header:               \ifnum #2=0{} \else foreach \i in {1,...,#2} {
+#+latex_header:                  ($(\fixname.north east)!{\i/(#2+1)}!(\fixname.south east)$) +(-
+#+latex_header: \bbpenetrate,0) 
+#+latex_header:   coordinate (\fixname_out\i') -- +(\bbportlen,0) coordinate (\fixname_out\i)}\fi;
+#+latex_header:            }}}
+#+latex_header:      },
+#+latex_header:      bb name/.style={append after command={\pgfextra{\node[anchor=north] at 
+#+latex_header: (\fixname.north) {#1};}}}
+#+latex_header:   }
+#+latex_header: 
+#+latex_header: 
+#+latex_header:   \tikzset{
+#+latex_header:   	unoriented WD/.style={
+#+latex_header:   		every to/.style={draw},
+#+latex_header:   		shorten <=-\penetration, shorten >=-\penetration,
+#+latex_header:   		label distance=-2pt,
+#+latex_header:   		thick,
+#+latex_header:   		node distance=\spacing,
+#+latex_header:   		execute at begin picture={\tikzset{
+#+latex_header:   			x=\spacing, y=\spacing}}
+#+latex_header:   		},
+#+latex_header:   	pack size/.store in=\psize,
+#+latex_header:   	pack size = 8pt,
+#+latex_header:   	spacing/.store in=\spacing,
+#+latex_header:   	spacing = 8pt,
+#+latex_header:   	link size/.store in=\lsize,
+#+latex_header:   	link size = 2pt,
+#+latex_header: 		penetration/.store in=\penetration,
+#+latex_header: 		penetration = 2pt,
+#+latex_header:   	pack color/.store in=\pcolor,
+#+latex_header:   	pack color = blue,
+#+latex_header:   	pack inside color/.store in=\picolor,
+#+latex_header:   	pack inside color=blue!20,
+#+latex_header:   	pack outside color/.store in=\pocolor,
+#+latex_header:   	pack outside color=blue!50!black,
+#+latex_header:   	surround sep/.store in=\ssep,
+#+latex_header:   	surround sep=8pt,
+#+latex_header:   	link/.style={
+#+latex_header:   		circle, 
+#+latex_header:   		draw=black, 
+#+latex_header:   		fill=black,
+#+latex_header:   		inner sep=0pt, 
+#+latex_header:   		minimum size=\lsize
+#+latex_header:   	},
+#+latex_header:   	pack/.style={
+#+latex_header:   		circle, 
+#+latex_header:   		draw = \pocolor, 
+#+latex_header:   		fill = \picolor,
+#+latex_header:   		inner sep = .25*\psize,
+#+latex_header:   		minimum size = \psize
+#+latex_header:   	},
+#+latex_header:   	outer pack/.style={
+#+latex_header:   		ellipse, 
+#+latex_header:   		draw,
+#+latex_header:   		inner sep=\ssep,
+#+latex_header:   		color=\pocolor,
+#+latex_header:   	},
+#+latex_header:   	intermediate pack/.style={
+#+latex_header:   		ellipse,
+#+latex_header:   		dashed, 
+#+latex_header:   		draw,
+#+latex_header:   		inner sep=\ssep,
+#+latex_header:   		color=\pocolor,
+#+latex_header:   	},
+#+latex_header:   }
+
+*** Marsden's diagrams                                                                    :ignore:
+# I am using Marsden's diagrams!
+#+latex_header: \usepackage{macros}
+#+latex_header: \usepackage{diag}
+#+latex_header: \usepackage{eqproof}
+
+#+latex_header: \newcommand{\leftop}{\ensuremath{\operatorname{\lhd}}}
+#+latex_header: \newcommand{\rightop}{\ensuremath{\operatorname{\rhd}}}
+
+#+latex_header: \newcommand{\mvright}[1]{\ensuremath{#1^{\rhd}}}
+#+latex_header: \newcommand{\mvrightright}[1]{\ensuremath{#1^{\rhd\rhd}}}
+#+latex_header: \newcommand{\mvleft}[1]{\ensuremath{#1^{\lhd}}}
+#+latex_header: \newcommand{\mvleftleft}[1]{\ensuremath{#1^{\lhd\lhd}}}
+
+#+latex_header: \newcommand{\adjsql}[1]{\ensuremath{#1_l}}
+#+latex_header: \newcommand{\adjsqr}[1]{\ensuremath{#1_r}}
+
+#+latex_header: \newcommand{\repcontrato}[4]{
+#+latex_header: \path (#1.center) ++(0,-0.5) coordinate (#1-r)
+#+latex_header:      +(-1,1) coordinate (#1-rl)
+#+latex_header:      +(1,1) coordinate (#1-rr);
+#+latex_header: \coordinate (#1-a) at (#1.south);
+#+latex_header: \path
+#+latex_header:  let \p1 = (#1.north) in
+#+latex_header:  let \p2 = (#1-rl) in
+#+latex_header:  let \p3 = (#1-rr) in
+#+latex_header:  coordinate (#1-b) at (\x2, \y1)
+#+latex_header:  coordinate (#1-c) at (\x3, \y1);
+#+latex_header: \fill[catset] (#1.south) -- (#1-r) to[out=0, in=270] (#1-rr) -- (#1-c) -- (#1.north east) -- (#1.south east) -- cycle;
+#+latex_header: \fill[catcop] (#1-b) -- (#1-rl) to[out=270,in=180] (#1-r) to[out=0,in=270] (#1-rr) -- (#1-c) -- cycle;
+#+latex_header: \fill[catterm] (#1.south) -- (#1-r) to[out=180, in=270] (#1-rl) -- (#1-b) -- (#1.north west) -- (#1.south west) -- cycle;
+#+latex_header: \draw (#1-r) to[out=180,in=270] (#1-rl) to node[swap]{#2} (#1-b);
+#+latex_header: \draw (#1-r) to[out=0, in=270] (#1-rr) to node[swap]{#3} (#1-c);
+#+latex_header: \draw (#1-a) to node[swap]{$*$} (#1-r);
+#+latex_header: \strnat{#1-r};
+#+latex_header: \strlabu{#1-r}{#4}
+#+latex_header: }
+#+latex_header: \newcommand{\repcontratoex}[5]{
+#+latex_header: \coordinate[label=below:#2] (#1-b) at (#1.south);
+#+latex_header: \coordinate[label=above:#5] (#1-t) at (#1.north);
+#+latex_header:  \draw (#1-b) -- ++(0,1.5)
+#+latex_header:        (#1-t) -- ++(0,-1.5);
+#+latex_header:  \path (#1.south west) -- ++(0.5,1) coordinate (#1-bl)
+#+latex_header:        (#1.north east) -- ++(-0.5,-1) coordinate (#1-tr);
+#+latex_header:  \node[rectangle, fit=(#1-bl)(#1-tr)] (#1-subdiag) {};
+#+latex_header:  \repcontrato{#1-subdiag}{#2}{#3}{#4};
+#+latex_header:  \draw[very thick] (#1-subdiag.south west) rectangle (#1-subdiag.north east);
+#+latex_header: \begin{pgfonlayer}{background}
+#+latex_header:  \fill[catterm] (#1.south west) rectangle (#1.north);
+#+latex_header:  \fill[catc] (#1.south east) rectangle (#1.north);
+#+latex_header: \end{pgfonlayer}
+#+latex_header: }
 * Posts
 ** TODO Diagonal arguments since Epimenides
 *** Epimenides
@@ -356,6 +564,14 @@ Un *grupoide* es un grupo coloreado.
 *** on V-enriched categories
 *** Day convolution
 ** TODO Reals in Agda
+
+** TODO A zoo of adjunctions
+distribuciones y simplices.
+fibraciones y proposiciones
+
+This is already done on Math.StackExchange!
+ * https://math.stackexchange.com/questions/46708/a-bestiary-about-adjunctions
+
 ** TODO Recursion schemes
 ** TODO A quote by Conor McBride
 #+begin_quote
@@ -365,6 +581,420 @@ mountains, but to flatten them." -- Conor McBride
 ** TODO Van Laarhoven representation for lenses
 # Derive it from Yoneda.
 # Live code.
+** TODO Notations for adjunctions
+** TODO Yoneda, lentes y adjunciones
+
+*** Introducción
+
+**** Categoría producto
+**** Categorías de funtores
+
+**** Funtor hom
+Fijemos una categoría $\mathbf{C}$.  Dados cualesquiera dos objetos $a, b \in \mathbf{C}$, 
+podemos considerar el conjunto de homomorfismos entre ellos,
+$\mathbf{C}(a,b) \in \mathbf{Sets}$.  Además, dado un morfismo $f \colon b \to d$,
+su /postcomposición/ $(f \circ -) \colon \mathbf{C}(a,b) \to \mathbf{C}(a,d)$ es una /función/,
+un morfismo de conjuntos que transforma cada morfismo $u \colon a \to b$
+en un morfismo $f \circ u \colon a \to d$. Y también, dado un mofismo $g \colon c \to a$,
+su /precomposición/ $(- \circ g) \colon \mathbf{C}(a,b) \to \mathbf{C}(c,b)$ es otra función. Esto
+determina un funtor.
+
+#+begin_proposition
+Fijado cualquier objeto $a \in \mathbf{C}$, podemos construir un funtor al que
+llamaremos $\mathbf{C}(a,-) \colon \mathbf{C} \to \mathbf{Sets}$.  Su acción en morfismos viene dada
+por la postcomposición.
+#+end_proposition
+#+begin_proof
+Para demostrar que es un funtor, debemos demostrar que preserva
+identidades y composiciones.  Para cualquier objeto $b \in \mathbf{C}$, sea
+el morfismo identidad $\mathrm{id} \colon b \to b$.  Demostramos que la postcomposición
+con la identidad, $(\mathrm{id} \circ -) \colon \mathbf{C}(a,b) \to \mathbf{C}(a,b)$ es a su vez la identidad en ese
+conjunto: nótese que $( \mathrm{id}_b \circ -) h = \mathrm{id} \circ h = h = \mathrm{id}_{\mathbf{C}(a,b)}(h)$, luego
+$(\mathrm{id}_{b} \circ -) = \mathrm{id}_{\mathbf{C}(a,b)}$.
+
+Ahora demostraremos que también preserva composiciones. Dadas dos
+funciones $f \colon b \to c$ y $g \colon c \to d$, queremos demostrar que la postcomposición
+con $(g \circ f)$ es exactamente igual que la postcomposición $f$ /compuesta/
+con la postcomposición con $g$. Tenemos que
+\[\begin{aligned} ((g \circ -) \circ (f \circ -)) h &= (g \circ -) (f \circ h) & \mbox{ \textit{ (definición)}} \\&=
+g \circ (f \circ h) & \mbox{ \textit{ (asociatividad)}}  \\&=
+(g \circ f) \circ h & \mbox{ \textit{ (definición)}} \\&=
+((g \circ f) \circ -) h,
+\end{aligned}\]
+luego $(g \circ -)\circ (f \circ -) = ((g \circ f) \circ -)$.
+#+end_proof
+
+/Nota:/ en las dos partes de esta demostración usamos dos veces el hecho
+de que si dos funciones son iguales en cada punto, entonces son iguales.
+Esto es, asumimos que $\forall x \in a, f(a) = g(a)$ implica $f = g$. Esto se
+conoce como el principio de /extensionalidad de las funciones/, y es cierto
+para morfismos de la categoría $\mathbf{Sets}$, pero no es cierto en general y podemos
+encontrar contraejemplos en la categoría dada por los homomorfismos entre grafos.
+Es decir, en esta demostración estamos usando crucialmente las propiedades de
+los conjuntos. \\
+
+Ahora podemos aplicar este mismo resultado a la categoría opuesta, para
+tener que $\mathbf{C}(-,d) \cong \mathbf{C}^{op}(d,-) \colon \mathbf{C}^{op} \to \mathbf{Sets}$ también determina un funtor.
+Nótese que este segundo funtor es contravariante, llevará cada morfismo
+$f \colon a \to b$ a su /precomposición/ $(- \circ f) \colon \mathbf{C}(b,d) \to \mathbf{C}(a,d)$. \\
+
+Todavía podemos ir más lejos, teniendo un funtor $\mathbf{C}(a,-) \colon \mathbf{C} \to \mathbf{Sets}$ y un funtor
+$\mathbf{C}^{op} \to \mathbf{Sets}$, tenemos por la propiedad universal del producto un funtor
+$\mathbf{C} \times \mathbf{C}^{op} \to \mathbf{Sets}$. Este funtor lleva pares de objetos $(a,b) \in \mathbf{C} \times \mathbf{C}^{op}$ de
+forma covariante y contravariante respectivamente
+
+#+begin_proposition
+La asignación $\mathbf{C}(-,-) \colon \mathbf{C} \times \mathbf{C}^{op} \to \mathbf{Sets}$ que acabamos de describir
+es funtorial.
+#+end_proposition
+#+begin_proof
+
+#+end_proof
+
+
+*** El lema de Yoneda
+Fijemos una categoría $\mathbf{C}$.  Cada objeto $c \in \mathbf{C}$ determina un funtor contravariante
+$\mathbf{C}(-,c) \in \mathbf{Cat}(\mathbf{C}^{op}, \mathbf{Sets})$. Los funtores de esta forma se llaman /representables/,
+y decimos que $\mathbf{C}(-,c)$ está representado por $c$. Dada una función $f \colon c \to d$, su
+postcomposición puede verse como una transformación natural
+$(f \circ -) \colon \mathbf{C}(-,c) \tonat \mathbf{C}(-,d)$.  Esto induce un funtor.
+
+#+begin_proposition
+El *embebimiento de Yoneda* es un funtor $\hirayo \colon \mathbf{C} \to \mathbf{Cats}(\mathbf{C}^{op}, \mathbf{Sets})$ que está
+determinado en objetos por $c \mapsto \mathbf{C}(-,c)$ y en morfismos por $f \mapsto (f \circ -)$.
+#+end_proposition
+
+
+*** Ópticas
+
+**** Invariantes
+
+**** Polimórficas
+
+**** Composicionalmente
+# Pickering. Compositionality fails.
+
+*** Representación profuntorial de una óptica
+
+*** En la práctica
+
+** Monoides, monoides coloreados                                                             :post:
+:PROPERTIES:
+:TITLE: Monoides coloreados y bi(monoides coloreados)
+:EXPORT_FILE_NAME: monoidescoloreadosbimonoidescoloreados.pdf
+:EXPORT_DATE: <2019-04-13 Sat 23:48>
+:EXPORT_OPTIONS: toc:3 num:t lang:es
+:END:
+
+\quad\\
+
+*** Introducción                                                                          :ignore:
+El plan será el siguiente: primero presentamos una /sintaxis/, ciertos
+símbolos que forman diagramas y que siguen ciertas reglas. Luego
+veremos que esta sintaxis toma /modelos/ en objetos matemáticos con
+cierta estructura.  ¿Cuál es la utilidad de estudiar la sintaxis? Cada
+vez que probemos algo sólo usando sus reglas, lo estaremos probando
+para todos sus modelos.  ¿En qué se diferencia esto de una
+presentación axiomática de, digamos, un grupo? en que nuestra sintaxis
+viene dada, no por cadenas de caracteres como suele hacerse en lógica,
+¡sino por diagramas!  Vamos a ir un paso más allá, y, haciendo
+implícitamente uso de teoremas de coherencia y complitud, definir las
+nuestras estructuras de forma elemental usando diagramas.  En lugar de
+definir diagramas, los tomamos como conceptos primitivos.
+
+/In this article I am drawing diagrams using tikz and following
+Marsden's cite:marsden14 macros for string diagrams./ /The general idea
+follows this paper, but also Vicary-Heunen-Reutter's notes/ /for
+Categorical Quantum Mechanics,/ cite:vicary19.
+
+*** Monoides y monoides coloreados
+#+begin_definicion 
+Un elemento de un *monoide* es una /cuerda/ con /nodos/, un diagrama en una dimensión.
+Los siguientes diagramas representan elementos de un monoide.
+\begin{center}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[label=below:$$] (b) ++(0,4) coordinate[label=above:$M$] (t);
+\coordinate[dot, label=right:$a$] (alpha) at ($(b)!0.333!(t)$);
+\coordinate[dot, label=right:$b$] (alpha') at ($(b)!0.666!(t)$);
+\draw (b) -- (alpha) to node[left]{$$} (alpha') -- (t);
+\begin{pgfonlayer}{background}
+\fill[color={white}] ($(t) + (-2,0)$) rectangle (b);
+\fill[color={white}] (t) rectangle ($(b) + (2,0)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[label=below:$$] (b) ++(0,4) coordinate[label=above:$M$] (t);
+\draw (b) -- (t);
+\begin{pgfonlayer}{background}
+\fill[color={white}] ($(t) + (-2,0)$) rectangle (b);
+\fill[color={white}] (t) rectangle ($(b) + (2,0)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[label=below:$$] (b) ++(0,4) coordinate[label=above:$M$] (t);
+\coordinate[dot, label=right:$x$] (alpha) at ($(b)!0.75!(t)$);
+\coordinate[dot, label=right:$y$] (alpha') at ($(b)!0.5!(t)$);
+\coordinate[dot, label=right:$z$] (alpha'') at ($(b)!0.25!(t)$);
+\draw (b) -- (alpha) to node[left]{$$} (alpha') to node[left]{$$} (alpha'') -- (t);
+\begin{pgfonlayer}{background}
+\fill[color={white}] ($(t) + (-2,0)$) rectangle (b);
+\fill[color={white}] (t) rectangle ($(b) + (2,0)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{center}
+A la cuerda vacía se le llama *identidad* o /elemento neutro/ del monoide.
+A la *concatenación* de dos cuerdas se le llama tradicionalmente /multiplicación/.
+#+end_definicion
+
+#+begin_ejemplo
+Los números naturales con la suma forman un monoide.[fn:1] La
+cuerda vacía es el cero y dos cuerdas con la misma suma se
+declaran iguales.
+\begin{equation*}
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[label=below:$$] (b) ++(0,4) coordinate[label=above:$\mathbb{N}$] (t);
+\coordinate[dot, label=right:$3$] (alpha) at ($(b)!0.75!(t)$);
+\coordinate[dot, label=right:$2$] (alpha') at ($(b)!0.5!(t)$);
+\coordinate[dot, label=right:$4$] (alpha'') at ($(b)!0.25!(t)$);
+\draw (b) -- (alpha) to node[left]{$$} (alpha') to node[left]{$$} (alpha'') -- (t);
+\begin{pgfonlayer}{background}
+\fill[color={white}] ($(t) + (-2,0)$) rectangle (b);
+\fill[color={white}] (t) rectangle ($(b) + (2,0)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered} = \begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[label=below:$$] (b) ++(0,4) coordinate[label=above:$\mathbb{N}$] (t);
+\coordinate[dot, label=right:$9$] (alpha) at ($(b)!0.5!(t)$);
+\draw (b) -- (alpha) -- (t);
+\begin{pgfonlayer}{background}
+\fill[color={white}] ($(t) + (-2,0)$) rectangle (b);
+\fill[color={white}] (t) rectangle ($(b) + (2,0)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+\end{equation*}
+¿Cuál es la ventaja de escribir esto frente a la notación usual de un
+monoide? con esta notación, la asociatividad es transparente. No tenemos
+forma de distinguir $((3+2)+4)$ de $(3+(2+4))$ y esto es bueno, porque
+en un monoide no debería poder existir forma de distinguirlos. Además, cuando
+dibujamos la unidad como una cuerda vacía, estamos haciendo la unitalidad
+transparente. No tenemos forma de distinguir $9$ de $0+9$.
+
+[fn:1] Y los dibujos describen un /ábaco/.
+#+end_ejemplo
+
+La estructura de un monoide es muy rica, pero podemos ir más allá. En
+un monoide, cualesquiera dos nodos pueden componerse sobre la cuerda,
+pero podemos limitar esta composición dando colores a las cuerdas.
+Cada nodo cambiará el color de la cuerda, y sólo podremos componer dos
+nodos si el color de salida del primero coincide con el color de
+entrada del segundo.
+
+#+begin_definicion
+Una *categoría* es un monoide coloreado. Alternativamente, un monoide es
+una categoría monocroma.  Normalmente, a los elementos de una categoría
+se les llama /morfismos/, a los colores se les llama /objetos,/ se les pone una
+etiqueta en lugar de un color, y se dice que
+/un monoide es una categoría con un sólo objeto/. 
+Los siguientes son morfismos en una categoría.
+\begin{center}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[label=below:$$] (b) ++(0,4) coordinate[label=above:$\mathbf{C}$] (t);
+\coordinate[dot, label=right:$f$] (alpha) at ($(b)!0.333!(t)$);
+\coordinate[dot, label=right:$g$] (alpha') at ($(b)!0.666!(t)$);
+\draw[red!75!black] (b) to node[left]{$A$} (alpha);
+\draw[blue!75!black] (alpha) to node[left]{$B$} (alpha');
+\draw[green!60!black] (alpha') to node[left]{$C$} (t);
+\begin{pgfonlayer}{background}
+\fill[color={white}] ($(t) + (-2,0)$) rectangle (b);
+\fill[color={white}] (t) rectangle ($(b) + (2,0)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[label=below:$$] (b) ++(0,4) coordinate[label=above:$\mathbf{C}$] (t);
+\draw[red!75!black] (b) to node[left]{$A$} (t);
+\begin{pgfonlayer}{background}
+\fill[color={white}] ($(t) + (-2,0)$) rectangle (b);
+\fill[color={white}] (t) rectangle ($(b) + (2,0)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[label=below:$$] (b) ++(0,4) coordinate[label=above:$\mathbf{C}$] (t);
+\coordinate[dot, label=right:$h$] (alpha) at ($(b)!0.5!(t)$);
+\draw[blue!75!black] (b) to node[left]{$B$} (alpha);
+\draw[red!75!black] (alpha) to node[left]{$A$} (t);
+\begin{pgfonlayer}{background}
+\fill[color={white}] ($(t) + (-2,0)$) rectangle (b);
+\fill[color={white}] (t) rectangle ($(b) + (2,0)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{center}
+A la concatenación se le suele llamar *composición* y a la cuerda vacía de un
+determinado color se le llama *identidad* sobre ese objeto. Al color de entrada
+de un nodo se le llama *dominio* y al color de salida se le llama *codominio*.
+#+end_definicion
+
+Ahora la composición está limitada: podemos poner $g$ después de $f$
+porque el dominio de $g$ y el codominio de $f$ coinciden, pero no
+podemos poner $h$ después de $g$, por ejemplo, porque $h$ tiene dominio $B$.
+
+#+begin_ejemplo
+Las funciones entre conjuntos forman una categoría, que suele notarse
+por $\mathbf{Set}$.  Cada color es un conjunto, y entre dos conjuntos $A$ y $B$ podemos
+considerar los nodos dados por las funciones $f \colon A \to B$.  Al concatenar
+varias funciones, lo que hacemos es componerlas. Una cadena vacía sobre
+un conjunto representa la función identidad sobre ese conjunto.
+\begin{equation*}
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[label=below:$$] (b) ++(0,4) coordinate[label=above:$\mathbf{Set}$] (t);
+\coordinate[dot, label=right:$\mathsf{not}$] (alpha) at ($(b)!0.666!(t)$);
+\coordinate[dot, label=right:$\mathsf{even}$] (alpha') at ($(b)!0.333!(t)$);
+\draw[yellow!60!black] (t) to node[left]{$\mathsf{Bool}$} (alpha);
+\draw[yellow!60!black] (alpha) to node[left]{$\mathsf{Bool}$} (alpha');
+\draw[red!70!black] (alpha') to node[left]{$\mathbb{N}$} (b);
+\begin{pgfonlayer}{background}
+\fill[color={white}] ($(t) + (-2,0)$) rectangle (b);
+\fill[color={white}] (t) rectangle ($(b) + (2,0)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered} = \begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[label=below:$$] (b) ++(0,4) coordinate[label=above:$\mathbf{Set}$] (t);
+\coordinate[dot, label=right:$\mathsf{odd}$] (alpha) at ($(b)!0.5!(t)$);
+\draw[red!70!black] (b) -- (alpha);
+\draw[yellow!70!black] (alpha) -- (t);
+\begin{pgfonlayer}{background}
+\fill[color={white}] ($(t) + (-2,0)$) rectangle (b);
+\fill[color={white}] (t) rectangle ($(b) + (2,0)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+\end{equation*}
+La asociatividad de la composición de funciones y la neutralidad de la
+función se han vuelto invisibles con esta notación.
+#+end_ejemplo
+
+*** Categorías monoidales
+Cuando los diagramas de verdad se vuelven interesantes es cuando
+pasamos de una a dos dimensiones.  Nuestra siguiente definición usa
+dos dimensiones. En uno de los ejes tenemos un monoide, en el otro
+tenemos una categoría.
+
+#+begin_definicion
+Los morfismos de *categoría monoidal* vienen dados por diagramas
+bidimensionales de cuerdas con distintos colores.  Un morfismo puede
+tener como entrada y salida un número cualquiera de cuerdas.
+\begin{center}
+\begin{tabular}{c c c c}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate (bl) ++(0,2) coordinate[dot, label=left:$\alpha$] (alpha) ++(0,2) coordinate (tl)
+ (bl) ++(2,0) coordinate (br) ++(0,2) coordinate[dot, label=right:$\beta$] (beta) ++(0,2) coordinate (tr);
+\draw[red!75!black] (bl) -- (alpha);
+\draw[blue!75!black] (alpha) -- (tl);
+\draw[green!75!black] (br) -- (beta);
+\draw[red!75!black] (beta) -- (tr);
+\begin{pgfonlayer}{background}
+\fill[color={white!95!black}] ($(tl) + (-2,0)$) rectangle (bl);
+\fill[color={white!95!black}] (tl) rectangle (br);
+\fill[color={white!95!black}] (tr) rectangle ($(br) + (2,0)$);
+\end{pgfonlayer}
+\end{tikzpicture} 
+&
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=above:\ensuremath{\gamma}]
+ (eta) ++(-1,1) coordinate (a) ++(0,1) coordinate (tl)
+ (eta) ++(1,1) coordinate (b) ++(0,1) coordinate (tr)
+ (eta) ++(-1,-1) coordinate[dot, label=left:$\delta$] (c) ++(0,-1) coordinate (el)
+ (eta) ++(1,-1) coordinate (d) ++(0,-1) coordinate (er)
+ (eta) ++(0,-2) coordinate (e);
+\draw[red!75!black] (tl) -- (a) to[out=-90, in=180] (eta.west);
+\draw (eta.west) -- (eta.east);
+\draw[red!75!black] (eta.east) to[out=0, in=-90] (b) -- (tr);
+\draw[blue!75!black] (el) -- (c);
+\draw[orange!75!black] (c) to[out=90, in=180] (eta.west);
+\draw (eta.west) -- (eta.east);
+\draw[blue!75!black] (eta.east) to[out=0, in=90] (d) -- (er);
+\draw[blue!75!black] (eta) -- (e);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(tl) + (-2,0)$) rectangle ($(tr) + (2,-4)$);
+%\fill[white!95!black] (tl) -- (a) to[out=-90, in=180] (eta.west) -- (eta.east) to[out=0, in=-90] (b) -- (tr) -- cycle;
+%\fill[white!95!black] ($(tl) + (-1,-2)$) rectangle ($(tr) + (1,-4)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+&
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=above:\ensuremath{\psi}]
+ (eta) ++(0,-2) coordinate (e);
+\draw[blue!75!black] (eta) -- (e);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(eta) + (-2,2)$) rectangle ($(eta) + (2,-2)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{tabular}
+\end{center}
+#+end_definicion
+
+Consideramos iguales cualesquiera dos diagramas que sean isotópicos,
+pero aun tenemos la restricción dada por los colores: el morfismo
+$\gamma$, por ejemplo, necesita tomar (¡en ese orden!) una entrada
+naranja y dos azules. Nuestro siguiente paso será colorear las regiones
+del diagrama, así que quizá es una buena idea cambiar los colores de las
+cuerdas por etiquetas, como implícitamente estamos haciendo con los
+morfismos.
+
+#+begin_ejemplo
+Las funciones sobre conjuntos no sólo forman una categoría, sino que
+forman una categoría monoidal con el producto dado por el producto
+cartesiano.  Esto nos permite además expresar funciones no necesariamente
+unarias en nuestros diagramas.
+\begin{center}
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label={[label distance=1ex]0:$\small{(+)}$}]
+ (eta) ++(0,1.333) coordinate[dot, label=right:$\mathsf{odd}$] (a) ++(0,1.333) coordinate (tl)
+ (eta) ++(-1,-1.333) coordinate (c) ++(0,0) coordinate (el)
+ (eta) ++(1,-1.333) coordinate (d) ++(0,0) coordinate (er);
+\draw[yellow!75!black] (tl) -- (a);
+\draw[red!75!black] (a) -- (eta);
+\draw (eta.west) -- (eta.east);
+\draw[red!75!black] (el) -- (c);
+\draw[red!75!black] (c) to[out=90, in=180] (eta.west);
+\draw (eta.west) -- (eta.east);
+\draw[red!75!black] (eta.east) to[out=0, in=90] (d) -- (er);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(eta) + (-3,2.666)$) rectangle ($(eta) + (3,-1.333)$);
+\end{pgfonlayer}
+\end{tikzpicture}\end{gathered} = \begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label={[label distance=1ex]0:$\small{(\oplus)}$}]
+ (eta) ++(0,1.333) coordinate (tl)
+ (eta) ++(-1,-1.333) coordinate[dot, label=left:$\mathsf{odd}$] (c) ++(0,-1.333) coordinate (el)
+ (eta) ++(1,-1.333)  coordinate[dot, label=right:$\mathsf{odd}$] (d) ++(0,-1.333) coordinate (er);
+\draw[yellow!75!black] (tl) -- (eta);
+\draw[red!75!black] (el) -- (c);
+\draw[yellow!75!black] (c) to[out=90, in=180] (eta.west);
+\draw (eta.west) -- (eta.east);
+\draw[yellow!75!black] (eta.east) to[out=0, in=90] (d);
+\draw[red!75!black] (d) -- (er);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(eta) + (-3,1.333)$) rectangle ($(eta) + (3,-2.666)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+\end{center}
+#+end_ejemplo
+
+*** TODO Monoides internos a un monoide coloreado monoidal                                :ignore:
+*** TODO PROPs y teorías de Lawvere                                                       :ignore:
+*** TODO Bicategorías                                                                     :ignore:
+
+*** references                                                                            :ignore:
+bibliographystyle:alpha
+bibliography:Math.bib
+
 ** Lawvere's fixed point theorem                                                             :post:
 :PROPERTIES:
 :TITLE: Lawvere's fixed point theorem
@@ -385,10 +1015,6 @@ B has a fixed point, that is, some b : B such that f b = b.
 
 *Proof.* As d is point-surjective, there exists x : A such that dx =
 λa.f(daa), but then, dxx = (λa.f(daa)) x = f(dxx) is a fixed point.
-
-*** references                                                                            :ignore:
-bibliographystyle:alpha
-bibliography:Math.bib
 
 ** Apuntes de Haskell                                                                        :post:
 :PROPERTIES:
@@ -3124,6 +3750,7 @@ unless otherwise specified.
 #+RESULTS:
 #+BEGIN_EXPORT html
 <ul>
+ <li><a href=monoidescoloreadosbimonoidescoloreados.pdf> Monoides coloreados y bi(monoides coloreados)</a><em>, 13 April 2019</em><br></li>
  <li><a href=lawverefixedpoint.html> Lawvere's fixed point theorem</a><em>, 28 February 2019</em><br></li>
  <li><a href=apuntesdehaskell.html> Apuntes de Haskell</a><em>, 27 February 2019</em><br></li>
  <li><a href=diagramascategoriasmonoidales.pdf> Diagramas para categorías monoidales</a><em>, 21 January 2019</em><br></li>
