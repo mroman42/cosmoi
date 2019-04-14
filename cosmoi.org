@@ -682,7 +682,7 @@ determinado en objetos por $c \mapsto \mathbf{C}(-,c)$ y en morfismos por $f \ma
 :PROPERTIES:
 :TITLE: Monoides coloreados y bi(monoides coloreados)
 :EXPORT_FILE_NAME: monoidescoloreadosbimonoidescoloreados.pdf
-:EXPORT_DATE: <2019-04-13 Sat 23:48>
+:EXPORT_DATE: <2019-04-14 Sun>
 :EXPORT_OPTIONS: toc:3 num:t lang:es
 :END:
 
@@ -985,10 +985,204 @@ unarias en nuestros diagramas.
 \end{tikzpicture}
 \end{gathered}
 \end{center}
+Por cierto, esta ecuación está expresando que la función que calcula si un
+número es impar es un homomorfismo de monoides (en su definición usual como
+conjuntos) del monoide de los naturales con la suma al monoide de los booleanos
+con la operación xor.
 #+end_ejemplo
 
+*** PROs y teorías de Lawvere
+Nos hemos saltado un paso obvio. ¿Qué ocurre si tomamos dos
+dimensiones pero sólo usamos cuerdas de un color? El resultado *no* es
+una categoría monoidal con un solo objeto, sino una categoría monoidal
+cuyos objetos vienen dados por el monoide libre sobre un
+generador. Esto ocurre porque no forzamos un número arbitrario de
+cuerdas a ser iguales a una sóla cuerda.
+
+#+begin_definicion
+Un *PRO*, o *categoría de (pro)ductos monoidales*, es una categoría monoidal
+monocroma. Alternativamente, una categoría monoidal es un PRO coloreado.
+#+end_definicion
+
+#+begin_ejemplo
+Estas categorías pueden usarse para describir teorías algebraicas internas
+a nuestras teorías. ¿Qué quiere decir esto? Nosotros hemos partido de una
+noción primitiva de monoide y categoría, pero una vez que tenemos la categoría
+monoidal de conjuntos, podríamos intentar definir un monoide /en la categoría de conjuntos/.
+Este monoide no será un diagrama sino una operación de multiplicación (con dos
+entradas y una salida) y una unidad (con una salida y ninguna entrada)
+/dentro de la categoría/.  Un monoide en una categoría monoidal viene determinado por
+los siguientes morfismos.
+\begin{center}
+\begin{tabular}{c c c c}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=below:\ensuremath{m}]
+ (eta) ++(-1,-1) coordinate (a) ++(0,-1) coordinate (tl)
+ (eta) ++(1,-1) coordinate (b) ++(0,-1) coordinate (tr)
+ (eta) ++(0,2) coordinate (e);
+\draw[black] (tl) -- (a) to[out=90, in=180] (eta.east);
+\draw[black] (eta.west) to[out=0, in=90] (b) -- (tr);
+\draw[black] (eta) -- (e);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(eta) + (-3,2)$) rectangle ($(eta) + (3,-2)$);
+\end{pgfonlayer}
+\end{tikzpicture} &
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=below:\ensuremath{u}]
+ (eta) ++(0,2) coordinate (e);
+\draw[black] (eta) -- (e);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(eta) + (-2,2)$) rectangle ($(eta) + (2,-2)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{tabular}
+\end{center}
+Cumpliendo los axiomas de un monoide, que son las siguientes ecuaciones.
+La primera se llama *unitalidad* y comprueba que la unidad es neutra respecto
+al producto.
+\begin{center}
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label={[label distance=1ex]0:$\small{m}$}]
+ (eta) ++(0,1.333) coordinate (tl)
+ (eta) ++(-1,-1.333) coordinate[dot, label=left:$u$] (c) ++(0,-1.333) coordinate (el)
+ (eta) ++(1,-1.333)  coordinate (d) ++(0,-1.333) coordinate (er);
+\draw[black] (tl) -- (eta);
+\draw[black] (c) to[out=90, in=180] (eta.west);
+\draw (eta.west) -- (eta.east);
+\draw[black] (eta.east) to[out=0, in=90] (d);
+\draw[black] (d) -- (er);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(eta) + (-3,1.333)$) rectangle ($(eta) + (3,-2.666)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+=
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate
+ (eta) ++(0,1.333) coordinate (tl)
+ (eta) ++(0,-1.333) coordinate (c) ++(0,-1.333) coordinate (el)
+ (eta) ++(0,-1.333)  coordinate (d) ++(0,-1.333) coordinate (er);
+\draw[black] (tl) -- (er);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(eta) + (-3,1.333)$) rectangle ($(eta) + (3,-2.666)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+=
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label={[label distance=1ex]0:$\small{m}$}]
+ (eta) ++(0,1.333) coordinate (tl)
+ (eta) ++(-1,-1.333) coordinate (c) ++(0,-1.333) coordinate (el)
+ (eta) ++(1,-1.333)  coordinate[dot, label=right:$u$] (d) ++(0,-1.333) coordinate (er);
+\draw[black] (tl) -- (eta);
+\draw[black] (el) -- (c);
+\draw[black] (c) to[out=90, in=180] (eta.west);
+\draw (eta.west) -- (eta.east);
+\draw[black] (eta.east) to[out=0, in=90] (d);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(eta) + (-3,1.333)$) rectangle ($(eta) + (3,-2.666)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+\end{center}
+La segunda se llama *asociatividad* y nos permite aplicar las multiplicaciones
+en cualquier orden.
+\begin{center}
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label={[label distance=1ex]180:$\small{m}$}]
+ (eta) ++(0,1.333) coordinate (tl)
+ (eta) ++(-1,-1.333) coordinate[dot, label={[label distance=1ex]180:$\small{m}$}] (c) ++(0,-1.333) coordinate (el)
+ (c) ++(-0.666,-1.333) coordinate (pl)
+ (c) ++(0.666,-1.333) coordinate (pr)
+ (eta) ++(1,-1.333)  coordinate (d) ++(0,-1.333) coordinate (er);
+\draw[black] (tl) -- (eta);
+\draw[black] (c) to[out=90, in=180] (eta.west);
+\draw[black] (pl) to[out=90, in=180] (c.west);
+\draw (eta.west) -- (eta.east);
+\draw[black] (eta.east) to[out=0, in=90] (d);
+\draw[black] (c.east) to[out=0, in=90] (pr);
+\draw[black] (d) -- (er);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(eta) + (-3,1.333)$) rectangle ($(eta) + (3,-2.666)$);
+ñ\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+=
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label={[label distance=1ex]0:$\small{m}$}]
+ (eta) ++(0,1.333) coordinate (tl)
+ (eta) ++(-1,-1.333) coordinate (c) ++(0,-1.333) coordinate (el)
+ (eta) ++(1,-1.333)  coordinate[dot, label={[label distance=1ex]0:$\small{m}$}] (d) ++(0,-1.333) coordinate (er)
+ (d) ++(-0.666,-1.333) coordinate (pl)
+ (d) ++(0.666,-1.333) coordinate (pr);
+\draw[black] (tl) -- (eta);
+\draw[black] (el) -- (c);
+\draw[black] (c) to[out=90, in=180] (eta.west);
+\draw (eta.west) -- (eta.east);
+\draw[black] (eta.east) to[out=0, in=90] (d);
+\draw[black] (pl) to[out=90, in=180] (d.west);
+\draw[black] (d.east) to[out=0, in=90] (pr);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(eta) + (-3,1.333)$) rectangle ($(eta) + (3,-2.666)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+\end{center}
+Los números complejos con la multiplicación, las cadenas de caracteres
+con la concatenación o los naturales con la suma son ejemplos clásicos
+de monoide.
+#+end_ejemplo
+
+Dada una teoría, consideramos su teoría *dual* como aquella que resulta de
+invertir la dirección de los diagramas.
+
+#+begin_definicion
+Un *comonoide* es el dual de un monoide.  Esto quiere decir que tendrá una
+/counidad/ y una /comultiplicación/.
+\begin{center}
+\begin{tabular}{c c c c}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=above:\ensuremath{n}]
+ (eta) ++(-1,1) coordinate (a) ++(0,1) coordinate (tl)
+ (eta) ++(1,1) coordinate (b) ++(0,1) coordinate (tr)
+ (eta) ++(0,-2) coordinate (e);
+\draw[black] (tl) -- (a) to[out=-90, in=180] (eta.east);
+\draw[black] (eta.west) to[out=0, in=-90] (b) -- (tr);
+\draw[black] (eta) -- (e);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(eta) + (-3,2)$) rectangle ($(eta) + (3,-2)$);
+\end{pgfonlayer}
+\end{tikzpicture} &
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=above:\ensuremath{c}]
+ (eta) ++(0,-2) coordinate (e);
+\draw[black] (eta) -- (e);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(eta) + (-2,2)$) rectangle ($(eta) + (2,-2)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{tabular}
+\end{center}
+Satisfaciendo axiomas de *counitalidad* y *coasociatividad*.
+
+¿Por qué no solemos hablar de comonoides cuando estudiamos álgebra?
+Nuestra notación es siempre unidimensional, y eso hace un poco difícil hablar
+de operaciones con más de una salida; además de esta limitación, esencialmente
+existe un único comonoide en la categoría de conjuntos. El único comonoide de la
+categoría de conjuntos es el comonoide de *copia y borrado*, donde la multiplicación
+es la diagonal $A \to A \times A$ y el borrado es la única función $A \to 1$.  Nunca hablamos
+de este comonoide, pero aparece continuamente cuando hacemos álgebra: lo que hacemos
+para evitar hablar de él es repetir nombres de variables, por ejemplo, la función
+$x \mapsto x + x$ es realmente la composición de la suma con la copia.
+#+end_definicion
+
+
 *** TODO Monoides internos a un monoide coloreado monoidal                                :ignore:
-*** TODO PROPs y teorías de Lawvere                                                       :ignore:
 *** TODO Bicategorías                                                                     :ignore:
 
 *** references                                                                            :ignore:
@@ -3711,7 +3905,7 @@ Que viene de nuevo dada por $y(\tau) = \tau_A(1_A)$.
 Hi! I'm *Mario Román*.  I am studying an MSc on Mathematics and Computer
 Science at the University of Oxford; my main interests being
 [[https://en.wikipedia.org/wiki/Category_theory][categories]], [[https://en.wikipedia.org/wiki/Type_theory][types]], [[https://en.wikipedia.org/wiki/Functional_programming][functional programming]] and logic.  I completed my
-bachelor's degree at the [[https://www.ugr.es/en/][University of Granada]] (Spain).  I am a
+(double) bachelor's degree at the [[https://www.ugr.es/en/][University of Granada]] (Spain).  I am a
 founder and ex-organizer of the [[https://libreim.github.io/][LibreIM]] community, for which I still
 write articles and organize seminars.
 
