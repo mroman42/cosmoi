@@ -678,18 +678,19 @@ determinado en objetos por $c \mapsto \mathbf{C}(-,c)$ y en morfismos por $f \ma
 
 *** En la práctica
 
-** Monoides, monoides coloreados                                                             :post:
+** Monoides coloreados y bi(monoides coloreados)                                             :post:
 :PROPERTIES:
 :TITLE: Monoides coloreados y bi(monoides coloreados)
 :EXPORT_FILE_NAME: monoidescoloreadosbimonoidescoloreados.pdf
-:EXPORT_DATE: <2019-04-14 Sun>
+:EXPORT_DATE: 14 de abril de 2019
+:INDEX_DATE: <2019-04-14 Sun>
 :EXPORT_OPTIONS: toc:3 num:t lang:es
 :END:
 
 \quad\\
 
 *** Introducción                                                                          :ignore:
-El plan será el siguiente: primero presentamos una /sintaxis/, ciertos
+Nuestro objetivo es el siguiente: primero presentamos una /sintaxis/, ciertos
 símbolos que forman diagramas y que siguen ciertas reglas. Luego
 veremos que esta sintaxis toma /modelos/ en objetos matemáticos con
 cierta estructura.  ¿Cuál es la utilidad de estudiar la sintaxis? Cada
@@ -949,7 +950,9 @@ morfismos.
 Las funciones sobre conjuntos no sólo forman una categoría, sino que
 forman una categoría monoidal con el producto dado por el producto
 cartesiano.  Esto nos permite además expresar funciones no necesariamente
-unarias en nuestros diagramas.
+unarias en nuestros diagramas.  ¡Importante!: los diagramas se suelen leer
+de abajo hacia arriba; pero a veces también se encuentran en la literatura
+de izquierda a derecha o incluso de arriba a abajo.
 \begin{center}
 \begin{gathered}
 \begin{tikzpicture}[scale=0.5]
@@ -1181,9 +1184,535 @@ para evitar hablar de él es repetir nombres de variables, por ejemplo, la funci
 $x \mapsto x + x$ es realmente la composición de la suma con la copia.
 #+end_definicion
 
+*** Trenzados
+Otra condición que suele considerarse para monoides es la
+*conmutatividad*.  Para ella, necesitamos un poco más de estructura
+en nuestra categoría monoidal.
 
-*** TODO Monoides internos a un monoide coloreado monoidal                                :ignore:
-*** TODO Bicategorías                                                                     :ignore:
+#+begin_definicion
+Una *categoría monoidal trenzada* es aquella en la que las cuerdas
+pueden trenzarse. Es decir, existe un morfismo, llamado
+/trenzado/, que escribimos como en el siguiente diagrama.
+\begin{center}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate
+ (eta) ++(-1,1) coordinate (a) ++(0,1) coordinate (tl)
+ (eta) ++(1,1) coordinate (b) ++(0,1) coordinate (tr)
+ (eta) ++(-1,-1) coordinate (c) ++(0,-1) coordinate (el)
+ (eta) ++(1,-1) coordinate (d) ++(0,-1) coordinate (er);
+\draw[red!75!black] (tl) -- (a);
+\draw[red!75!black] (a) to[out=-90, in=90] (d);
+\draw[red!75!black] (d) -- (er);
+\foreach \arrow in {1, ..., 2} {
+        \fill[white!95!black, name intersections={of=bg arrow and fg arrow\arrow, name=i}] (i-1) circle (4pt);
+    }
+\draw[blue!75!black] (b) -- (tr);
+\draw[blue!75!black] (b) to[out=-90, in=90] (c);
+\draw[blue!75!black] (el) -- (c);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(tl) + (-2,0)$) rectangle ($(tr) + (2,-4)$);
+%\fill[white!95!black] (tl) -- (a) to[out=-90, in=180] (eta.west) -- (eta.east) to[out=0, in=-90] (b) -- (tr) -- cycle;
+%\fill[white!95!black] ($(tl) + (-1,-2)$) rectangle ($(tr) + (1,-4)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{center}
+#+end_definicion
+
+#+begin_ejemplo
+En una categoría monoidal, un monoide es *conmutativo* si el componer
+con una trenza no altera su multiplicación. La *coconmutatividad* se
+define de forma análoga.
+\begin{center}
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=below:\ensuremath{m}]
+ (eta) ++(-1,-1) coordinate (a) ++(0,-1) coordinate (tl)
+ (eta) ++(1,-1) coordinate (b) ++(0,-1) coordinate (tr)
+ (eta) ++(0,2) coordinate (e);
+\draw[black] (a) to[out=90, in=180] (eta.east);
+\draw[black] (eta.west) to[out=0, in=90] (b);
+\draw[black] (eta) -- (e);
+\draw[name path=fgarrow, black] (tl) to[out=90,in=-90] (b);
+\draw[name path=bgarrow, black] (tr) to[out=90,in=-90] (a);
+\fill[white!95!black, name intersections={of=bgarrow and fgarrow, name=i}] (i-1) circle (13pt);
+\draw[name path=ubgarrow, black] (tr) to[out=90,in=-90] (a);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(eta) + (-3,2)$) rectangle ($(eta) + (3,-2)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered} =
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=below:\ensuremath{m}]
+ (eta) ++(-1,-1) coordinate (a) ++(0,-1) coordinate (tl)
+ (eta) ++(1,-1) coordinate (b) ++(0,-1) coordinate (tr)
+ (eta) ++(0,2) coordinate (e);
+\draw[black] (tl) -- (a) to[out=90, in=180] (eta.east);
+\draw[black] (eta.west) to[out=0, in=90] (b) -- (tr);
+\draw[black] (eta) -- (e);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(eta) + (-3,2)$) rectangle ($(eta) + (3,-2)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+\end{center}
+#+end_ejemplo
+
+*** Dualidades y espacios vectoriales
+Antes de dar el siguiente paso, vamos a considerar dualidades y vamos a
+trabajar con uno de los ejemplos más interesantes de categoría monoidal:
+los espacios vectoriales.
+
+#+begin_definicion
+Una *dualidad* entre dos cuerdas $f \dashv g$ viene dada por una forma de crearlas
+desde la nada y una forma de fundirlas.  ¡Nótese que la definición no es
+simétrica! Si $f \dashv g$, no necesariamente se tiene $g \dashv f$.
+\begin{center}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=below:\ensuremath{\eta}] 
+ (eta) ++(-1,1) coordinate (a) ++(0,0.5) coordinate[label=above:\ensuremath{f}] (tl)
+ (eta) ++(1,1) coordinate (b) ++(0,0.5) coordinate[label=above:\ensuremath{g}] (tr);
+\draw[red!75!black] (tl) -- (a) to[out=-90, in=180] (eta.west);
+\draw[blue!75!black] (eta.east) to[out=0, in=-90] (b) -- (tr);
+\begin{pgfonlayer}{background}
+\fill[white] ($(tl) + (-1,0)$) rectangle ($(tr) + (1,-2)$);
+\fill[white] (tl) -- (a) to[out=-90, in=180] (eta.west) -- (eta.east) to[out=0, in=-90] (b) -- (tr) -- cycle;
+\fill[white] ($(tl) + (-1,-2)$) rectangle ($(tr) + (1,-3)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+&
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=above:\ensuremath{\varepsilon}] 
+ (epsilon) ++(-1,-1) coordinate (a) ++(0,-0.5) coordinate[label=below:\ensuremath{g}] (bl)
+ (epsilon) ++(1,-1) coordinate (b) ++(0,-0.5) coordinate[label=below:\ensuremath{f}] (br);
+\draw[blue!75!black] (bl) -- (a) to[out=90, in=180] (epsilon.west);
+\draw[red!75!black] (epsilon.east) to[out=0, in=90] (b) -- (br);
+\begin{pgfonlayer}{background}
+\fill[white] ($(bl) + (-1,0)$) rectangle ($(br) + (1,2)$);
+\fill[white] (bl) -- (a) to[out=90, in=180] (epsilon.west) -- (epsilon.east) to[out=0, in=90] (b) -- (br) -- cycle;
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{center}
+Satisfaciendo las siguientes *ecuaciones de zig-zag*.
+\begin{center}
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=above:$\eta$] (eta) ++(1,1) coordinate (a) ++(1,1) coordinate[dot, label=below:$\varepsilon$] (epsilon) 
+ ++(1,-1) coordinate (b) ++(0,-2) coordinate (br)
+ (eta) ++(-1,1) coordinate (c) ++(0,2) coordinate (tl);
+\draw[red!75!black] (tl) -- (c) to[out=-90, in=180] (eta);
+\draw[blue!75!black] (eta) to[out=0, in=-90] (a) to[out=90, in=180] (epsilon);
+\draw[red!75!black] (epsilon) to[out=0, in=90] (b) -- (br);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] (tl) -- (c) to[out=-90, in=180] (eta) to[out=0, in=-90] (a) to[out=90, in=180] (epsilon) to[out=0, in=90] (b) -- (br)
+ -- ++(0.5,0) -- ++(0,4) -- cycle;
+\fill[white!95!black] (tl) -- (c) to[out=-90, in=180] (eta) to[out=0, in=-90] (a) to[out=90, in=180] (epsilon) to[out=0, in=90] (b) -- (br)
+ -- ++(-4.5,0) -- ++(0,4) -- cycle;
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+\enskip=\enskip
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate (b) ++(0,4) coordinate (t);
+\draw[red!75!black] (b) -- (t);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(t) + (-1,0)$) rectangle (b);
+\fill[white!95!black] (t) rectangle ($(b) + (1,0)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+\qquad
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=below:$\varepsilon$] (epsilon) ++(1,-1) coordinate (a) ++(1,-1) coordinate[dot, label=above:$\eta$] (eta)
+ ++(1,1) coordinate (b) ++(0,2) coordinate (tr)
+ (epsilon) ++(-1,-1) coordinate (c) ++(0,-2) coordinate (bl);
+\draw[blue!75!black] (bl) -- (c) to[out=90, in=180] (epsilon);
+\draw[red!75!black] (epsilon) to[out=0, in=90] (a) to[out=-90, in=180] (eta);
+\draw[blue!75!black] (eta) to[out=0, in=-90] (b) -- (tr);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] (bl) -- (c) to[out=90, in=180] (epsilon) to[out=0, in=90] (a) to[out=-90, in=180] (eta) to[out=0, in=-90] (b) -- (tr)
+ -- ++(0.5,0) -- ++(0,-4) -- cycle;
+\fill[white!95!black] (bl) -- (c) to[out=90, in=180] (epsilon) to[out=0, in=90] (a) to[out=-90, in=180] (eta) to[out=0, in=-90] (b) -- (tr)
+ -- ++(-4.5,0) -- ++(0,-4) -- cycle;
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+\enskip=\enskip
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate (b) ++(0,4) coordinate (t);
+\draw[blue!75!black] (b) -- (t);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(t) + (-1,0)$) rectangle (b);
+\fill[white!95!black] (t) rectangle ($(b) + (1,0)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+\end{center}
+#+end_definicion
+
+#+begin_ejemplo
+Consideramos la categoría mononidal de los espacios vectoriales
+finitos, fijada una base ortonormal.[fn:2] Los morfismos son funciones
+lineales, y los espacios vectoriales en sí forman un monoide con el
+producto tensor de espacios vectoriales.
+Pero además, cada espacio vectorial es dual consigo mismo, $V \dashv V^{\ast} \cong V$, 
+gracias al producto escalar, que es una función $\varepsilon \colon V \otimes V \to V$, y a
+la diagonal de la base $\eta \colon I \to V \otimes V$, que está definida por el
+elemento $\sum (e_i \otimes e_i)$.
+
+Con todo esto, la *traspuesta* de una función lineal $f \colon V \to W$
+es una función $f \colon W \to V$ definida como sigue. Nótese que aquí
+$\eta$ y $\varepsilon$ se refieren a distintas dualidades, cada una de uno de los
+espacios es dual consigo mismo.
+\begin{center}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=below:$\eta$] (eta) ++(1,1) coordinate[dot, label=right:$f$] (a) ++(1,1) coordinate[dot, label=above:$\varepsilon$] (epsilon) 
+ ++(1,-1) coordinate (b) ++(0,-2) coordinate (br)
+ (eta) ++(-1,1) coordinate (c) ++(0,2) coordinate (tl);
+\draw[orange!75!black] (tl) -- (c) to[out=-90, in=180] (eta);
+\draw[orange!75!black] (eta) to[out=0, in=-90] (a);
+\draw[violet!75!black] (a) to[out=90, in=180] (epsilon);
+\draw[violet!75!black] (epsilon) to[out=0, in=90] (b) -- (br);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] (tl) -- (c) to[out=-90, in=180] (eta) to[out=0, in=-90] (a) to[out=90, in=180] (epsilon) to[out=0, in=90] (b) -- (br)
+ -- ++(0.5,0) -- ++(0,4) -- cycle;
+\fill[white!95!black] (tl) -- (c) to[out=-90, in=180] (eta) to[out=0, in=-90] (a) to[out=90, in=180] (epsilon) to[out=0, in=90] (b) -- (br)
+ -- ++(-4.5,0) -- ++(0,4) -- cycle;
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{center}
+Usando trenzados y moviendo el diagrama, podemos demostrar que la
+traspuesta de la traspuesta es de nuevo la función original.
+
+[fn:2] Sobre los reales, por ejemplo. Pero todo lo que hagamos
+funciona para cualquier cuerpo en general e incluso para módulos sobre
+un semianillo arbitrario.  Si tomamos por ejemplo el semianillo de los
+booleanos, obtenemos la categoría de relaciones $\mathbf{Rel}$.
+#+end_ejemplo
+
+#+begin_ejemplo
+<<ejemplo-dualidad-monoide>>
+Toda dualidad $f \dashv g$ da lugar a un monoide en el producto tensorial $f \otimes g$. Su multiplicación
+y su unidad son las siguientes. Los axiomas se siguen de las ecuaciones de zig-zag.
+\begin{center}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=below:\ensuremath{\eta}] 
+ (eta) ++(-1,1) coordinate (a) ++(0,0.5) coordinate[label=above:\ensuremath{f}] (tl)
+ (eta) ++(1,1) coordinate (b) ++(0,0.5) coordinate[label=above:\ensuremath{g}] (tr);
+\draw[red!75!black] (tl) -- (a) to[out=-90, in=180] (eta.west);
+\draw[blue!75!black] (eta.east) to[out=0, in=-90] (b) -- (tr);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(tl) + (-1,0)$) rectangle ($(tr) + (1,-2)$);
+\fill[white!95!black] (tl) -- (a) to[out=-90, in=180] (eta.west) -- (eta.east) to[out=0, in=-90] (b) -- (tr) -- cycle;
+\fill[white!95!black] ($(tl) + (-1,-2)$) rectangle ($(tr) + (1,-3)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+&
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=below:$\varepsilon$] 
+ (epsilon) ++(-1,-1) coordinate (a) ++(0,-0.5) coordinate (bl) ++(-1,0) coordinate (bll) 
+  ++(0,3) coordinate[label=above:$f$] (tl)
+ (epsilon) ++(1,-1) coordinate (b) ++(0,-0.5) coordinate (br) ++(1,0) coordinate (brr) 
+  ++(0,3) coordinate[label=above:$g$] (tr);
+\draw[red!75!black] (bll) -- (tl);
+\draw[blue!75!black] (brr) -- (tr);
+\draw[blue!75!black] (bl) -- (a) to[out=90, in=180] (epsilon.west);
+\draw[red!75!black] (epsilon.east) to[out=0, in=90] (b) -- (br);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(tl) + (-1,0)$) rectangle (bll);
+\fill[white!95!black] ($(tr) + (1,0)$) rectangle (brr);
+\fill[white!95!black] (bll) rectangle (tr);
+\fill[white!95!black] (bl) -- (a) to[out=90, in=180] (epsilon.west) -- (epsilon.east) to[out=0, in=90] (b) -- (br) -- cycle;
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{center}
+#+end_ejemplo
+
+*** Bicategorías
+El siguiente paso es colorear las regiones.  Esto limitará qué cuerdas
+podemos colocar al lado de otras cuerdas.
+
+#+begin_definicion
+Una *bicategoría* es una categoría monoidal coloreada en las regiones.
+Alternativamente, una categoría monoidal es una bicategoría monocroma.
+\begin{center}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label={[label distance=0.25cm]right:\ensuremath{\alpha}}] (sigma) 
+ ++(-2,1) coordinate[dot, label=below:\ensuremath{\beta}] (epsilon) ++(-1,-1) coordinate (a)
+ ++(0,-0.5) coordinate[label=below:\ensuremath{f}] (bl)
+ (sigma) ++(1,1.5) coordinate[label=above:\ensuremath{h}] (tr)
+ (sigma) ++(0,1.5) coordinate[label=above:\ensuremath{e}] (tl)
+ (sigma) ++(0,-0.5) coordinate[label=below:\ensuremath{g}] (br);
+\draw (tr) to[out=-90, in=0] (sigma) to[out=180, in=0] (epsilon) to[out=180, in=90] (a) -- (bl);
+\draw (br) -- (tl);
+\begin{pgfonlayer}{background}
+\fill[green!20] ($(bl) + (-1,0)$) rectangle (tl);
+\fill[green!50] ($(tr) + (1,0)$) rectangle (br);
+\begin{scope}
+\clip ($(bl) + (-1,0)$) rectangle (tl);
+\fill[blue!20] (tr) to[out=-90, in=0] (sigma) to[out=180, in=0] (epsilon) to[out=180, in=90] (a) -- (bl) -- ++(5,0) -- ++(0,2) -- cycle;
+\end{scope}
+\begin{scope}
+\clip ($(tr) + (1,0)$) rectangle (br);
+\fill[blue!50] (tr) to[out=-90, in=0] (sigma) to[out=180, in=0] (epsilon) to[out=180, in=90] (a) -- (bl) -- ++(5,0) -- ++(0,2) -- cycle;
+\end{scope}
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{center}
+#+end_definicion
+
+#+begin_ejemplo
+La bicategoría $\mathbf{Cat}$ tiene regiones dadas por categorías. Una cuerda
+entre dos regiones es un funtor, y los funtores forman una categoría
+con la composición de funtores.  Un nodo viene dado por una transformación
+natural, que convierte la composición de varios funtores en otra composición
+de funtores.  Por ejemplo, una mónada resulta de dibujar un monoide en esta
+categoría.
+\begin{center}
+\begin{tabular}{c c c c}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=below:\ensuremath{\mu}]
+ (eta) ++(-1,-1) coordinate (a) ++(0,-1) coordinate[label=below:{$T$}] (tl)
+ (eta) ++(1,-1) coordinate (b) ++(0,-1) coordinate[label=below:{$T$}] (tr)
+ (eta) ++(0,2) coordinate[label=above:{$T$}] (e);
+\draw[black] (tl) -- (a) to[out=90, in=180] (eta.east);
+\draw[black] (eta.west) to[out=0, in=90] (b) -- (tr);
+\draw[black] (eta) -- (e);
+\begin{pgfonlayer}{background}
+\fill[blue!20] ($(eta) + (-3,2)$) rectangle ($(eta) + (3,-2)$);
+\end{pgfonlayer}
+\end{tikzpicture} &
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=below:\ensuremath{\eta}]
+ (eta) ++(0,2) coordinate[label=above:{$T$}] (e)
+ (eta) ++(0,-2) coordinate[label=below:{$\phantom{t}$}] (ep);
+\draw[black] (eta) -- (e);
+\begin{pgfonlayer}{background}
+\fill[blue!20] ($(eta) + (-2,2)$) rectangle ($(eta) + (2,-2)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{tabular}
+\end{center}
+En otras palabras, una mónada viene determinada por una transformación
+natural llamada /multiplicación/ $\mu \colon T \circ T \tonat T$ y una transformación natural
+llamada /unidad/ $\eta \colon 1 \tonat T$, donde $1$ es el funtor identidad.  Esto son dos
+familias de funciones indexadas sobre los objetos de una categoría $c \in \mathbf{C}$,
+donde la multiplicación es $\mu_c \colon T(T(c)) \to T(c)$ y la unidad es $\eta_c \colon c \to T(c)$.
+Cumplirán además los axiomas de un monoide.
+#+end_ejemplo
+
+#+begin_ejemplo
+Una dualidad en la bicategoría $\mathbf{Cat}$ se llama *adjunción*.  Por el Ejemplo [[ejemplo-dualidad-monoide]],
+sabemos entonces que toda adjunción $F \dashv G$ da lugar a una mónada $G \circ F$.
+
+Es decir, estos diagramas de cite:marsden14 representan una adjunción.
+\begin{center}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=above:\ensuremath{\eta}] 
+ (eta) ++(-1,1) coordinate (a) ++(0,0.5) coordinate[label=above:\ensuremath{F}] (tl)
+ (eta) ++(1,1) coordinate (b) ++(0,0.5) coordinate[label=above:\ensuremath{G}] (tr);
+\draw (tl) -- (a) to[out=-90, in=180] (eta.west) -- (eta.east) to[out=0, in=-90] (b) -- (tr);
+\begin{pgfonlayer}{background}
+\fill[catc] ($(tl) + (-1,0)$) rectangle ($(tr) + (1,-2)$);
+\fill[catd] (tl) -- (a) to[out=-90, in=180] (eta.west) -- (eta.east) to[out=0, in=-90] (b) -- (tr) -- cycle;
+\fill[white] ($(tl) + (-1,-2)$) rectangle ($(tr) + (1,-3)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=below:\ensuremath{\epsilon}] 
+ (epsilon) ++(-1,-1) coordinate (a) ++(0,-0.5) coordinate[label=below:\ensuremath{G}] (bl)
+ (epsilon) ++(1,-1) coordinate (b) ++(0,-0.5) coordinate[label=below:\ensuremath{F}] (br);
+\draw (bl) -- (a) to[out=90, in=180] (epsilon.west) -- (epsilon.east) to[out=0, in=90] (b) -- (br);
+\begin{pgfonlayer}{background}
+\fill[catd] ($(bl) + (-1,0)$) rectangle ($(br) + (1,2)$);
+\fill[catc] (bl) -- (a) to[out=90, in=180] (epsilon.west) -- (epsilon.east) to[out=0, in=90] (b) -- (br) -- cycle;
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{center}
+
+La unitalidad de la mónada se demuestra gracias al zig-zag.
+\begin{equation*}
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=above:$\eta$] (eta) ++(2,1) coordinate[dot, label=below:$\epsilon$] (epsilon)
+ ++(1,-1) coordinate (a) ++(0,-0.5) coordinate[label=below:$F$] (bl)
+ (eta) ++(-1,1) coordinate (b) ++(0,0.5) coordinate[label=above:$F$] (tl)
+ (bl) ++(1,0) coordinate[label=below:$G$] (br) ++(0,2) coordinate[label=above:$G$] (tr);
+\draw (tl) -- (b) to[out=-90, in=180] (eta.west) -- (eta.east) to[out=0, in=180] (epsilon.west) -- (epsilon.east) to[out=0, in=90] (a) -- (bl);
+\draw (br) -- (tr);
+\begin{pgfonlayer}{background}
+\fill[catc] ($(tl) + (-1,0)$) rectangle ($(br) + (1,0)$);
+\fill[catd] (tl) -- (b) to[out=-90, in=180] (eta.west) -- (eta.east) to[out=0, in=180] (epsilon.west) -- (epsilon.east) to[out=0, in=90] (a) -- (bl) -- (br) -- (tr) -- cycle;
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}=
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[label=above:$F$] (tl) ++(1,0) coordinate[label=above:$G$] (tr)
+ (tl) ++(0,-2) coordinate[label=below:$F$] (bl)
+ (tr) ++(0,-2) coordinate[label=below:$G$] (br);
+\draw (bl) -- (tl)
+ (br) -- (tr);
+\begin{pgfonlayer}{background}
+\fill[catc] ($(tl) + (-1,0)$) rectangle (bl);
+\fill[catc] ($(tr) + (1,0)$) rectangle (br);
+\fill[catd] (tl) rectangle (br);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+=
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=above:$\eta$] (eta) ++(-2,1) coordinate[dot, label=below:$\epsilon$] (epsilon)
+ ++(-1,-1) coordinate (a) ++(0,-0.5) coordinate[label=below:$G$] (br)
+ (eta) ++(1,1) coordinate (b) ++(0,0.5) coordinate[label=above:$G$] (tr)
+ (br) ++(-1,0) coordinate[label=below:$F$] (bl) ++(0,2) coordinate[label=above:$F$] (tl);
+\draw (tr) -- (b) to[out=-90, in=0] (eta.east) -- (eta.west) to[out=180, in=0] (epsilon.east) -- (epsilon.west) to[out=180, in=90] (a) -- (br)
+ (bl) -- (tl);
+\begin{pgfonlayer}{background}
+\fill[catc] ($(bl) + (-1,0)$) rectangle ($(tr) + (1,0)$);
+\fill[catd] (tr) -- (b) to[out=-90, in=0] (eta.east) -- (eta.west) to[out=180, in=0] (epsilon.east) -- (epsilon.west) to[out=180, in=90] (a) -- (br)
+ -- (bl) -- (tl) -- cycle;
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+\end{equation*}
+Y la asociatividad gracias a las isotopías.
+\begin{equation*}
+\begin{gathered}
+\begin{tikzpicture}[auto,scale=0.3]
+\path (0,-2.5) coordinate (base) 
+ (-1.5,-1) coordinate[dot, label=below:$\epsilon$] 
+ (epsilon1) ++(-1,-1) coordinate (a)
+ (epsilon1) ++(1,-1) coordinate (b)
+ (1.5,1) coordinate[dot, label=below:$\epsilon$] (epsilon2)
+ (epsilon2) ++(-1,-1) coordinate (c)
+ (epsilon2) ++(1,-1) coordinate (d);
+\path let \p1 = (base) in
+      let \p2 = (a) in
+      let \p3 = (b) in
+      let \p4 = (c) in
+      let \p5 = (d) in
+ coordinate[label=below:$G$] (bll) at (\x2, \y1)
+ coordinate[label=below:$F$] (bl) at (\x3, \y1)
+ coordinate[label=below:$G$] (br) at (\x4, \y1)
+ coordinate[label=below:$F$] (brr) at (\x5, \y1);
+\path 
+ (bll) ++(-1,0) coordinate[label=below:$F$] (blll) ++(0,4) coordinate[label=above:$F$] (tlll)
+ (brr) ++(1,0) coordinate[label=below:$G$] (brrr) +(0,4) coordinate[label=above:$G$] (trrr);
+\draw (bll) -- (a) to[out=90, in=180] (epsilon1.west) -- (epsilon1.east) to[out=0, in=90] (b) -- (bl)
+      (br) -- (c) to[out=90, in=180] (epsilon2.west) -- (epsilon2.east) to[out=0, in=90] (d) -- (brr)
+ (blll) -- (tlll)
+ (brrr) -- (trrr);
+\begin{pgfonlayer}{background}
+\fill[catd] ($(blll) + (-1,0)$) rectangle ($(trrr) + (1,0)$);
+\fill[catc] ($(blll) + (-1,0)$) rectangle (tlll);
+\fill[catc] ($(brrr) + (1,0)$) rectangle (trrr);
+\fill[catc] (bll) -- (a) to[out=90, in=180] (epsilon1.west) -- (epsilon1.east) to[out=0, in=90] (b) -- (bl) -- cycle;
+\fill[catc] (br) -- (c) to[out=90, in=180] (epsilon2.west) -- (epsilon2.east) to[out=0, in=90] (d) -- (brr) -- cycle;
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+=
+\begin{gathered}
+\begin{tikzpicture}[auto,scale=0.3]
+\path (0,-2.5) coordinate (base) 
+ (-1.5,0) coordinate[dot, label=below:$\epsilon$] 
+ (epsilon1) ++(-1,-1) coordinate (a)
+ (epsilon1) ++(1,-1) coordinate (b)
+ (1.5,0) coordinate[dot, label=below:$\epsilon$] (epsilon2)
+ (epsilon2) ++(-1,-1) coordinate (c)
+ (epsilon2) ++(1,-1) coordinate (d);
+\path let \p1 = (base) in
+      let \p2 = (a) in
+      let \p3 = (b) in
+      let \p4 = (c) in
+      let \p5 = (d) in
+ coordinate[label=below:$G$] (bll) at (\x2, \y1)
+ coordinate[label=below:$F$] (bl) at (\x3, \y1)
+ coordinate[label=below:$G$] (br) at (\x4, \y1)
+ coordinate[label=below:$F$] (brr) at (\x5, \y1);
+\path 
+ (bll) ++(-1,0) coordinate[label=below:$F$] (blll) ++(0,4) coordinate[label=above:$F$] (tlll)
+ (brr) ++(1,0) coordinate[label=below:$G$] (brrr) +(0,4) coordinate[label=above:$G$] (trrr);
+\draw (bll) -- (a) to[out=90, in=180] (epsilon1.west) -- (epsilon1.east) to[out=0, in=90] (b) -- (bl)
+      (br) -- (c) to[out=90, in=180] (epsilon2.west) -- (epsilon2.east) to[out=0, in=90] (d) -- (brr)
+ (blll) -- (tlll)
+ (brrr) -- (trrr);
+\begin{pgfonlayer}{background}
+\fill[catd] ($(blll) + (-1,0)$) rectangle ($(trrr) + (1,0)$);
+\fill[catc] ($(blll) + (-1,0)$) rectangle (tlll);
+\fill[catc] ($(brrr) + (1,0)$) rectangle (trrr);
+\fill[catc] (bll) -- (a) to[out=90, in=180] (epsilon1.west) -- (epsilon1.east) to[out=0, in=90] (b) -- (bl) -- cycle;
+\fill[catc] (br) -- (c) to[out=90, in=180] (epsilon2.west) -- (epsilon2.east) to[out=0, in=90] (d) -- (brr) -- cycle;
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+=
+\begin{gathered}
+\begin{tikzpicture}[auto,scale=0.3]
+\path (0,-2.5) coordinate (base) 
+ (-1.5,1) coordinate[dot, label=below:$\epsilon$] 
+ (epsilon1) ++(-1,-1) coordinate (a)
+ (epsilon1) ++(1,-1) coordinate (b)
+ (1.5,-1) coordinate[dot, label=below:$\epsilon$] (epsilon2)
+ (epsilon2) ++(-1,-1) coordinate (c)
+ (epsilon2) ++(1,-1) coordinate (d);
+\path let \p1 = (base) in
+      let \p2 = (a) in
+      let \p3 = (b) in
+      let \p4 = (c) in
+      let \p5 = (d) in
+ coordinate[label=below:$G$] (bll) at (\x2, \y1)
+ coordinate[label=below:$F$] (bl) at (\x3, \y1)
+ coordinate[label=below:$G$] (br) at (\x4, \y1)
+ coordinate[label=below:$F$] (brr) at (\x5, \y1);
+\path 
+ (bll) ++(-1,0) coordinate[label=below:$F$] (blll) ++(0,4) coordinate[label=above:$F$] (tlll)
+ (brr) ++(1,0) coordinate[label=below:$G$] (brrr) +(0,4) coordinate[label=above:$G$] (trrr);
+\draw (bll) -- (a) to[out=90, in=180] (epsilon1.west) -- (epsilon1.east) to[out=0, in=90] (b) -- (bl)
+      (br) -- (c) to[out=90, in=180] (epsilon2.west) -- (epsilon2.east) to[out=0, in=90] (d) -- (brr)
+ (blll) -- (tlll)
+ (brrr) -- (trrr);
+\begin{pgfonlayer}{background}
+\fill[catd] ($(blll) + (-1,0)$) rectangle ($(trrr) + (1,0)$);
+\fill[catc] ($(blll) + (-1,0)$) rectangle (tlll);
+\fill[catc] ($(brrr) + (1,0)$) rectangle (trrr);
+\fill[catc] (bll) -- (a) to[out=90, in=180] (epsilon1.west) -- (epsilon1.east) to[out=0, in=90] (b) -- (bl) -- cycle;
+\fill[catc] (br) -- (c) to[out=90, in=180] (epsilon2.west) -- (epsilon2.east) to[out=0, in=90] (d) -- (brr) -- cycle;
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+\end{equation*}
+El ejemplo común de una situación como esta lo dan el funtor que crea
+la mónada libre sobre un conjunto $F \colon \mathbf{Set} \to \mathbf{Mon}$ y el funtor de
+olvido $G \colon \mathbf{Mon} \to \mathbf{Set}$. La mónada $G \circ F$ se llama en programación
+funcional la *mónada Lista* (/List monad/).
+
+De forma dual, podemos definir comónadas y demostrar que toda adjunción
+$F \dashv G$ da lugar a una comónada $F \circ G$.
+#+end_ejemplo
+
+
+*** Conclusión
+Tenemos la siguiente tabla y nada nos impide continuar hacia más
+dimensiones y más colores.  Calcular manipulaciones de diagramas en
+dimensiones arbitrarias es lo que hace el asistente [[https://homotopy.io/][homotopy.io]] cite:homotopyio
+de Vicary-Hu-Liss.
+
+|---------------------+---------------+-------------+--------------------|
+| Estructuras         | 0 dimensiones | 1 dimensión | 2 dimensiones      |
+|---------------------+---------------+-------------+--------------------|
+| Blanco y negro      | Conjunto      | Monoide     | PRO                |
+| Cuerdas coloreadas  |               | Categoría   | Categoría monoidal |
+| Regiones coloreadas |               |             | Bicategoría        |
+|---------------------+---------------+-------------+--------------------|
+
+Una estructura tricolor, por ejemplo, nos permite llegar a
+tricategorías y bicategorías monoidales.
 
 *** references                                                                            :ignore:
 bibliographystyle:alpha
@@ -1193,7 +1722,7 @@ bibliography:Math.bib
 :PROPERTIES:
 :TITLE: Lawvere's fixed point theorem
 :EXPORT_FILE_NAME: lawverefixedpoint.html
-:EXPORT_DATE: <2019-02-28 Mon 10:23>
+:INDEX_DATE: <2019-02-28 Mon 10:23>
 :END:
 
 This is a note stating the main result 
@@ -1214,7 +1743,7 @@ B has a fixed point, that is, some b : B such that f b = b.
 :PROPERTIES:
 :TITLE: Apuntes de Haskell
 :EXPORT_FILE_NAME: apuntesdehaskell.html
-:EXPORT_DATE: <2019-02-27 Mon 21:00>
+:INDEX_DATE: <2019-02-27 Mon 21:00>
 :END:
 
 Hace ya un tiempo, [[https://github.com/mx-psi][@mx-psi]] y yo escribimos estos 
@@ -1227,7 +1756,7 @@ y dejarlos listos para otro seminario este año.
 :PROPERTIES:
 :TITLE: Diagramas para categorías monoidales
 :EXPORT_FILE_NAME: diagramascategoriasmonoidales.pdf
-:EXPORT_DATE: <2019-01-21 Mon 19:01>
+:INDEX_DATE: <2019-01-21 Mon 19:01>
 :END:
 
 Este es un post de enlaces sobre lenguajes diagramáticos. Me temo que
@@ -1319,7 +1848,7 @@ bibliography:Math.bib
 :PROPERTIES:
 :TITLE: dotfiles in a single org-file
 :EXPORT_FILE_NAME: dotfilesinasingleorg.html
-:EXPORT_DATE: <2019-01-21 Mon 19:01>
+:INDEX_DATE: <2019-01-21 Mon 19:01>
 :END:
 
 I was thinking that it would be nice to have all your configuration
@@ -1355,7 +1884,7 @@ didn't anyone tell me?/
 :PROPERTIES:
 :TITLE: Every surjection to a projective R-module is split
 :EXPORT_FILE_NAME: everysurjectiontoprojectiveissplit.pdf
-:EXPORT_DATE: <2018-12-24 Sun 09:07>
+:INDEX_DATE: <2018-12-24 Sun 09:07>
 :END:
 
 /The statement comes from an exercise on André Henriques' course on/
@@ -1381,7 +1910,7 @@ $P$ is a direct summand of a free module and thus a projective module.
 :PROPERTIES:
 :TITLE: Hom is continuous
 :EXPORT_FILE_NAME: homcontinuous.pdf
-:EXPORT_DATE: <2018-12-23 Sun 16:20>
+:INDEX_DATE: <2018-12-23 Sun 16:20>
 :END:
 
 /This is an exercise on Samson Abramsky's notes/
@@ -1434,7 +1963,7 @@ bibliography:Math.bib
 :PROPERTIES:
 :TITLE: Pasting pullbacks
 :EXPORT_FILE_NAME: pastingpullbacks.pdf
-:EXPORT_DATE: <2018-12-23 Sun 16:09>
+:INDEX_DATE: <2018-12-23 Sun 16:09>
 :END:
 
 /This is an exercise on Samson Abramsky's notes/
@@ -1503,7 +2032,7 @@ bibliography:Math.bib
 :PROPERTIES:
 :TITLE: Linear logic is quantity-sensitive
 :EXPORT_FILE_NAME: countinginlinearlogic.pdf
-:EXPORT_DATE: <2018-12-23 Sun 15:50>
+:INDEX_DATE: <2018-12-23 Sun 15:50>
 :END:
 
 /This is an exercise on Samson Abramsky's notes/
@@ -1552,7 +2081,7 @@ bibliography:Math.bib
 :PROPERTIES:
 :TITLE: Powerset-algebras are complete semilattices
 :EXPORT_FILE_NAME: powersetalgebrascompletesemilattices.pdf
-:EXPORT_DATE: <2018-12-23 Sun 13:10>
+:INDEX_DATE: <2018-12-23 Sun 13:10>
 :END:
 
 /This is a combination of two exercises from Samson Abramsky's notes/
@@ -1701,7 +2230,7 @@ bibliography:Math.bib
 :PROPERTIES:
 :TITLE: Picado's Interview with Lawvere
 :EXPORT_FILE_NAME: picadolawvereinterview.html
-:EXPORT_DATE: <2018-09-08 Sat 17:20>
+:INDEX_DATE: <2018-09-08 Sat 17:20>
 :END:
 
 [[http://www.mat.uc.pt/~picado/][Jorge Picado]] (who is also coauthor of the book on [[https://www.maa.org/press/maa-reviews/frames-and-locales-topology-without-points][locales]] I am reading) has
@@ -1733,7 +2262,7 @@ an agenda have become explicit.
 :PROPERTIES:
 :TITLE: A quote by Ampère
 :EXPORT_FILE_NAME: quoteampere.html
-:EXPORT_DATE: <2018-09-03 Mon 21:55>
+:INDEX_DATE: <2018-09-03 Mon 21:55>
 :END:
 
 /[Les langues] commencent par être una musique, et finissent par être une algèbre./ 
@@ -1748,7 +2277,7 @@ be more modern than this.
 :PROPERTIES:
 :TITLE: LibreIM, casi cinco años después
 :EXPORT_FILE_NAME: libreimquintoaniversario.html
-:EXPORT_DATE: <2018-09-03 Mon 21:54>
+:INDEX_DATE: <2018-09-03 Mon 21:54>
 :END:
 
 Tengo un correo de diciembre de 2013 en el que David Charte consiguió
@@ -1778,7 +2307,7 @@ futuro.
 :PROPERTIES:
 :TITLE: Org-drill and spaced repetition
 :EXPORT_FILE_NAME: orgdrillspacedrepetition.html
-:EXPORT_DATE: <2018-09-03 Mon 21:53>
+:INDEX_DATE: <2018-09-03 Mon 21:53>
 :END:
 
 When it comes to [[https://www.gwern.net/Spaced-repetition][spaced]] [[https://codual.github.io/2016/07/07/repeticion-espaciada/][repetition]] software, [[https://ankiweb.net/about][Anki]] is probably the most
@@ -1803,7 +2332,7 @@ with Emacs, it could be a good idea to try both before settling on one.
 :PROPERTIES:
 :TITLE: Uniqueness of identity proofs
 :EXPORT_FILE_NAME: uniquenessofidentityproofs.pdf
-:EXPORT_DATE: <2018-08-25 Sat 21:57>
+:INDEX_DATE: <2018-08-25 Sat 21:57>
 :END:
 
 #+BEGIN_quote
@@ -1882,7 +2411,7 @@ bibliography:Math.bib
 :PROPERTIES:
 :TITLE: Writing a bachelor's thesis in org-mode
 :EXPORT_FILE_NAME: bachelorsthesisinorgmode.html
-:EXPORT_DATE: <2018-08-15 Wed 23:37>
+:INDEX_DATE: <2018-08-15 Wed 23:37>
 :END:
 
 My [[https://github.com/mroman42/ctlc/][bachelor's thesis]] has been completely written in org-mode
@@ -1911,7 +2440,7 @@ emacs thesis.org --batch -u `id -un` \
 :PROPERTIES:
 :TITLE: Blogging with a single org-file
 :EXPORT_FILE_NAME: bloggingwithasingleorgfile.html
-:EXPORT_DATE: <2018-08-15 Wed 23:19>
+:INDEX_DATE: <2018-08-15 Wed 23:19>
 :ID:       64a920ed-1914-4e64-997d-837f14815cdd
 :END:
 
@@ -1927,7 +2456,7 @@ headers.
 :PROPERTIES:
 :TITLE: Coinduction
 :EXPORT_FILE_NAME: coinduction.pdf
-:EXPORT_DATE: <2018-08-15 Wed 23:08>
+:INDEX_DATE: <2018-08-15 Wed 23:08>
 :ID:       174d185e-2269-40f2-935c-e8d45e08bfc8
 :END:
 
@@ -1974,7 +2503,7 @@ pred (a + b) | Just a' = Just (a' + b)
 :PROPERTIES:
 :TITLE: Cartesian closed categories
 :EXPORT_FILE_NAME: cartesianclosedcategories.pdf
-:EXPORT_DATE: <2018-07-01 Sun 11:30>
+:INDEX_DATE: <2018-07-01 Sun 11:30>
 :ID:       3d52d110-822a-4f85-a1c4-57d868b527d5
 :END:
 
@@ -2017,7 +2546,7 @@ Now, we should discuss if \beta-equivalence corresponds to the equality between 
 :PROPERTIES:
 :TITLE: Category theory and lambda calculus
 :EXPORT_FILE_NAME: categorytheoryandlambdacalculus.html
-:EXPORT_DATE: <2018-07-01 Sun 11:00>
+:INDEX_DATE: <2018-07-01 Sun 11:00>
 :END:
 
 *Category theory and lambda calculus* is the title of my bachelor's
@@ -2039,7 +2568,7 @@ Spanish), which are a reasonable summary of the ideas presented there.
 :PROPERTIES:
 :TITLE: Evaluación en cálculo lambda
 :EXPORT_FILE_NAME: evaluacionlambda.html
-:EXPORT_DATE: <2018-05-25 Fri 18:02>
+:INDEX_DATE: <2018-05-25 Fri 18:02>
 :END:
 Esta es una recopilación de los enunciados que nos llevan a usar la
 evaluación mediante \beta-reducciones del cálculo lambda como un
@@ -2103,7 +2632,7 @@ Estas dos formas de evaluación se suelen llamar /call-by-value/ y
 :PROPERTIES:
 :TITLE: Mikrokosmos
 :EXPORT_FILE_NAME: mikrokosmos.html
-:EXPORT_DATE: <2018-05-25 Fri 18:01>
+:INDEX_DATE: <2018-05-25 Fri 18:01>
 :ID:       5e645152-8b35-4236-bf9a-95b0d3bcb85d
 :END:
 
@@ -2126,7 +2655,7 @@ and play with the code!
 :PROPERTIES:
 :TITLE:    Aprendiendo Emacs
 :EXPORT_FILE_NAME: aprendiendoemacs.html
-:EXPORT_DATE: <2018-05-25 Fri 18:34>
+:INDEX_DATE: <2018-05-25 Fri 18:34>
 :END:
 
 *** Emacs
@@ -2445,7 +2974,7 @@ con más funcionalidad. Un tutorial básico sobre Elisp es
 :PROPERTIES:
 :TITLE:    Capturando links en org-mode
 :EXPORT_FILE_NAME: capturandolinksenorgmode.html
-:EXPORT_DATE: <2017-03-23 Thu 14:54>
+:INDEX_DATE: <2017-03-23 Thu 14:54>
 :END:
 
 *** Capturando links
@@ -2524,7 +3053,7 @@ hasta que ese diálogo no ha terminado, no se ejecutan los hooks y el frame no s
 :PROPERTIES:
 :TITLE: Distribuciones discretas con mónadas
 :EXPORT_FILE_NAME: distribucionesmonadas.html
-:EXPORT_DATE: <2018-05-25 Fri 18:34>
+:INDEX_DATE: <2018-05-25 Fri 18:34>
 :END:
 
 *** El modelo
@@ -2734,7 +3263,7 @@ main = return ()
 :PROPERTIES:
 :TITLE:    Inducción estructural
 :EXPORT_FILE_NAME: induccionestructural.html
-:EXPORT_DATE: <2015-03-14 Sat 15:02>
+:INDEX_DATE: <2015-03-14 Sat 15:02>
 :END:
 
 Normalmente aplicamos inducción sobre los números naturales, y cuando
@@ -2847,7 +3376,7 @@ demostraciones Coq.
 :PROPERTIES:
 :TITLE:    Mónadas
 :EXPORT_FILE_NAME: monadas.html
-:EXPORT_DATE: <2016-12-24 Mon 15:09>
+:INDEX_DATE: <2016-12-24 Mon 15:09>
 :END:
 
 #+BEGIN_QUOTE
@@ -3419,7 +3948,7 @@ como en teoría de categorías:
 :PROPERTIES:
 :TITLE:    Matemáticas en emacs
 :EXPORT_FILE_NAME: matematicasemacs.html
-:EXPORT_DATE: <2016-09-26 Mon 15:07>
+:INDEX_DATE: <2016-09-26 Mon 15:07>
 :END:
 
 /Actualizado a 06 de agosto de 2017./
@@ -3616,7 +4145,7 @@ de matemáticas. Mi archivo de configuración de Emacs está disponible en
 :PROPERTIES:
 :TITLE:    Ideas de teoría de tipos
 :EXPORT_FILE_NAME: ideasteoriatipos.html
-:EXPORT_DATE: <2016-01-08 Fri 15:13>
+:INDEX_DATE: <2016-01-08 Fri 15:13>
 :END:
 
 /Una recopilación de algunas ideas y enlaces después de haber empezado
@@ -3758,7 +4287,7 @@ asistente de demostraciones *COQ*, desarrollado por el INRIA. El
 :PROPERTIES:
 :TITLE:    Informal CV
 :EXPORT_FILE_NAME: informalcv.html
-:EXPORT_DATE: <2018-10-21 Sun>
+:INDEX_DATE: <2018-10-21 Sun>
 :END:
 
  * December 2018. Attended [[http://events.cs.bham.ac.uk/syco/2/][SYCO2]]. (University of Strathclyde)
@@ -3809,7 +4338,7 @@ $D\otimes -$ is right-exact; so for them to be exact, we only need:
 :PROPERTIES:
 :TITLE:    Wikipedia contributions
 :EXPORT_FILE_NAME: wikipediacontributions.html
-:EXPORT_DATE: <2018-02-17 Tue 12:00>
+:INDEX_DATE: <2018-02-17 Tue 12:00>
 :END:
 
 The majority of my math-related contributions to Wikipedia are
@@ -3839,7 +4368,7 @@ I have contributed to.
 :PROPERTIES:
 :TITLE:    Yoneda lemma
 :EXPORT_FILE_NAME: wikipediacontributions.pdf
-:EXPORT_DATE: <2018-02-17 Tue 12:00>
+:INDEX_DATE: <2018-02-17 Tue 12:00>
 :END:
 
 *** Lema de Yoneda
@@ -3922,7 +4451,7 @@ unless otherwise specified.
 :PROPERTIES:
 :TITLE:  Index
 :EXPORT_FILE_NAME: index.html
-:EXPORT_DATE: <2018-05-25 Fri 18:12>
+:INDEX_DATE: <2018-05-25 Fri 18:12>
 :END:
 
 #+begin_src emacs-lisp :exports results :results output html :eval never-export
@@ -3931,7 +4460,7 @@ unless otherwise specified.
       " <li><a href=" 
       (concat (org-entry-get (point) "EXPORT_FILE_NAME")  "> ") 
       (org-entry-get (point) "TITLE") "</a><em>"
-      (format-time-string ", %d %B %Y" (date-to-time (org-entry-get (point) "EXPORT_DATE"))) "</em><br></li>\n")))
+      (format-time-string ", %d %B %Y" (date-to-time (org-entry-get (point) "INDEX_DATE"))) "</em><br></li>\n")))
 
   (defun print-index ()
     (progn 
@@ -4046,7 +4575,7 @@ must have the tag :post: and must have the properties
       "<title>" (org-entry-get (point) "TITLE") "</title>\n"
       "<link>" (concat "https://mroman42.github.io/cosmoi/" (org-entry-get (point) "EXPORT_FILE_NAME")) "</link>\n"
       "<guid>" (concat "https://mroman42.github.io/cosmoi/" (org-entry-get (point) "EXPORT_FILE_NAME")) "</guid>\n"
-      "<pubDate>" (format-time-string "%a, %d %b %Y %H:%M:%S GMT" (date-to-time (org-entry-get (point) "EXPORT_DATE")))  "</pubDate>\n"
+      "<pubDate>" (format-time-string "%a, %d %b %Y %H:%M:%S GMT" (date-to-time (org-entry-get (point) "INDEX_DATE")))  "</pubDate>\n"
       "<description>" "</description>\n"
       "</item>\n"
       ) nil "feed.xml" 'append))
