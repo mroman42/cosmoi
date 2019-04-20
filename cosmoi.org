@@ -27,28 +27,32 @@
 
 ** latex-header                                                                            :ignore:
 #+latex_header: \usepackage{libertine}
-#+latex_header: \usepackage[scale=0.85]{FiraMono}
-#+latex_header: \usepackage{unicode-math}
+#+latex_header: \usepackage[scaled=0.9]{inconsolata}
+#+latex_header: %\usepackage[scale=0.85]{FiraMono}
 
 #+latex_class_options: [11pt]
-#+latex_header_extra: %\usepackage[top=1in, bottom=1.5in, left=1.4in, right=1.5in]{geometry}
 
 #+latex_header_extra: \usepackage{minted} \usemintedstyle{colorful}
-#+latex_header_extra: \setminted{fontsize=\small}
-#+latex_header_extra: \setminted[haskell]{linenos=false,fontsize=\small}
+#+latex_header_extra: \setminted{fontsize=\small,linenos=false,obeytabs=true,tabsize=2}
+#+latex_header_extra: \setminted[haskell]{linenos=false,fontsize=\small,encoding=utf8}
+#+latex_header_extra: \makeatletter \AtBeginEnvironment{minted}{\dontdofcolorbox} \def\dontdofcolorbox{\renewcommand\fcolorbox[4][]{##4}} \makeatother
 #+latex_header_extra: \renewcommand{\theFancyVerbLine}{\sffamily\textcolor[rgb]{0.5,0.5,1.0}{\oldstylenums{\arabic{FancyVerbLine}}}}
 
 #+latex_header: \BeforeBeginEnvironment{minted}{\vspace{-0.5cm}}
 #+latex_header: \AfterEndEnvironment{minted}{\vspace{-0.2cm}}
 
-#+latex_header: \usepackage{CJKutf8}\usepackage[utf8]{inputenc} 
+#+latex_header_extra: \usepackage[utf8]{inputenc} 
+#+latex_header_extra: \usepackage[T1]{fontenc}
+#+latex_header_extra: \usepackage{CJKutf8}
+
 #+latex_header: \newcommand{\hirayo}{\text{\usefont{U}{min}{m}{n}\symbol{'210}}} \DeclareFontFamily{U}{min}{} \DeclareFontShape{U}{min}{m}{n}{<-> udmj30}{}
 #+latex_header: \setcounter{secnumdepth}{0}
 #+latex_header: %\setlength{\parindent}{0pt}
 #+latex_header: \usepackage{physics}
 #+latex_header: \usepackage{amsthm}
 #+latex_header: \usepackage{amsmath}
-#+latex_header: \usepackage{amssymb}\usepackage{bbm}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{bbm}
 #+latex_header: \usepackage{amsbsy}
 #+latex_header: \usepackage{bm}
 #+latex_header: \usepackage{stmaryrd}
@@ -96,10 +100,9 @@
 #+latex_header: \newcommand\twoheaduparrow{\mathrel{\rotatebox{90}{$\twoheadrightarrow$}}}
 #+latex_header: \newcommand\twoheaddownarrow{\mathrel{\rotatebox{90}{$\twoheadleftarrow$}}}
 
-#+latex_header: \usepackage{amsthm}
 #+latex_header: \newtheorem*{statement}{Statement}
 
-*** Theorem styles                                                                        :ignore:
+** Theorem styles                                                                          :ignore:
 #+latex_header_extra: \theoremstyle{plain}
 #+latex_header_extra: \newtheorem{theorem}{Theorem}
 #+latex_header_extra: \newtheorem{proposition}[theorem]{Proposition}
@@ -119,7 +122,7 @@
 #+latex_header_extra: \definecolor{greenPRL}{HTML}{078f60}
 #+latex_header_extra: \hypersetup{colorlinks=true, linktocpage=true, pdfstartpage=3, pdfstartview=FitV,breaklinks=true, pdfpagemode=UseNone, pageanchor=true, pdfpagemode=UseOutlines,plainpages=false, bookmarksnumbered, bookmarksopen=true, bookmarksopenlevel=1,hypertexnames=true, pdfhighlight=/O,urlcolor=greenPRL,linkcolor=greenPRL,citecolor=greenPRL}
 
-*** Macros on HoTT                                                                        :ignore:
+** Type theory macros                                                                      :ignore:
 #+latex_header: \newcommand\ap{\mathsf{ap}}
 #+latex_header: \newcommand\apd{\mathsf{apd}}
 #+latex_header: \newcommand\refl{\mathsf{refl}}
@@ -157,76 +160,29 @@
 #+latex_header: \newcommand\seg{\mathsf{seg}}
 #+latex_header: \newcommand\base{\mathsf{base}}
 #+latex_header: \newcommand\N{\mathsf{N}}
-#+latex_header: \newcommand\conn{\mathsf{conn}}
-#+latex_header: \newcommand\code{\mathsf{code}}
-#+latex_header: \newcommand\encode{\mathsf{encode}}
-#+latex_header: \newcommand\decode{\mathsf{decode}}
 #+latex_header: \newcommand\merid{\mathsf{merid}}
-#+latex_header: \newcommand\isCut{\mathsf{isCut}}
-#+latex_header: \newcommand\apart{\mathbin{\#}}
 #+latex_header: \newcommand\istype[1]{\mathop{\mbox{$\mathsf{is}$-$#1$-$\mathsf{type}$}}}
 
-*** Logic macros                                                                          :ignore:
+** Logic macros                                                                            :ignore:
 #+latex_header: \newcommand\land{\wedge}
 #+latex_header: \newcommand\lor{\vee}
 #+latex_header: \newcommand\model{\mathfrak{M}}
 #+latex_header: \newcommand\entail{\models}
 #+latex_header: \newcommand\seq{\Rightarrow}
 
-*** Analysis                                                                              :ignore:
+** Analysis                                                                                :ignore:
 #+latex_header: \newcommand\oy{\overline{y}}
 #+latex_header: \newcommand\tf{\tilde{f}}
 #+latex_header: %\newcommand\bV{\overset{\bullet}{V}}
 #+latex_header: \newcommand\bV{\dot{V}}
 
-*** Type theory macros                                                                    :ignore:
-#+latex_header: \newcommand\ap{\mathsf{ap}}
-#+latex_header: \newcommand\apd{\mathsf{apd}}
-#+latex_header: \newcommand\refl{\mathsf{refl}}
-#+latex_header: \newcommand\id{\mathsf{id}}
-#+latex_header: \newcommand\transport{\mathsf{transport}}
-#+latex_header: \newcommand\happly{\mathsf{happly}}
-#+latex_header: \newcommand\funext{\mathsf{funext}}
-#+latex_header: \newcommand\proj{\mathsf{pr}}
-#+latex_header: \newcommand\rec{\mathsf{rec}}
-#+latex_header: \newcommand\pr{\mathsf{pr}}
-#+latex_header: \newcommand\idtoeqv{\mathsf{idtoeqv}}
-#+latex_header: \newcommand\ua{\mathsf{ua}}
-#+latex_header: \newcommand\isSet{\mathsf{isSet}}
-#+latex_header: \newcommand\isProp{\mathsf{isProp}}
-#+latex_header: \newcommand\Set{\mathsf{Set}}
-#+latex_header: \newcommand\Prop{\mathsf{Prop}}
-#+latex_header: \newcommand\fnot{\mathsf{not}}
-#+latex_header: \newcommand\LEM{\mathsf{LEM}}
-#+latex_header: \newcommand\trunc[1]{\left\lVert#1\right\rVert}
-#+latex_header: \newcommand\isContr{\mathsf{isContr}}
-#+latex_header: \newcommand\ishae{\mathsf{ishae}}
-#+latex_header: \newcommand\qinv{\mathsf{qinv}}
-#+latex_header: \newcommand\fib{\mathsf{fib}}
-#+latex_header: \newcommand\biinv{\mathsf{biinv}}
-#+latex_header: \newcommand\linv{\mathsf{linv}}
-#+latex_header: \newcommand\rinv{\mathsf{rinv}}
-#+latex_header: \renewcommand\succ{\mathsf{succ}}
-#+latex_header: \newcommand\isequiv{\mathsf{isequiv}}
-#+latex_header: \newcommand\isHinit{\mathsf{isHinit}}
-#+latex_header: \newcommand\isEmbedding{\mathsf{isEmbedding}}
-#+latex_header: \newcommand\isSurjective{\mathsf{isSurjective}}
-#+latex_header: \newcommand\pair{\mathsf{pair}}
-#+latex_header: \newcommand\inl{\mathsf{inl}}
-#+latex_header: \newcommand\inr{\mathsf{inr}}
-#+latex_header: \newcommand\seg{\mathsf{seg}}
-#+latex_header: \newcommand\base{\mathsf{base}}
-#+latex_header: \newcommand\N{\mathsf{N}}
-#+latex_header: \newcommand\merid{\mathsf{merid}}
-#+latex_header: \newcommand\istype[1]{\mathop{\mbox{$\mathsf{is}$-$#1$-$\mathsf{type}$}}}
-
-*** Category theory macros                                                                :ignore:
+** Category theory macros                                                                  :ignore:
 #+latex_header: \newcommand\hom{\mathrm{hom}}
 #+latex_header: \newcommand\Sets{\mathsf{Sets}}
 #+latex_header: \newcommand\Set{\mathsf{Set}}
 #+latex_header: \newcommand\todot{\xrightarrow{.}}
 
-*** tikz-pictures                                                                         :ignore:
+** tikz-pictures                                                                           :ignore:
 # I am using Spivak-Schultz's string diagrams library! It is really
 # cool and the results look very nice.
 
@@ -379,7 +335,7 @@
 #+latex_header:   	},
 #+latex_header:   }
 
-*** Marsden's diagrams                                                                    :ignore:
+** Marsden's diagrams                                                                      :ignore:
 # I am using Marsden's diagrams!
 #+latex_header: \usepackage{macros}
 #+latex_header: \usepackage{diag}
@@ -431,7 +387,267 @@
 #+latex_header:  \fill[catc] (#1.south east) rectangle (#1.north);
 #+latex_header: \end{pgfonlayer}
 #+latex_header: }
+** Math symbols and Unicode support                                                        :ignore:
+#+latex_header: \usepackage{newunicodechar}
+#+latex_header: \usepackage{scalerel}
+#+latex_header: \newunicodechar{∃}{\ensuremath{\scaleobj{0.8}{\boldsymbol{\exists}}}}
+#+latex_header: \newunicodechar{∀}{\ensuremath{\scaleobj{0.8}{\boldsymbol{\forall}}}}
+#+latex_header: \newunicodechar{≅}{\ensuremath{\scaleobj{0.8}{\boldsymbol{\cong}}}}
+
+#+latex_header: \DeclareUnicodeCharacter{22A5}{\ensuremath{\scaleobj{0.8}{\boldsymbol{\bot}}}}
+#+latex_header: \DeclareUnicodeCharacter{22A4}{\ensuremath{\scaleobj{0.8}{\boldsymbol{\top}}}}
+#+latex_header: \DeclareUnicodeCharacter{2192}{\ensuremath{\scaleobj{0.7}{\boldsymbol{\to}}}}
+#+latex_header: \DeclareUnicodeCharacter{2200}{\ensuremath{\scaleobj{0.9}{\boldsymbol{\forall}}}}
+#+latex_header: \DeclareUnicodeCharacter{2203}{\ensuremath{\scaleobj{0.85}{\boldsymbol{\exists}}}}
+#+latex_header: \DeclareUnicodeCharacter{21D2}{\ensuremath{\scaleobj{0.7}{\boldsymbol{\Rightarrow}}}}
+#+latex_header: \DeclareUnicodeCharacter{2115}{\ensuremath{\scaleobj{0.8}{\boldsymbol{\mathbb{N}}}}}
+#+latex_header: \DeclareUnicodeCharacter{211D}{\ensuremath{\scaleobj{0.8}{\boldsymbol{\mathbb{R}}}}}
+#+latex_header: \DeclareUnicodeCharacter{2124}{\ensuremath{\scaleobj{0.8}{\boldsymbol{\mathbb{Z}}}}}
+#+latex_header: \DeclareUnicodeCharacter{2217}{\ensuremath{\scaleobj{0.8}{\boldsymbol{\ast}}}}
+#+latex_header: \DeclareUnicodeCharacter{2218}{\ensuremath{\scaleobj{0.9}{\boldsymbol{\circ}}}}
+#+latex_header: \DeclareUnicodeCharacter{2243}{\ensuremath{\scaleobj{0.8}{\boldsymbol{\simeq}}}}
+#+latex_header: \DeclareUnicodeCharacter{2208}{\ensuremath{\scaleobj{0.8}{\boldsymbol{\in}}}}
+#+latex_header: \DeclareUnicodeCharacter{207A}{\ensuremath{\scaleobj{0.8}{\boldsymbol{^{+}}}}}
+#+latex_header: \DeclareUnicodeCharacter{03B1}{\ensuremath{\scaleobj{0.9}{\boldsymbol{\alpha}}}}
+#+latex_header: \DeclareUnicodeCharacter{03B2}{\ensuremath{\scaleobj{0.9}{\boldsymbol{\beta}}}}
+#+latex_header: \DeclareUnicodeCharacter{03B3}{\ensuremath{\scaleobj{0.9}{\boldsymbol{\gamma}}}}
+#+latex_header: \DeclareUnicodeCharacter{03B4}{\ensuremath{\scaleobj{0.9}{\boldsymbol{\delta}}}}
+#+latex_header: \DeclareUnicodeCharacter{03A3}{\ensuremath{\scaleobj{0.9}{\boldsymbol{\Sigma}}}}
+#+latex_header: \DeclareUnicodeCharacter{03A9}{\ensuremath{\scaleobj{0.8}{\boldsymbol{\Omega}}}}
+#+latex_header: \DeclareUnicodeCharacter{2209}{\ensuremath{\scaleobj{0.8}{\boldsymbol{\notin}}}}
+#+latex_header: \DeclareUnicodeCharacter{2261}{\ensuremath{\scaleobj{0.8}{\boldsymbol{\equiv}}}}
+#+latex_header: \DeclareUnicodeCharacter{2262}{\ensuremath{\scaleobj{0.8}{\boldsymbol{\not\equiv}}}}
+#+latex_header: \DeclareUnicodeCharacter{2228}{\ensuremath{\scaleobj{0.8}{\boldsymbol{\vee}}}}
+#+latex_header: \DeclareUnicodeCharacter{2225}{\ensuremath{\scaleobj{0.8}{\boldsymbol{\|}}}}
+
 * Posts
+** TODO Yoneda, lentes y adjunciones
+
+*** Bidireccionalidad y profuntores
+# Por qué nos preocupa la bidireccionalidad.
+
+*** Fines y cofines
+Nuestra herramienta principal será el cálculo de fines y cofines
+cite:loregian15.
+
+**** Definiciones                                                                        :ignore:
+#+begin_definicion
+Dado un profuntor $p \colon \mathbf{C}^{op} \times \mathbf{C} \to \mathbf{Set}$,
+su *fin* es un objeto, que escribimos como una integral,
+junto a una familia de proyecciones a la diagonal del profuntor,
+\[
+\pi_{a} \colon \left(  
+\int_{x \in \mathbf{C}} p(x,x)
+\right) \to p(a,a),
+\mbox{ para cada }
+a \in \mathbf{C}.
+\]
+Esta familia cumple una condición de coherencia, que dice que
+para cualquier función $f \colon a \to b$, las dos formas posibles de llegar
+desde la diagonal hasta $p(a,b)$ coinciden.
+\[\begin{tikzcd}
+& {\displaystyle \int_{x \in \mathbf{C}} p(x,x)} \dlar[swap]{\pi_{a}}\drar{\pi_{b}} & \\
+p(a,a) \drar[swap]{p( \mathrm{id} ,f)} && p(b,b) \dlar{p(f , \mathrm{id})} \\
+& p(a,b) &
+\end{tikzcd}\]
+Y además, es universal respecto a esta propiedad. Si tenemos cualquier
+otro objeto con una familia coherente de proyecciones $z \to p(a,a)$
+para todo $a \in \mathbf{C}$, entonces tenemos un único $z \to \int_{x \in \mathbf{C}} p(x,x)$ haciendo
+los diagramas conmutar.
+#+end_definicion
+
+#+begin_definicion
+Dado un profuntor $p \colon \mathbf{C}^{op} \times \mathbf{C} \to \mathbf{Set}$,
+su *cofin* es un objeto, que escribimos como una integral (esta vez
+con el índice arriba), junto a una familia de inclusiones a la
+diagonal del profuntor,
+\[
+i_{a} \colon p(a,a) \to
+\left(  
+\int^{x \in \mathbf{C}} p(x,x)
+\right),
+\mbox{ para cada }
+a \in \mathbf{C}.
+\]
+Esta familia cumple una condición de coherencia, que dice que
+para cualquier función $f \colon a \to b$, las dos formas posibles de llegar
+desde $p(a,b)$ hasta el cofin coinciden.
+\[\begin{tikzcd}
+& {\displaystyle \int^{x \in \mathbf{C}} p(x,x)} & \\
+p(a,a) \urar  && p(b,b) \ular \\
+& p(a,b) \urar[swap]{f}\ular{f} &
+\end{tikzcd}\]
+Y además, es universal respecto a esta propiedad. Si tenemos cualquier
+otro objeto con una familia coherente de inclusiones $p(a,a) \to z$
+para todo $a \in \mathbf{C}$, entonces tenemos un único $\int_{x \in \mathbf{C}} p(x,x) \to z$ haciendo
+los diagramas conmutar.
+#+end_definicion
+
+**** Cuantificadores                                                                     :ignore:
+Los fines son límites, parecidos a los productos (de hecho, son
+ecualizadores); los cofines son colímites, parecidos a las sumas
+(coecualizadores).  Una intuición es que los fines son cuantificadores
+universales (=∀)= y los cofines son cuantificadores existenciales (=∃=).
+¡Esta es sólo una notación!, pero será útil para simplificar cálculos
+y para implementar las ideas en Haskell.
+
+#+BEGIN_example
+∏    -- Fines.
+∏    (∀ x . p x x)
+∏    (∀ x . p x x) -> p a a
+∏    (z -> p a a) -> (z -> (∀ x . p x x))
+∏      
+∏    -- Cofines
+∏    (∃ x . p x x)
+∏    p a a -> (∃ x . p x x)
+∏    (p a a -> z) -> ((∃ x . p x x) -> z)
+#+END_example
+
+En este código, las proyecciones coinciden con instanciar el cuantificador.
+Las propiedades universales se corresponden con reglas de deducción de los
+cuantificadores. En todo el código usamos =a= como una variable de tipo, asumiendo
+parametricidad.
+
+**** Transformaciones naturales                                                          :ignore:
+#+begin_ejemplo
+Dados funtores $F,G \colon \mathbf{C} \to \mathbf{D}$, las transformaciones naturales entre ellos
+vienen dadas por el siguiente fin.
+\[
+\mathrm{Nat}(F,G) = \int_{x \in \mathbf{C}} \mathbf{D}(Fx,Gx)
+\]
+Cuando la categoría de destino es $\mathbf{Sets}$ podemos escribir esto como sigue.
+#+BEGIN_example
+∏    Nat f g  =  ∀ x . f x -> g x
+#+END_example
+#+end_ejemplo
+#+begin_proof
+Sea $z$ un conjunto con morfismos $z \to \mathbf{D}(Fx, Gx)$ para cada $x \in \mathbf{C}$.
+Para cada $\alpha \in z$, los morfismos determinan una familia $\alpha_x \in \mathbf{D}(Fx,Gx)$.
+Las condiciones de coherencia dicen que para cualquier $f \circ a \to b$
+se tiene $Gf \circ\alpha_{a} = \alpha_{b} \circ Ff$. Eso quiere decir que $\alpha$ es una transformación
+natural.
+#+end_proof
+
+*** Lema de Yoneda
+#+attr_latex: :options [Lema de Yoneda]
+#+begin_theorem
+Sea $\mathbf{C}$ una categoría y $F \colon \mathbf{C} \to \mathbf{Set}$ un funtor.  Para cualquier $a \in \mathbf{C}$,
+el conjunto de transformaciones naturales del funtor $\mathbf{C}(a,-)$ al funtor $F$
+es naturalmente isomorfo a $Fa$.
+\[
+\left(  \int_{x \in \mathbf{C}} \mathbf{C}(a,x) \to Fx \right) \cong F a
+\]
+En el caso de aplicarlo sobre la categoría de conjuntos obtenemos lo
+siguiente.
+#+BEGIN_verbatim 
+∏    ∀ x . (a -> x) -> f x  ≅  f a
+#+END_verbatim
+#+end_theorem
+#+begin_proof
+Vamos a probar la biyección.  
+#+end_proof
+
+*** First draft
+**** Introducción
+***** Funtor hom
+Fijemos una categoría $\mathbf{C}$.  Dados cualesquiera dos objetos $a, b \in \mathbf{C}$, 
+podemos considerar el conjunto de homomorfismos entre ellos,
+$\mathbf{C}(a,b) \in \mathbf{Sets}$.  Además, dado un morfismo $f \colon b \to d$,
+su /postcomposición/ $(f \circ -) \colon \mathbf{C}(a,b) \to \mathbf{C}(a,d)$ es una /función/,
+un morfismo de conjuntos que transforma cada morfismo $u \colon a \to b$
+en un morfismo $f \circ u \colon a \to d$. Y también, dado un mofismo $g \colon c \to a$,
+su /precomposición/ $(- \circ g) \colon \mathbf{C}(a,b) \to \mathbf{C}(c,b)$ es otra función. Esto
+determina un funtor.
+
+#+begin_proposition
+Fijado cualquier objeto $a \in \mathbf{C}$, podemos construir un funtor al que
+llamaremos $\mathbf{C}(a,-) \colon \mathbf{C} \to \mathbf{Sets}$.  Su acción en morfismos viene dada
+por la postcomposición.
+#+end_proposition
+#+begin_proof
+Para demostrar que es un funtor, debemos demostrar que preserva
+identidades y composiciones.  Para cualquier objeto $b \in \mathbf{C}$, sea
+el morfismo identidad $\mathrm{id} \colon b \to b$.  Demostramos que la postcomposición
+con la identidad, $(\mathrm{id} \circ -) \colon \mathbf{C}(a,b) \to \mathbf{C}(a,b)$ es a su vez la identidad en ese
+conjunto: nótese que $( \mathrm{id}_b \circ -) h = \mathrm{id} \circ h = h = \mathrm{id}_{\mathbf{C}(a,b)}(h)$, luego
+$(\mathrm{id}_{b} \circ -) = \mathrm{id}_{\mathbf{C}(a,b)}$.
+
+Ahora demostraremos que también preserva composiciones. Dadas dos
+funciones $f \colon b \to c$ y $g \colon c \to d$, queremos demostrar que la postcomposición
+con $(g \circ f)$ es exactamente igual que la postcomposición $f$ /compuesta/
+con la postcomposición con $g$. Tenemos que
+\[\begin{aligned} ((g \circ -) \circ (f \circ -)) h &= (g \circ -) (f \circ h) & \mbox{ \textit{ (definición)}} \\&=
+g \circ (f \circ h) & \mbox{ \textit{ (asociatividad)}}  \\&=
+(g \circ f) \circ h & \mbox{ \textit{ (definición)}} \\&=
+((g \circ f) \circ -) h,
+\end{aligned}\]
+luego $(g \circ -)\circ (f \circ -) = ((g \circ f) \circ -)$.
+#+end_proof
+
+/Nota:/ en las dos partes de esta demostración usamos dos veces el hecho
+de que si dos funciones son iguales en cada punto, entonces son iguales.
+Esto es, asumimos que $\forall x \in a, f(a) = g(a)$ implica $f = g$. Esto se
+conoce como el principio de /extensionalidad de las funciones/, y es cierto
+para morfismos de la categoría $\mathbf{Sets}$, pero no es cierto en general y podemos
+encontrar contraejemplos en la categoría dada por los homomorfismos entre grafos.
+Es decir, en esta demostración estamos usando crucialmente las propiedades de
+los conjuntos. \\
+
+Ahora podemos aplicar este mismo resultado a la categoría opuesta, para
+tener que $\mathbf{C}(-,d) \cong \mathbf{C}^{op}(d,-) \colon \mathbf{C}^{op} \to \mathbf{Sets}$ también determina un funtor.
+Nótese que este segundo funtor es contravariante, llevará cada morfismo
+$f \colon a \to b$ a su /precomposición/ $(- \circ f) \colon \mathbf{C}(b,d) \to \mathbf{C}(a,d)$. \\
+
+Todavía podemos ir más lejos, teniendo un funtor $\mathbf{C}(a,-) \colon \mathbf{C} \to \mathbf{Sets}$ y un funtor
+$\mathbf{C}^{op} \to \mathbf{Sets}$, tenemos por la propiedad universal del producto un funtor
+$\mathbf{C} \times \mathbf{C}^{op} \to \mathbf{Sets}$. Este funtor lleva pares de objetos $(a,b) \in \mathbf{C} \times \mathbf{C}^{op}$ de
+forma covariante y contravariante respectivamente
+
+#+begin_proposition
+La asignación $\mathbf{C}(-,-) \colon \mathbf{C} \times \mathbf{C}^{op} \to \mathbf{Sets}$ que acabamos de describir
+es funtorial.
+#+end_proposition
+#+begin_proof
+#+end_proof
+
+**** El lema de Yoneda
+Fijemos una categoría $\mathbf{C}$.  Cada objeto $c \in \mathbf{C}$ determina un funtor contravariante
+$\mathbf{C}(-,c) \in \mathbf{Cat}(\mathbf{C}^{op}, \mathbf{Sets})$. Los funtores de esta forma se llaman /representables/,
+y decimos que $\mathbf{C}(-,c)$ está representado por $c$. Dada una función $f \colon c \to d$, su
+postcomposición puede verse como una transformación natural
+$(f \circ -) \colon \mathbf{C}(-,c) \tonat \mathbf{C}(-,d)$.  Esto induce un funtor.
+
+#+begin_proposition
+El *embebimiento de Yoneda* es un funtor $\hirayo \colon \mathbf{C} \to \mathbf{Cats}(\mathbf{C}^{op}, \mathbf{Sets})$ que está
+determinado en objetos por $c \mapsto \mathbf{C}(-,c)$ y en morfismos por $f \mapsto (f \circ -)$.
+#+end_proposition
+
+#+attr_latex: :options [Lema de Yoneda]
+#+begin_theorem
+El *lema de Yoneda* dice que para toda categoría $\mathbf{C}$, existe una biyección
+$[ \mathbf{C} , \mathbf{Set} ](\hirayo(A), F ) \cong FA$ natural en $F \in [ \mathbf{C} , \mathbf{Sets} ]$ y en $A \in \mathbf{C}$.
+#+end_theorem
+#+begin_proof
+
+#+end_proof
+
+**** Ópticas                                                                           :noexport:
+
+***** Invariantes
+
+***** Polimórficas
+
+***** Composicionalmente
+# Pickering. Compositionality fails.
+
+**** Representación profuntorial de una óptica                                         :noexport:
+
+**** En la práctica                                                                    :noexport:
+
+**** Apéndice                                                                          :noexport:
+
+***** Categoría producto
+***** Categorías de funtores
 ** TODO Diagonal arguments since Epimenides
 *** Epimenides
 #+begin_quote
@@ -563,8 +779,6 @@ Un *grupoide* es un grupo coloreado.
 ** TODO Integral calculus with Yoneda
 *** on V-enriched categories
 *** Day convolution
-** TODO Reals in Agda
-
 ** TODO A zoo of adjunctions
 distribuciones y simplices.
 fibraciones y proposiciones
@@ -582,101 +796,21 @@ mountains, but to flatten them." -- Conor McBride
 # Derive it from Yoneda.
 # Live code.
 ** TODO Notations for adjunctions
-** TODO Yoneda, lentes y adjunciones
+** Dedekind reals in Agda                                                                    :post:
+:PROPERTIES:
+:TITLE: Dedekind reals in Agda
+:EXPORT_FILE_NAME: dedekindrealsagda.html
+:INDEX_DATE: <2019-05-20 Fri 14:31>
+:END:
 
-*** Introducción
+For my Bachelor's dissertation I wrote an implementation of the
+positive Dedekind real numbers in Agda.  The formalization is not
+completely sound, using =--type-in-type= to simplify dealing with
+universes; but it is enough to successfully compile to Haskell code
+and compute the first digits of the binary representation of =sqrt(2)=
+from its definition.
 
-**** Categoría producto
-**** Categorías de funtores
-
-**** Funtor hom
-Fijemos una categoría $\mathbf{C}$.  Dados cualesquiera dos objetos $a, b \in \mathbf{C}$, 
-podemos considerar el conjunto de homomorfismos entre ellos,
-$\mathbf{C}(a,b) \in \mathbf{Sets}$.  Además, dado un morfismo $f \colon b \to d$,
-su /postcomposición/ $(f \circ -) \colon \mathbf{C}(a,b) \to \mathbf{C}(a,d)$ es una /función/,
-un morfismo de conjuntos que transforma cada morfismo $u \colon a \to b$
-en un morfismo $f \circ u \colon a \to d$. Y también, dado un mofismo $g \colon c \to a$,
-su /precomposición/ $(- \circ g) \colon \mathbf{C}(a,b) \to \mathbf{C}(c,b)$ es otra función. Esto
-determina un funtor.
-
-#+begin_proposition
-Fijado cualquier objeto $a \in \mathbf{C}$, podemos construir un funtor al que
-llamaremos $\mathbf{C}(a,-) \colon \mathbf{C} \to \mathbf{Sets}$.  Su acción en morfismos viene dada
-por la postcomposición.
-#+end_proposition
-#+begin_proof
-Para demostrar que es un funtor, debemos demostrar que preserva
-identidades y composiciones.  Para cualquier objeto $b \in \mathbf{C}$, sea
-el morfismo identidad $\mathrm{id} \colon b \to b$.  Demostramos que la postcomposición
-con la identidad, $(\mathrm{id} \circ -) \colon \mathbf{C}(a,b) \to \mathbf{C}(a,b)$ es a su vez la identidad en ese
-conjunto: nótese que $( \mathrm{id}_b \circ -) h = \mathrm{id} \circ h = h = \mathrm{id}_{\mathbf{C}(a,b)}(h)$, luego
-$(\mathrm{id}_{b} \circ -) = \mathrm{id}_{\mathbf{C}(a,b)}$.
-
-Ahora demostraremos que también preserva composiciones. Dadas dos
-funciones $f \colon b \to c$ y $g \colon c \to d$, queremos demostrar que la postcomposición
-con $(g \circ f)$ es exactamente igual que la postcomposición $f$ /compuesta/
-con la postcomposición con $g$. Tenemos que
-\[\begin{aligned} ((g \circ -) \circ (f \circ -)) h &= (g \circ -) (f \circ h) & \mbox{ \textit{ (definición)}} \\&=
-g \circ (f \circ h) & \mbox{ \textit{ (asociatividad)}}  \\&=
-(g \circ f) \circ h & \mbox{ \textit{ (definición)}} \\&=
-((g \circ f) \circ -) h,
-\end{aligned}\]
-luego $(g \circ -)\circ (f \circ -) = ((g \circ f) \circ -)$.
-#+end_proof
-
-/Nota:/ en las dos partes de esta demostración usamos dos veces el hecho
-de que si dos funciones son iguales en cada punto, entonces son iguales.
-Esto es, asumimos que $\forall x \in a, f(a) = g(a)$ implica $f = g$. Esto se
-conoce como el principio de /extensionalidad de las funciones/, y es cierto
-para morfismos de la categoría $\mathbf{Sets}$, pero no es cierto en general y podemos
-encontrar contraejemplos en la categoría dada por los homomorfismos entre grafos.
-Es decir, en esta demostración estamos usando crucialmente las propiedades de
-los conjuntos. \\
-
-Ahora podemos aplicar este mismo resultado a la categoría opuesta, para
-tener que $\mathbf{C}(-,d) \cong \mathbf{C}^{op}(d,-) \colon \mathbf{C}^{op} \to \mathbf{Sets}$ también determina un funtor.
-Nótese que este segundo funtor es contravariante, llevará cada morfismo
-$f \colon a \to b$ a su /precomposición/ $(- \circ f) \colon \mathbf{C}(b,d) \to \mathbf{C}(a,d)$. \\
-
-Todavía podemos ir más lejos, teniendo un funtor $\mathbf{C}(a,-) \colon \mathbf{C} \to \mathbf{Sets}$ y un funtor
-$\mathbf{C}^{op} \to \mathbf{Sets}$, tenemos por la propiedad universal del producto un funtor
-$\mathbf{C} \times \mathbf{C}^{op} \to \mathbf{Sets}$. Este funtor lleva pares de objetos $(a,b) \in \mathbf{C} \times \mathbf{C}^{op}$ de
-forma covariante y contravariante respectivamente
-
-#+begin_proposition
-La asignación $\mathbf{C}(-,-) \colon \mathbf{C} \times \mathbf{C}^{op} \to \mathbf{Sets}$ que acabamos de describir
-es funtorial.
-#+end_proposition
-#+begin_proof
-
-#+end_proof
-
-
-*** El lema de Yoneda
-Fijemos una categoría $\mathbf{C}$.  Cada objeto $c \in \mathbf{C}$ determina un funtor contravariante
-$\mathbf{C}(-,c) \in \mathbf{Cat}(\mathbf{C}^{op}, \mathbf{Sets})$. Los funtores de esta forma se llaman /representables/,
-y decimos que $\mathbf{C}(-,c)$ está representado por $c$. Dada una función $f \colon c \to d$, su
-postcomposición puede verse como una transformación natural
-$(f \circ -) \colon \mathbf{C}(-,c) \tonat \mathbf{C}(-,d)$.  Esto induce un funtor.
-
-#+begin_proposition
-El *embebimiento de Yoneda* es un funtor $\hirayo \colon \mathbf{C} \to \mathbf{Cats}(\mathbf{C}^{op}, \mathbf{Sets})$ que está
-determinado en objetos por $c \mapsto \mathbf{C}(-,c)$ y en morfismos por $f \mapsto (f \circ -)$.
-#+end_proposition
-
-
-*** Ópticas
-
-**** Invariantes
-
-**** Polimórficas
-
-**** Composicionalmente
-# Pickering. Compositionality fails.
-
-*** Representación profuntorial de una óptica
-
-*** En la práctica
+The code is on [[https://github.com/mroman42/dedekind-reals][GitHub]].
 
 ** Monoides coloreados y bi(monoides coloreados)                                             :post:
 :PROPERTIES:
@@ -1469,7 +1603,7 @@ La bicategoría $\mathbf{Cat}$ tiene regiones dadas por categorías. Una cuerda
 entre dos regiones es un funtor, y los funtores forman una categoría
 con la composición de funtores.  Un nodo viene dado por una transformación
 natural, que convierte la composición de varios funtores en otra composición
-de funtores.  Por ejemplo, una mónada resulta de dibujar un monoide en esta
+de funtores.  Por ejemplo, una *mónada* resulta de dibujar un monoide en esta
 categoría.
 \begin{center}
 \begin{tabular}{c c c c}
@@ -1867,10 +2001,10 @@ Highlighting works perfectly thanks to org-babel.
  
  Configuration parameters for X client applications.
 
- #+BEGIN_SRC conf /home/mario/.Xresources
+ #+BEGIN_ conf /home/mario/.Xresources
  xterm*font: *-fixed-*-*-*-24-*
  Xft.dpi:    192
- #+END_SRC
+ #+END_
 #+END_EXAMPLE
 
 This file can be put under version control and a /dotfiles repository/
@@ -2359,7 +2493,7 @@ themselves. That is, for any type $A$, the following type is inhabited
 Idris and Agda allow the user to prove this proposition in general via
 pattern matching.
 
-#+BEGIN_SRC haskell
+#+BEGIN_ haskell
 -- In Agda.
 uip : {A : Set} -> {x y : A} -> (p q : x ≡ y) -> p ≡ q
 uip refl refl = refl
@@ -4473,7 +4607,8 @@ unless otherwise specified.
 #+RESULTS:
 #+BEGIN_EXPORT html
 <ul>
- <li><a href=monoidescoloreadosbimonoidescoloreados.pdf> Monoides coloreados y bi(monoides coloreados)</a><em>, 13 April 2019</em><br></li>
+ <li><a href=dedekindrealsagda.html> Dedekind reals in Agda</a><em>, 20 May 2019</em><br></li>
+ <li><a href=monoidescoloreadosbimonoidescoloreados.pdf> Monoides coloreados y bi(monoides coloreados)</a><em>, 14 April 2019</em><br></li>
  <li><a href=lawverefixedpoint.html> Lawvere's fixed point theorem</a><em>, 28 February 2019</em><br></li>
  <li><a href=apuntesdehaskell.html> Apuntes de Haskell</a><em>, 27 February 2019</em><br></li>
  <li><a href=diagramascategoriasmonoidales.pdf> Diagramas para categorías monoidales</a><em>, 21 January 2019</em><br></li>
