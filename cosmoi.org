@@ -422,7 +422,6 @@
 
 * Posts
 ** TODO Yoneda, lentes y adjunciones
-
 *** Bidireccionalidad y profuntores
 # Por qué nos preocupa la bidireccionalidad.
 
@@ -544,9 +543,21 @@ siguiente.
 #+END_verbatim
 #+end_theorem
 #+begin_proof
-Vamos a probar la biyección.  
+Vamos a construir la biyección y demostrar que es una biyección.
+Dado $u \in Fa$, tenemos un elemento de $\mathbf{C}(a,x) \to Fx$ para cualquier
+$x \in \mathbf{C}$, dado por la acción del funtor.  En el otro sentido, dada
+cualquier transformación natural $\mathbf{C}(a,x) \to Fx$, podemos aplicarla
+sobre la identidad $\mathrm{id} \in \mathbf{C}(a,a)$ para obtener $Fa$.
+
+Ahora debemos demostrar que esto es una biyección. En un sentido es
+trivial, en el contrario, debemos demostrar que dos transformaciones
+naturales con la misma acción en la identidad son iguales. Pero
+precisamente por coherencia (o /naturalidad/) tenemos
+$Ff(\eta_a( \mathrm{id})) =\eta_x(f)$.
 #+end_proof
 
+*** TODO Isos
+*** TODO Tambara
 *** First draft
 **** Introducción
 ***** Funtor hom
@@ -728,57 +739,11 @@ Double dual of a vector space.
 # Bartok
 # Cosmoi -> Benabou
 
-** TODO Monoides, grupos, grupoides, categorías
-# Definiciones
-# Motivación
-# Estructura coloreada
-# Topología y topología dirigida
-
-*** Monoides
-Un *monoide* es una estructura $A$ en la que (1) podemos /componer/
-cualesquiera dos elementos en uno nuevo con una operación 
-$\circ \colon A \times A \to A$ y en la que (2) existe un elemento neutro $e$
-que no afecta al componerse con otro, $a \circ e = e \circ a = a$ para
-cualquier $a : A$, y (3) la composición es asociativa, siendo
-$a \circ (b \circ c) = (a \circ b) \circ c$ para cualesquiera $a,b,c : A$.
-
-Ejemplos son:
-
- 1. Los números naturales con la suma como operación y el cero
-    como elemento neutro. $n + 0 = 0 + n = n$
- 2. Las cadenas de texto, con la concatenación como operación y
-    la cadena vacía como elemento neutro. $a \circ "" = "" \circ a = a$
-
-*** Grupo
-Un *grupo* es un monoide donde cada elemento $a : A$ tiene una
-inversa $a^{-1} : A$ tal que $a \circ a^{-1} = a^{-1} \circ a = e$.
-
-Ejemplos son:
-
- 1. Los números enteros con la suma como operación, el cero como
-    elemento neutro y el elemento opuesto como negación.
-
-*** Categoría
-Una *categoría* es un monoide coloreado. Eso significa que no podemos
-componer elementos libremente, sino que cada elemento $a : A$ tiene un
-dominio $\mathrm{dom}(a)$ y un codominio $\mathrm{cod}(a)$. Sólo podemos componer $a \circ b$ 
-si $\mathrm{cod}(b) = \mathrm{dom}(a)$, y la composición tendrá dominio $\mathrm{dom}(b)$ y 
-codominio $\mathrm{cod}(b)$.
-
-Ejemplos son:
-
- 1. Las funciones con la composición de funciones.
-
-*** Grupoide
-Un *grupoide* es un grupo coloreado. 
 ** TODO Adjunciones
 ** TODO Media 2018
 ** TODO Three Emacs
 ** TODO Notes and spaced repetition cards in org-mode
 ** TODO Applicative functors
-** TODO Integral calculus with Yoneda
-*** on V-enriched categories
-*** Day convolution
 ** TODO A zoo of adjunctions
 distribuciones y simplices.
 fibraciones y proposiciones
@@ -796,6 +761,63 @@ mountains, but to flatten them." -- Conor McBride
 # Derive it from Yoneda.
 # Live code.
 ** TODO Notations for adjunctions
+** Monoides, grupos, grupoides, categorías                                                   :post:
+:PROPERTIES:
+:TITLE: Monoides, groupos, grupoides, categorías
+:EXPORT_FILE_NAME: monoidesgrouposcategorias.pdf
+:EXPORT_DATE: 1 de abril de 2019
+:INDEX_DATE: <2019-04-01 Mon>
+:EXPORT_OPTIONS: toc:nil num:t lang:es
+:END:
+
+*** Monoides                                                                              :ignore:
+#+begin_definition
+Un *monoide* es una estructura $A$ en la que (1) podemos /componer/
+cualesquiera dos elementos en uno nuevo con una operación 
+$\circ \colon A \times A \to A$ y en la que (2) existe un elemento neutro $e$
+que no afecta al componerse con otro, $a \circ e = e \circ a = a$ para
+cualquier $a : A$, y (3) la composición es asociativa, siendo
+$a \circ (b \circ c) = (a \circ b) \circ c$ para cualesquiera $a,b,c : A$.
+#+end_definition
+
+Ejemplos son:
+
+ 1. Los números naturales con la suma como operación y el cero
+    como elemento neutro. $n + 0 = 0 + n = n$
+ 2. Las cadenas de texto, con la concatenación como operación y
+    la cadena vacía como elemento neutro. $a \circ "" = "" \circ a = a$
+
+*** Grupo                                                                                 :ignore:
+#+begin_definition
+Un *grupo* es un monoide donde cada elemento $a : A$ tiene una
+inversa $a^{-1} : A$ tal que $a \circ a^{-1} = a^{-1} \circ a = e$.
+#+end_definition
+
+Ejemplos son:
+
+ 1. Los números enteros con la suma como operación, el cero como
+    elemento neutro y el elemento opuesto como negación.
+
+*** Categoría                                                                             :ignore:
+#+begin_definition
+Una *categoría* es un monoide coloreado. Eso significa que no podemos
+componer elementos libremente, sino que cada elemento $a : A$ tiene un
+dominio $\mathrm{dom}(a)$ y un codominio $\mathrm{cod}(a)$. Sólo podemos componer $a \circ b$ 
+si $\mathrm{cod}(b) = \mathrm{dom}(a)$, y la composición tendrá dominio $\mathrm{dom}(b)$ y 
+codominio $\mathrm{cod}(b)$.
+#+end_definition
+
+Ejemplos son:
+
+ 1. Las funciones con la composición de funciones.
+ 2. Las funciones lineales entre espacios vectoriales con la composición.
+ 3. Las demostraciones de $(a \leq b)$ con la transitividad.
+
+*** Grupoide                                                                              :ignore:
+#+begin_definition
+Un *grupoide* es un grupo coloreado.
+#+end_definition
+
 ** Dedekind reals in Agda                                                                    :post:
 :PROPERTIES:
 :TITLE: Dedekind reals in Agda
