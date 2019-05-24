@@ -27,19 +27,17 @@
 
 ** latex-header                                                                            :ignore:
 #+latex_header: \usepackage{libertine}
-#+latex_header: \usepackage[scaled=0.9]{inconsolata}
+#+latex_header: \usepackage[scaled=1]{inconsolata}
 #+latex_header: %\usepackage[scale=0.85]{FiraMono}
 
 #+latex_class_options: [11pt]
 
 #+latex_header_extra: \usepackage{minted} \usemintedstyle{colorful}
-#+latex_header_extra: \setminted{fontsize=\small,linenos=false,obeytabs=true,tabsize=2}
+#+latex_header_extra: \setminted{fontsize=\small,linenos=false,obeytabs=true,tabsize=2,frame=none}
 #+latex_header_extra: \setminted[haskell]{linenos=false,fontsize=\small,encoding=utf8}
 #+latex_header_extra: \makeatletter \AtBeginEnvironment{minted}{\dontdofcolorbox} \def\dontdofcolorbox{\renewcommand\fcolorbox[4][]{##4}} \makeatother
-#+latex_header_extra: \renewcommand{\theFancyVerbLine}{\sffamily\textcolor[rgb]{0.5,0.5,1.0}{\oldstylenums{\arabic{FancyVerbLine}}}}
-
-#+latex_header: \BeforeBeginEnvironment{minted}{\vspace{-0.5cm}}
-#+latex_header: \AfterEndEnvironment{minted}{\vspace{-0.2cm}}
+#+latex_header: \AtBeginEnvironment{minted}{\renewcommand{\fcolorbox}[4][]{#4}}
+#+latex_header_extra: %\renewcommand{\theFancyVerbLine}{\sffamily\textcolor[rgb]{0.5,0.5,1.0}{\oldstylenums{\arabic{FancyVerbLine}}}}
 
 #+latex_header_extra: \usepackage[utf8]{inputenc} 
 #+latex_header_extra: \usepackage[T1]{fontenc}
@@ -105,9 +103,12 @@
 ** Theorem styles                                                                          :ignore:
 #+latex_header_extra: \theoremstyle{plain}
 #+latex_header_extra: \newtheorem{theorem}{Theorem}
+#+latex_header_extra: \newtheorem{teorema}[theorem]{Teorema}
 #+latex_header_extra: \newtheorem{proposition}[theorem]{Proposition}
+#+latex_header_extra: \newtheorem{proposicion}[theorem]{Proposición}
 #+latex_header_extra: \newtheorem{lemma}[theorem]{Lemma}
 #+latex_header_extra: \newtheorem{corollary}[theorem]{Corollary}
+#+latex_header_extra: \newtheorem{corolario}[theorem]{Corolario}
 #+latex_header_extra: \theoremstyle{definition}
 #+latex_header_extra: \newtheorem{definition}[theorem]{Definition}
 #+latex_header_extra: \newtheorem{definicion}[theorem]{Definición}
@@ -115,6 +116,7 @@
 #+latex_header_extra: \newtheorem{proofs}{Proof}
 #+latex_header_extra: \theoremstyle{remark}
 #+latex_header_extra: \newtheorem{remark}[theorem]{Remark}
+#+latex_header_extra: \newtheorem{nota}[theorem]{Nota}
 #+latex_header_extra: \newtheorem{exampleth}[theorem]{Example}
 #+latex_header_extra: \newtheorem{ejemplo}[theorem]{Ejemplo}
 #+latex_header_extra: \begingroup\makeatletter\@for\theoremstyle:=definition,remark,plain\do{\expandafter\g@addto@macro\csname th@\theoremstyle\endcsname{\addtolength\thm@preskip\parskip}}\endgroup
@@ -390,9 +392,9 @@
 ** Math symbols and Unicode support                                                        :ignore:
 #+latex_header: \usepackage{newunicodechar}
 #+latex_header: \usepackage{scalerel}
-#+latex_header: \newunicodechar{∃}{\ensuremath{\scaleobj{0.8}{\boldsymbol{\exists}}}}
-#+latex_header: \newunicodechar{∀}{\ensuremath{\scaleobj{0.8}{\boldsymbol{\forall}}}}
-#+latex_header: \newunicodechar{≅}{\ensuremath{\scaleobj{0.8}{\boldsymbol{\cong}}}}
+#+latex_header: \newunicodechar{∃}{\ensuremath{\scaleobj{0.9}{\boldsymbol{\exists}}}}
+#+latex_header: \newunicodechar{∀}{\ensuremath{\scaleobj{0.9}{\boldsymbol{\forall}}}}
+#+latex_header: \newunicodechar{≅}{\ensuremath{\scaleobj{0.9}{\boldsymbol{\cong}}}}
 
 #+latex_header: \DeclareUnicodeCharacter{22A5}{\ensuremath{\scaleobj{0.8}{\boldsymbol{\bot}}}}
 #+latex_header: \DeclareUnicodeCharacter{22A4}{\ensuremath{\scaleobj{0.8}{\boldsymbol{\top}}}}
@@ -421,7 +423,7 @@
 #+latex_header: \DeclareUnicodeCharacter{2225}{\ensuremath{\scaleobj{0.8}{\boldsymbol{\|}}}}
 
 * Posts
-** TODO Yoneda, lentes y adjunciones
+** TODO Yoneda y ópticas
 *** Bidireccionalidad y profuntores
 # Por qué nos preocupa la bidireccionalidad.
 
@@ -490,17 +492,18 @@ universales (=∀)= y los cofines son cuantificadores existenciales (=∃=).
 ¡Esta es sólo una notación!, pero será útil para simplificar cálculos
 y para implementar las ideas en Haskell.
 
-#+BEGIN_example
-∏    -- Fines.
-∏    (∀ x . p x x)
-∏    (∀ x . p x x) -> p a a
-∏    (z -> p a a) -> (z -> (∀ x . p x x))
-∏      
-∏    -- Cofines
-∏    (∃ x . p x x)
-∏    p a a -> (∃ x . p x x)
-∏    (p a a -> z) -> ((∃ x . p x x) -> z)
-#+END_example
+#+ATTR_LATEX: :options style=xcode
+#+BEGIN_SRC haskell
+    -- Fines.
+    (∀ x . p x x)
+    (∀ x . p x x) -> p a a
+    (z -> p a a) -> (z -> (∀ x . p x x))
+      
+    -- Cofines
+    (∃ x . p x x)
+    p a a -> (∃ x . p x x)
+    (p a a -> z) -> ((∃ x . p x x) -> z)
+#+END_SRC
 
 En este código, las proyecciones coinciden con instanciar el cuantificador.
 Las propiedades universales se corresponden con reglas de deducción de los
@@ -515,10 +518,11 @@ vienen dadas por el siguiente fin.
 \mathrm{Nat}(F,G) = \int_{x \in \mathbf{C}} \mathbf{D}(Fx,Gx)
 \]
 Cuando la categoría de destino es $\mathbf{Sets}$ podemos escribir esto como sigue.
-#+BEGIN_example
-∏    Nat f g  =  ∀ x . f x -> g x
-#+END_example
 #+end_ejemplo
+#+ATTR_LATEX: :options style=xcode
+#+BEGIN_SRC haskell
+    Nat f g  =  ∀ x . f x -> g x
+#+END_SRC
 #+begin_proof
 Sea $z$ un conjunto con morfismos $z \to \mathbf{D}(Fx, Gx)$ para cada $x \in \mathbf{C}$.
 Para cada $\alpha \in z$, los morfismos determinan una familia $\alpha_x \in \mathbf{D}(Fx,Gx)$.
@@ -558,7 +562,27 @@ $Ff(\eta_a( \mathrm{id})) =\eta_x(f)$.
 
 *** TODO Isos
 *** TODO Tambara
-*** First draft
+#+begin_definicion
+Un *módulo de Tambara* para un producto monoidal $\otimes$ es un profuntor
+$p \colon \mathbf{C}^{op} \times \mathbf{C} \to \mathbf{Set}$ con una transformación
+\[
+p(x,y) \to p(c \otimes x , c \otimes y)
+\]
+natural en los tres argumentos y satisfaciendo cierta coherencia
+que no detallamos.
+#+end_definicion
+
+#+begin_statement
+Los módulos de Tambara forman una categoría con las transformaciones
+naturales entre profuntores que respetan la estructura de módulo.
+En particular, existe un funtor de olvido $U \colon \mathbf{Tamb}_{\otimes} \to \mathbf{Prof}$ y
+tiene un adjunto izquierdo dado por
+\[
+\Phi(p)(s,t) = \int
+\]
+#+end_statement
+
+*** Drafts                                                                              :noexport:
 **** Introducción
 ***** Funtor hom
 Fijemos una categoría $\mathbf{C}$.  Dados cualesquiera dos objetos $a, b \in \mathbf{C}$, 
@@ -659,6 +683,659 @@ $[ \mathbf{C} , \mathbf{Set} ](\hirayo(A), F ) \cong FA$ natural en $F \in [ \ma
 
 ***** Categoría producto
 ***** Categorías de funtores
+**** TODO Van Laarhoven representation for lenses                                      :noexport:
+# Derive it from Yoneda.
+# Live code.
+** TODO Adjunciones
+:PROPERTIES:
+:TITLE: Adjunciones (borrador)
+:EXPORT_FILE_NAME: sobreadjunciones.pdf
+:EXPORT_DATE: 21 de abril de 2019
+:INDEX_DATE: <2019-04-21 Sun>
+:EXPORT_OPTIONS: toc:1 num:t lang:es
+:END:
+
+\quad\\
+
+Las adjunciones son un concepto básico que no suele aparecer en cursos
+de matemáticas hasta que se empieza a usar teoría de categorías.
+Muchas construcciones pueden expresarse como adjunciones, y saber
+identificarlas y usarlas simplifica muchos razonamientos.  La mayoría
+de estas notas vienen de traducir partes de mi trabajo de fin de
+grado, pero pueden encontrarse (y bastante mejor explicadas) en
+cualquier libro básico de teoría de categorías (cite:awodey10,
+cite:riehl17, cite:maclane78), quizá con otra notación.  Especialmente
+la notación como secuentes en lógica viene inspirada por teoría de
+tipos y no parece especialmente común, pero aquí la usaremos en la
+mayoría de demostraciones.
+
+*** Definiciones
+**** Definición clásica                                                                  :ignore:
+# cite:ctlc
+# cite:maclane
+
+#+begin_definicion
+Una *adjunción* entre dos categorías $\mathbf{X}$ to $\mathbf{Y}$ es un par de
+funtores $F \colon \mathbf{X} \to \mathbf{Y}$ y $G\colon \mathbf{Y} \to \mathbf{X}$, junto a una biyección
+$\varphi \colon \hom(FX,Y) \cong \hom(X,GY)$ natural en $X \in \mathbf{X}$ y en $Y \in \mathbf{Y}$.
+Decimos que  $F$ es /adjunto izquierdo/ a $G$ y que $G$ es /adjunto derecho/ a $F$, y escribimos
+eso como $F \dashv G$.
+#+end_definicion
+
+**** Lo que significa la doble naturalidad                                               :ignore:
+#+begin_nota
+Decir que $\varphi$ es natural significa para cualquier $h \colon X \to X'$ y para cualquier
+$k \colon Y \to Y'$, los siguientes cuadrados conmutan.  Como además $\varphi$ es una biyección,
+podemos tomar $\varphi^{-1}$, darle la vuelta a las flechas, y seguir teniendo cuadrados
+que conmutan.
+\[\begin{tikzcd}
+\hom(FX,Y)
+\rar{\varphi}
+\dar[swap]{- \circ Fh} & 
+\hom(X,GY)
+\dar{- \circ h} & 
+\hom(FX,Y)
+\rar{\varphi}
+\dar[swap]{k \circ -} &
+\hom(X,GY)
+\dar{Gk \circ -} \\
+\hom(FX',Y) 
+\rar[swap]{\varphi} &
+\hom(X',GY) &
+\hom(FX,Y')
+\rar[swap]{\varphi} &
+\hom(X,GY')
+\end{tikzcd}\]
+#+end_nota
+
+**** Notación de Lawvere                                                                 :ignore:
+Una notación más sencilla para condensar toda esta información es
+usando diagramas que simulan relaciones lógicas.[fn:lawvere] Una
+adjunción $F \dashv G$ puede escribirse como sigue.
+\begin{prooftree}
+\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] FX \rar{f}\& Y \end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&] X \rar{\varphi{(f)}}\& GY \end{tikzcd}}
+\end{prooftree}
+Esta notación enfatiza que a cada morfismo $FX \to Y$ le corresponde un
+morfismo $X \to GY$; y que esta es una relación biyectiva, yendo en ambas
+direcciones.  La naturalidad se traduce en que la precomposición y la
+poscomposición de morfismos son respetados por esta regla de inferencia.
+Dados cualesquiera $h \colon X' \to X$ y $k \colon Y \to Y'$, sabemos por naturalidad
+que las flechas compuestas en los siguientes diagramas son adjuntas entre
+sí.
+\begin{prooftree}
+\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] 
+FX' \ar[bend left=45]{rr}{f \circ Fh} \rar{Fh}\& 
+FX \rar{f}\& 
+Y
+\end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&]
+X' \ar[bend right=45]{rr}[swap]{\varphi(f) \circ h} \rar[swap]{h}\& 
+X \rar[swap]{\varphi(f)}\&
+GY 
+\end{tikzcd}}
+\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&]
+FX \ar[bend left=45]{rr}{k \circ f} \rar{f}\&
+Y \rar{k}\&
+Y' \end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&]
+X \ar[bend right=45]{rr}[swap]{Gk \circ \varphi(f)} \rar[swap]{\varphi(f)}\&
+GY \rar[swap]{Gk}\&
+GY'\end{tikzcd}}
+\noLine
+\BIC{}
+\end{prooftree}
+Es decir, $\varphi(f) \circ h = \varphi(f \circ Fh)$ y $Gk \circ \varphi(f) = \varphi(k \circ f)$.
+
+[fn:lawvere] Aprendí esta notación de unos apuntes de Lawvere
+cite:lawvere309 y de Manuel Bullejos.  No he podido trazar cuál es el
+origen exacto, parece que es folklore en teoría de categorías.
+
+**** Unidad y counidad                                                                   :ignore:
+#+begin_definicion
+Dada una adjunción $F \dashv G$, la *unidad* y la *counidad* son las
+familias de morfismos $\eta_X \colon X \to GFX$ y $\varepsilon \colon FGY \to Y$, que se
+obtienen al aplicar el isomorfismo a las identidades en cada
+categoría respectivamente.
+\begin{prooftree}
+\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] FX \rar{\id}\& FX \end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&] X \rar{\eta_{x}}\& GFX \end{tikzcd}}
+\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] FGY \rar{\varepsilon_{y}}\& Y \end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&] GY \rar{\id}\& GY \end{tikzcd}}
+\noLine
+\BIC{}
+\end{prooftree}
+#+end_definicion
+
+**** Unidad y counidad son transformaciones naturales                                    :ignore:
+#+begin_proposicion
+La unidad y la counidad son transformaciones naturales.
+#+end_proposicion
+#+begin_proof
+Sean $h \colon X \to X'$ y $k \colon Y \to Y'$. Comprobaremos que el
+morfismo adjunto a $Fh$ es $GFh \circ \eta_X$ y $\eta_X' \circ h$ al
+mismo tiempo, lo que implica que deben ser iguales. De
+la misma forma, el adjunto a $Gk$ es $k \circ \varepsilon_Y$ pero
+tambień $\varepsilon_{Y'} \circ FGk$.
+\begin{prooftree}
+\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] 
+\phantom{Fx}\&
+X \rar{h}\& 
+Y \rar{\eta}\& 
+GFY
+\end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&] 
+FX \rar{\id}\& 
+FX \rar{Fh}\& 
+FY \rar{\id}\& 
+FY 
+\end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&]
+X \rar{\eta}\& 
+GFX \rar{GFh}\&
+GFY \&
+\phantom{Gy}
+\end{tikzcd}}
+\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] 
+FGX \rar{\varepsilon} \&
+X \rar{k}\& 
+Y \& 
+\phantom{GFy}
+\end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&]
+GX \rar{\id}\&
+GX \rar{Gk}\&
+GY \rar{\id} \&
+GY
+\end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&]
+\phantom{Gx}\&
+FGx \rar{FGk}\&
+FGy \rar{\varepsilon}\&
+y \end{tikzcd}}
+\noLine
+\BIC{}
+\end{prooftree}
+#+end_proof
+
+**** Unidad y counidad cumplen las ecuaciones de zig-zag                                 :ignore:
+#+begin_proposicion
+La unidad y la counidad cumplen las ecuaciones dadas
+en los siguientes diagramas, llamadas /ecuaciones triangulares/
+o /ecuaciones de zig-zag/.
+\[\begin{tikzcd}
+G \drar[equal] \rar{\eta} & GFG \dar{G \varepsilon} &
+FGF \dar[swap]{\varepsilon} & F \lar[swap]{F\eta} \dlar[equal] \\
+& G & F &
+\end{tikzcd}\]
+Es decir, tenemos $G\varepsilon \circ \eta = \mathrm{id}$ y también $\varepsilon \circ F\eta = \mathrm{id}$.
+#+end_proposicion
+#+begin_proof
+Probaremos algo todavía más general, que $Gf \circ \eta = \varphi(f)$ y que
+también $\varepsilon \circ Fg = \varphi^{-1}(g)$ para cualesquiera $f \colon FX \to Y$ y
+$g \colon X \to GY$.  En efecto, aplicando naturalidad en los diagramas
+tenemos que deben coincidir.
+\begin{prooftree}
+\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] 
+FX \ar[bend left=45]{rr}{\varepsilon_{Y} \circ Fg} \rar{Fg}\& 
+FGY \rar{\varepsilon_Y}\& 
+Y 
+\end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&]
+X \ar[bend right=45]{rr}[swap]{g} \rar[swap]{g}\& 
+GY \rar[swap]{\id}\&
+GY 
+\end{tikzcd}}
+\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&]
+FX \ar[bend left=45]{rr}{f} \rar{\id}\&
+FX \rar{f}\&
+Y \end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&]
+X \ar[bend right=45]{rr}[swap]{Gf \circ \eta_X} \rar[swap]{\eta_X}\&
+GFX \rar[swap]{Gf}\&
+GY \end{tikzcd}}
+\noLine
+\BIC{}
+\end{prooftree}
+#+end_proof
+
+*** Caracterización y propiedades
+Las adjunciones contienen muchísima información.  Ahora mismo nos
+sería muy difícil probar que dos funtores forman una adjunción. Lo que
+necesitamos son formas de caracterizarlas.
+
+**** Caracterización                                                                     :ignore:
+#+attr_latex: :options [Caracterización de adjunciones]
+#+begin_proposition
+<<prop-characterize-adjunctions>>
+Una adjunción $F \dashv G$ entre categorías $\mathbf{X}$ y $\mathbf{Y}$ 
+viene determinada por cualesquiera de las siguientes opciones,
+
+ 1. funtores $F,G$ y $\eta\colon 1 \tonat GF$ donde $\eta_X\colon X \to GFX$ es universal sobre $G$.
+ 2. funtor $G$ y universales $\eta_X \colon X \to GF_0 X$; aquí $F_0X \in \mathbf{Y}$ crea un funtor $F$.
+ 3. funtores $F,G$ y $\varepsilon\colon FG \tonat 1$ donde $\varepsilon_Y\colon FGY \to Y$ es universal sobre $F$.
+ 4. funtor $F$ y universales $\varepsilon_Y\colon FG_0Y \to Y$; aquí $G_0Y \in \mathbf{X}$ crea un funtor $G$.
+ 5. funtores $F,G$, con transformaciones naturales satisfaciendo $G\varepsilon \circ \eta G = \id$ y $\varepsilon F \circ F\eta = \id$
+    (zig-zag).
+#+end_proposition
+#+begin_proof
+/1./ Universality of $\eta_X$ gives a isomorphism $\varphi \colon \hom(FX,Y) \cong \hom(X,GY)$ between 
+the arrows in the following diagram
+\[\begin{tikzcd}
+& GY & Y \\
+X \rar[swap]{\eta_x}\urar{f} & GFX \uar[swap,dashed]{Gg} & FX \uar[dashed,swap]{\exists! g}
+\end{tikzcd}\]
+defined as $\varphi(g) = Gg \circ \eta_X$. This isomorphism is natural in $X$; for every
+$h \colon X' \to X$ we know by naturality of $\eta$ that $Gg \circ \eta \circ h = G(g \circ Fh) \circ \eta$.
+The isomorphism is also natural in $Y$; for every $k \colon Y \to Y'$ we know by
+functoriality of $G$ that $Gh\circ Gg \circ \eta = G(h \circ g) \circ \eta$.
+
+/2./ We can define a functor $F$ on objects as $FX = F_0X$. Given any
+$h \colon X \to X'$, we can use the universality of $\eta$ to define
+$Fh$ as the unique arrow making this diagram commute
+\[\begin{tikzcd}
+& GFX' & FX' \\
+X \rar[swap]{\eta_X}\urar{\eta_{X'} \circ h} & GFX \uar[swap,dashed]{GFh} &
+FX \uar[dashed,swap]{\exists! Fh}
+\end{tikzcd}\]
+and this choice makes $F$ a functor and $\eta$ a natural transformation,
+as it can be checked in the following diagrams using the existence
+and uniqueness given by the universality of $\eta$ in both cases.
+\[\begin{tikzcd}
+&&& X'' \rar{\eta_{X''}}  & GFX''  & FX'' \\
+& GFX & FX & X'  \uar{h'} \rar{\eta_{X'}}  & GFX'  \uar[swap]{GFh'}  & 
+FX' \uar[dashed]{\exists! Fh'} \\
+X \rar[swap]{\eta_X}\urar{\eta_{X}} & GFX \uar[swap,dashed]{\id} & 
+FX \uar[dashed,swap]{\id} & 
+X \rar{\eta_{X}}\uar{h} & GFX \uar[swap]{GFh} & 
+FX \uar[dashed]{\exists! Fh'} \ar[dashed,swap,bend right]{uu}{\exists! F(h' \circ h)}
+\end{tikzcd}\]
+
+/3./ The proof is dual to that of /1/.
+
+/4./ The proof is dual to that of /2/.
+
+/5./ We can define two functions $\varphi(f) = Gf \circ \eta_X$ and $\theta(g) = \varepsilon_Y \circ Fg$.
+We checked in 1 (and 3) that these functions are natural in both arguments;
+now we will see that they are inverses of each other using naturality
+and the triangle identities
+
+ * $\varphi(\theta(g)) &= G\varepsilon \circ GFg \circ \eta = G\varepsilon \circ \eta \circ g = g$;
+ * $\theta(\varphi(f)) = \varepsilon \circ FGf \circ F\eta = f \circ \varepsilon \circ F\eta = f$.\qedhere
+#+end_proof
+
+**** Unicidad                                                                            :ignore:
+#+ATTR_LATEX: :options [Unicidad esencial de adjuntos]
+#+BEGIN_proposition
+Dos adjuntos al mismo funtor $F,F' \dashv G$ son naturalmente isomorfos.
+#+END_proposition
+#+BEGIN_proof
+Construiremos un isomorfismo natural a partir de las dos unidades $\eta, \eta'$
+que determinan las adjunciones. Para cada $X$, sabemos que $\eta_X \colon X \to GFX$
+y $\eta_{X'} \colon X \to GF'X$ son universales desde $X$ hacia $G$.  Se puede ver que
+en general los morfismos universales son únicos salvo isomorfismo, así que
+existe un $\theta_X \colon FX \to F'X$ tal que $G\theta_X \circ \eta_X = \eta'_X$. \\
+
+Sabemos que $\theta$ es natural porque para cualquier $f \colon X \to Y$ los morfismos
+$\theta \circ Ff$ y $F'f \circ \theta$, hacen conmutar el siguiente diagrama.
+\[\begin{tikzcd}
+Y \rar{\eta'} & GF'Y & F'Y\\
+X \rar{\eta}\uar{f} & GFX \uar[dashed,swap]{} & FX \uar[dashed]{\exists!}
+\end{tikzcd}\]
+En efecto,
+
+ * $G(\theta \circ Ff) \circ \eta = G\theta \circ GFf \circ \eta = G\theta \circ \eta \circ f = \eta' \circ f$;
+ * $G(F'f \circ \theta) \circ \eta = GF'f \circ G\theta \circ \eta = GF'f \circ \eta' = \eta' \circ f$.
+
+Pero el morfismo haciendo conmutar el diagrama debería ser único, así
+que $\theta \circ Ff = F'f \circ \theta$.
+#+END_proof
+
+**** Composición                                                                         :ignore:
+#+ATTR_LATEX: :options [Composición de adjunciones]
+#+BEGIN_theorem
+Dadas dos adjunciones $\varphi \colon F \dashv G$ y $\theta \colon F' \dashv G'$ entre dos
+pares de categorías ${\cal X},{\cal Y}$ y ${\cal Y},{\cal Z}$ respectivamente, los funtores
+compuestos crean una adjunción $\varphi \cdot \theta \colon F'\circ F \dashv G\circ G'$. 
+#+END_theorem
+#+BEGIN_proof
+La composición de isomorfismos naturales es de nuevo un isomorfismo natural,
+así que lo único que hacemos es obtener el isomorfismo que buscamos por
+composición.
+\begin{prooftree}
+\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&]
+F'FX \rar{f}\& Y
+\end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&]
+FX \rar{\theta(f)}\& G'Y
+\end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&]
+X \rar{\varphi\theta(f)}\& GG'Y
+\end{tikzcd}}
+\end{prooftree}
+#+END_proof
+
+Si además queremos conocer la unidad y counidad de esta adjunción, podemos
+aplicar la biyección compuesta a las identidades, como sigue.
+Si la unidad y la counidad de $\varphi$ son $\pair{\eta,\varepsilon}$ y las de
+$\theta$ son $\pair{\eta',\varepsilon'}$, la unidad y la counidad de la adjunción
+compuesta vienen dadas por $\pair{G \eta' F \circ \eta,\ \varepsilon' \circ F' \varepsilon G'}$.
+\begin{prooftree}
+\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] 
+\phantom{FX}\&
+F'FX \rar{\id}\& 
+F'FX 
+\end{tikzcd}}
+\doubleLine
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&] 
+FX \rar{\id}\& 
+FX \rar{\eta'_{FX}}\& 
+G'F'FX
+\end{tikzcd}}
+\doubleLine
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&]
+X \rar[swap]{\eta}\& 
+GFX \rar[swap]{G\eta'_{FX}}\&
+GG'F'FX
+\end{tikzcd}}
+
+\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] 
+GG'Z \rar{\id} \&
+GG'Z \& 
+\phantom{FFGy}
+\end{tikzcd}}
+\doubleLine
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&]
+FGG'Z \rar{\varepsilon_{G'Z}}\&
+G'Z \rar{\id}\&
+G'Z \end{tikzcd}}
+\doubleLine
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&]
+F'FGG'Z  \rar[swap]{F'\varepsilon_{G'Z}}\&
+F'G'Z \rar[swap]{\varepsilon'}\&
+Z \end{tikzcd}}
+\noLine
+\BIC{}
+\end{prooftree}
+
+*** Muchas adjunciones
+Esta parte viene inspirada por la numerosísima cantidad de adjunciones que
+pueden encontrarse al hacer categorías y por un hilo en [[https://math.stackexchange.com/questions/46708/a-bestiary-about-adjunctions][Math.SE]].
+
+**** Monoides libres
+#+begin_proposicion
+Consideremos la categoría de los monoides con los homomorfismos de
+monoide.  El funtor $F \colon \mathbf{Set} \to \mathbf{Mon}$ que envía cada conjunto a su
+monoide libre es el adjunto izquierdo del funtor $U \colon \mathbf{Mon} \to \mathbf{Set}$
+que a cada monoide le asocia su conjunto subyacente.
+#+end_proposicion
+#+begin_proof
+Vamos a usar la caracterización de las adjunciones. Crearemos una
+familia de funciones $\eta_X \colon X \to UFX$ y probaremos la universalidad
+del siguiente diagrama.  Aquí $M$ es un monoide con unidad $e$ y multiplicación
+$(\cdot)$.
+\[\begin{tikzcd}
+& UM & M \\
+X \rar[swap]{\eta_x}\urar{f} & UFX \uar[swap,dashed]{Uh} & FX \uar[dashed,swap]{\exists! h}
+\end{tikzcd}\]
+Puede ayudar pensar que si $X$ es un conjunto, $FX$ es el conjunto de
+las listas finitas sobre $X$.  Por el diagrama sabemos que $h[x] = f(x)$
+está determinado; pero además, como $h$ debe ser un homomorfismo de
+monoides, esto lo hace estar determinado sobre cualquier lista.
+Concluimos que el único morfismo posible está definido como
+$h[x_1,\dots,x_{n}] = f(x_1) \cdot \ldots \cdot f(x_{n})$.
+#+end_proof
+
+La mónada asociada a esta adjunción es la mónada lista.  Las álgebras
+sobre esta mónada son precisamente los monoides.
+
+**** Conexiones de Galois
+#+begin_definicion
+Los conjuntos parcialmente ordenados forman categorías en las que
+hay un único morfismo $a \to b$ cuando $a \leq b$.  Un funtor entre dos
+conjuntos parcialmente ordenados es una función monótona. Una
+*conexión de Galois* es una adjunción entre conjuntos parcialmente
+ordenados.
+#+end_definicion
+
+Es decir, una adjunción entre $P$ y $Q$ consiste en funciones monótonas
+$f \colon P \to Q$ y $g \colon Q \to P$, con la siguiente doble implicación para
+cualesquiera $x \in P$, $y \in Q$.
+\begin{prooftree}
+\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] f(x) \leq y \end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&] x \leq g(y) \end{tikzcd}}
+\end{prooftree}
+Estos casos son especialmente fáciles de identificar y de demostrar
+porque en ellos las condiciones de naturalidad se satisfacen
+automáticamente. Esto es así porque hay a lo sumo un único morfismo
+entre cualesquiera dos objetos, y por tanto, dos morfismos entre los
+mismos objetos deben coincidir.
+
+#+begin_ejemplo
+Sea una topología en un conjunto $X$.  Los abiertos forman un conjunto
+parcialmente ordenado con la inclusión ${\cal O}(X)$, pero de hecho todos los
+elementos del conjunto potencia forman un conjunto parcialmente ordenado
+con la inclusión, ${\cal P}(X)$.  Podemos ver un abierto como un elemento del
+conjunto potencia $i \colon {\cal O}(X) \to {\cal P}(X)$.  El *interior* de un conjunto
+$\mathsf{int} \colon {\cal P}(X) \to {\cal O}(X)$ es el adjunto derecho a esa inclusión, $i \dashv \mathsf{int}$.
+\begin{prooftree}
+\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] i(U) \subseteq A \end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&] U \subseteq \textsf{int}(A) \end{tikzcd}}
+\end{prooftree}
+Nótese que ambos son equivalentes para cualquier $U \in {\cal O}(X)$ y cualquier
+$A \in {\cal P}(X)$.  Esto también nos dice que el interior es comonádico; y sus
+coálgebras son los conjuntos abiertos.
+#+end_ejemplo
+
+**** Distribuciones y símplices
+Consideramos un funtor que envía un conjunto $X$ al conjunto de
+distribuciones finitas sobre él, $DX$.  Las álgebras sobre la mónada
+de esta adjunción son los conjuntos convexos; en particular las
+álgebras libres sobre conjuntos finitos se llaman *símplices*.
+
+**** Los cuantificadores son adjunciones
+# Fibraciones de Grothendieck
+*** Mónadas y álgebras
+
+**** Mónadas                                                                             :ignore:
+#+begin_definicion
+Una *mónada* es un funtor $T\colon X \to X$ con una transformación natural
+$\eta\colon \Id \tonat T$ llamada *unidad* y una transformación natural $\mu \colon T^2 \tonat T$,
+llamada /multiplicación/; tales que los siguientes diagramas conmutan.
+\[\begin{tikzcd}
+T^3 \rar{T\mu}\dar{\mu T} & T^2\dar{\mu} \\
+T^2 \rar{\mu} & T
+\end{tikzcd}
+\qquad
+\begin{tikzcd}
+\Id \circ T \rar{\eta T}\drar[swap]{\cong} & T^2\dar{\mu} & \lar[swap]{T\eta}\dlar{\cong} T\circ \Id \\
+& T &
+\end{tikzcd}\]
+Una *comónada* es el dual a una mónada, con una *counidad* $\varepsilon \colon T \tonat \Id$
+y una comultiplicación $T \tonat T^2$.
+#+end_definicion
+
+#+begin_ejemplo
+Las mónadas en un preorden son funciones idempotentes crecientes.
+#+end_ejemplo
+
+**** Cada adjunción da lugar a una mónada                                                :ignore:
+#+begin_proposicion
+Dada una adjunción $G \dashv F$, la composición $G \circ F$ es una mónada.
+#+end_proposicion
+#+begin_proof
+La unidad de la adjunción es la unidad de la mónada. El producto
+será $\mu = G\varepsilon$.  La asociatividad es el siguiente diagrama, que se
+obtiene primero por naturalidad y luego aplicando funtores.
+\[\begin{tikzcd}
+FGFG\rar{FG\varepsilon} \dar[swap]{\varepsilon} & FG \dar{\varepsilon} \\
+FG\rar{\varepsilon} & I
+\end{tikzcd}
+\qquad
+\begin{tikzcd}
+GFGFGF\rar{GFG\varepsilon} \dar[swap]{G\varepsilon} & GFGF \dar{G\varepsilon} \\
+GFGF\rar{G\varepsilon} & GF
+\end{tikzcd}\]
+La unitalidad viene dada precisamente por las ecuaciones de zigzag.
+#+end_proof
+
+*** Álgebras
+
+**** Álgebras                                                                            :ignore:
+#+begin_definicion
+Un *álgebra* sobre un funtor $F \colon \mathbf{C} \to \mathbf{C}$ viene dada por un objeto
+$X \in \mathbf{C}$ equipado con un morfismo $FX \to X$ llamado /morfismo/ /de/
+/estructura/.
+#+end_definicion
+
+Un morfismo entre dos álgebras dadas por $FX \to X$ y por $FY \to Y$
+viene dado por un $h \colon X \to Y$ haciendo conmutar el siguiente
+diagrama.
+\[\begin{tikzcd}
+FX \rar{Fh}\dar{\mu} & FY\dar{\nu} \\
+X \rar{h} & Y
+\end{tikzcd}\]
+Con estos morfismos, las álgebras sobre un funtor forman una
+categoría.  El objeto inicial de esta categoría no necesita existir,
+pero cuando lo hace es único salvo isomorfismo.
+
+**** Lambek                                                                              :ignore:
+#+ATTR_LATEX: :options [Lambek]
+#+begin_teorema
+El morfismo de estructura de un álgebra inicial es un isomorfismo.
+Es decir, si $X$ es un álgebra inicial, entonces $\mu \colon FX \cong X$ (véase cite:awodey10).
+#+end_teorema
+#+begin_proof
+Consideremos el siguiente diagrama conmutativo, donde $l \colon X \to FX$ 
+viene dado por la inicialidad de $X$.
+\[\begin{tikzcd}
+FX\rar{Fl} \dar[swap]{\mu} &
+FFX \dar{F\mu} \rar{F\mu} &
+FX \dar{\mu} \\
+X\rar{l} &
+FX\rar{\mu} &
+X
+\end{tikzcd}\]
+Por inicialidad de $X$ sabemos que $\mu \circ l = \id$, y por conmutatividad
+de la parte izquierda,  $l \circ \mu = F(\mu \circ l) = \id$.
+#+end_proof
+
+**** Catamorfismos, anamorfismos e hilomorfismos                                         :ignore:
+Podemos usar el punto fijo de los funtores para definir catamorfismos
+y anamorfismos. Hay un problema y es que =Fix= encontrará /un/ punto fijo
+si lo hay (teorema de reducción a izquierda para el cálculo lambda),
+pero no tenemos forma de fijar el que queremos.
+
+#+BEGIN_SRC haskell
+    -- Declaramos el punto fijo de un funtor.  Si nos da el álgebra
+    -- o la coálgebra inicial, 'In' y 'out' serán isomorfismos por
+    -- el teorema de Lambek.
+    newtype Fix f = In { out :: f (Fix f) }
+    
+    type Algebra f a = f a -> a
+    type Coalgebra f a = a -> f a
+    
+    -- Usando el teorema de Lambek.
+    cata :: (Functor f) => Algebra f a -> Fix f -> a
+    cata alg = alg . fmap (cata alg) . out
+    
+    ana :: (Functor f) => Coalgebra f b -> b -> Fix f
+    ana coalg = In . fmap (ana coalg) . coalg
+#+END_SRC
+
+**** Catamorfismo: listas                                                                :ignore:
+#+begin_ejemplo
+El funtor polinómico $1+A \times (-)$ tiene como álgebra inicial
+las listas de tipo $A$.
+#+end_ejemplo
+#+BEGIN_SRC haskell
+    -- Listas, monoides libres.
+    data ListF a f = NilF | ConsF a f deriving (Functor)
+    type List a = Fix (ListF a)
+    
+    nil = In NilF
+    cons = ((In .) . ConsF)
+    
+    algsum :: (Num a) => Algebra (ListF a) a
+    algsum NilF        = 0
+    algsum (ConsF a b) = a + b
+    
+    sumlist :: (Num a) => List a -> a
+    sumlist = cata algsum
+#+END_SRC
+
+
+**** Los números naturales son un álgebra inicial                                        :ignore:
+#+ATTR_LATEX: :options [Objeto de números naturales]
+#+BEGIN_exampleth
+<<example-naturalnumbersobj>>
+Consider the functor $F(X) = 1 + X$ in a category ${\cal C}$ with coproducts
+and a terminal object. Its initial algebra is called a *natural numbers object*
+due to the fact that, in $\Set$, this initial algebra is precisely the
+set of natural numbers $\mathbb{N}$ with the successor function $\mathrm{succ}\colon \mathbb{N} \to \mathbb{N}$
+and the zero element given as a morphism from the terminal object, $0 \colon 1 \to \mathbb{N}$.
+\[\begin{tikzcd}
+1+\mathbb{N}\rar{} \dar[swap]{\pair{0,\mathrm{succ}}} & 1+X\dar{\pair{x,f}} \\
+\mathbb{N}\rar{\varphi} & X
+\end{tikzcd}\]
+Let $X$ be an $F\text{-algebra}$ given by $x \colon 1 \to X$ and $f \colon X \to X$; by induction over
+the natural numbers we can show that a morphism of algebras $\varphi$ making that diagram
+commute must follow $\varphi(0) = x$ and $\varphi(\mathrm{succ}(n)) = f(\varphi(n))$. Thus, in a certain sense, 
+initiality captures the principle of induction.
+
+For instance, we can define addition $+ \colon \mathbb{N} \times \mathbb{N} \to \mathbb{N}$, interpreted
+as a unary operation $+ \colon \mathbb{N} \to \hom(\mathbb{N},\mathbb{N})$, as the unique morphism $\varphi$
+from the initial algebra to the algebra given by $\hom(\mathbb{N},\mathbb{N})$ with $\id$
+and postcomposition with $\mathrm{succ}$.
+\[\begin{tikzcd}
+1+\mathbb{N}\rar{} \dar[swap]{\pair{0,\mathrm{succ}}} & 
+1+\hom(\mathbb{N},\mathbb{N}) \dar{\pair{\id, \mathrm{succ}\,\circ\, -}} \\
+\mathbb{N}\rar{+} &
+\hom(\mathbb{N},\mathbb{N})
+\end{tikzcd}\]
+This definition immediately implies the equalities $0+m = \id(m) = m$
+and $\mathrm{succ}(n) + m = (\mathrm{succ}\circ (n+\_))(m) = \mathrm{succ}(n+m)$.
+#+END_exampleth
+
+*** Los adjuntos derechos preservan límites
+**** Límites                                                                             :ignore:
+#+begin_definicion
+Dada una categoría $\mathbf{C}$ y cualquier categoría $n$ podemos considerar un *funtor diagonal*
+$\Delta_n \colon \mathbf{C} \to \mathbf{C}^n$ que se define constante como $\Delta(X,k) = X$ en objetos y $\Delta(f,k) = f$ 
+en morfismos.  Un *límite* es un adjunto derecho al funtor diagonal; un *colímite* es
+un adjunto izquierdo al funtor diagonal. [fn:deflimite]
+#+end_definicion
+
+El funtor diagonal tiene una propiedad interesante, es una /comultiplicación/ que
+preserva cualquier funtor. Esto quiere decir que para cualquier $F \colon \mathbf{C} \to \mathbf{C}$,
+podemos considerar $F_{(n)} \colon \mathbf{C}^n \to \mathbf{C}^{n}$ como el funtor que resulta de aplicar $F$ en
+cada uno de los índices. Tenemos entonces $\Delta \circ F = F_{(n)} \circ \Delta$. 
+
+#+begin_teorema
+Los adjuntos derechos son continuos. Los adjuntos izquierdos son
+cocontinuos.
+#+end_teorema
+#+begin_proof
+Sea un límite $\Delta^n \dashv \mathsf{lim}$. Si tenemos una adjunción $L \dashv R$, podemos componerlas
+para obtener $\Delta^n \circ L \dashv R \circ \mathsf{lim}$. Por otro lado, podemos ver que $L^{(n)} \dashv R^{(n)}$ y
+podemos componer la adjunción $L^{(n)} \circ \Delta^{(n)} \dashv \mathsf{lim} \circ R^{(n)}$.  Pero sabemos que
+$\Delta^n \circ L = L^{(n)} \circ \Delta^{n}$ y que las adjunciones son únicas salvo isomorfismo, así
+que $\mathsf{lim} \circ R^{(n)} \cong R \circ \mathsf{lim}$.
+#+end_proof
+
+#+begin_corolario
+Para cualesquiera conjuntos $A,B,C \in \mathbf{Set}$, se tiene $(A + B) \times C \cong A \times C + B \times C$.
+#+end_corolario
+
+[fn:deflimite] Los límites suelen considerarse en más generalidad, permitiendo que
+no formen un funtor sino que sólo se den determinados casos.  Esta presentación va
+a ayudar a simplificar mucho la próxima demostración y no perdemos nada que nos
+importe especialmente ahora.  Para una definición estándar de límite se puede
+usar cite:maclane78.
+
+*** references                                                                            :ignore:
+bibliographystyle:alpha
+bibliography:Math.bib
 ** TODO Diagonal arguments since Epimenides
 *** Epimenides
 #+begin_quote
@@ -738,29 +1415,115 @@ Double dual of a vector space.
 ** TODO Etimología para Mikrokosmos
 # Bartok
 # Cosmoi -> Benabou
-
-** TODO Adjunciones
 ** TODO Media 2018
 ** TODO Three Emacs
 ** TODO Notes and spaced repetition cards in org-mode
 ** TODO Applicative functors
-** TODO A zoo of adjunctions
-distribuciones y simplices.
-fibraciones y proposiciones
-
-This is already done on Math.StackExchange!
- * https://math.stackexchange.com/questions/46708/a-bestiary-about-adjunctions
-
 ** TODO Recursion schemes
 ** TODO A quote by Conor McBride
 #+begin_quote
 "The task of the academic is not to scale great intellectual
 mountains, but to flatten them." -- Conor McBride
 #+end_quote
-** TODO Van Laarhoven representation for lenses
-# Derive it from Yoneda.
-# Live code.
-** TODO Notations for adjunctions
+
+** The traversal is the optic for polynomial functors                                        :post:
+:PROPERTIES:
+:TITLE: The traversal is the optic for polynomial functors
+:EXPORT_FILE_NAME: traversals.pdf
+:EXPORT_DATE: 24th May, 2019
+:INDEX_DATE: <2019-04-01 Mon>
+:EXPORT_OPTIONS: toc:nil num:t lang:en
+:END:
+
+We present a derivation of the traversal as the optic associated with
+polynomial functors.  This is still work in progress and I have not checked
+all the details, I might retract this if it does not work.
+
+The idea here is that optics can be described as associated to the action
+of some pseudomonoid. This approach was previously taken by Riley but we
+make this work with Bartosz' Yoneda-with-adjunction trick applied to arbitrary
+actions. We can consider the same monad Pastro-Street use for Tambara modules
+but for an arbitrary pseudomonoid action.
+
+*** Yoneda with adjunction
+#+begin_lemma
+Let $\Phi$ be a monad in $\mathbf{Prof}$ and let $U \colon \Phi\mathbf{-alg} \to \mathbf{Prof}$ be the forgetful
+functor.  We know the following isomorphism.
+\[
+\int_{p} (Up)(a,b) \to (Up)(s,t) \cong (\Phi ( \mathbf{C}^{op} \times \mathbf{C} )((a,b), -)) (s,t)
+\]
+#+end_lemma
+
+*** Comonad for an action
+#+begin_lemma
+Let $(\cdot) \colon \mathbf{M} \times \mathbf{C} \to \mathbf{C}$ be an action of a monoidal category on a category.
+The following should form a comonad where the unit and the multiplication
+are given by the unit and tensor of the monoidal category (or, in general,
+the pseudomonoid structure).
+\[
+(\Theta p)uv = \int_{m \in \mathbf{M}} p(m \cdot u , m \cdot v)
+\]
+The laws should follow from the laws of the pseudomonoid.
+#+end_lemma
+
+#+begin_theorem
+The comonoid has a right adjoint given by
+\[
+(\Phi p)xy = \int^{u,v,m} \mathbf{C}(x, m \cdot u) \times \mathbf{C}(m \cdot v , y) \times p(u,v).
+\]
+#+end_theorem
+
+*** General formula
+Applying Yoneda with adjunction to this monad yields
+\[
+\left( \int_{p \in \Theta\mbox{-}\mathbf{coAlg}} p (a, b) \to p (s, t) \right)
+\cong
+\int^{m \in \mathbf{M}} \mathbf{C}(s , m \cdot a) \times \mathbf{C}(m \cdot b , t).
+\]
+Where we are quantifying over the functors that have a coalgebra
+for the comonad. That is, the profunctors that preserve the
+the action.
+\[
+p (a , b) \to \int_{m \in \mathbf{M}} p(m \cdot a , m \cdot b)
+\]
+
+#+begin_note
+The idea is that it should generalize the results described (in Riley
+and) first in Bartosz' post on profunctor optics for Tambara modules
+to an arbitrary action.  We need to check details.
+#+end_note
+
+*** Traversal
+Polynomial functors $f \colon \mathbf{C} \to \mathbf{C}$ in a bicartesian closed category are these
+that can be written as $f(x) = \sum_n \lambda_nx^n$, where $x^n$ is the n-fold cartesian product. 
+We consider the category $\mathbf{Poly}$ of polynomial functors as a full subcategory 
+of $[ \mathbf{C} , \mathbf{C} ]$. This category is monoidal with the
+monoidal product given by composition of endofunctors.  There exists an action
+$\mathbf{Poly} \to \mathbf{Sets} \to \mathbf{Sets}$ given by evaluation.
+
+Let $f \in \mathbf{Poly}$. It must be of the form $f(x) = \sum_n \lambda_n x^n$. We
+apply cocontinuity of hom, then we apply Yoneda n-times. Yoneda substitutes the
+coefficient $\lambda_n$ inside $f$ by $(b^n \to t)$.
+\[\begin{aligned}
+\int^{p \in \mathbf{Poly}} \mathbf{C}(s , f(a)) \times \mathbf{C}(f(b), t)  \cong \\ 
+\int^{p \in \mathbf{Poly}} \mathbf{C}(s , f(a)) \times \mathbf{C}(\sum_{n} \lambda_n b^n, t) \cong \\
+\int^{p \in \mathbf{Poly}} \mathbf{C}(s , f(a)) \times \prod_{n} \mathbf{C}( \lambda_n b^n, t) \cong \\
+\int^{p \in \mathbf{Poly}} \mathbf{C}(s , f(a)) \times \prod_{n} \mathbf{C}( \lambda_n , b^n \to t) \cong \\
+\mathbf{C} \left(  s , \sum_n a^n \times ( b^n \to t) \right)
+\end{aligned}\]
+And thus the traversal is the associated optic to the action of
+polynomial functors on the category of sets.  In other words,
+\[
+(s \to \sum_n a^n \times (b^n \to t)) \cong  \int_{p \in \mathsf{TambPoly}} p(a,b) \to p(s,t),
+\]
+where $\mathsf{TambPoly}$ is the subcategory of profunctors that are Tambara
+modules for the action of polynomial functors. That is, that have
+families of morphisms as follows.
+\[
+p(x,y) \to \int_{f \in \mathbf{Poly}} p(f(x), f(y))
+\]
+
+
 ** Monoides, grupos, grupoides, categorías                                                   :post:
 :PROPERTIES:
 :TITLE: Monoides, groupos, grupoides, categorías
@@ -769,6 +1532,8 @@ mountains, but to flatten them." -- Conor McBride
 :INDEX_DATE: <2019-04-01 Mon>
 :EXPORT_OPTIONS: toc:nil num:t lang:es
 :END:
+
+\quad\\
 
 *** Monoides                                                                              :ignore:
 #+begin_definition
@@ -864,8 +1629,27 @@ Marsden's cite:marsden14 macros for string diagrams./ /The general idea
 follows this paper, but also Vicary-Heunen-Reutter's notes/ /for
 Categorical Quantum Mechanics,/ cite:vicary19.
 
+*** Cálculo gráfico
+Normalmente nuestras ecuaciones usan una dimensión. En el cálculo
+diagramático empezaremos usando una sola dimensión pero pasaremos a
+usar dos, y en principio nada nos limitaría a usar estructuras de
+dimensiones arbitrarias.
+
+Cuando usamos una dimensión, podemos, substituir cualquiera de las
+subexpresiones que forman la fórmula por otra expresión que sea igual
+a ella.  De la misma forma, cuando tenemos dos dimensiones, podemos
+substituir cualquiera de los subdiagramas (recuadros del diagrama
+original) por un diagrama que sea igual.
+
+Seguiremos algunas convenciones.
+
+ * Los diagramas se leen de abajo a arriba.
+ * Dos diagramas que sean isotópicos, es decir, tales que uno
+   pueda transformarse en el otro sólo moviendo los nodos y las
+   cuerdas sin crear cruces, son iguales.
+
 *** Monoides y monoides coloreados
-#+begin_definicion 
+#+begin_definicion
 Un elemento de un *monoide* es una /cuerda/ con /nodos/, un diagrama en una dimensión.
 Los siguientes diagramas representan elementos de un monoide.
 \begin{center}
@@ -3794,7 +4578,7 @@ En las listas, por ejemplo, tenemos como candidato para
 =return :: a -> [a]= será simplemente incluir un elemento en una lista
 que sólo lo contenga a él.
 
-En esta mónada, =(>>=)= mapea una función =a -> [a]= sobre cada elemento
+En esta mónada, =(>>==) mapea una función =a -> [a]= sobre cada elemento
 de la lista y concatena todos los resultados:
 
 #+BEGIN_EXAMPLE
@@ -3802,7 +4586,7 @@ de la lista y concatena todos los resultados:
     [1,1,1,2,2,2,3,3,3]
 #+END_EXAMPLE
 
-Nótese que, de la misma manera en la que podemos usar =(>>=)=, podemos
+Nótese que, de la misma manera en la que podemos usar =(>>==), podemos
 usar una versión con sus parámetros cambiados de orden, =(=<<)=. Aquí
 usamos la mónada lista para enumerar los racionales repitiendo
 elementos:[2]
