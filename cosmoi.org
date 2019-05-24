@@ -5413,6 +5413,8 @@ unless otherwise specified.
 #+RESULTS:
 #+BEGIN_EXPORT html
 <ul>
+ <li><a href=traversals.pdf> The traversal is the optic for polynomial functors</a><em>, 01 April 2019</em><br></li>
+ <li><a href=monoidesgrouposcategorias.pdf> Monoides, groupos, grupoides, categorías</a><em>, 01 April 2019</em><br></li>
  <li><a href=dedekindrealsagda.html> Dedekind reals in Agda</a><em>, 20 May 2019</em><br></li>
  <li><a href=monoidescoloreadosbimonoidescoloreados.pdf> Monoides coloreados y bi(monoides coloreados)</a><em>, 14 April 2019</em><br></li>
  <li><a href=lawverefixedpoint.html> Lawvere's fixed point theorem</a><em>, 28 February 2019</em><br></li>
