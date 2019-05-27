@@ -1426,6 +1426,42 @@ Double dual of a vector space.
 mountains, but to flatten them." -- Conor McBride
 #+end_quote
 
+** The glass optic                                                                           :post:
+:PROPERTIES:
+:TITLE: The glass optic
+:EXPORT_FILE_NAME: glass.pdf
+:EXPORT_DATE: 27th May, 2019
+:INDEX_DATE: <2019-04-27 Mon>
+:EXPORT_OPTIONS: toc:nil num:t lang:en
+:END:
+
+At the intersection between a *lens* and a *grate* there should be an
+optic that I have started to call *glass*.  If the pseudomonoid action
+that describes a lens is $c \times (-)$ and the one for glass is $c \to (-)$,
+the action that we want to get should be the one given by the
+coproduct pseudomonoid.
+
+We rewrite the action of every word $c_1d_1\dots c_kd_k$ as follows,
+for some $e,f \in \mathbf{C}$ bicartesian closed category.
+\[\begin{aligned}
+a &\mapsto d_1 \times (c_1 \to d_2 \times (c_2 \to \dots x)) \\
+&= d_1 \times (c_1 \to d_2) \times ((c_1 \times c_2) \to \dots x) \\
+&= e \times (f \to x)
+\end{aligned}\]
+And we derive the concrete representation.
+\[\begin{aligned}
+\int^{c,d} & \mathbf{C}(s, c \times (d \to a)) \times \mathbf{C}((d \to b) \times c , t) \\&\cong
+\int^{c,d} \mathbf{C}(s, c) \times \mathbf{C}(s \to d \to a) \times \mathbf{C}((d \to b) \times c , t) \\&\cong
+\int^{d} \mathbf{C}(s \to d \to a) \times \mathbf{C}((d \to b) \times s , t) \\&\cong
+\int^{d} \mathbf{C}(d \to (s \to a)) \times \mathbf{C}((d \to b) \times s , t) \\&\cong
+\mathbf{C}(((s \to a) \to b) \times s , t) \\&\cong
+\mathbf{C}(((s \to a) \to b) , s \to t)
+\end{aligned}\]
+
+The optic in Haskell is =((s -> a) -> b) -> s -> t=. My intuition at the
+moment is "If from a getter you can create a b, then you can update s
+to t", which apparently also rhymes.
+
 ** The traversal is the optic for polynomial functors                                        :post:
 :PROPERTIES:
 :TITLE: The traversal is the optic for polynomial functors
@@ -1587,7 +1623,7 @@ Un *grupoide* es un grupo coloreado.
 :PROPERTIES:
 :TITLE: Dedekind reals in Agda
 :EXPORT_FILE_NAME: dedekindrealsagda.html
-:INDEX_DATE: <2019-05-20 Fri 14:31>
+:INDEX_DATE: <2019-04-20 Fri 14:31>
 :END:
 
 For my Bachelor's dissertation I wrote an implementation of the
@@ -5413,9 +5449,10 @@ unless otherwise specified.
 #+RESULTS:
 #+BEGIN_EXPORT html
 <ul>
+ <li><a href=glass.pdf> The glass optic</a><em>, 27 April 2019</em><br></li>
  <li><a href=traversals.pdf> The traversal is the optic for polynomial functors</a><em>, 01 April 2019</em><br></li>
  <li><a href=monoidesgrouposcategorias.pdf> Monoides, groupos, grupoides, categorías</a><em>, 01 April 2019</em><br></li>
- <li><a href=dedekindrealsagda.html> Dedekind reals in Agda</a><em>, 20 May 2019</em><br></li>
+ <li><a href=dedekindrealsagda.html> Dedekind reals in Agda</a><em>, 20 April 2019</em><br></li>
  <li><a href=monoidescoloreadosbimonoidescoloreados.pdf> Monoides coloreados y bi(monoides coloreados)</a><em>, 14 April 2019</em><br></li>
  <li><a href=lawverefixedpoint.html> Lawvere's fixed point theorem</a><em>, 28 February 2019</em><br></li>
  <li><a href=apuntesdehaskell.html> Apuntes de Haskell</a><em>, 27 February 2019</em><br></li>
