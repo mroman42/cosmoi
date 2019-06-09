@@ -21,6 +21,7 @@
 #+HTML_HEAD:     <div id="navigation">
 #+HTML_HEAD:         <a href="index.html">Index</a>
 #+HTML_HEAD:         <a href="about.html">About</a>
+#+HTML_HEAD:         <a href="math.html">Math</a>
 #+HTML_HEAD:         <a href="feed.xml">RSS</a>
 #+HTML_HEAD:     </div>
 #+HTML_HEAD: </div>
@@ -1467,7 +1468,7 @@ to t", which apparently also rhymes.
 :TITLE: The traversal is the optic for polynomial functors
 :EXPORT_FILE_NAME: traversals.pdf
 :EXPORT_DATE: 24th May, 2019
-:INDEX_DATE: <2019-04-01 Mon>
+:INDEX_DATE: <2019-04-24 Mon>
 :EXPORT_OPTIONS: toc:nil num:t lang:en
 :END:
 
@@ -1558,7 +1559,6 @@ families of morphisms as follows.
 \[
 p(x,y) \to \int_{f \in \mathbf{Poly}} p(f(x), f(y))
 \]
-
 
 ** Monoides, grupos, grupoides, categorías                                                   :post:
 :PROPERTIES:
@@ -5401,6 +5401,31 @@ Que viene de nuevo dada por $y(\tau) = \tau_A(1_A)$.
 
 [3] The Catsters.
     [[https://www.youtube.com/watch?v=TLMxHB19khE][Representables and Yoneda 3]]
+
+* Math
+:PROPERTIES:
+:TITLE:  Math
+:EXPORT_FILE_NAME: math.html
+:END:
+
+** Papers
+
+ * *[[http://jose.theoj.org/papers/8324e9aa1019760e987673f55e335f34][Mikrokosmos: an educational lambda interpreter]]*. /Mario Román/. The
+   Journal of Open Source Education, 2018.
+ 
+** Posts
+
+ * [[https://libreim.github.io/blog/2016/12/21/monadas/][*Mónadas*]], LibreIM 2016.
+ * [[https://libreim.github.io/blog/2016/09/19/aprendiendo-emacs/][*Aprendiendo Emacs*]], LibreIM 2016.
+
+** Talks
+
+ * *[[https://mroman42.github.io/cosmoi/monoidescoloreadosbimonoidescoloreados.pdf][Monoides coloreados, bi(monoides coloreados)]]*. /(26th April 2019, [[https://wpd.ugr.es/~iemath/][IEMath]])/
+ * *[[https://mroman42.github.io/libreim-constructiva/constructiva.pdf][Ideas sobre constructivismo y computabilidad]]*. /(21st September 2018, [[https://wpd.ugr.es/~iemath/][IEMath]])/
+ * *[[https://github.com/mroman42/lambda.notes][Lógica intuicionista y cálculo lambda]]*. /(19th January 2018, [[https://wpd.ugr.es/~iemath/][IEMath]])/
+ * *[[https://github.com/mroman42/lambda.notes][Categorías, funtores y transformaciones naturales]]*. /(18th November 2017, [[https://wpd.ugr.es/~iemath/][IEMath]])/
+
+
 * About
 :PROPERTIES:
 :TITLE:  About
@@ -5450,7 +5475,7 @@ unless otherwise specified.
 #+BEGIN_EXPORT html
 <ul>
  <li><a href=glass.pdf> The glass optic</a><em>, 27 April 2019</em><br></li>
- <li><a href=traversals.pdf> The traversal is the optic for polynomial functors</a><em>, 01 April 2019</em><br></li>
+ <li><a href=traversals.pdf> The traversal is the optic for polynomial functors</a><em>, 24 April 2019</em><br></li>
  <li><a href=monoidesgrouposcategorias.pdf> Monoides, groupos, grupoides, categorías</a><em>, 01 April 2019</em><br></li>
  <li><a href=dedekindrealsagda.html> Dedekind reals in Agda</a><em>, 20 April 2019</em><br></li>
  <li><a href=monoidescoloreadosbimonoidescoloreados.pdf> Monoides coloreados y bi(monoides coloreados)</a><em>, 14 April 2019</em><br></li>
