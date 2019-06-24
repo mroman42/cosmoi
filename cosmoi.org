@@ -16,11 +16,11 @@
 
 #+HTML_HEAD: <div id="header">
 #+HTML_HEAD:     <div id="logo">
-#+HTML_HEAD:         <a hrwef="index.html">Cosmoi</a>
+#+HTML_HEAD:         <a hrwef="blog.html">Mario Román</a>
 #+HTML_HEAD:     </div>
 #+HTML_HEAD:     <div id="navigation">
-#+HTML_HEAD:         <a href="index.html">Index</a>
 #+HTML_HEAD:         <a href="about.html">About</a>
+#+HTML_HEAD:         <a href="blog.html">Blog</a>
 #+HTML_HEAD:         <a href="math.html">Math</a>
 #+HTML_HEAD:         <a href="feed.xml">RSS</a>
 #+HTML_HEAD:     </div>
@@ -422,9 +422,63 @@
 #+latex_header: \DeclareUnicodeCharacter{2262}{\ensuremath{\scaleobj{0.8}{\boldsymbol{\not\equiv}}}}
 #+latex_header: \DeclareUnicodeCharacter{2228}{\ensuremath{\scaleobj{0.8}{\boldsymbol{\vee}}}}
 #+latex_header: \DeclareUnicodeCharacter{2225}{\ensuremath{\scaleobj{0.8}{\boldsymbol{\|}}}}
+* Blog index
+:PROPERTIES:
+:TITLE:  Blog
+:EXPORT_FILE_NAME: blog.html
+:EXPORT_TITLE: Blog index
+:INDEX_DATE: <2018-05-25 Fri 18:12>
+:END:
 
-* Posts
+#+begin_src emacs-lisp :exports results :results output html :eval never-export
+  (defun print-post-at-point () 
+    (princ (concat  
+      " <li><a href=" 
+      (concat (org-entry-get (point) "EXPORT_FILE_NAME")  "> ") 
+      (org-entry-get (point) "TITLE") "</a><em>"
+      (format-time-string ", %d %B %Y" (date-to-time (org-entry-get (point) "INDEX_DATE"))) "</em><br></li>\n")))
+
+  (defun print-index ()
+    (progn 
+      (princ "<ul>\n") 
+      (org-map-entries (lambda () (print-post-at-point)) "+post" nil) 
+      (princ "</ul>\n")))
+
+  (print-index)
+#+end_src
+#+RESULTS:
+#+BEGIN_EXPORT html
+<ul>
+ <li><a href=dedekindrealsagda.html> Dedekind reals in Agda</a><em>, 20 April 2019</em><br></li>
+ <li><a href=lawverefixedpoint.html> Lawvere's fixed point theorem</a><em>, 28 February 2019</em><br></li>
+ <li><a href=apuntesdehaskell.html> Apuntes de Haskell</a><em>, 27 February 2019</em><br></li>
+ <li><a href=dotfilesinasingleorg.html> dotfiles in a single org-file</a><em>, 21 January 2019</em><br></li>
+ <li><a href=picadolawvereinterview.html> Picado's Interview with Lawvere</a><em>, 08 September 2018</em><br></li>
+ <li><a href=quoteampere.html> A quote by Ampère</a><em>, 03 September 2018</em><br></li>
+ <li><a href=libreimquintoaniversario.html> LibreIM, casi cinco años después</a><em>, 03 September 2018</em><br></li>
+ <li><a href=orgdrillspacedrepetition.html> Org-drill and spaced repetition</a><em>, 03 September 2018</em><br></li>
+ <li><a href=bachelorsthesisinorgmode.html> Writing a bachelor's thesis in org-mode</a><em>, 15 August 2018</em><br></li>
+ <li><a href=bloggingwithasingleorgfile.html> Blogging with a single org-file</a><em>, 15 August 2018</em><br></li>
+ <li><a href=categorytheoryandlambdacalculus.html> Category theory and lambda calculus</a><em>, 01 July 2018</em><br></li>
+ <li><a href=evaluacionlambda.html> Evaluación en cálculo lambda</a><em>, 25 May 2018</em><br></li>
+ <li><a href=mikrokosmos.html> Mikrokosmos</a><em>, 25 May 2018</em><br></li>
+ <li><a href=aprendiendoemacs.html> Aprendiendo Emacs</a><em>, 25 May 2018</em><br></li>
+ <li><a href=capturandolinksenorgmode.html> Capturando links en org-mode</a><em>, 23 March 2017</em><br></li>
+ <li><a href=distribucionesmonadas.html> Distribuciones discretas con mónadas</a><em>, 25 May 2018</em><br></li>
+ <li><a href=induccionestructural.html> Inducción estructural</a><em>, 14 March 2015</em><br></li>
+ <li><a href=monadas.html> Mónadas</a><em>, 24 December 2016</em><br></li>
+ <li><a href=matematicasemacs.html> Matemáticas en emacs</a><em>, 26 September 2016</em><br></li>
+ <li><a href=ideasteoriatipos.html> Ideas de teoría de tipos</a><em>, 08 January 2016</em><br></li>
+ <li><a href=informalcv.html> Informal CV</a><em>, 21 October 2018</em><br></li>
+ <li><a href=wikipediacontributions.html> Wikipedia contributions</a><em>, 17 February 2018</em><br></li>
+</ul>
+#+END_EXPORT
+
+* Blog
 ** TODO Yoneda y ópticas
+# A blog post on Yoneda lemma. Use the analogy of city travelling (@
+# iceland jack) and give examples both in mathematics and optics.
+
 *** Bidireccionalidad y profuntores
 # Por qué nos preocupa la bidireccionalidad.
 
@@ -1427,197 +1481,8 @@ Double dual of a vector space.
 mountains, but to flatten them." -- Conor McBride
 #+end_quote
 
-** The glass optic                                                                           :post:
-:PROPERTIES:
-:TITLE: The glass optic
-:EXPORT_FILE_NAME: glass.pdf
-:EXPORT_DATE: 27th May, 2019
-:INDEX_DATE: <2019-04-27 Mon>
-:EXPORT_OPTIONS: toc:nil num:t lang:en
-:END:
 
-At the intersection between a *lens* and a *grate* there should be an
-optic that I have started to call *glass*.  If the pseudomonoid action
-that describes a lens is $c \times (-)$ and the one for glass is $c \to (-)$,
-the action that we want to get should be the one given by the
-coproduct pseudomonoid.
 
-We rewrite the action of every word $c_1d_1\dots c_kd_k$ as follows,
-for some $e,f \in \mathbf{C}$ bicartesian closed category.
-\[\begin{aligned}
-a &\mapsto d_1 \times (c_1 \to d_2 \times (c_2 \to \dots x)) \\
-&= d_1 \times (c_1 \to d_2) \times ((c_1 \times c_2) \to \dots x) \\
-&= e \times (f \to x)
-\end{aligned}\]
-And we derive the concrete representation.
-\[\begin{aligned}
-\int^{c,d} & \mathbf{C}(s, c \times (d \to a)) \times \mathbf{C}((d \to b) \times c , t) \\&\cong
-\int^{c,d} \mathbf{C}(s, c) \times \mathbf{C}(s \to d \to a) \times \mathbf{C}((d \to b) \times c , t) \\&\cong
-\int^{d} \mathbf{C}(s \to d \to a) \times \mathbf{C}((d \to b) \times s , t) \\&\cong
-\int^{d} \mathbf{C}(d \to (s \to a)) \times \mathbf{C}((d \to b) \times s , t) \\&\cong
-\mathbf{C}(((s \to a) \to b) \times s , t) \\&\cong
-\mathbf{C}(((s \to a) \to b) , s \to t)
-\end{aligned}\]
-
-The optic in Haskell is =((s -> a) -> b) -> s -> t=. My intuition at the
-moment is "If from a getter you can create a b, then you can update s
-to t", which apparently also rhymes.
-
-** The traversal is the optic for polynomial functors                                        :post:
-:PROPERTIES:
-:TITLE: The traversal is the optic for polynomial functors
-:EXPORT_FILE_NAME: traversals.pdf
-:EXPORT_DATE: 24th May, 2019
-:INDEX_DATE: <2019-04-24 Mon>
-:EXPORT_OPTIONS: toc:nil num:t lang:en
-:END:
-
-We present a derivation of the traversal as the optic associated with
-polynomial functors.  This is still work in progress and I have not checked
-all the details, I might retract this if it does not work.
-
-The idea here is that optics can be described as associated to the action
-of some pseudomonoid. This approach was previously taken by Riley but we
-make this work with Bartosz' Yoneda-with-adjunction trick applied to arbitrary
-actions. We can consider the same monad Pastro-Street use for Tambara modules
-but for an arbitrary pseudomonoid action.
-
-*** Yoneda with adjunction
-#+begin_lemma
-Let $\Phi$ be a monad in $\mathbf{Prof}$ and let $U \colon \Phi\mathbf{-alg} \to \mathbf{Prof}$ be the forgetful
-functor.  We know the following isomorphism.
-\[
-\int_{p} (Up)(a,b) \to (Up)(s,t) \cong (\Phi ( \mathbf{C}^{op} \times \mathbf{C} )((a,b), -)) (s,t)
-\]
-#+end_lemma
-
-*** Comonad for an action
-#+begin_lemma
-Let $(\cdot) \colon \mathbf{M} \times \mathbf{C} \to \mathbf{C}$ be an action of a monoidal category on a category.
-The following should form a comonad where the unit and the multiplication
-are given by the unit and tensor of the monoidal category (or, in general,
-the pseudomonoid structure).
-\[
-(\Theta p)uv = \int_{m \in \mathbf{M}} p(m \cdot u , m \cdot v)
-\]
-The laws should follow from the laws of the pseudomonoid.
-#+end_lemma
-
-#+begin_theorem
-The comonoid has a right adjoint given by
-\[
-(\Phi p)xy = \int^{u,v,m} \mathbf{C}(x, m \cdot u) \times \mathbf{C}(m \cdot v , y) \times p(u,v).
-\]
-#+end_theorem
-
-*** General formula
-Applying Yoneda with adjunction to this monad yields
-\[
-\left( \int_{p \in \Theta\mbox{-}\mathbf{coAlg}} p (a, b) \to p (s, t) \right)
-\cong
-\int^{m \in \mathbf{M}} \mathbf{C}(s , m \cdot a) \times \mathbf{C}(m \cdot b , t).
-\]
-Where we are quantifying over the functors that have a coalgebra
-for the comonad. That is, the profunctors that preserve the
-the action.
-\[
-p (a , b) \to \int_{m \in \mathbf{M}} p(m \cdot a , m \cdot b)
-\]
-
-#+begin_note
-The idea is that it should generalize the results described (in Riley
-and) first in Bartosz' post on profunctor optics for Tambara modules
-to an arbitrary action.  We need to check details.
-#+end_note
-
-*** Traversal
-Polynomial functors $f \colon \mathbf{C} \to \mathbf{C}$ in a bicartesian closed category are these
-that can be written as $f(x) = \sum_n \lambda_nx^n$, where $x^n$ is the n-fold cartesian product. 
-We consider the category $\mathbf{Poly}$ of polynomial functors as a full subcategory 
-of $[ \mathbf{C} , \mathbf{C} ]$. This category is monoidal with the
-monoidal product given by composition of endofunctors.  There exists an action
-$\mathbf{Poly} \to \mathbf{Sets} \to \mathbf{Sets}$ given by evaluation.
-
-Let $f \in \mathbf{Poly}$. It must be of the form $f(x) = \sum_n \lambda_n x^n$. We
-apply cocontinuity of hom, then we apply Yoneda n-times. Yoneda substitutes the
-coefficient $\lambda_n$ inside $f$ by $(b^n \to t)$.
-\[\begin{aligned}
-\int^{p \in \mathbf{Poly}} \mathbf{C}(s , f(a)) \times \mathbf{C}(f(b), t)  \cong \\ 
-\int^{p \in \mathbf{Poly}} \mathbf{C}(s , f(a)) \times \mathbf{C}(\sum_{n} \lambda_n b^n, t) \cong \\
-\int^{p \in \mathbf{Poly}} \mathbf{C}(s , f(a)) \times \prod_{n} \mathbf{C}( \lambda_n b^n, t) \cong \\
-\int^{p \in \mathbf{Poly}} \mathbf{C}(s , f(a)) \times \prod_{n} \mathbf{C}( \lambda_n , b^n \to t) \cong \\
-\mathbf{C} \left(  s , \sum_n a^n \times ( b^n \to t) \right)
-\end{aligned}\]
-And thus the traversal is the associated optic to the action of
-polynomial functors on the category of sets.  In other words,
-\[
-(s \to \sum_n a^n \times (b^n \to t)) \cong  \int_{p \in \mathsf{TambPoly}} p(a,b) \to p(s,t),
-\]
-where $\mathsf{TambPoly}$ is the subcategory of profunctors that are Tambara
-modules for the action of polynomial functors. That is, that have
-families of morphisms as follows.
-\[
-p(x,y) \to \int_{f \in \mathbf{Poly}} p(f(x), f(y))
-\]
-
-** Monoides, grupos, grupoides, categorías                                                   :post:
-:PROPERTIES:
-:TITLE: Monoides, groupos, grupoides, categorías
-:EXPORT_FILE_NAME: monoidesgrouposcategorias.pdf
-:EXPORT_DATE: 1 de abril de 2019
-:INDEX_DATE: <2019-04-01 Mon>
-:EXPORT_OPTIONS: toc:nil num:t lang:es
-:END:
-
-\quad\\
-
-*** Monoides                                                                              :ignore:
-#+begin_definition
-Un *monoide* es una estructura $A$ en la que (1) podemos /componer/
-cualesquiera dos elementos en uno nuevo con una operación 
-$\circ \colon A \times A \to A$ y en la que (2) existe un elemento neutro $e$
-que no afecta al componerse con otro, $a \circ e = e \circ a = a$ para
-cualquier $a : A$, y (3) la composición es asociativa, siendo
-$a \circ (b \circ c) = (a \circ b) \circ c$ para cualesquiera $a,b,c : A$.
-#+end_definition
-
-Ejemplos son:
-
- 1. Los números naturales con la suma como operación y el cero
-    como elemento neutro. $n + 0 = 0 + n = n$
- 2. Las cadenas de texto, con la concatenación como operación y
-    la cadena vacía como elemento neutro. $a \circ "" = "" \circ a = a$
-
-*** Grupo                                                                                 :ignore:
-#+begin_definition
-Un *grupo* es un monoide donde cada elemento $a : A$ tiene una
-inversa $a^{-1} : A$ tal que $a \circ a^{-1} = a^{-1} \circ a = e$.
-#+end_definition
-
-Ejemplos son:
-
- 1. Los números enteros con la suma como operación, el cero como
-    elemento neutro y el elemento opuesto como negación.
-
-*** Categoría                                                                             :ignore:
-#+begin_definition
-Una *categoría* es un monoide coloreado. Eso significa que no podemos
-componer elementos libremente, sino que cada elemento $a : A$ tiene un
-dominio $\mathrm{dom}(a)$ y un codominio $\mathrm{cod}(a)$. Sólo podemos componer $a \circ b$ 
-si $\mathrm{cod}(b) = \mathrm{dom}(a)$, y la composición tendrá dominio $\mathrm{dom}(b)$ y 
-codominio $\mathrm{cod}(b)$.
-#+end_definition
-
-Ejemplos son:
-
- 1. Las funciones con la composición de funciones.
- 2. Las funciones lineales entre espacios vectoriales con la composición.
- 3. Las demostraciones de $(a \leq b)$ con la transitividad.
-
-*** Grupoide                                                                              :ignore:
-#+begin_definition
-Un *grupoide* es un grupo coloreado.
-#+end_definition
 
 ** Dedekind reals in Agda                                                                    :post:
 :PROPERTIES:
@@ -1635,1064 +1500,6 @@ from its definition.
 
 The code is on [[https://github.com/mroman42/dedekind-reals][GitHub]].
 
-** Monoides coloreados y bi(monoides coloreados)                                             :post:
-:PROPERTIES:
-:TITLE: Monoides coloreados y bi(monoides coloreados)
-:EXPORT_FILE_NAME: monoidescoloreadosbimonoidescoloreados.pdf
-:EXPORT_DATE: 14 de abril de 2019
-:INDEX_DATE: <2019-04-14 Sun>
-:EXPORT_OPTIONS: toc:3 num:t lang:es
-:END:
-
-\quad\\
-
-*** Introducción                                                                          :ignore:
-Nuestro objetivo es el siguiente: primero presentamos una /sintaxis/, ciertos
-símbolos que forman diagramas y que siguen ciertas reglas. Luego
-veremos que esta sintaxis toma /modelos/ en objetos matemáticos con
-cierta estructura.  ¿Cuál es la utilidad de estudiar la sintaxis? Cada
-vez que probemos algo sólo usando sus reglas, lo estaremos probando
-para todos sus modelos.  ¿En qué se diferencia esto de una
-presentación axiomática de, digamos, un grupo? en que nuestra sintaxis
-viene dada, no por cadenas de caracteres como suele hacerse en lógica,
-¡sino por diagramas!  Vamos a ir un paso más allá, y, haciendo
-implícitamente uso de teoremas de coherencia y complitud, definir las
-nuestras estructuras de forma elemental usando diagramas.  En lugar de
-definir diagramas, los tomamos como conceptos primitivos.
-
-/In this article I am drawing diagrams using tikz and following
-Marsden's cite:marsden14 macros for string diagrams./ /The general idea
-follows this paper, but also Vicary-Heunen-Reutter's notes/ /for
-Categorical Quantum Mechanics,/ cite:vicary19.
-
-*** Cálculo gráfico
-Normalmente nuestras ecuaciones usan una dimensión. En el cálculo
-diagramático empezaremos usando una sola dimensión pero pasaremos a
-usar dos, y en principio nada nos limitaría a usar estructuras de
-dimensiones arbitrarias.
-
-Cuando usamos una dimensión, podemos, substituir cualquiera de las
-subexpresiones que forman la fórmula por otra expresión que sea igual
-a ella.  De la misma forma, cuando tenemos dos dimensiones, podemos
-substituir cualquiera de los subdiagramas (recuadros del diagrama
-original) por un diagrama que sea igual.
-
-Seguiremos algunas convenciones.
-
- * Los diagramas se leen de abajo a arriba.
- * Dos diagramas que sean isotópicos, es decir, tales que uno
-   pueda transformarse en el otro sólo moviendo los nodos y las
-   cuerdas sin crear cruces, son iguales.
-
-*** Monoides y monoides coloreados
-#+begin_definicion
-Un elemento de un *monoide* es una /cuerda/ con /nodos/, un diagrama en una dimensión.
-Los siguientes diagramas representan elementos de un monoide.
-\begin{center}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[label=below:$$] (b) ++(0,4) coordinate[label=above:$M$] (t);
-\coordinate[dot, label=right:$a$] (alpha) at ($(b)!0.333!(t)$);
-\coordinate[dot, label=right:$b$] (alpha') at ($(b)!0.666!(t)$);
-\draw (b) -- (alpha) to node[left]{$$} (alpha') -- (t);
-\begin{pgfonlayer}{background}
-\fill[color={white}] ($(t) + (-2,0)$) rectangle (b);
-\fill[color={white}] (t) rectangle ($(b) + (2,0)$);
-\end{pgfonlayer}
-\end{tikzpicture}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[label=below:$$] (b) ++(0,4) coordinate[label=above:$M$] (t);
-\draw (b) -- (t);
-\begin{pgfonlayer}{background}
-\fill[color={white}] ($(t) + (-2,0)$) rectangle (b);
-\fill[color={white}] (t) rectangle ($(b) + (2,0)$);
-\end{pgfonlayer}
-\end{tikzpicture}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[label=below:$$] (b) ++(0,4) coordinate[label=above:$M$] (t);
-\coordinate[dot, label=right:$x$] (alpha) at ($(b)!0.75!(t)$);
-\coordinate[dot, label=right:$y$] (alpha') at ($(b)!0.5!(t)$);
-\coordinate[dot, label=right:$z$] (alpha'') at ($(b)!0.25!(t)$);
-\draw (b) -- (alpha) to node[left]{$$} (alpha') to node[left]{$$} (alpha'') -- (t);
-\begin{pgfonlayer}{background}
-\fill[color={white}] ($(t) + (-2,0)$) rectangle (b);
-\fill[color={white}] (t) rectangle ($(b) + (2,0)$);
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{center}
-A la cuerda vacía se le llama *identidad* o /elemento neutro/ del monoide.
-A la *concatenación* de dos cuerdas se le llama tradicionalmente /multiplicación/.
-#+end_definicion
-
-#+begin_ejemplo
-Los números naturales con la suma forman un monoide.[fn:1] La
-cuerda vacía es el cero y dos cuerdas con la misma suma se
-declaran iguales.
-\begin{equation*}
-\begin{gathered}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[label=below:$$] (b) ++(0,4) coordinate[label=above:$\mathbb{N}$] (t);
-\coordinate[dot, label=right:$3$] (alpha) at ($(b)!0.75!(t)$);
-\coordinate[dot, label=right:$2$] (alpha') at ($(b)!0.5!(t)$);
-\coordinate[dot, label=right:$4$] (alpha'') at ($(b)!0.25!(t)$);
-\draw (b) -- (alpha) to node[left]{$$} (alpha') to node[left]{$$} (alpha'') -- (t);
-\begin{pgfonlayer}{background}
-\fill[color={white}] ($(t) + (-2,0)$) rectangle (b);
-\fill[color={white}] (t) rectangle ($(b) + (2,0)$);
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{gathered} = \begin{gathered}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[label=below:$$] (b) ++(0,4) coordinate[label=above:$\mathbb{N}$] (t);
-\coordinate[dot, label=right:$9$] (alpha) at ($(b)!0.5!(t)$);
-\draw (b) -- (alpha) -- (t);
-\begin{pgfonlayer}{background}
-\fill[color={white}] ($(t) + (-2,0)$) rectangle (b);
-\fill[color={white}] (t) rectangle ($(b) + (2,0)$);
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{gathered}
-\end{equation*}
-¿Cuál es la ventaja de escribir esto frente a la notación usual de un
-monoide? con esta notación, la asociatividad es transparente. No tenemos
-forma de distinguir $((3+2)+4)$ de $(3+(2+4))$ y esto es bueno, porque
-en un monoide no debería poder existir forma de distinguirlos. Además, cuando
-dibujamos la unidad como una cuerda vacía, estamos haciendo la unitalidad
-transparente. No tenemos forma de distinguir $9$ de $0+9$.
-
-[fn:1] Y los dibujos describen un /ábaco/.
-#+end_ejemplo
-
-La estructura de un monoide es muy rica, pero podemos ir más allá. En
-un monoide, cualesquiera dos nodos pueden componerse sobre la cuerda,
-pero podemos limitar esta composición dando colores a las cuerdas.
-Cada nodo cambiará el color de la cuerda, y sólo podremos componer dos
-nodos si el color de salida del primero coincide con el color de
-entrada del segundo.
-
-#+begin_definicion
-Una *categoría* es un monoide coloreado. Alternativamente, un monoide es
-una categoría monocroma.  Normalmente, a los elementos de una categoría
-se les llama /morfismos/, a los colores se les llama /objetos,/ se les pone una
-etiqueta en lugar de un color, y se dice que
-/un monoide es una categoría con un sólo objeto/. 
-Los siguientes son morfismos en una categoría.
-\begin{center}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[label=below:$$] (b) ++(0,4) coordinate[label=above:$\mathbf{C}$] (t);
-\coordinate[dot, label=right:$f$] (alpha) at ($(b)!0.333!(t)$);
-\coordinate[dot, label=right:$g$] (alpha') at ($(b)!0.666!(t)$);
-\draw[red!75!black] (b) to node[left]{$A$} (alpha);
-\draw[blue!75!black] (alpha) to node[left]{$B$} (alpha');
-\draw[green!60!black] (alpha') to node[left]{$C$} (t);
-\begin{pgfonlayer}{background}
-\fill[color={white}] ($(t) + (-2,0)$) rectangle (b);
-\fill[color={white}] (t) rectangle ($(b) + (2,0)$);
-\end{pgfonlayer}
-\end{tikzpicture}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[label=below:$$] (b) ++(0,4) coordinate[label=above:$\mathbf{C}$] (t);
-\draw[red!75!black] (b) to node[left]{$A$} (t);
-\begin{pgfonlayer}{background}
-\fill[color={white}] ($(t) + (-2,0)$) rectangle (b);
-\fill[color={white}] (t) rectangle ($(b) + (2,0)$);
-\end{pgfonlayer}
-\end{tikzpicture}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[label=below:$$] (b) ++(0,4) coordinate[label=above:$\mathbf{C}$] (t);
-\coordinate[dot, label=right:$h$] (alpha) at ($(b)!0.5!(t)$);
-\draw[blue!75!black] (b) to node[left]{$B$} (alpha);
-\draw[red!75!black] (alpha) to node[left]{$A$} (t);
-\begin{pgfonlayer}{background}
-\fill[color={white}] ($(t) + (-2,0)$) rectangle (b);
-\fill[color={white}] (t) rectangle ($(b) + (2,0)$);
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{center}
-A la concatenación se le suele llamar *composición* y a la cuerda vacía de un
-determinado color se le llama *identidad* sobre ese objeto. Al color de entrada
-de un nodo se le llama *dominio* y al color de salida se le llama *codominio*.
-#+end_definicion
-
-Ahora la composición está limitada: podemos poner $g$ después de $f$
-porque el dominio de $g$ y el codominio de $f$ coinciden, pero no
-podemos poner $h$ después de $g$, por ejemplo, porque $h$ tiene dominio $B$.
-
-#+begin_ejemplo
-Las funciones entre conjuntos forman una categoría, que suele notarse
-por $\mathbf{Set}$.  Cada color es un conjunto, y entre dos conjuntos $A$ y $B$ podemos
-considerar los nodos dados por las funciones $f \colon A \to B$.  Al concatenar
-varias funciones, lo que hacemos es componerlas. Una cadena vacía sobre
-un conjunto representa la función identidad sobre ese conjunto.
-\begin{equation*}
-\begin{gathered}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[label=below:$$] (b) ++(0,4) coordinate[label=above:$\mathbf{Set}$] (t);
-\coordinate[dot, label=right:$\mathsf{not}$] (alpha) at ($(b)!0.666!(t)$);
-\coordinate[dot, label=right:$\mathsf{even}$] (alpha') at ($(b)!0.333!(t)$);
-\draw[yellow!60!black] (t) to node[left]{$\mathsf{Bool}$} (alpha);
-\draw[yellow!60!black] (alpha) to node[left]{$\mathsf{Bool}$} (alpha');
-\draw[red!70!black] (alpha') to node[left]{$\mathbb{N}$} (b);
-\begin{pgfonlayer}{background}
-\fill[color={white}] ($(t) + (-2,0)$) rectangle (b);
-\fill[color={white}] (t) rectangle ($(b) + (2,0)$);
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{gathered} = \begin{gathered}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[label=below:$$] (b) ++(0,4) coordinate[label=above:$\mathbf{Set}$] (t);
-\coordinate[dot, label=right:$\mathsf{odd}$] (alpha) at ($(b)!0.5!(t)$);
-\draw[red!70!black] (b) -- (alpha);
-\draw[yellow!70!black] (alpha) -- (t);
-\begin{pgfonlayer}{background}
-\fill[color={white}] ($(t) + (-2,0)$) rectangle (b);
-\fill[color={white}] (t) rectangle ($(b) + (2,0)$);
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{gathered}
-\end{equation*}
-La asociatividad de la composición de funciones y la neutralidad de la
-función se han vuelto invisibles con esta notación.
-#+end_ejemplo
-
-*** Categorías monoidales
-Cuando los diagramas de verdad se vuelven interesantes es cuando
-pasamos de una a dos dimensiones.  Nuestra siguiente definición usa
-dos dimensiones. En uno de los ejes tenemos un monoide, en el otro
-tenemos una categoría.
-
-#+begin_definicion
-Los morfismos de *categoría monoidal* vienen dados por diagramas
-bidimensionales de cuerdas con distintos colores.  Un morfismo puede
-tener como entrada y salida un número cualquiera de cuerdas.
-\begin{center}
-\begin{tabular}{c c c c}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate (bl) ++(0,2) coordinate[dot, label=left:$\alpha$] (alpha) ++(0,2) coordinate (tl)
- (bl) ++(2,0) coordinate (br) ++(0,2) coordinate[dot, label=right:$\beta$] (beta) ++(0,2) coordinate (tr);
-\draw[red!75!black] (bl) -- (alpha);
-\draw[blue!75!black] (alpha) -- (tl);
-\draw[green!75!black] (br) -- (beta);
-\draw[red!75!black] (beta) -- (tr);
-\begin{pgfonlayer}{background}
-\fill[color={white!95!black}] ($(tl) + (-2,0)$) rectangle (bl);
-\fill[color={white!95!black}] (tl) rectangle (br);
-\fill[color={white!95!black}] (tr) rectangle ($(br) + (2,0)$);
-\end{pgfonlayer}
-\end{tikzpicture} 
-&
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[dot, label=above:\ensuremath{\gamma}]
- (eta) ++(-1,1) coordinate (a) ++(0,1) coordinate (tl)
- (eta) ++(1,1) coordinate (b) ++(0,1) coordinate (tr)
- (eta) ++(-1,-1) coordinate[dot, label=left:$\delta$] (c) ++(0,-1) coordinate (el)
- (eta) ++(1,-1) coordinate (d) ++(0,-1) coordinate (er)
- (eta) ++(0,-2) coordinate (e);
-\draw[red!75!black] (tl) -- (a) to[out=-90, in=180] (eta.west);
-\draw (eta.west) -- (eta.east);
-\draw[red!75!black] (eta.east) to[out=0, in=-90] (b) -- (tr);
-\draw[blue!75!black] (el) -- (c);
-\draw[orange!75!black] (c) to[out=90, in=180] (eta.west);
-\draw (eta.west) -- (eta.east);
-\draw[blue!75!black] (eta.east) to[out=0, in=90] (d) -- (er);
-\draw[blue!75!black] (eta) -- (e);
-\begin{pgfonlayer}{background}
-\fill[white!95!black] ($(tl) + (-2,0)$) rectangle ($(tr) + (2,-4)$);
-%\fill[white!95!black] (tl) -- (a) to[out=-90, in=180] (eta.west) -- (eta.east) to[out=0, in=-90] (b) -- (tr) -- cycle;
-%\fill[white!95!black] ($(tl) + (-1,-2)$) rectangle ($(tr) + (1,-4)$);
-\end{pgfonlayer}
-\end{tikzpicture}
-&
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[dot, label=above:\ensuremath{\psi}]
- (eta) ++(0,-2) coordinate (e);
-\draw[blue!75!black] (eta) -- (e);
-\begin{pgfonlayer}{background}
-\fill[white!95!black] ($(eta) + (-2,2)$) rectangle ($(eta) + (2,-2)$);
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{tabular}
-\end{center}
-#+end_definicion
-
-Consideramos iguales cualesquiera dos diagramas que sean isotópicos,
-pero aun tenemos la restricción dada por los colores: el morfismo
-$\gamma$, por ejemplo, necesita tomar (¡en ese orden!) una entrada
-naranja y dos azules. Nuestro siguiente paso será colorear las regiones
-del diagrama, así que quizá es una buena idea cambiar los colores de las
-cuerdas por etiquetas, como implícitamente estamos haciendo con los
-morfismos.
-
-#+begin_ejemplo
-Las funciones sobre conjuntos no sólo forman una categoría, sino que
-forman una categoría monoidal con el producto dado por el producto
-cartesiano.  Esto nos permite además expresar funciones no necesariamente
-unarias en nuestros diagramas.  ¡Importante!: los diagramas se suelen leer
-de abajo hacia arriba; pero a veces también se encuentran en la literatura
-de izquierda a derecha o incluso de arriba a abajo.
-\begin{center}
-\begin{gathered}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[dot, label={[label distance=1ex]0:$\small{(+)}$}]
- (eta) ++(0,1.333) coordinate[dot, label=right:$\mathsf{odd}$] (a) ++(0,1.333) coordinate (tl)
- (eta) ++(-1,-1.333) coordinate (c) ++(0,0) coordinate (el)
- (eta) ++(1,-1.333) coordinate (d) ++(0,0) coordinate (er);
-\draw[yellow!75!black] (tl) -- (a);
-\draw[red!75!black] (a) -- (eta);
-\draw (eta.west) -- (eta.east);
-\draw[red!75!black] (el) -- (c);
-\draw[red!75!black] (c) to[out=90, in=180] (eta.west);
-\draw (eta.west) -- (eta.east);
-\draw[red!75!black] (eta.east) to[out=0, in=90] (d) -- (er);
-\begin{pgfonlayer}{background}
-\fill[white!95!black] ($(eta) + (-3,2.666)$) rectangle ($(eta) + (3,-1.333)$);
-\end{pgfonlayer}
-\end{tikzpicture}\end{gathered} = \begin{gathered}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[dot, label={[label distance=1ex]0:$\small{(\oplus)}$}]
- (eta) ++(0,1.333) coordinate (tl)
- (eta) ++(-1,-1.333) coordinate[dot, label=left:$\mathsf{odd}$] (c) ++(0,-1.333) coordinate (el)
- (eta) ++(1,-1.333)  coordinate[dot, label=right:$\mathsf{odd}$] (d) ++(0,-1.333) coordinate (er);
-\draw[yellow!75!black] (tl) -- (eta);
-\draw[red!75!black] (el) -- (c);
-\draw[yellow!75!black] (c) to[out=90, in=180] (eta.west);
-\draw (eta.west) -- (eta.east);
-\draw[yellow!75!black] (eta.east) to[out=0, in=90] (d);
-\draw[red!75!black] (d) -- (er);
-\begin{pgfonlayer}{background}
-\fill[white!95!black] ($(eta) + (-3,1.333)$) rectangle ($(eta) + (3,-2.666)$);
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{gathered}
-\end{center}
-Por cierto, esta ecuación está expresando que la función que calcula si un
-número es impar es un homomorfismo de monoides (en su definición usual como
-conjuntos) del monoide de los naturales con la suma al monoide de los booleanos
-con la operación xor.
-#+end_ejemplo
-
-*** PROs y teorías de Lawvere
-Nos hemos saltado un paso obvio. ¿Qué ocurre si tomamos dos
-dimensiones pero sólo usamos cuerdas de un color? El resultado *no* es
-una categoría monoidal con un solo objeto, sino una categoría monoidal
-cuyos objetos vienen dados por el monoide libre sobre un
-generador. Esto ocurre porque no forzamos un número arbitrario de
-cuerdas a ser iguales a una sóla cuerda.
-
-#+begin_definicion
-Un *PRO*, o *categoría de (pro)ductos monoidales*, es una categoría monoidal
-monocroma. Alternativamente, una categoría monoidal es un PRO coloreado.
-#+end_definicion
-
-#+begin_ejemplo
-Estas categorías pueden usarse para describir teorías algebraicas internas
-a nuestras teorías. ¿Qué quiere decir esto? Nosotros hemos partido de una
-noción primitiva de monoide y categoría, pero una vez que tenemos la categoría
-monoidal de conjuntos, podríamos intentar definir un monoide /en la categoría de conjuntos/.
-Este monoide no será un diagrama sino una operación de multiplicación (con dos
-entradas y una salida) y una unidad (con una salida y ninguna entrada)
-/dentro de la categoría/.  Un monoide en una categoría monoidal viene determinado por
-los siguientes morfismos.
-\begin{center}
-\begin{tabular}{c c c c}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[dot, label=below:\ensuremath{m}]
- (eta) ++(-1,-1) coordinate (a) ++(0,-1) coordinate (tl)
- (eta) ++(1,-1) coordinate (b) ++(0,-1) coordinate (tr)
- (eta) ++(0,2) coordinate (e);
-\draw[black] (tl) -- (a) to[out=90, in=180] (eta.east);
-\draw[black] (eta.west) to[out=0, in=90] (b) -- (tr);
-\draw[black] (eta) -- (e);
-\begin{pgfonlayer}{background}
-\fill[white!95!black] ($(eta) + (-3,2)$) rectangle ($(eta) + (3,-2)$);
-\end{pgfonlayer}
-\end{tikzpicture} &
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[dot, label=below:\ensuremath{u}]
- (eta) ++(0,2) coordinate (e);
-\draw[black] (eta) -- (e);
-\begin{pgfonlayer}{background}
-\fill[white!95!black] ($(eta) + (-2,2)$) rectangle ($(eta) + (2,-2)$);
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{tabular}
-\end{center}
-Cumpliendo los axiomas de un monoide, que son las siguientes ecuaciones.
-La primera se llama *unitalidad* y comprueba que la unidad es neutra respecto
-al producto.
-\begin{center}
-\begin{gathered}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[dot, label={[label distance=1ex]0:$\small{m}$}]
- (eta) ++(0,1.333) coordinate (tl)
- (eta) ++(-1,-1.333) coordinate[dot, label=left:$u$] (c) ++(0,-1.333) coordinate (el)
- (eta) ++(1,-1.333)  coordinate (d) ++(0,-1.333) coordinate (er);
-\draw[black] (tl) -- (eta);
-\draw[black] (c) to[out=90, in=180] (eta.west);
-\draw (eta.west) -- (eta.east);
-\draw[black] (eta.east) to[out=0, in=90] (d);
-\draw[black] (d) -- (er);
-\begin{pgfonlayer}{background}
-\fill[white!95!black] ($(eta) + (-3,1.333)$) rectangle ($(eta) + (3,-2.666)$);
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{gathered}
-=
-\begin{gathered}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate
- (eta) ++(0,1.333) coordinate (tl)
- (eta) ++(0,-1.333) coordinate (c) ++(0,-1.333) coordinate (el)
- (eta) ++(0,-1.333)  coordinate (d) ++(0,-1.333) coordinate (er);
-\draw[black] (tl) -- (er);
-\begin{pgfonlayer}{background}
-\fill[white!95!black] ($(eta) + (-3,1.333)$) rectangle ($(eta) + (3,-2.666)$);
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{gathered}
-=
-\begin{gathered}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[dot, label={[label distance=1ex]0:$\small{m}$}]
- (eta) ++(0,1.333) coordinate (tl)
- (eta) ++(-1,-1.333) coordinate (c) ++(0,-1.333) coordinate (el)
- (eta) ++(1,-1.333)  coordinate[dot, label=right:$u$] (d) ++(0,-1.333) coordinate (er);
-\draw[black] (tl) -- (eta);
-\draw[black] (el) -- (c);
-\draw[black] (c) to[out=90, in=180] (eta.west);
-\draw (eta.west) -- (eta.east);
-\draw[black] (eta.east) to[out=0, in=90] (d);
-\begin{pgfonlayer}{background}
-\fill[white!95!black] ($(eta) + (-3,1.333)$) rectangle ($(eta) + (3,-2.666)$);
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{gathered}
-\end{center}
-La segunda se llama *asociatividad* y nos permite aplicar las multiplicaciones
-en cualquier orden.
-\begin{center}
-\begin{gathered}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[dot, label={[label distance=1ex]180:$\small{m}$}]
- (eta) ++(0,1.333) coordinate (tl)
- (eta) ++(-1,-1.333) coordinate[dot, label={[label distance=1ex]180:$\small{m}$}] (c) ++(0,-1.333) coordinate (el)
- (c) ++(-0.666,-1.333) coordinate (pl)
- (c) ++(0.666,-1.333) coordinate (pr)
- (eta) ++(1,-1.333)  coordinate (d) ++(0,-1.333) coordinate (er);
-\draw[black] (tl) -- (eta);
-\draw[black] (c) to[out=90, in=180] (eta.west);
-\draw[black] (pl) to[out=90, in=180] (c.west);
-\draw (eta.west) -- (eta.east);
-\draw[black] (eta.east) to[out=0, in=90] (d);
-\draw[black] (c.east) to[out=0, in=90] (pr);
-\draw[black] (d) -- (er);
-\begin{pgfonlayer}{background}
-\fill[white!95!black] ($(eta) + (-3,1.333)$) rectangle ($(eta) + (3,-2.666)$);
-ñ\end{pgfonlayer}
-\end{tikzpicture}
-\end{gathered}
-=
-\begin{gathered}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[dot, label={[label distance=1ex]0:$\small{m}$}]
- (eta) ++(0,1.333) coordinate (tl)
- (eta) ++(-1,-1.333) coordinate (c) ++(0,-1.333) coordinate (el)
- (eta) ++(1,-1.333)  coordinate[dot, label={[label distance=1ex]0:$\small{m}$}] (d) ++(0,-1.333) coordinate (er)
- (d) ++(-0.666,-1.333) coordinate (pl)
- (d) ++(0.666,-1.333) coordinate (pr);
-\draw[black] (tl) -- (eta);
-\draw[black] (el) -- (c);
-\draw[black] (c) to[out=90, in=180] (eta.west);
-\draw (eta.west) -- (eta.east);
-\draw[black] (eta.east) to[out=0, in=90] (d);
-\draw[black] (pl) to[out=90, in=180] (d.west);
-\draw[black] (d.east) to[out=0, in=90] (pr);
-\begin{pgfonlayer}{background}
-\fill[white!95!black] ($(eta) + (-3,1.333)$) rectangle ($(eta) + (3,-2.666)$);
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{gathered}
-\end{center}
-Los números complejos con la multiplicación, las cadenas de caracteres
-con la concatenación o los naturales con la suma son ejemplos clásicos
-de monoide.
-#+end_ejemplo
-
-Dada una teoría, consideramos su teoría *dual* como aquella que resulta de
-invertir la dirección de los diagramas.
-
-#+begin_definicion
-Un *comonoide* es el dual de un monoide.  Esto quiere decir que tendrá una
-/counidad/ y una /comultiplicación/.
-\begin{center}
-\begin{tabular}{c c c c}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[dot, label=above:\ensuremath{n}]
- (eta) ++(-1,1) coordinate (a) ++(0,1) coordinate (tl)
- (eta) ++(1,1) coordinate (b) ++(0,1) coordinate (tr)
- (eta) ++(0,-2) coordinate (e);
-\draw[black] (tl) -- (a) to[out=-90, in=180] (eta.east);
-\draw[black] (eta.west) to[out=0, in=-90] (b) -- (tr);
-\draw[black] (eta) -- (e);
-\begin{pgfonlayer}{background}
-\fill[white!95!black] ($(eta) + (-3,2)$) rectangle ($(eta) + (3,-2)$);
-\end{pgfonlayer}
-\end{tikzpicture} &
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[dot, label=above:\ensuremath{c}]
- (eta) ++(0,-2) coordinate (e);
-\draw[black] (eta) -- (e);
-\begin{pgfonlayer}{background}
-\fill[white!95!black] ($(eta) + (-2,2)$) rectangle ($(eta) + (2,-2)$);
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{tabular}
-\end{center}
-Satisfaciendo axiomas de *counitalidad* y *coasociatividad*.
-
-¿Por qué no solemos hablar de comonoides cuando estudiamos álgebra?
-Nuestra notación es siempre unidimensional, y eso hace un poco difícil hablar
-de operaciones con más de una salida; además de esta limitación, esencialmente
-existe un único comonoide en la categoría de conjuntos. El único comonoide de la
-categoría de conjuntos es el comonoide de *copia y borrado*, donde la multiplicación
-es la diagonal $A \to A \times A$ y el borrado es la única función $A \to 1$.  Nunca hablamos
-de este comonoide, pero aparece continuamente cuando hacemos álgebra: lo que hacemos
-para evitar hablar de él es repetir nombres de variables, por ejemplo, la función
-$x \mapsto x + x$ es realmente la composición de la suma con la copia.
-#+end_definicion
-
-*** Trenzados
-Otra condición que suele considerarse para monoides es la
-*conmutatividad*.  Para ella, necesitamos un poco más de estructura
-en nuestra categoría monoidal.
-
-#+begin_definicion
-Una *categoría monoidal trenzada* es aquella en la que las cuerdas
-pueden trenzarse. Es decir, existe un morfismo, llamado
-/trenzado/, que escribimos como en el siguiente diagrama.
-\begin{center}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate
- (eta) ++(-1,1) coordinate (a) ++(0,1) coordinate (tl)
- (eta) ++(1,1) coordinate (b) ++(0,1) coordinate (tr)
- (eta) ++(-1,-1) coordinate (c) ++(0,-1) coordinate (el)
- (eta) ++(1,-1) coordinate (d) ++(0,-1) coordinate (er);
-\draw[red!75!black] (tl) -- (a);
-\draw[red!75!black] (a) to[out=-90, in=90] (d);
-\draw[red!75!black] (d) -- (er);
-\foreach \arrow in {1, ..., 2} {
-        \fill[white!95!black, name intersections={of=bg arrow and fg arrow\arrow, name=i}] (i-1) circle (4pt);
-    }
-\draw[blue!75!black] (b) -- (tr);
-\draw[blue!75!black] (b) to[out=-90, in=90] (c);
-\draw[blue!75!black] (el) -- (c);
-\begin{pgfonlayer}{background}
-\fill[white!95!black] ($(tl) + (-2,0)$) rectangle ($(tr) + (2,-4)$);
-%\fill[white!95!black] (tl) -- (a) to[out=-90, in=180] (eta.west) -- (eta.east) to[out=0, in=-90] (b) -- (tr) -- cycle;
-%\fill[white!95!black] ($(tl) + (-1,-2)$) rectangle ($(tr) + (1,-4)$);
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{center}
-#+end_definicion
-
-#+begin_ejemplo
-En una categoría monoidal, un monoide es *conmutativo* si el componer
-con una trenza no altera su multiplicación. La *coconmutatividad* se
-define de forma análoga.
-\begin{center}
-\begin{gathered}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[dot, label=below:\ensuremath{m}]
- (eta) ++(-1,-1) coordinate (a) ++(0,-1) coordinate (tl)
- (eta) ++(1,-1) coordinate (b) ++(0,-1) coordinate (tr)
- (eta) ++(0,2) coordinate (e);
-\draw[black] (a) to[out=90, in=180] (eta.east);
-\draw[black] (eta.west) to[out=0, in=90] (b);
-\draw[black] (eta) -- (e);
-\draw[name path=fgarrow, black] (tl) to[out=90,in=-90] (b);
-\draw[name path=bgarrow, black] (tr) to[out=90,in=-90] (a);
-\fill[white!95!black, name intersections={of=bgarrow and fgarrow, name=i}] (i-1) circle (13pt);
-\draw[name path=ubgarrow, black] (tr) to[out=90,in=-90] (a);
-\begin{pgfonlayer}{background}
-\fill[white!95!black] ($(eta) + (-3,2)$) rectangle ($(eta) + (3,-2)$);
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{gathered} =
-\begin{gathered}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[dot, label=below:\ensuremath{m}]
- (eta) ++(-1,-1) coordinate (a) ++(0,-1) coordinate (tl)
- (eta) ++(1,-1) coordinate (b) ++(0,-1) coordinate (tr)
- (eta) ++(0,2) coordinate (e);
-\draw[black] (tl) -- (a) to[out=90, in=180] (eta.east);
-\draw[black] (eta.west) to[out=0, in=90] (b) -- (tr);
-\draw[black] (eta) -- (e);
-\begin{pgfonlayer}{background}
-\fill[white!95!black] ($(eta) + (-3,2)$) rectangle ($(eta) + (3,-2)$);
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{gathered}
-\end{center}
-#+end_ejemplo
-
-*** Dualidades y espacios vectoriales
-Antes de dar el siguiente paso, vamos a considerar dualidades y vamos a
-trabajar con uno de los ejemplos más interesantes de categoría monoidal:
-los espacios vectoriales.
-
-#+begin_definicion
-Una *dualidad* entre dos cuerdas $f \dashv g$ viene dada por una forma de crearlas
-desde la nada y una forma de fundirlas.  ¡Nótese que la definición no es
-simétrica! Si $f \dashv g$, no necesariamente se tiene $g \dashv f$.
-\begin{center}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[dot, label=below:\ensuremath{\eta}] 
- (eta) ++(-1,1) coordinate (a) ++(0,0.5) coordinate[label=above:\ensuremath{f}] (tl)
- (eta) ++(1,1) coordinate (b) ++(0,0.5) coordinate[label=above:\ensuremath{g}] (tr);
-\draw[red!75!black] (tl) -- (a) to[out=-90, in=180] (eta.west);
-\draw[blue!75!black] (eta.east) to[out=0, in=-90] (b) -- (tr);
-\begin{pgfonlayer}{background}
-\fill[white] ($(tl) + (-1,0)$) rectangle ($(tr) + (1,-2)$);
-\fill[white] (tl) -- (a) to[out=-90, in=180] (eta.west) -- (eta.east) to[out=0, in=-90] (b) -- (tr) -- cycle;
-\fill[white] ($(tl) + (-1,-2)$) rectangle ($(tr) + (1,-3)$);
-\end{pgfonlayer}
-\end{tikzpicture}
-&
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[dot, label=above:\ensuremath{\varepsilon}] 
- (epsilon) ++(-1,-1) coordinate (a) ++(0,-0.5) coordinate[label=below:\ensuremath{g}] (bl)
- (epsilon) ++(1,-1) coordinate (b) ++(0,-0.5) coordinate[label=below:\ensuremath{f}] (br);
-\draw[blue!75!black] (bl) -- (a) to[out=90, in=180] (epsilon.west);
-\draw[red!75!black] (epsilon.east) to[out=0, in=90] (b) -- (br);
-\begin{pgfonlayer}{background}
-\fill[white] ($(bl) + (-1,0)$) rectangle ($(br) + (1,2)$);
-\fill[white] (bl) -- (a) to[out=90, in=180] (epsilon.west) -- (epsilon.east) to[out=0, in=90] (b) -- (br) -- cycle;
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{center}
-Satisfaciendo las siguientes *ecuaciones de zig-zag*.
-\begin{center}
-\begin{gathered}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[dot, label=above:$\eta$] (eta) ++(1,1) coordinate (a) ++(1,1) coordinate[dot, label=below:$\varepsilon$] (epsilon) 
- ++(1,-1) coordinate (b) ++(0,-2) coordinate (br)
- (eta) ++(-1,1) coordinate (c) ++(0,2) coordinate (tl);
-\draw[red!75!black] (tl) -- (c) to[out=-90, in=180] (eta);
-\draw[blue!75!black] (eta) to[out=0, in=-90] (a) to[out=90, in=180] (epsilon);
-\draw[red!75!black] (epsilon) to[out=0, in=90] (b) -- (br);
-\begin{pgfonlayer}{background}
-\fill[white!95!black] (tl) -- (c) to[out=-90, in=180] (eta) to[out=0, in=-90] (a) to[out=90, in=180] (epsilon) to[out=0, in=90] (b) -- (br)
- -- ++(0.5,0) -- ++(0,4) -- cycle;
-\fill[white!95!black] (tl) -- (c) to[out=-90, in=180] (eta) to[out=0, in=-90] (a) to[out=90, in=180] (epsilon) to[out=0, in=90] (b) -- (br)
- -- ++(-4.5,0) -- ++(0,4) -- cycle;
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{gathered}
-\enskip=\enskip
-\begin{gathered}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate (b) ++(0,4) coordinate (t);
-\draw[red!75!black] (b) -- (t);
-\begin{pgfonlayer}{background}
-\fill[white!95!black] ($(t) + (-1,0)$) rectangle (b);
-\fill[white!95!black] (t) rectangle ($(b) + (1,0)$);
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{gathered}
-\qquad
-\begin{gathered}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[dot, label=below:$\varepsilon$] (epsilon) ++(1,-1) coordinate (a) ++(1,-1) coordinate[dot, label=above:$\eta$] (eta)
- ++(1,1) coordinate (b) ++(0,2) coordinate (tr)
- (epsilon) ++(-1,-1) coordinate (c) ++(0,-2) coordinate (bl);
-\draw[blue!75!black] (bl) -- (c) to[out=90, in=180] (epsilon);
-\draw[red!75!black] (epsilon) to[out=0, in=90] (a) to[out=-90, in=180] (eta);
-\draw[blue!75!black] (eta) to[out=0, in=-90] (b) -- (tr);
-\begin{pgfonlayer}{background}
-\fill[white!95!black] (bl) -- (c) to[out=90, in=180] (epsilon) to[out=0, in=90] (a) to[out=-90, in=180] (eta) to[out=0, in=-90] (b) -- (tr)
- -- ++(0.5,0) -- ++(0,-4) -- cycle;
-\fill[white!95!black] (bl) -- (c) to[out=90, in=180] (epsilon) to[out=0, in=90] (a) to[out=-90, in=180] (eta) to[out=0, in=-90] (b) -- (tr)
- -- ++(-4.5,0) -- ++(0,-4) -- cycle;
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{gathered}
-\enskip=\enskip
-\begin{gathered}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate (b) ++(0,4) coordinate (t);
-\draw[blue!75!black] (b) -- (t);
-\begin{pgfonlayer}{background}
-\fill[white!95!black] ($(t) + (-1,0)$) rectangle (b);
-\fill[white!95!black] (t) rectangle ($(b) + (1,0)$);
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{gathered}
-\end{center}
-#+end_definicion
-
-#+begin_ejemplo
-Consideramos la categoría mononidal de los espacios vectoriales
-finitos, fijada una base ortonormal.[fn:2] Los morfismos son funciones
-lineales, y los espacios vectoriales en sí forman un monoide con el
-producto tensor de espacios vectoriales.
-Pero además, cada espacio vectorial es dual consigo mismo, $V \dashv V^{\ast} \cong V$, 
-gracias al producto escalar, que es una función $\varepsilon \colon V \otimes V \to V$, y a
-la diagonal de la base $\eta \colon I \to V \otimes V$, que está definida por el
-elemento $\sum (e_i \otimes e_i)$.
-
-Con todo esto, la *traspuesta* de una función lineal $f \colon V \to W$
-es una función $f \colon W \to V$ definida como sigue. Nótese que aquí
-$\eta$ y $\varepsilon$ se refieren a distintas dualidades, cada una de uno de los
-espacios es dual consigo mismo.
-\begin{center}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[dot, label=below:$\eta$] (eta) ++(1,1) coordinate[dot, label=right:$f$] (a) ++(1,1) coordinate[dot, label=above:$\varepsilon$] (epsilon) 
- ++(1,-1) coordinate (b) ++(0,-2) coordinate (br)
- (eta) ++(-1,1) coordinate (c) ++(0,2) coordinate (tl);
-\draw[orange!75!black] (tl) -- (c) to[out=-90, in=180] (eta);
-\draw[orange!75!black] (eta) to[out=0, in=-90] (a);
-\draw[violet!75!black] (a) to[out=90, in=180] (epsilon);
-\draw[violet!75!black] (epsilon) to[out=0, in=90] (b) -- (br);
-\begin{pgfonlayer}{background}
-\fill[white!95!black] (tl) -- (c) to[out=-90, in=180] (eta) to[out=0, in=-90] (a) to[out=90, in=180] (epsilon) to[out=0, in=90] (b) -- (br)
- -- ++(0.5,0) -- ++(0,4) -- cycle;
-\fill[white!95!black] (tl) -- (c) to[out=-90, in=180] (eta) to[out=0, in=-90] (a) to[out=90, in=180] (epsilon) to[out=0, in=90] (b) -- (br)
- -- ++(-4.5,0) -- ++(0,4) -- cycle;
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{center}
-Usando trenzados y moviendo el diagrama, podemos demostrar que la
-traspuesta de la traspuesta es de nuevo la función original.
-
-[fn:2] Sobre los reales, por ejemplo. Pero todo lo que hagamos
-funciona para cualquier cuerpo en general e incluso para módulos sobre
-un semianillo arbitrario.  Si tomamos por ejemplo el semianillo de los
-booleanos, obtenemos la categoría de relaciones $\mathbf{Rel}$.
-#+end_ejemplo
-
-#+begin_ejemplo
-<<ejemplo-dualidad-monoide>>
-Toda dualidad $f \dashv g$ da lugar a un monoide en el producto tensorial $f \otimes g$. Su multiplicación
-y su unidad son las siguientes. Los axiomas se siguen de las ecuaciones de zig-zag.
-\begin{center}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[dot, label=below:\ensuremath{\eta}] 
- (eta) ++(-1,1) coordinate (a) ++(0,0.5) coordinate[label=above:\ensuremath{f}] (tl)
- (eta) ++(1,1) coordinate (b) ++(0,0.5) coordinate[label=above:\ensuremath{g}] (tr);
-\draw[red!75!black] (tl) -- (a) to[out=-90, in=180] (eta.west);
-\draw[blue!75!black] (eta.east) to[out=0, in=-90] (b) -- (tr);
-\begin{pgfonlayer}{background}
-\fill[white!95!black] ($(tl) + (-1,0)$) rectangle ($(tr) + (1,-2)$);
-\fill[white!95!black] (tl) -- (a) to[out=-90, in=180] (eta.west) -- (eta.east) to[out=0, in=-90] (b) -- (tr) -- cycle;
-\fill[white!95!black] ($(tl) + (-1,-2)$) rectangle ($(tr) + (1,-3)$);
-\end{pgfonlayer}
-\end{tikzpicture}
-&
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[dot, label=below:$\varepsilon$] 
- (epsilon) ++(-1,-1) coordinate (a) ++(0,-0.5) coordinate (bl) ++(-1,0) coordinate (bll) 
-  ++(0,3) coordinate[label=above:$f$] (tl)
- (epsilon) ++(1,-1) coordinate (b) ++(0,-0.5) coordinate (br) ++(1,0) coordinate (brr) 
-  ++(0,3) coordinate[label=above:$g$] (tr);
-\draw[red!75!black] (bll) -- (tl);
-\draw[blue!75!black] (brr) -- (tr);
-\draw[blue!75!black] (bl) -- (a) to[out=90, in=180] (epsilon.west);
-\draw[red!75!black] (epsilon.east) to[out=0, in=90] (b) -- (br);
-\begin{pgfonlayer}{background}
-\fill[white!95!black] ($(tl) + (-1,0)$) rectangle (bll);
-\fill[white!95!black] ($(tr) + (1,0)$) rectangle (brr);
-\fill[white!95!black] (bll) rectangle (tr);
-\fill[white!95!black] (bl) -- (a) to[out=90, in=180] (epsilon.west) -- (epsilon.east) to[out=0, in=90] (b) -- (br) -- cycle;
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{center}
-#+end_ejemplo
-
-*** Bicategorías
-El siguiente paso es colorear las regiones.  Esto limitará qué cuerdas
-podemos colocar al lado de otras cuerdas.
-
-#+begin_definicion
-Una *bicategoría* es una categoría monoidal coloreada en las regiones.
-Alternativamente, una categoría monoidal es una bicategoría monocroma.
-\begin{center}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[dot, label={[label distance=0.25cm]right:\ensuremath{\alpha}}] (sigma) 
- ++(-2,1) coordinate[dot, label=below:\ensuremath{\beta}] (epsilon) ++(-1,-1) coordinate (a)
- ++(0,-0.5) coordinate[label=below:\ensuremath{f}] (bl)
- (sigma) ++(1,1.5) coordinate[label=above:\ensuremath{h}] (tr)
- (sigma) ++(0,1.5) coordinate[label=above:\ensuremath{e}] (tl)
- (sigma) ++(0,-0.5) coordinate[label=below:\ensuremath{g}] (br);
-\draw (tr) to[out=-90, in=0] (sigma) to[out=180, in=0] (epsilon) to[out=180, in=90] (a) -- (bl);
-\draw (br) -- (tl);
-\begin{pgfonlayer}{background}
-\fill[green!20] ($(bl) + (-1,0)$) rectangle (tl);
-\fill[green!50] ($(tr) + (1,0)$) rectangle (br);
-\begin{scope}
-\clip ($(bl) + (-1,0)$) rectangle (tl);
-\fill[blue!20] (tr) to[out=-90, in=0] (sigma) to[out=180, in=0] (epsilon) to[out=180, in=90] (a) -- (bl) -- ++(5,0) -- ++(0,2) -- cycle;
-\end{scope}
-\begin{scope}
-\clip ($(tr) + (1,0)$) rectangle (br);
-\fill[blue!50] (tr) to[out=-90, in=0] (sigma) to[out=180, in=0] (epsilon) to[out=180, in=90] (a) -- (bl) -- ++(5,0) -- ++(0,2) -- cycle;
-\end{scope}
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{center}
-#+end_definicion
-
-#+begin_ejemplo
-La bicategoría $\mathbf{Cat}$ tiene regiones dadas por categorías. Una cuerda
-entre dos regiones es un funtor, y los funtores forman una categoría
-con la composición de funtores.  Un nodo viene dado por una transformación
-natural, que convierte la composición de varios funtores en otra composición
-de funtores.  Por ejemplo, una *mónada* resulta de dibujar un monoide en esta
-categoría.
-\begin{center}
-\begin{tabular}{c c c c}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[dot, label=below:\ensuremath{\mu}]
- (eta) ++(-1,-1) coordinate (a) ++(0,-1) coordinate[label=below:{$T$}] (tl)
- (eta) ++(1,-1) coordinate (b) ++(0,-1) coordinate[label=below:{$T$}] (tr)
- (eta) ++(0,2) coordinate[label=above:{$T$}] (e);
-\draw[black] (tl) -- (a) to[out=90, in=180] (eta.east);
-\draw[black] (eta.west) to[out=0, in=90] (b) -- (tr);
-\draw[black] (eta) -- (e);
-\begin{pgfonlayer}{background}
-\fill[blue!20] ($(eta) + (-3,2)$) rectangle ($(eta) + (3,-2)$);
-\end{pgfonlayer}
-\end{tikzpicture} &
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[dot, label=below:\ensuremath{\eta}]
- (eta) ++(0,2) coordinate[label=above:{$T$}] (e)
- (eta) ++(0,-2) coordinate[label=below:{$\phantom{t}$}] (ep);
-\draw[black] (eta) -- (e);
-\begin{pgfonlayer}{background}
-\fill[blue!20] ($(eta) + (-2,2)$) rectangle ($(eta) + (2,-2)$);
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{tabular}
-\end{center}
-En otras palabras, una mónada viene determinada por una transformación
-natural llamada /multiplicación/ $\mu \colon T \circ T \tonat T$ y una transformación natural
-llamada /unidad/ $\eta \colon 1 \tonat T$, donde $1$ es el funtor identidad.  Esto son dos
-familias de funciones indexadas sobre los objetos de una categoría $c \in \mathbf{C}$,
-donde la multiplicación es $\mu_c \colon T(T(c)) \to T(c)$ y la unidad es $\eta_c \colon c \to T(c)$.
-Cumplirán además los axiomas de un monoide.
-#+end_ejemplo
-
-#+begin_ejemplo
-Una dualidad en la bicategoría $\mathbf{Cat}$ se llama *adjunción*.  Por el Ejemplo [[ejemplo-dualidad-monoide]],
-sabemos entonces que toda adjunción $F \dashv G$ da lugar a una mónada $G \circ F$.
-
-Es decir, estos diagramas de cite:marsden14 representan una adjunción.
-\begin{center}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[dot, label=above:\ensuremath{\eta}] 
- (eta) ++(-1,1) coordinate (a) ++(0,0.5) coordinate[label=above:\ensuremath{F}] (tl)
- (eta) ++(1,1) coordinate (b) ++(0,0.5) coordinate[label=above:\ensuremath{G}] (tr);
-\draw (tl) -- (a) to[out=-90, in=180] (eta.west) -- (eta.east) to[out=0, in=-90] (b) -- (tr);
-\begin{pgfonlayer}{background}
-\fill[catc] ($(tl) + (-1,0)$) rectangle ($(tr) + (1,-2)$);
-\fill[catd] (tl) -- (a) to[out=-90, in=180] (eta.west) -- (eta.east) to[out=0, in=-90] (b) -- (tr) -- cycle;
-\fill[white] ($(tl) + (-1,-2)$) rectangle ($(tr) + (1,-3)$);
-\end{pgfonlayer}
-\end{tikzpicture}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[dot, label=below:\ensuremath{\epsilon}] 
- (epsilon) ++(-1,-1) coordinate (a) ++(0,-0.5) coordinate[label=below:\ensuremath{G}] (bl)
- (epsilon) ++(1,-1) coordinate (b) ++(0,-0.5) coordinate[label=below:\ensuremath{F}] (br);
-\draw (bl) -- (a) to[out=90, in=180] (epsilon.west) -- (epsilon.east) to[out=0, in=90] (b) -- (br);
-\begin{pgfonlayer}{background}
-\fill[catd] ($(bl) + (-1,0)$) rectangle ($(br) + (1,2)$);
-\fill[catc] (bl) -- (a) to[out=90, in=180] (epsilon.west) -- (epsilon.east) to[out=0, in=90] (b) -- (br) -- cycle;
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{center}
-
-La unitalidad de la mónada se demuestra gracias al zig-zag.
-\begin{equation*}
-\begin{gathered}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[dot, label=above:$\eta$] (eta) ++(2,1) coordinate[dot, label=below:$\epsilon$] (epsilon)
- ++(1,-1) coordinate (a) ++(0,-0.5) coordinate[label=below:$F$] (bl)
- (eta) ++(-1,1) coordinate (b) ++(0,0.5) coordinate[label=above:$F$] (tl)
- (bl) ++(1,0) coordinate[label=below:$G$] (br) ++(0,2) coordinate[label=above:$G$] (tr);
-\draw (tl) -- (b) to[out=-90, in=180] (eta.west) -- (eta.east) to[out=0, in=180] (epsilon.west) -- (epsilon.east) to[out=0, in=90] (a) -- (bl);
-\draw (br) -- (tr);
-\begin{pgfonlayer}{background}
-\fill[catc] ($(tl) + (-1,0)$) rectangle ($(br) + (1,0)$);
-\fill[catd] (tl) -- (b) to[out=-90, in=180] (eta.west) -- (eta.east) to[out=0, in=180] (epsilon.west) -- (epsilon.east) to[out=0, in=90] (a) -- (bl) -- (br) -- (tr) -- cycle;
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{gathered}=
-\begin{gathered}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[label=above:$F$] (tl) ++(1,0) coordinate[label=above:$G$] (tr)
- (tl) ++(0,-2) coordinate[label=below:$F$] (bl)
- (tr) ++(0,-2) coordinate[label=below:$G$] (br);
-\draw (bl) -- (tl)
- (br) -- (tr);
-\begin{pgfonlayer}{background}
-\fill[catc] ($(tl) + (-1,0)$) rectangle (bl);
-\fill[catc] ($(tr) + (1,0)$) rectangle (br);
-\fill[catd] (tl) rectangle (br);
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{gathered}
-=
-\begin{gathered}
-\begin{tikzpicture}[scale=0.5]
-\path coordinate[dot, label=above:$\eta$] (eta) ++(-2,1) coordinate[dot, label=below:$\epsilon$] (epsilon)
- ++(-1,-1) coordinate (a) ++(0,-0.5) coordinate[label=below:$G$] (br)
- (eta) ++(1,1) coordinate (b) ++(0,0.5) coordinate[label=above:$G$] (tr)
- (br) ++(-1,0) coordinate[label=below:$F$] (bl) ++(0,2) coordinate[label=above:$F$] (tl);
-\draw (tr) -- (b) to[out=-90, in=0] (eta.east) -- (eta.west) to[out=180, in=0] (epsilon.east) -- (epsilon.west) to[out=180, in=90] (a) -- (br)
- (bl) -- (tl);
-\begin{pgfonlayer}{background}
-\fill[catc] ($(bl) + (-1,0)$) rectangle ($(tr) + (1,0)$);
-\fill[catd] (tr) -- (b) to[out=-90, in=0] (eta.east) -- (eta.west) to[out=180, in=0] (epsilon.east) -- (epsilon.west) to[out=180, in=90] (a) -- (br)
- -- (bl) -- (tl) -- cycle;
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{gathered}
-\end{equation*}
-Y la asociatividad gracias a las isotopías.
-\begin{equation*}
-\begin{gathered}
-\begin{tikzpicture}[auto,scale=0.3]
-\path (0,-2.5) coordinate (base) 
- (-1.5,-1) coordinate[dot, label=below:$\epsilon$] 
- (epsilon1) ++(-1,-1) coordinate (a)
- (epsilon1) ++(1,-1) coordinate (b)
- (1.5,1) coordinate[dot, label=below:$\epsilon$] (epsilon2)
- (epsilon2) ++(-1,-1) coordinate (c)
- (epsilon2) ++(1,-1) coordinate (d);
-\path let \p1 = (base) in
-      let \p2 = (a) in
-      let \p3 = (b) in
-      let \p4 = (c) in
-      let \p5 = (d) in
- coordinate[label=below:$G$] (bll) at (\x2, \y1)
- coordinate[label=below:$F$] (bl) at (\x3, \y1)
- coordinate[label=below:$G$] (br) at (\x4, \y1)
- coordinate[label=below:$F$] (brr) at (\x5, \y1);
-\path 
- (bll) ++(-1,0) coordinate[label=below:$F$] (blll) ++(0,4) coordinate[label=above:$F$] (tlll)
- (brr) ++(1,0) coordinate[label=below:$G$] (brrr) +(0,4) coordinate[label=above:$G$] (trrr);
-\draw (bll) -- (a) to[out=90, in=180] (epsilon1.west) -- (epsilon1.east) to[out=0, in=90] (b) -- (bl)
-      (br) -- (c) to[out=90, in=180] (epsilon2.west) -- (epsilon2.east) to[out=0, in=90] (d) -- (brr)
- (blll) -- (tlll)
- (brrr) -- (trrr);
-\begin{pgfonlayer}{background}
-\fill[catd] ($(blll) + (-1,0)$) rectangle ($(trrr) + (1,0)$);
-\fill[catc] ($(blll) + (-1,0)$) rectangle (tlll);
-\fill[catc] ($(brrr) + (1,0)$) rectangle (trrr);
-\fill[catc] (bll) -- (a) to[out=90, in=180] (epsilon1.west) -- (epsilon1.east) to[out=0, in=90] (b) -- (bl) -- cycle;
-\fill[catc] (br) -- (c) to[out=90, in=180] (epsilon2.west) -- (epsilon2.east) to[out=0, in=90] (d) -- (brr) -- cycle;
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{gathered}
-=
-\begin{gathered}
-\begin{tikzpicture}[auto,scale=0.3]
-\path (0,-2.5) coordinate (base) 
- (-1.5,0) coordinate[dot, label=below:$\epsilon$] 
- (epsilon1) ++(-1,-1) coordinate (a)
- (epsilon1) ++(1,-1) coordinate (b)
- (1.5,0) coordinate[dot, label=below:$\epsilon$] (epsilon2)
- (epsilon2) ++(-1,-1) coordinate (c)
- (epsilon2) ++(1,-1) coordinate (d);
-\path let \p1 = (base) in
-      let \p2 = (a) in
-      let \p3 = (b) in
-      let \p4 = (c) in
-      let \p5 = (d) in
- coordinate[label=below:$G$] (bll) at (\x2, \y1)
- coordinate[label=below:$F$] (bl) at (\x3, \y1)
- coordinate[label=below:$G$] (br) at (\x4, \y1)
- coordinate[label=below:$F$] (brr) at (\x5, \y1);
-\path 
- (bll) ++(-1,0) coordinate[label=below:$F$] (blll) ++(0,4) coordinate[label=above:$F$] (tlll)
- (brr) ++(1,0) coordinate[label=below:$G$] (brrr) +(0,4) coordinate[label=above:$G$] (trrr);
-\draw (bll) -- (a) to[out=90, in=180] (epsilon1.west) -- (epsilon1.east) to[out=0, in=90] (b) -- (bl)
-      (br) -- (c) to[out=90, in=180] (epsilon2.west) -- (epsilon2.east) to[out=0, in=90] (d) -- (brr)
- (blll) -- (tlll)
- (brrr) -- (trrr);
-\begin{pgfonlayer}{background}
-\fill[catd] ($(blll) + (-1,0)$) rectangle ($(trrr) + (1,0)$);
-\fill[catc] ($(blll) + (-1,0)$) rectangle (tlll);
-\fill[catc] ($(brrr) + (1,0)$) rectangle (trrr);
-\fill[catc] (bll) -- (a) to[out=90, in=180] (epsilon1.west) -- (epsilon1.east) to[out=0, in=90] (b) -- (bl) -- cycle;
-\fill[catc] (br) -- (c) to[out=90, in=180] (epsilon2.west) -- (epsilon2.east) to[out=0, in=90] (d) -- (brr) -- cycle;
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{gathered}
-=
-\begin{gathered}
-\begin{tikzpicture}[auto,scale=0.3]
-\path (0,-2.5) coordinate (base) 
- (-1.5,1) coordinate[dot, label=below:$\epsilon$] 
- (epsilon1) ++(-1,-1) coordinate (a)
- (epsilon1) ++(1,-1) coordinate (b)
- (1.5,-1) coordinate[dot, label=below:$\epsilon$] (epsilon2)
- (epsilon2) ++(-1,-1) coordinate (c)
- (epsilon2) ++(1,-1) coordinate (d);
-\path let \p1 = (base) in
-      let \p2 = (a) in
-      let \p3 = (b) in
-      let \p4 = (c) in
-      let \p5 = (d) in
- coordinate[label=below:$G$] (bll) at (\x2, \y1)
- coordinate[label=below:$F$] (bl) at (\x3, \y1)
- coordinate[label=below:$G$] (br) at (\x4, \y1)
- coordinate[label=below:$F$] (brr) at (\x5, \y1);
-\path 
- (bll) ++(-1,0) coordinate[label=below:$F$] (blll) ++(0,4) coordinate[label=above:$F$] (tlll)
- (brr) ++(1,0) coordinate[label=below:$G$] (brrr) +(0,4) coordinate[label=above:$G$] (trrr);
-\draw (bll) -- (a) to[out=90, in=180] (epsilon1.west) -- (epsilon1.east) to[out=0, in=90] (b) -- (bl)
-      (br) -- (c) to[out=90, in=180] (epsilon2.west) -- (epsilon2.east) to[out=0, in=90] (d) -- (brr)
- (blll) -- (tlll)
- (brrr) -- (trrr);
-\begin{pgfonlayer}{background}
-\fill[catd] ($(blll) + (-1,0)$) rectangle ($(trrr) + (1,0)$);
-\fill[catc] ($(blll) + (-1,0)$) rectangle (tlll);
-\fill[catc] ($(brrr) + (1,0)$) rectangle (trrr);
-\fill[catc] (bll) -- (a) to[out=90, in=180] (epsilon1.west) -- (epsilon1.east) to[out=0, in=90] (b) -- (bl) -- cycle;
-\fill[catc] (br) -- (c) to[out=90, in=180] (epsilon2.west) -- (epsilon2.east) to[out=0, in=90] (d) -- (brr) -- cycle;
-\end{pgfonlayer}
-\end{tikzpicture}
-\end{gathered}
-\end{equation*}
-El ejemplo común de una situación como esta lo dan el funtor que crea
-la mónada libre sobre un conjunto $F \colon \mathbf{Set} \to \mathbf{Mon}$ y el funtor de
-olvido $G \colon \mathbf{Mon} \to \mathbf{Set}$. La mónada $G \circ F$ se llama en programación
-funcional la *mónada Lista* (/List monad/).
-
-De forma dual, podemos definir comónadas y demostrar que toda adjunción
-$F \dashv G$ da lugar a una comónada $F \circ G$.
-#+end_ejemplo
-
-
-*** Conclusión
-Tenemos la siguiente tabla y nada nos impide continuar hacia más
-dimensiones y más colores.  Calcular manipulaciones de diagramas en
-dimensiones arbitrarias es lo que hace el asistente [[https://homotopy.io/][homotopy.io]] cite:homotopyio
-de Vicary-Hu-Liss.
-
-|---------------------+---------------+-------------+--------------------|
-| Estructuras         | 0 dimensiones | 1 dimensión | 2 dimensiones      |
-|---------------------+---------------+-------------+--------------------|
-| Blanco y negro      | Conjunto      | Monoide     | PRO                |
-| Cuerdas coloreadas  |               | Categoría   | Categoría monoidal |
-| Regiones coloreadas |               |             | Bicategoría        |
-|---------------------+---------------+-------------+--------------------|
-
-Una estructura tricolor, por ejemplo, nos permite llegar a
-tricategorías y bicategorías monoidales.
-
-*** references                                                                            :ignore:
-bibliographystyle:alpha
-bibliography:Math.bib
 
 ** Lawvere's fixed point theorem                                                             :post:
 :PROPERTIES:
@@ -2728,97 +1535,6 @@ en los seminarios de LibreIM, [[https://github.com/pedritomelenas][Pedro García
 [[https://github.com/libreim/haskell/blob/3acbc2f7088483d3ba69ecdc00891c8419341aaf/PrimeraParte/PrimeraParte.ipynb][cuaderno de Jupyter]] para acompañarlos, y finalmente [[https://github.com/mx-psi][@mx-psi]] ha vuelto a revisarlos
 y dejarlos listos para otro seminario este año. 
 
-** Diagramas para categorías monoidales                                                      :post:
-:PROPERTIES:
-:TITLE: Diagramas para categorías monoidales
-:EXPORT_FILE_NAME: diagramascategoriasmonoidales.pdf
-:INDEX_DATE: <2019-01-21 Mon 19:01>
-:END:
-
-Este es un post de enlaces sobre lenguajes diagramáticos. Me temo que
-todo el material está en inglés, pero quería tener una nota sobre el
-tema que no estuviera en inglés. \\
-
-Vamos a motivarlos primero siguiendo un ejemplo de cite:coecke17; la
-explicación de todo está en el libro, aquí sólo quiero dar una idea.
-Supongamos que tenemos los siguientes ingredientes representados en un
-diagrama. Dos partes (Alice y Bob) comparten un /estado/ común
-representado como un cable en forma de U. Alice tiene además cierta información propia
-ψ que quiere enviar a Bob. Por último,
-Alice puede tomar dos estados y hacerlos iguales introduciendo un
-error en el proceso.  Bob puede corregir este error una vez Alice le
-informa de él. Todos los procesos se representan como cajas con una
-serie de entradas (abajo) y salidas (arriba). El eje y se interpreta
-como una línea temporal de abajo a arriba.
-
-#+attr_latex: :width 5cm
-#+caption: Los ingredientes.
-[[./alicebob1.jpg]]
-
-¿Cómo combinamos estas piezas? La respuesta obvia es el siguiente
-diagrama. Aquí, Alice toma el estado que quiere enviar y el estado
-compartido y los hace iguales introduciendo un error; Bob corrige
-este error. Las siguientes igualdades son válidas en el cálculo
-diagramático y muestran que esto es equivalente a que Bob acabe
-teniendo la información que Alice le quería mandar.
-
-#+caption: La solución.
-[[./alicebob2.jpg]]
-
-Este diagrama puede traducirse formalmente a un morfismo en una
-categoría con suficiente estructura (explícitamente, a una categoría
-monoidal cerrada compacta, pero no necesitamos detalles).  La
-categoría de conjuntos cuyos morfismos son relaciones, *Rel*, tiene esa
-estructura; y cuando interpretamos este diagrama obtenemos el
-protocolo de /libreta de un solo uso/ (one-time pad).  La categoría de
-espacios de Hilbert con matrices unitarias tiene esa estructura
-también, y cuando interpretamos el morfismo ¡obtenemos un protocolo de
-/teleportación cuántica/!  Es decir, un poco de razonamiento
-diagramático nos ha servido para obtener en abstracto un protocolo y
-descubrir que dos protocolos conocidos son dos de sus instancias
-particulares en distintas categorías. Podríamos estudiar otros
-protocolos, y podríamos interpretarlos en otras categorías. ¿Qué más
-podemos hacer con diagramas?, lo que sigue es una lista no exhaustiva.
-
- * *Álgebra lineal.* Un ejemplo perfecto de categorías con esta estructura
-   son los espacios vectoriales. En el blog [[https://graphicallinearalgebra.net/][Graphical Linear Algebra]],
-   [[https://www.southampton.ac.uk/~ps1a06/][Pawel Sobocinski]] da una introducción informal al álgebra
-   lineal y al razonamiento diagramático.
-
- * *Mecánica cuántica diagramática.* /Picturing Quantum Processes/, de [[https://www.cs.ox.ac.uk/people/bob.coecke/][Coecke]] y [[http://www.cs.ru.nl/A.Kissinger/][Kissinger]]
-   cite:coecke17, de donde viene el primer ejemplo. Es una introducción
-   elemental que no asume prácticamente ningún conocimiento previo: ni de
-   mecánica cuántica ni de diagramas. Profundiza mucho en los diagramas en sí y
-   no requiere conocer la teoría de categorías subyacente.
-
- * *Mecánica cuántica categórica.* /Categorical Quantum Mechanics ([[https://www.cs.ox.ac.uk/files/10510/notes.pdf][link]]),/ de
-   [[https://www.cs.ox.ac.uk/people/jamie.vicary/][Vicary]] y [[http://homepages.inf.ed.ac.uk/cheunen/teaching.html][Heunen]] da otra introducción a las aplicaciones en
-   mecánica cuántica. Enfatiza mucho más la teoría de categorías, aquí
-   sí es un prerrequisito haber leído teoría de categorías. Como bonus,
-   hay un estudio muy detallado de cómo las categorías justifican el
-   razonamiento diagramático.
-
- * *Teoría de categorías*. /Category theory with string diagrams/, de [[https://www.cs.ox.ac.uk/people/dan.marsden/][Marsden]],
-   es muy accesible y explica 2-categorías, adjunciones, mónadas e incluso 
-   límites; usando razonamiento gráfico.
-
- * *Lingüística.* /Distributional compositional categorical semantics/ es
-   un marco teórico para calcular el significado de las frases en función
-   del significado de las palabras. Es /distribucional/ porque el significado
-   de una palabra se calcula según las palabras que aparecen cerca de ella
-   en un corpus de texto suficientemente grande; es /composicional/ porque
-   podemos componer esos significados usando la estructura categórica para
-   calcular el significado de frases completas. Una introducción es
-   cite:coecke10 de [[https://www.cs.ox.ac.uk/people/bob.coecke/][Coecke]], [[http://www.eecs.qmul.ac.uk/profiles/sadrzadehmehrnoosh.html][Sadrzadeh]] y [[https://sites.google.com/site/stephenclark609/][Clark]].
-
- * *Teoría de juegos*, usando una categoría de [[https://julesh.com/2018/08/16/lenses-for-philosophers/][lentes]]. Hay una [[https://www.youtube.com/watch?v=C64905vTT3s&feature=youtu.be][charla introductoria]]
-   de Jules Hedges y varios artículos como cite:hedges18.
-   
-Por último, una visión general de los lenguages diagramáticos es cite:selinger10.
-
-*** references                                                                            :ignore:
-bibliographystyle:alpha
-bibliography:Math.bib
 
 ** dotfiles in a single org-file                                                             :post:
 :PROPERTIES:
@@ -2839,14 +1555,14 @@ For instance, this is how =.Xresources= looks now inside my org file.
 Highlighting works perfectly thanks to org-babel.
 
 #+BEGIN_EXAMPLE
- ** X resources
- 
- Configuration parameters for X client applications.
-
- #+BEGIN_ conf /home/mario/.Xresources
- xterm*font: *-fixed-*-*-*-24-*
- Xft.dpi:    192
- #+END_
+    ** X resources
+    
+    Configuration parameters for X client applications.
+   
+    #+BEGIN_SOURCE conf /home/mario/.Xresources
+    xterm*font: *-fixed-*-*-*-24-*
+    Xft.dpi:    192
+    #+END_SOURCE
 #+END_EXAMPLE
 
 This file can be put under version control and a /dotfiles repository/
@@ -2855,352 +1571,6 @@ until now).
 
 As always with Emacs, this use case is obvious in retrospect, but /why
 didn't anyone tell me?/
-
-** Every surjection to a projective R-module is split                                        :post:
-:PROPERTIES:
-:TITLE: Every surjection to a projective R-module is split
-:EXPORT_FILE_NAME: everysurjectiontoprojectiveissplit.pdf
-:INDEX_DATE: <2018-12-24 Sun 09:07>
-:END:
-
-/The statement comes from an exercise on André Henriques' course on/
-/[[https://courses.maths.ox.ac.uk/node/36705][Homological Algebra]]/.
-
-#+begin_statement
-Let $R$ be a ring. Prove that an $R\mathrm{-module}$ $P$ is projective iff every surjective
-map $A \to P$ admits a section.
-#+end_statement
-
-Given a projective module $P$, we can apply the definition to any surjection
-$f \colon A \twoheadrightarrow P$ to get the existence of a section.
-\[\begin{tikzcd}
-& P \dar{\mathrm{id}} \dlar[dashed,swap]{\exists s}\\
-A \rar{f} & P 
-\end{tikzcd}\]
-Suppose every surjection admits a section, we can take a surjection from the
-free module over $P$, which we call $\pi \colon F \to P$ and take a section $s \colon P \to F$.
-Then the sequence $0 \to \mathrm{ker}(\pi) \to F \to P \to 0$ splits,
-$P$ is a direct summand of a free module and thus a projective module.
-
-** Hom is continuous and then all right adjoints are                                         :post:
-:PROPERTIES:
-:TITLE: Hom is continuous
-:EXPORT_FILE_NAME: homcontinuous.pdf
-:INDEX_DATE: <2018-12-23 Sun 16:20>
-:END:
-
-/This is an exercise on Samson Abramsky's notes/
-/on the course Categories, Proofs and Processes./ cite:abramsky10 \\
-
-#+begin_statement
-Let $A$ be an object in the category ${\cal C}$. Show that the covariant $\mathrm{hom}$ functor
-${\cal C}(A,-)$, as defined in Lecture III, preserves all limits.
-#+end_statement
-#+begin_proof
-Let ${\cal I}$ be a small category, $F \colon {\cal I} \to {\cal C}$ a functor and let $L$ with the
-morphisms $(l_{I})_{I \in {\cal I}}$ be the limit of that functor. We know that for every
-morphism $i \colon I \to J$ in ${\cal I}$, we have $l_J = Fi\circ l_I$.
-
-Let $Z$ be a set with a family of morphisms $f_I \colon Z \to {\cal C}(A,FI)$ determining
-a cone to ${\cal C}(A,F-) \colon {\cal I} \to \mathbf{Sets}$; that is, such that for each $i \colon I \to J$ in ${\cal I}$, we 
-have that $f_J = (Fi \circ -) \circ f_I$; or, in other words, for each $z \in Z$ we have
-$f_J(z) = Fi \circ f_I(z)$. Thus, fixing any $z \in Z$ gives as a family of morphisms
-$f_I(z) \in {\cal C}(A,FI)$ defining a cone. This implies that there exists some
-unique morphism $a(z) \colon A \to L$ such that $l_{I} \circ a(z) = f_I(z)$.
-
-Repeating this for every $z \in Z$ we have obtained a function $a \colon Z \to {\cal C}(A,L)$
-with the property $l_I \circ a = f_I$. This function must be the unique one with this
-property, because for any other $a' \colon Z \to {\cal C}(A,L)$, for each $z \in Z$ 
-we would have $l_I \circ a'(z) = f_I(z)$ and that would imply that $a'(z) = a(z)$.
-#+end_proof
-
-#+begin_proposition
-Right adjoints preserve limits.
-#+end_proposition
-#+begin_proof
-(From cite:awodey10) Let $L \colon \mathbb{C} \to \mathbb{D}$ and $R \colon \mathbb{D} \to \mathbb{C}$ be a pair of adjoints
-$L \dashv R$. Let $X_i$ be objects determining any diagram and $Y$ an arbitrary object.
-We have the following chain of natural transformations between
-hom-sets.
-\[\begin{aligned}
-\hom(Y,R \lim X_i) &\cong \hom(LY,\lim X_i) \\
-&\cong \lim\hom(LY,X_i) \\
-&\cong \lim\hom(Y,RX_i) \\
-&\cong \hom(Y,\lim RX_i)
-\end{aligned}\]
-By Yoneda Lemma, $R\lim X_i \cong \lim RX_i$.
-#+end_proof
-
-*** references                                                                            :ignore:
-bibliographystyle:alpha
-bibliography:Math.bib
-
-** Pasting pullbacks                                                                         :post:
-:PROPERTIES:
-:TITLE: Pasting pullbacks
-:EXPORT_FILE_NAME: pastingpullbacks.pdf
-:INDEX_DATE: <2018-12-23 Sun 16:09>
-:END:
-
-/This is an exercise on Samson Abramsky's notes/
-/on the course Categories, Proofs and Processes./ cite:abramsky10 \\
-
-#+begin_proposition
-In the following commutative diagram, 
-if $ABCD$ and $BEDF$ are pullback squares, so is $AECF$.
-\[\begin{tikzcd}
-A \rar\dar & B \rar\dar & E \dar \\
-C \rar & D \rar & F
-\end{tikzcd}\]
-#+end_proposition
-#+begin_proof
-Given some $u \colon Z \to E$ and $v \colon Z \to C$ such that $tu = dcv$, we can use 
-the pullback to construct some $Z \to B$ and the other pullback to construct
-some $Z \to A$. This proves existence.  Given two morphisms $z$ and $z'$ such that
-$baz = u = baz'$ and $rz = v = rz'$, as in the following diagram, we will prove
-they are equal.
-\[\begin{tikzcd}
-Z\ar[dashed,bend left]{drr}{w} \drar[dashed,bend left]{z} \drar[dashed,bend right]{z'} \ar[bend left]{rrrd}{u} \ar[bend right]{ddr}{v} &&&\\
-& A \rar{a}\dar{r} & B \rar{b}\dar{s} & E \dar{t} \\
-& C \rar{c} & D \rar{d} & F
-\end{tikzcd}\]
-By the universal property of the pullback $BEDF$ there is a unique morphism
-$w \colon Z \to B$ such that $bw = u$ and $sw = cv$, but $baz = baz' = u$ and
-$saz = crz = cv = crz' = saz'$, so $az = az'$. Then using the pullback $ABCD$,
-there would be a unique morphism $y \colon Z \to A$ such that $ay = az$ and $v = ry$, 
-but both $z$ and $z'$ satisfy this condition and thus they are equal.
-#+end_proof
-
-#+begin_proposition
-In the following commutative diagram, 
-if $BEDF$ and $AECF$ are pullback squares, so is $ABCD$.
-\[\begin{tikzcd}
-A \rar\dar & B \rar\dar & E \dar \\
-C \rar & D \rar & F
-\end{tikzcd}\]
-#+end_proposition
-#+begin_proof
-Given some $u \colon Z \to B$ and $v \colon Z \to C$ such that $su = cv$, we
-can apply the universal property of the pullback $AECF$ to the
-maps $bu$ and $v$, which satisfy $tbu = dsu = dcv$, to construct some
-$z \colon Z \to A$ such that $baz = bu$ and $v = rz$.
-
-By the universal property of $BEDF$, there exists a unique $y$
-such that $by = bu$ and $sy = cv$, but both $az$ and $u$ satisfy that,
-and thus they are equal. This proves existence.
-\[\begin{tikzcd}
-Z\drar[dashed,bend left]{z} \drar[dashed,bend right]{z'} \ar[bend left]{rrd}{u} \ar[bend right]{ddr}{v} &&&\\
-& A \rar{a}\dar{r} & B \rar{b}\dar{s} & E \dar{t} \\
-& C \rar{c} & D \rar{d} & F
-\end{tikzcd}\]
-Given two morphisms $z,z' \colon Z \to A$ such that $az = u = az'$ and
-$rz = rz' = v$; we know by the universal property of the pullback
-$AECF$ applied to $bu$ and $v$ that there is a unique morphism $x \colon Z \to A$
-such that $bax = bu$ and $v = rx$; and thus they must be equal.
-#+end_proof
-
-
-*** references                                                                            :ignore:
-bibliographystyle:alpha
-bibliography:Math.bib
-
-** Linear logic is quantity-sensitive                                                        :post:
-:PROPERTIES:
-:TITLE: Linear logic is quantity-sensitive
-:EXPORT_FILE_NAME: countinginlinearlogic.pdf
-:INDEX_DATE: <2018-12-23 Sun 15:50>
-:END:
-
-/This is an exercise on Samson Abramsky's notes/
-/on the course Categories, Proofs and Processes./ cite:abramsky10 \\
-
-The main idea here is that we can formalize the notion that linear
-logic is sensitive to the number of ocurrences of each variable
-using the model it has on groups, which are particular cases of
-symmetric monoidal closed categories.
-
-#+begin_statement
-Can you construct proofs in Linear Logic of the following sequents?
-
- * $A \vdash A \otimes A$
- * $\vdash (A \multimap (A \multimap B)) \multimap (A \multimap B)$
- * $\vdash A \multimap (B \multimap A)$
-#+end_statement
-
-Consider the discrete category of the integers with the monoidal
-structure given by addition, which is associative, and $0$ as the unit.
-With this we can construct the structural isomorphisms as identities.
-This is a symmetric category because addition is commutative. It
-is monoidal closed with $(a \multimap b) = b - a$ because we have the following
-adjunction, where morphisms represent equalities.
-\begin{prooftree}
-\AXC{$a + b = c$}
-\UIC{$a = c - b$}
-\end{prooftree}
-Naturality of the structural isomorphisms and of the
-adjunction follow from the fact that we are in a discrete category. \\
-
-Now, neither $a = a + a$, $0 = (b-a) - ((b-a)-a) = a$, nor $0 = (a-b)-a = -b$
-are true in general. It is impossible to create a morphism of
-these types in a symmetric monoidal closed category in general. \\
-
-This shows that linear logic is resource sensitive.  We could assume
-that each object has a weight and that morphisms have to be
-balanced.  The interpretation on integers precisely reflects this
-'weight'.
-
-*** references                                                                            :ignore:
-bibliographystyle:alpha
-bibliography:Math.bib
-
-** Powerset-algebras are complete semilattices                                               :post:
-:PROPERTIES:
-:TITLE: Powerset-algebras are complete semilattices
-:EXPORT_FILE_NAME: powersetalgebrascompletesemilattices.pdf
-:INDEX_DATE: <2018-12-23 Sun 13:10>
-:END:
-
-/This is a combination of two exercises from Samson Abramsky's notes/
-/on the course Categories, Proofs and Processes./ cite:abramsky10 \\
-
-#+begin_definition
-We take a *complete semilattice* to mean a poset $(P, \leq)$ where every
-subset $S \subseteq P$ has a least upper bound we write as $\bigvee S$. That is to
-say that it is a category with at most one morphism between any two
-objects that has all coproducts.
-#+end_definition
-
-A morphism between complete semilattices is a map between posets that
-preserves all least upper bounds, that is $h \left( \bigvee S \right) = \bigvee h(S)$, where we
-write $h(S) = \left\{ h(x) \mid x \in S \right\}$. This property implies monotonicity: note
-that from $x \leq y$ we get $h(y) = h(x \vee y) = h(x) \vee h(y)$, and thus $h(x) \leq h(y)$.
-We have created a category of complete semilattices with morphisms
-between them that we call $\mathbf{SL}$. There is a forgetful functor $U \colon \mathbf{SL} \to \mathbf{Set}$
-assigning the underlying set to each poset.
-
-*** Free-forgetful adjunction
-#+begin_proposition
-The forgetful functor $U \colon \mathbf{SL} \to \mathbf{Set}$ has a left adjoint.
-#+end_proposition
-#+begin_proof
-We will show that the left adjoint is the functor ${\cal P} \colon \mathbf{Set} \to \mathbf{SL}$ sending each set to its powerset
-ordered by inclusion, which is a complete semilattice because
-the union of a family of sets is its least upper bound. Given 
-two sets $A$ and $B$, any
-function $f \colon A \to B$ induces a $f^{\ast} \colon {\cal P}A \to {\cal P}B$
-sending a subset to its image under $f$; this constitutes the action
-of the functor on morphisms. We can check that this
-is a morphism of complete semilattices because, for any family
-${\cal X} \subseteq {\cal P}(A)$, we have
-
-\[
-f^{\ast} \left( \bigcup_{Y \in {\cal X}} Y \right) = 
-\left\{ f(y) \;\middle|\; y \in \bigcup_{Y \in {\cal X}} Y \right\} =
-\bigcup_{Y \in {\cal X}} \left\{ f(y) \mid y \in  Y \right\} =
-\bigcup_{Y \in {\cal X}} f^{\ast}(Y).
-\]
-
-To construct the adjunction, we start by defining an isomorphism $\mathbf{Set}(A,UB) \to \mathbf{SL}({\cal P}A,B)$ that sends
-$f \colon A \to B$ to the function that acts on some $Y \subseteq A$ as
-
-\[
-\overline{f}(Y) = \bigvee_{y \in Y} f(y).
-\]
-
-This is a morphism of complete semilattices because for any family
-of subsets ${\cal X} \subseteq {\cal P}(A)$ we have
-
-\[
-\overline{f} \left( \bigcup_{Y \in {\cal X}} Y  \right) =
-\bigvee_{y \in \bigcup_{Y \in {\cal X}} Y} f(y) =
-\bigvee_{Y \in {\cal X}} \bigvee_{y \in Y} f(y) =
-\bigvee_{Y \in {\cal X}} \overline{f}(Y)
-\]
-
-This isomorphism has an inverse sending each morphism $h \colon {\cal P}(A) \to B$ to
-the function $A \to B$ defined as $a \mapsto h(\left\{ a \right\})$. We
-can check that these are in fact inverses because for any $f \colon A \to B$
-and $a \in A$ we have
-
-\[
-\overline{f}(\left\{ a \right\}) = \bigvee_{a \in \left\{ a \right\}} f(a) = f(a)
-\]
-
-and for any semilattice morphism $h \colon {\cal P}(A) \to B$ we have for any $X \subseteq A$,
-using that it preserves least upper bounds, that
-
-\[
-\overline{h(\{-\})}(X) =
-\bigvee_{x \in X} h(\left\{ x \right\}) = 
-h \left( \bigvee_{x \in X} \left\{ x \right\} \right) = 
-h(X).
-\]
-
-We now show that the isomorphism is in fact natural. Given any
-$f \colon A \to UB$, any function $a \colon A' \to A$ and any morphism of semilattices
-$b \colon B \to B'$, we have for a given $Y \in {\cal P}(A)$ that
-
-\[
-b \overline{f} a^{\ast}(Y) = b \left( \bigvee_{y \in Y}f(a(y))  \right) =
-\bigvee_{y \in Y} b f a(y) = \overline{b f a}(Y),
-\]
-
-because $b$ preserves least upper bounds. This proves that
-$b\circ \overline{f} \circ a^{\ast} = \overline{b \circ f \circ a}$ and the isomorphism is thus natural.
-#+end_proof
-
-*** Powerset-algebras
-Note that the powerset monad acts on objects as $U{\cal P}$, simply
-taking the powerset and forgetting about its semilattice structure.
-The unit of the adjunction, $a \mapsto \left\{ a \right\}$ is precisely the unit of the
-monad, and the counit of the adjunction, the lattice homomorphism
-$\bigvee \colon {\cal P}L \to L$ for any lattice $L$, is such that $U\bigvee_{{\cal P}} = \bigcup \colon {\cal P}{\cal P}A \to {\cal P}A$
-is precisely the multiplication of the monad for any set $A$. \\
-
-We can now prove that ${\cal P}\mbox{-algebras}$ are complete semilattices.
-Note that an algebra would be a function $f \colon {\cal P}A \to A$ such that
-
-\[
-f \left\{ a \right\} = a, \qquad f \left( \bigcup_{i \in I} A_i \right) = f \left\{ f(A_i) \mid i \in I \right\},
-\]
-
-for any element $a \in A$ and any family of subsets $A_i \subseteq A$. We can define
-a partial order where for any two elements $x,y \in A$, we have that $x \leq y$
-when $f \left\{ x,y \right\} = y$. This satisfies
-
- * *reflexivity*, because $f \left\{ x,x \right\} = x$;
- * *transitivity*, because if $x \leq y \leq z$, then we have
-   $f \left\{ x,z \right\} = f \left\{ f\{x\}, f\{y,z\} \right\} = f \left\{ x,y,z \right\} = f \left\{ f\{x,y\},f\{z\} \right\} = z$;
- * and *antisymmetry*, because $x \leq y \leq x$ implies $x = f \left\{ x,y \right\} = y$.
-
-For this particular preorder, the function $f$ is the lowest great bound
-$\bigvee$; this can be proved checking that, for any subset $S \subseteq A$,
-
- * for each $s \in S$, we have $f \left\{ s , f(S) \right\} = f(S \cup \left\{ s \right\})= f(S)$,
-   so $s \leq f(S)$;
- * and given some $x \in A$ such that $s \leq x$ for all $s \in S$, we have
-   $f \left\{ f(S),x \right\} = f \left( \bigcup_{s \in S} \left\{ s,x \right\} \right) = f \left\{ x \right\} = x$, and thus $f(S) \leq x$.
-
-Finally, we can check that taking the lowest great bound on a subset
-of a poset provides a valid algebra.
-
-\[
-\bigvee \left\{ a \right\} = a, \qquad
-\bigvee \left( \bigcup_{i \in I} A_i \right) = \bigvee \left\{ \bigvee A_i \mid i \in I \right\}.
-\]
-
-Note that once we know that all algebras are of this form, a ${\cal P}\mbox{-algebra}$
-morphism is precisely a function between complete semilattices $f \colon A \to B$
-satisfying, $f \left( \bigvee A \right) = \bigvee f(A)$; that is, a complete semilattice morphism.
-
-*** Monadicity theorem
-This is also a consequence of Beck's monadicity theorem. The adjunction ${\cal P} \dashv U$ is
-monadic and that implies that the comparison functor $\mathbf{SL} \to \mathbf{Set}^{{\cal P}}$ between complete
-semilattices and powerset-algebras is an equivalence.
-
-*** references                                                                            :ignore:
-bibliographystyle:alpha
-bibliography:Math.bib
 
 ** Picado's Interview with Lawvere                                                           :post:
 :PROPERTIES:
@@ -3304,84 +1674,6 @@ org-drill format would be great.
 If you are not yet committed to Anki and you are already confortable
 with Emacs, it could be a good idea to try both before settling on one.
 
-** Uniqueness of identity proofs                                                             :post:
-:PROPERTIES:
-:TITLE: Uniqueness of identity proofs
-:EXPORT_FILE_NAME: uniquenessofidentityproofs.pdf
-:INDEX_DATE: <2018-08-25 Sat 21:57>
-:END:
-
-#+BEGIN_quote
-/Attribution: this is only a summary, the original ideas exposed here
-can be found on the reference articles./
-#+END_quote
-
-Equality in Martin-Löf type theory is a beautiful concept but it is
-notoriously tricky to understand.  This is the second time I feel like
-I get it; and it probably won't be the last one.  I have been reading
-the groupoid interpretation article, and at least the first sections
-are recommended lecture to anyone interested in the topic; it is
-really well-written and does not require any previous
-knowledge. cite:hofmann98
-
-Let's talk about *Uniqueness of identity proofs* (UIP). This is the principle
-that says that any two proofs of the same equality must be equal
-themselves. That is, for any type $A$, the following type is inhabited
-
-\[
-\prod_{x,y : A} \prod_{p, q : x = y} p = q.
-\]
-
-Idris and Agda allow the user to prove this proposition in general via
-pattern matching.
-
-#+BEGIN_ haskell
--- In Agda.
-uip : {A : Set} -> {x y : A} -> (p q : x ≡ y) -> p ≡ q
-uip refl refl = refl
-#+END_SRC
-
-#+BEGIN_SRC haskell
--- In Idris
-uip : (t : Type) 
-    -> (x : t) -> (y : t) 
-    -> (p : x = y) -> (q : x = y) 
-    -> p = q
-uip t x x Refl Refl = Refl
-#+END_SRC
-
-However, UIP is not valid in general in Martin-Löf type theory.
-Hofmann and Streicher's groupoid interpretation provides a model where
-the UIP fails. In particular, this proves that pattern matching, in full
-generality, is not conservative over Martin-Löf type theory. cite:hofmann98
-In Agda, we can disable this behaviour with the flag ~--without-K~, this
-is necessary if we want to do Homotopy Type Theory, for example.
-
-In general, the rule we /can/ use in Intensional Type Theory is the
-J-eliminator. The usual properties of equality, like the Leibniz'
-indiscernibility of identicals, are consequences of it. It is subtle
-to notice how it works as it should while not implying UIP. For
-any type $C$ depending two variables $x : A$ and $y : A$ we have the
-following rule.
-
-\begin{prooftree}
-\AXC{$\Gamma \vdash a : A$}
-\noLine
-\UIC{$\Gamma, x : A \vdash c:C(x,x)$}
-\AXC{$\Gamma \vdash b : A$}
-\noLine
-\UIC{$\Gamma \vdash p : a = b$}
-\BIC{$\Gamma \vdash \mathsf{J}_C(c,p) : C(a,b)$}
-\end{prooftree}
-
-There is also a nice justification of the rule from category theory
-and an adjoint characterization of equality due to Lawvere. More on
-this can be read on the Michael's Shulman article on homotopy type
-theory. cite:shulman17
-
-*** references                                                                            :ignore:
-bibliographystyle:alpha
-bibliography:Math.bib
 
 ** Writing a bachelor's thesis in org-mode                                                   :post:
 :PROPERTIES:
@@ -3407,9 +1699,9 @@ use the first one; the relevant line on the makefile looks as follows
 (thanks to [[https://github.com/ncordon][@ncordon]] for the idea!).
 
 #+BEGIN_SRC bash
-emacs thesis.org --batch -u `id -un` \
---eval '(load user-init-file)' \
--f org-latex-export-to-pdf
+  emacs thesis.org --batch -u `id -un` \
+    --eval '(load user-init-file)' \
+    -f org-latex-export-to-pdf
 #+END_SRC
 
 ** Blogging with a single org-file                                                           :post:
@@ -3428,95 +1720,7 @@ possible using [[https://orgmode.org/manual/Tags.html#Tags][tags]] that signal w
 and the =org-map-entries= function, which maps a function over all
 headers.
 
-** Coinduction                                                                               :post:
-:PROPERTIES:
-:TITLE: Coinduction
-:EXPORT_FILE_NAME: coinduction.pdf
-:INDEX_DATE: <2018-08-15 Wed 23:08>
-:ID:       174d185e-2269-40f2-935c-e8d45e08bfc8
-:END:
 
-The following article by Jacobs and Rutten is a really nice
-introduction to the notion of coinduction.  It assumes almost no prior
-knowledge of categories and details algebras, initiality, coalgebras,
-finality, induction and bisimulation.
-
- * [[http://www.cs.ru.nl/~bart/PAPERS/JR.pdf][A tutorial on (Co)algebras and (Co)induction - Bart Jacobs, Jan Rutten]]
-
-Conatural numbers can be implemented in Agda using [[https://agda.readthedocs.io/en/v2.5.4.1/language/coinduction.html#coinduction][coinductive records]]
-as in the following example.  If you are interested in understanding
-coinduction, it might be a good idea to experiment in Agda; I learnt a
-lot writing basic coinductive definitions.
-
-#+BEGIN_SRC haskell
-data Maybe (A : Set) : Set where
-  Nothing : Maybe A
-  Just : A -> Maybe A
-
-record coNat : Set where
-  coinductive
-  field
-    pred : Maybe coNat
-open coNat public    
-
-coZero : coNat
-pred coZero = Nothing
-
-coInf : coNat
-pred coInf = Just coInf
-
-succ : coNat -> coNat
-pred (succ n) = Just n
-
-infixl 20 _+_
-_+_ : coNat -> coNat -> coNat
-pred (a + b) with pred a
-pred (a + b) | Nothing = pred b
-pred (a + b) | Just a' = Just (a' + b)
-#+END_SRC
-
-** Cartesian closed categories                                                               :post:
-:PROPERTIES:
-:TITLE: Cartesian closed categories
-:EXPORT_FILE_NAME: cartesianclosedcategories.pdf
-:INDEX_DATE: <2018-07-01 Sun 11:30>
-:ID:       3d52d110-822a-4f85-a1c4-57d868b527d5
-:END:
-
-A *cartesian closed category* $\mathbb{C}$ can be defined as a category having a right adjoint
-of the unique functor to the terminal category $\ast \colon \mathbb{C} \to 1$, a right adjoint of the
-diagonal functor $\Delta \colon \mathbb{C} \to \mathbb{C} \times \mathbb{C}$, and a right adjoint of $- \times A \colon \mathbb{C} \to \mathbb{C}$ for
-each $A \in \mathbb{C}$. These three adjoints correspond to the existence of a /terminal/ object,
-binary /products/ and /exponentials/.
-
-\begin{prooftree}
-\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] \ast \rar{}\& \ast \end{tikzcd}}
-\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&] C \rar{!}\& 1 \end{tikzcd}}
-\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] C,C \rar{f,g}\& A,B \end{tikzcd}}
-\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&] C \rar{\langle f,g \rangle}\& A \times B \end{tikzcd}}
-\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] C \times A \rar{f}\& B \end{tikzcd}}
-\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&] C \rar{\widetilde{f}}\& B^A \end{tikzcd}}
-\noLine
-\TIC{}
-\end{prooftree}
-
-These three rules match the three introduction rules for the simply
-typed lambda calculus. We interpret $C$ as a context $\Gamma$ and each morphism
-$a \colon C \to A$ as a term $\Gamma \vdash a : A$.
-
-\begin{prooftree}
-\AXC{}
-\UIC{$\Gamma \vdash \ast : 1$}
-\AXC{$\Gamma \vdash a : A$}
-\AXC{$\Gamma \vdash b : B$}
-\BIC{$\Gamma \vdash \pair{a,b} : A \times B$}
-\AXC{$\Gamma, a : A \vdash b : B$}
-\UIC{$\Gamma \vdash (\lambda a.b) : A \to B$}
-\noLine
-\TIC{}
-\end{prooftree}
-
-Now, we should discuss if \beta-equivalence corresponds to the equality between morphisms.
 
 ** Category theory and lambda calculus                                                       :post:
 :PROPERTIES:
@@ -5343,7 +3547,7 @@ I have contributed to.
 ** Yoneda lemma
 :PROPERTIES:
 :TITLE:    Yoneda lemma
-:EXPORT_FILE_NAME: wikipediacontributions.pdf
+:EXPORT_FILE_NAME: yonedalemma.pdf
 :INDEX_DATE: <2018-02-17 Tue 12:00>
 :END:
 
@@ -5402,7 +3606,7 @@ Que viene de nuevo dada por $y(\tau) = \tau_A(1_A)$.
 [3] The Catsters.
     [[https://www.youtube.com/watch?v=TLMxHB19khE][Representables and Yoneda 3]]
 
-* Math
+* Math index
 :PROPERTIES:
 :TITLE:  Math
 :EXPORT_FILE_NAME: math.html
@@ -5413,18 +3617,1918 @@ Que viene de nuevo dada por $y(\tau) = \tau_A(1_A)$.
  * *[[http://jose.theoj.org/papers/8324e9aa1019760e987673f55e335f34][Mikrokosmos: an educational lambda interpreter]]*. /Mario Román/. The
    Journal of Open Source Education, 2018.
  
-** Posts
+** External Posts
 
  * [[https://libreim.github.io/blog/2016/12/21/monadas/][*Mónadas*]], LibreIM 2016.
  * [[https://libreim.github.io/blog/2016/09/19/aprendiendo-emacs/][*Aprendiendo Emacs*]], LibreIM 2016.
 
 ** Talks
 
+ * *[[https://mroman42.github.io/ctlc-slides/slides.pdf][Category Theory and Lambda Calculus]]*, BSc Dissertation defense. /(24th June 2018, [[https://fciencias.ugr.es/en/][Universidad de Granada]])/
  * *[[https://mroman42.github.io/cosmoi/monoidescoloreadosbimonoidescoloreados.pdf][Monoides coloreados, bi(monoides coloreados)]]*. /(26th April 2019, [[https://wpd.ugr.es/~iemath/][IEMath]])/
  * *[[https://mroman42.github.io/libreim-constructiva/constructiva.pdf][Ideas sobre constructivismo y computabilidad]]*. /(21st September 2018, [[https://wpd.ugr.es/~iemath/][IEMath]])/
  * *[[https://github.com/mroman42/lambda.notes][Lógica intuicionista y cálculo lambda]]*. /(19th January 2018, [[https://wpd.ugr.es/~iemath/][IEMath]])/
  * *[[https://github.com/mroman42/lambda.notes][Categorías, funtores y transformaciones naturales]]*. /(18th November 2017, [[https://wpd.ugr.es/~iemath/][IEMath]])/
+ 
+** Short notes
+#+begin_src emacs-lisp :exports results :results output html :eval never-export
+  (defun print-post-at-point () 
+    (princ (concat  
+      " <li><a href=" 
+      (concat (org-entry-get (point) "EXPORT_FILE_NAME")  "> ") 
+      (org-entry-get (point) "TITLE") "</a>, <em> ("
+      (org-entry-get (point) "EXPORT_DATE") ")</em><br></li>\n")))
 
+  (defun print-index ()
+    (progn 
+      (princ "<ul>\n") 
+      (org-map-entries (lambda () (print-post-at-point)) "+note" nil) 
+      (princ "</ul>\n")))
+
+  (print-index)
+#+end_src
+
+#+RESULTS:
+#+BEGIN_EXPORT html
+<ul>
+ <li><a href=glass.pdf> The glass optic</a>, <em> (27th May, 2019)</em><br></li>
+ <li><a href=traversals.pdf> The traversal is the optic for polynomial functors</a>, <em> (24th May, 2019)</em><br></li>
+ <li><a href=monoidesgrouposcategorias.pdf> Monoides, groupos, grupoides, categorías</a>, <em> (1 de abril de 2019)</em><br></li>
+ <li><a href=monoidescoloreadosbimonoidescoloreados.pdf> Monoides coloreados y bi(monoides coloreados)</a>, <em> (14 de abril de 2019)</em><br></li>
+ <li><a href=diagramascategoriasmonoidales.pdf> Diagramas para categorías monoidales</a>, <em> ()</em><br></li>
+ <li><a href=everysurjectiontoprojectiveissplit.pdf> Every surjection to a projective R-module is split</a>, <em> ()</em><br></li>
+ <li><a href=homcontinuous.pdf> Hom is continuous</a>, <em> ()</em><br></li>
+ <li><a href=pastingpullbacks.pdf> Pasting pullbacks</a>, <em> ()</em><br></li>
+ <li><a href=countinginlinearlogic.pdf> Linear logic is quantity-sensitive</a>, <em> ()</em><br></li>
+ <li><a href=powersetalgebrascompletesemilattices.pdf> Powerset-algebras are complete semilattices</a>, <em> ()</em><br></li>
+ <li><a href=uniquenessofidentityproofs.pdf> Uniqueness of identity proofs</a>, <em> ()</em><br></li>
+ <li><a href=coinduction.pdf> Coinduction</a>, <em> ()</em><br></li>
+ <li><a href=cartesianclosedcategories.pdf> Cartesian closed categories</a>, <em> ()</em><br></li>
+</ul>
+#+END_EXPORT
+
+* Math
+** The glass optic                                                                           :note:
+:PROPERTIES:
+:TITLE: The glass optic
+:EXPORT_FILE_NAME: glass.pdf
+:EXPORT_DATE: 27th May, 2019
+:INDEX_DATE: <2019-04-27 Mon>
+:EXPORT_OPTIONS: toc:nil num:t lang:en
+:END:
+
+At the intersection between a *lens* and a *grate* there should be an
+optic that I have started to call *glass*.  If the pseudomonoid action
+that describes a lens is $c \times (-)$ and the one for glass is $c \to (-)$,
+the action that we want to get should be the one given by the
+coproduct pseudomonoid.
+
+We rewrite the action of every word $c_1d_1\dots c_kd_k$ as follows,
+for some $e,f \in \mathbf{C}$ bicartesian closed category.
+\[\begin{aligned}
+a &\mapsto d_1 \times (c_1 \to d_2 \times (c_2 \to \dots x)) \\
+&= d_1 \times (c_1 \to d_2) \times ((c_1 \times c_2) \to \dots x) \\
+&= e \times (f \to x)
+\end{aligned}\]
+And we derive the concrete representation.
+\[\begin{aligned}
+\int^{c,d} & \mathbf{C}(s, c \times (d \to a)) \times \mathbf{C}((d \to b) \times c , t) \\&\cong
+\int^{c,d} \mathbf{C}(s, c) \times \mathbf{C}(s \to d \to a) \times \mathbf{C}((d \to b) \times c , t) \\&\cong
+\int^{d} \mathbf{C}(s \to d \to a) \times \mathbf{C}((d \to b) \times s , t) \\&\cong
+\int^{d} \mathbf{C}(d \to (s \to a)) \times \mathbf{C}((d \to b) \times s , t) \\&\cong
+\mathbf{C}(((s \to a) \to b) \times s , t) \\&\cong
+\mathbf{C}(((s \to a) \to b) , s \to t)
+\end{aligned}\]
+
+The optic in Haskell is =((s -> a) -> b) -> s -> t=. My intuition at the
+moment is "If from a getter you can create a b, then you can update s
+to t", which apparently also rhymes.
+
+** The traversal is the optic for polynomial functors                                        :note:
+:PROPERTIES:
+:TITLE: The traversal is the optic for polynomial functors
+:EXPORT_FILE_NAME: traversals.pdf
+:EXPORT_DATE: 24th May, 2019
+:INDEX_DATE: <2019-04-24 Mon>
+:EXPORT_OPTIONS: toc:nil num:t lang:en
+:END:
+
+We present a derivation of the traversal as the optic associated with
+polynomial functors.  This is still work in progress and I have not checked
+all the details, I might retract this if it does not work.
+
+The idea here is that optics can be described as associated to the action
+of some pseudomonoid. This approach was previously taken by Riley but we
+make this work with Bartosz' Yoneda-with-adjunction trick applied to arbitrary
+actions. We can consider the same monad Pastro-Street use for Tambara modules
+but for an arbitrary pseudomonoid action.
+
+*** Yoneda with adjunction
+#+begin_lemma
+Let $\Phi$ be a monad in $\mathbf{Prof}$ and let $U \colon \Phi\mathbf{-alg} \to \mathbf{Prof}$ be the forgetful
+functor.  We know the following isomorphism.
+\[
+\int_{p} (Up)(a,b) \to (Up)(s,t) \cong (\Phi ( \mathbf{C}^{op} \times \mathbf{C} )((a,b), -)) (s,t)
+\]
+#+end_lemma
+
+*** Comonad for an action
+#+begin_lemma
+Let $(\cdot) \colon \mathbf{M} \times \mathbf{C} \to \mathbf{C}$ be an action of a monoidal category on a category.
+The following should form a comonad where the unit and the multiplication
+are given by the unit and tensor of the monoidal category (or, in general,
+the pseudomonoid structure).
+\[
+(\Theta p)uv = \int_{m \in \mathbf{M}} p(m \cdot u , m \cdot v)
+\]
+The laws should follow from the laws of the pseudomonoid.
+#+end_lemma
+
+#+begin_theorem
+The comonoid has a right adjoint given by
+\[
+(\Phi p)xy = \int^{u,v,m} \mathbf{C}(x, m \cdot u) \times \mathbf{C}(m \cdot v , y) \times p(u,v).
+\]
+#+end_theorem
+
+*** General formula
+Applying Yoneda with adjunction to this monad yields
+\[
+\left( \int_{p \in \Theta\mbox{-}\mathbf{coAlg}} p (a, b) \to p (s, t) \right)
+\cong
+\int^{m \in \mathbf{M}} \mathbf{C}(s , m \cdot a) \times \mathbf{C}(m \cdot b , t).
+\]
+Where we are quantifying over the functors that have a coalgebra
+for the comonad. That is, the profunctors that preserve the
+the action.
+\[
+p (a , b) \to \int_{m \in \mathbf{M}} p(m \cdot a , m \cdot b)
+\]
+
+#+begin_note
+The idea is that it should generalize the results described (in Riley
+and) first in Bartosz' post on profunctor optics for Tambara modules
+to an arbitrary action.  We need to check details.
+#+end_note
+
+*** Traversal
+Polynomial functors $f \colon \mathbf{C} \to \mathbf{C}$ in a bicartesian closed category are these
+that can be written as $f(x) = \sum_n \lambda_nx^n$, where $x^n$ is the n-fold cartesian product. 
+We consider the category $\mathbf{Poly}$ of polynomial functors as a full subcategory 
+of $[ \mathbf{C} , \mathbf{C} ]$. This category is monoidal with the
+monoidal product given by composition of endofunctors.  There exists an action
+$\mathbf{Poly} \to \mathbf{Sets} \to \mathbf{Sets}$ given by evaluation.
+
+Let $f \in \mathbf{Poly}$. It must be of the form $f(x) = \sum_n \lambda_n x^n$. We
+apply cocontinuity of hom, then we apply Yoneda n-times. Yoneda substitutes the
+coefficient $\lambda_n$ inside $f$ by $(b^n \to t)$.
+\[\begin{aligned}
+\int^{p \in \mathbf{Poly}} \mathbf{C}(s , f(a)) \times \mathbf{C}(f(b), t)  \cong \\ 
+\int^{p \in \mathbf{Poly}} \mathbf{C}(s , f(a)) \times \mathbf{C}(\sum_{n} \lambda_n b^n, t) \cong \\
+\int^{p \in \mathbf{Poly}} \mathbf{C}(s , f(a)) \times \prod_{n} \mathbf{C}( \lambda_n b^n, t) \cong \\
+\int^{p \in \mathbf{Poly}} \mathbf{C}(s , f(a)) \times \prod_{n} \mathbf{C}( \lambda_n , b^n \to t) \cong \\
+\mathbf{C} \left(  s , \sum_n a^n \times ( b^n \to t) \right)
+\end{aligned}\]
+And thus the traversal is the associated optic to the action of
+polynomial functors on the category of sets.  In other words,
+\[
+(s \to \sum_n a^n \times (b^n \to t)) \cong  \int_{p \in \mathsf{TambPoly}} p(a,b) \to p(s,t),
+\]
+where $\mathsf{TambPoly}$ is the subcategory of profunctors that are Tambara
+modules for the action of polynomial functors. That is, that have
+families of morphisms as follows.
+\[
+p(x,y) \to \int_{f \in \mathbf{Poly}} p(f(x), f(y))
+\]
+
+** Monoides, grupos, grupoides, categorías                                                   :note:
+:PROPERTIES:
+:TITLE: Monoides, groupos, grupoides, categorías
+:EXPORT_FILE_NAME: monoidesgrouposcategorias.pdf
+:EXPORT_DATE: 1 de abril de 2019
+:INDEX_DATE: <2019-04-01 Mon>
+:EXPORT_OPTIONS: toc:nil num:t lang:es
+:END:
+
+\quad\\
+
+*** Monoides                                                                              :ignore:
+#+begin_definition
+Un *monoide* es una estructura $A$ en la que (1) podemos /componer/
+cualesquiera dos elementos en uno nuevo con una operación 
+$\circ \colon A \times A \to A$ y en la que (2) existe un elemento neutro $e$
+que no afecta al componerse con otro, $a \circ e = e \circ a = a$ para
+cualquier $a : A$, y (3) la composición es asociativa, siendo
+$a \circ (b \circ c) = (a \circ b) \circ c$ para cualesquiera $a,b,c : A$.
+#+end_definition
+
+Ejemplos son:
+
+ 1. Los números naturales con la suma como operación y el cero
+    como elemento neutro. $n + 0 = 0 + n = n$
+ 2. Las cadenas de texto, con la concatenación como operación y
+    la cadena vacía como elemento neutro. $a \circ "" = "" \circ a = a$
+
+*** Grupo                                                                                 :ignore:
+#+begin_definition
+Un *grupo* es un monoide donde cada elemento $a : A$ tiene una
+inversa $a^{-1} : A$ tal que $a \circ a^{-1} = a^{-1} \circ a = e$.
+#+end_definition
+
+Ejemplos son:
+
+ 1. Los números enteros con la suma como operación, el cero como
+    elemento neutro y el elemento opuesto como negación.
+
+*** Categoría                                                                             :ignore:
+#+begin_definition
+Una *categoría* es un monoide coloreado. Eso significa que no podemos
+componer elementos libremente, sino que cada elemento $a : A$ tiene un
+dominio $\mathrm{dom}(a)$ y un codominio $\mathrm{cod}(a)$. Sólo podemos componer $a \circ b$ 
+si $\mathrm{cod}(b) = \mathrm{dom}(a)$, y la composición tendrá dominio $\mathrm{dom}(b)$ y 
+codominio $\mathrm{cod}(b)$.
+#+end_definition
+
+Ejemplos son:
+
+ 1. Las funciones con la composición de funciones.
+ 2. Las funciones lineales entre espacios vectoriales con la composición.
+ 3. Las demostraciones de $(a \leq b)$ con la transitividad.
+
+*** Grupoide                                                                              :ignore:
+#+begin_definition
+Un *grupoide* es un grupo coloreado.
+#+end_definition
+
+** Monoides coloreados y bi(monoides coloreados)                                             :note:
+:PROPERTIES:
+:TITLE: Monoides coloreados y bi(monoides coloreados)
+:EXPORT_FILE_NAME: monoidescoloreadosbimonoidescoloreados.pdf
+:EXPORT_DATE: 14 de abril de 2019
+:INDEX_DATE: <2019-04-14 Sun>
+:EXPORT_OPTIONS: toc:3 num:t lang:es
+:END:
+
+\quad\\
+
+*** Introducción                                                                          :ignore:
+Nuestro objetivo es el siguiente: primero presentamos una /sintaxis/, ciertos
+símbolos que forman diagramas y que siguen ciertas reglas. Luego
+veremos que esta sintaxis toma /modelos/ en objetos matemáticos con
+cierta estructura.  ¿Cuál es la utilidad de estudiar la sintaxis? Cada
+vez que probemos algo sólo usando sus reglas, lo estaremos probando
+para todos sus modelos.  ¿En qué se diferencia esto de una
+presentación axiomática de, digamos, un grupo? en que nuestra sintaxis
+viene dada, no por cadenas de caracteres como suele hacerse en lógica,
+¡sino por diagramas!  Vamos a ir un paso más allá, y, haciendo
+implícitamente uso de teoremas de coherencia y complitud, definir las
+nuestras estructuras de forma elemental usando diagramas.  En lugar de
+definir diagramas, los tomamos como conceptos primitivos.
+
+/In this article I am drawing diagrams using tikz and following
+Marsden's cite:marsden14 macros for string diagrams./ /The general idea
+follows this paper, but also Vicary-Heunen-Reutter's notes/ /for
+Categorical Quantum Mechanics,/ cite:vicary19.
+
+*** Cálculo gráfico
+Normalmente nuestras ecuaciones usan una dimensión. En el cálculo
+diagramático empezaremos usando una sola dimensión pero pasaremos a
+usar dos, y en principio nada nos limitaría a usar estructuras de
+dimensiones arbitrarias.
+
+Cuando usamos una dimensión, podemos, substituir cualquiera de las
+subexpresiones que forman la fórmula por otra expresión que sea igual
+a ella.  De la misma forma, cuando tenemos dos dimensiones, podemos
+substituir cualquiera de los subdiagramas (recuadros del diagrama
+original) por un diagrama que sea igual.
+
+Seguiremos algunas convenciones.
+
+ * Los diagramas se leen de abajo a arriba.
+ * Dos diagramas que sean isotópicos, es decir, tales que uno
+   pueda transformarse en el otro sólo moviendo los nodos y las
+   cuerdas sin crear cruces, son iguales.
+
+*** Monoides y monoides coloreados
+#+begin_definicion
+Un elemento de un *monoide* es una /cuerda/ con /nodos/, un diagrama en una dimensión.
+Los siguientes diagramas representan elementos de un monoide.
+\begin{center}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[label=below:$$] (b) ++(0,4) coordinate[label=above:$M$] (t);
+\coordinate[dot, label=right:$a$] (alpha) at ($(b)!0.333!(t)$);
+\coordinate[dot, label=right:$b$] (alpha') at ($(b)!0.666!(t)$);
+\draw (b) -- (alpha) to node[left]{$$} (alpha') -- (t);
+\begin{pgfonlayer}{background}
+\fill[color={white}] ($(t) + (-2,0)$) rectangle (b);
+\fill[color={white}] (t) rectangle ($(b) + (2,0)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[label=below:$$] (b) ++(0,4) coordinate[label=above:$M$] (t);
+\draw (b) -- (t);
+\begin{pgfonlayer}{background}
+\fill[color={white}] ($(t) + (-2,0)$) rectangle (b);
+\fill[color={white}] (t) rectangle ($(b) + (2,0)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[label=below:$$] (b) ++(0,4) coordinate[label=above:$M$] (t);
+\coordinate[dot, label=right:$x$] (alpha) at ($(b)!0.75!(t)$);
+\coordinate[dot, label=right:$y$] (alpha') at ($(b)!0.5!(t)$);
+\coordinate[dot, label=right:$z$] (alpha'') at ($(b)!0.25!(t)$);
+\draw (b) -- (alpha) to node[left]{$$} (alpha') to node[left]{$$} (alpha'') -- (t);
+\begin{pgfonlayer}{background}
+\fill[color={white}] ($(t) + (-2,0)$) rectangle (b);
+\fill[color={white}] (t) rectangle ($(b) + (2,0)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{center}
+A la cuerda vacía se le llama *identidad* o /elemento neutro/ del monoide.
+A la *concatenación* de dos cuerdas se le llama tradicionalmente /multiplicación/.
+#+end_definicion
+
+#+begin_ejemplo
+Los números naturales con la suma forman un monoide.[fn:1] La
+cuerda vacía es el cero y dos cuerdas con la misma suma se
+declaran iguales.
+\begin{equation*}
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[label=below:$$] (b) ++(0,4) coordinate[label=above:$\mathbb{N}$] (t);
+\coordinate[dot, label=right:$3$] (alpha) at ($(b)!0.75!(t)$);
+\coordinate[dot, label=right:$2$] (alpha') at ($(b)!0.5!(t)$);
+\coordinate[dot, label=right:$4$] (alpha'') at ($(b)!0.25!(t)$);
+\draw (b) -- (alpha) to node[left]{$$} (alpha') to node[left]{$$} (alpha'') -- (t);
+\begin{pgfonlayer}{background}
+\fill[color={white}] ($(t) + (-2,0)$) rectangle (b);
+\fill[color={white}] (t) rectangle ($(b) + (2,0)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered} = \begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[label=below:$$] (b) ++(0,4) coordinate[label=above:$\mathbb{N}$] (t);
+\coordinate[dot, label=right:$9$] (alpha) at ($(b)!0.5!(t)$);
+\draw (b) -- (alpha) -- (t);
+\begin{pgfonlayer}{background}
+\fill[color={white}] ($(t) + (-2,0)$) rectangle (b);
+\fill[color={white}] (t) rectangle ($(b) + (2,0)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+\end{equation*}
+¿Cuál es la ventaja de escribir esto frente a la notación usual de un
+monoide? con esta notación, la asociatividad es transparente. No tenemos
+forma de distinguir $((3+2)+4)$ de $(3+(2+4))$ y esto es bueno, porque
+en un monoide no debería poder existir forma de distinguirlos. Además, cuando
+dibujamos la unidad como una cuerda vacía, estamos haciendo la unitalidad
+transparente. No tenemos forma de distinguir $9$ de $0+9$.
+
+[fn:1] Y los dibujos describen un /ábaco/.
+#+end_ejemplo
+
+La estructura de un monoide es muy rica, pero podemos ir más allá. En
+un monoide, cualesquiera dos nodos pueden componerse sobre la cuerda,
+pero podemos limitar esta composición dando colores a las cuerdas.
+Cada nodo cambiará el color de la cuerda, y sólo podremos componer dos
+nodos si el color de salida del primero coincide con el color de
+entrada del segundo.
+
+#+begin_definicion
+Una *categoría* es un monoide coloreado. Alternativamente, un monoide es
+una categoría monocroma.  Normalmente, a los elementos de una categoría
+se les llama /morfismos/, a los colores se les llama /objetos,/ se les pone una
+etiqueta en lugar de un color, y se dice que
+/un monoide es una categoría con un sólo objeto/. 
+Los siguientes son morfismos en una categoría.
+\begin{center}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[label=below:$$] (b) ++(0,4) coordinate[label=above:$\mathbf{C}$] (t);
+\coordinate[dot, label=right:$f$] (alpha) at ($(b)!0.333!(t)$);
+\coordinate[dot, label=right:$g$] (alpha') at ($(b)!0.666!(t)$);
+\draw[red!75!black] (b) to node[left]{$A$} (alpha);
+\draw[blue!75!black] (alpha) to node[left]{$B$} (alpha');
+\draw[green!60!black] (alpha') to node[left]{$C$} (t);
+\begin{pgfonlayer}{background}
+\fill[color={white}] ($(t) + (-2,0)$) rectangle (b);
+\fill[color={white}] (t) rectangle ($(b) + (2,0)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[label=below:$$] (b) ++(0,4) coordinate[label=above:$\mathbf{C}$] (t);
+\draw[red!75!black] (b) to node[left]{$A$} (t);
+\begin{pgfonlayer}{background}
+\fill[color={white}] ($(t) + (-2,0)$) rectangle (b);
+\fill[color={white}] (t) rectangle ($(b) + (2,0)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[label=below:$$] (b) ++(0,4) coordinate[label=above:$\mathbf{C}$] (t);
+\coordinate[dot, label=right:$h$] (alpha) at ($(b)!0.5!(t)$);
+\draw[blue!75!black] (b) to node[left]{$B$} (alpha);
+\draw[red!75!black] (alpha) to node[left]{$A$} (t);
+\begin{pgfonlayer}{background}
+\fill[color={white}] ($(t) + (-2,0)$) rectangle (b);
+\fill[color={white}] (t) rectangle ($(b) + (2,0)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{center}
+A la concatenación se le suele llamar *composición* y a la cuerda vacía de un
+determinado color se le llama *identidad* sobre ese objeto. Al color de entrada
+de un nodo se le llama *dominio* y al color de salida se le llama *codominio*.
+#+end_definicion
+
+Ahora la composición está limitada: podemos poner $g$ después de $f$
+porque el dominio de $g$ y el codominio de $f$ coinciden, pero no
+podemos poner $h$ después de $g$, por ejemplo, porque $h$ tiene dominio $B$.
+
+#+begin_ejemplo
+Las funciones entre conjuntos forman una categoría, que suele notarse
+por $\mathbf{Set}$.  Cada color es un conjunto, y entre dos conjuntos $A$ y $B$ podemos
+considerar los nodos dados por las funciones $f \colon A \to B$.  Al concatenar
+varias funciones, lo que hacemos es componerlas. Una cadena vacía sobre
+un conjunto representa la función identidad sobre ese conjunto.
+\begin{equation*}
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[label=below:$$] (b) ++(0,4) coordinate[label=above:$\mathbf{Set}$] (t);
+\coordinate[dot, label=right:$\mathsf{not}$] (alpha) at ($(b)!0.666!(t)$);
+\coordinate[dot, label=right:$\mathsf{even}$] (alpha') at ($(b)!0.333!(t)$);
+\draw[yellow!60!black] (t) to node[left]{$\mathsf{Bool}$} (alpha);
+\draw[yellow!60!black] (alpha) to node[left]{$\mathsf{Bool}$} (alpha');
+\draw[red!70!black] (alpha') to node[left]{$\mathbb{N}$} (b);
+\begin{pgfonlayer}{background}
+\fill[color={white}] ($(t) + (-2,0)$) rectangle (b);
+\fill[color={white}] (t) rectangle ($(b) + (2,0)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered} = \begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[label=below:$$] (b) ++(0,4) coordinate[label=above:$\mathbf{Set}$] (t);
+\coordinate[dot, label=right:$\mathsf{odd}$] (alpha) at ($(b)!0.5!(t)$);
+\draw[red!70!black] (b) -- (alpha);
+\draw[yellow!70!black] (alpha) -- (t);
+\begin{pgfonlayer}{background}
+\fill[color={white}] ($(t) + (-2,0)$) rectangle (b);
+\fill[color={white}] (t) rectangle ($(b) + (2,0)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+\end{equation*}
+La asociatividad de la composición de funciones y la neutralidad de la
+función se han vuelto invisibles con esta notación.
+#+end_ejemplo
+
+*** Categorías monoidales
+Cuando los diagramas de verdad se vuelven interesantes es cuando
+pasamos de una a dos dimensiones.  Nuestra siguiente definición usa
+dos dimensiones. En uno de los ejes tenemos un monoide, en el otro
+tenemos una categoría.
+
+#+begin_definicion
+Los morfismos de *categoría monoidal* vienen dados por diagramas
+bidimensionales de cuerdas con distintos colores.  Un morfismo puede
+tener como entrada y salida un número cualquiera de cuerdas.
+\begin{center}
+\begin{tabular}{c c c c}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate (bl) ++(0,2) coordinate[dot, label=left:$\alpha$] (alpha) ++(0,2) coordinate (tl)
+ (bl) ++(2,0) coordinate (br) ++(0,2) coordinate[dot, label=right:$\beta$] (beta) ++(0,2) coordinate (tr);
+\draw[red!75!black] (bl) -- (alpha);
+\draw[blue!75!black] (alpha) -- (tl);
+\draw[green!75!black] (br) -- (beta);
+\draw[red!75!black] (beta) -- (tr);
+\begin{pgfonlayer}{background}
+\fill[color={white!95!black}] ($(tl) + (-2,0)$) rectangle (bl);
+\fill[color={white!95!black}] (tl) rectangle (br);
+\fill[color={white!95!black}] (tr) rectangle ($(br) + (2,0)$);
+\end{pgfonlayer}
+\end{tikzpicture} 
+&
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=above:\ensuremath{\gamma}]
+ (eta) ++(-1,1) coordinate (a) ++(0,1) coordinate (tl)
+ (eta) ++(1,1) coordinate (b) ++(0,1) coordinate (tr)
+ (eta) ++(-1,-1) coordinate[dot, label=left:$\delta$] (c) ++(0,-1) coordinate (el)
+ (eta) ++(1,-1) coordinate (d) ++(0,-1) coordinate (er)
+ (eta) ++(0,-2) coordinate (e);
+\draw[red!75!black] (tl) -- (a) to[out=-90, in=180] (eta.west);
+\draw (eta.west) -- (eta.east);
+\draw[red!75!black] (eta.east) to[out=0, in=-90] (b) -- (tr);
+\draw[blue!75!black] (el) -- (c);
+\draw[orange!75!black] (c) to[out=90, in=180] (eta.west);
+\draw (eta.west) -- (eta.east);
+\draw[blue!75!black] (eta.east) to[out=0, in=90] (d) -- (er);
+\draw[blue!75!black] (eta) -- (e);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(tl) + (-2,0)$) rectangle ($(tr) + (2,-4)$);
+%\fill[white!95!black] (tl) -- (a) to[out=-90, in=180] (eta.west) -- (eta.east) to[out=0, in=-90] (b) -- (tr) -- cycle;
+%\fill[white!95!black] ($(tl) + (-1,-2)$) rectangle ($(tr) + (1,-4)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+&
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=above:\ensuremath{\psi}]
+ (eta) ++(0,-2) coordinate (e);
+\draw[blue!75!black] (eta) -- (e);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(eta) + (-2,2)$) rectangle ($(eta) + (2,-2)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{tabular}
+\end{center}
+#+end_definicion
+
+Consideramos iguales cualesquiera dos diagramas que sean isotópicos,
+pero aun tenemos la restricción dada por los colores: el morfismo
+$\gamma$, por ejemplo, necesita tomar (¡en ese orden!) una entrada
+naranja y dos azules. Nuestro siguiente paso será colorear las regiones
+del diagrama, así que quizá es una buena idea cambiar los colores de las
+cuerdas por etiquetas, como implícitamente estamos haciendo con los
+morfismos.
+
+#+begin_ejemplo
+Las funciones sobre conjuntos no sólo forman una categoría, sino que
+forman una categoría monoidal con el producto dado por el producto
+cartesiano.  Esto nos permite además expresar funciones no necesariamente
+unarias en nuestros diagramas.  ¡Importante!: los diagramas se suelen leer
+de abajo hacia arriba; pero a veces también se encuentran en la literatura
+de izquierda a derecha o incluso de arriba a abajo.
+\begin{center}
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label={[label distance=1ex]0:$\small{(+)}$}]
+ (eta) ++(0,1.333) coordinate[dot, label=right:$\mathsf{odd}$] (a) ++(0,1.333) coordinate (tl)
+ (eta) ++(-1,-1.333) coordinate (c) ++(0,0) coordinate (el)
+ (eta) ++(1,-1.333) coordinate (d) ++(0,0) coordinate (er);
+\draw[yellow!75!black] (tl) -- (a);
+\draw[red!75!black] (a) -- (eta);
+\draw (eta.west) -- (eta.east);
+\draw[red!75!black] (el) -- (c);
+\draw[red!75!black] (c) to[out=90, in=180] (eta.west);
+\draw (eta.west) -- (eta.east);
+\draw[red!75!black] (eta.east) to[out=0, in=90] (d) -- (er);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(eta) + (-3,2.666)$) rectangle ($(eta) + (3,-1.333)$);
+\end{pgfonlayer}
+\end{tikzpicture}\end{gathered} = \begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label={[label distance=1ex]0:$\small{(\oplus)}$}]
+ (eta) ++(0,1.333) coordinate (tl)
+ (eta) ++(-1,-1.333) coordinate[dot, label=left:$\mathsf{odd}$] (c) ++(0,-1.333) coordinate (el)
+ (eta) ++(1,-1.333)  coordinate[dot, label=right:$\mathsf{odd}$] (d) ++(0,-1.333) coordinate (er);
+\draw[yellow!75!black] (tl) -- (eta);
+\draw[red!75!black] (el) -- (c);
+\draw[yellow!75!black] (c) to[out=90, in=180] (eta.west);
+\draw (eta.west) -- (eta.east);
+\draw[yellow!75!black] (eta.east) to[out=0, in=90] (d);
+\draw[red!75!black] (d) -- (er);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(eta) + (-3,1.333)$) rectangle ($(eta) + (3,-2.666)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+\end{center}
+Por cierto, esta ecuación está expresando que la función que calcula si un
+número es impar es un homomorfismo de monoides (en su definición usual como
+conjuntos) del monoide de los naturales con la suma al monoide de los booleanos
+con la operación xor.
+#+end_ejemplo
+
+*** PROs y teorías de Lawvere
+Nos hemos saltado un paso obvio. ¿Qué ocurre si tomamos dos
+dimensiones pero sólo usamos cuerdas de un color? El resultado *no* es
+una categoría monoidal con un solo objeto, sino una categoría monoidal
+cuyos objetos vienen dados por el monoide libre sobre un
+generador. Esto ocurre porque no forzamos un número arbitrario de
+cuerdas a ser iguales a una sóla cuerda.
+
+#+begin_definicion
+Un *PRO*, o *categoría de (pro)ductos monoidales*, es una categoría monoidal
+monocroma. Alternativamente, una categoría monoidal es un PRO coloreado.
+#+end_definicion
+
+#+begin_ejemplo
+Estas categorías pueden usarse para describir teorías algebraicas internas
+a nuestras teorías. ¿Qué quiere decir esto? Nosotros hemos partido de una
+noción primitiva de monoide y categoría, pero una vez que tenemos la categoría
+monoidal de conjuntos, podríamos intentar definir un monoide /en la categoría de conjuntos/.
+Este monoide no será un diagrama sino una operación de multiplicación (con dos
+entradas y una salida) y una unidad (con una salida y ninguna entrada)
+/dentro de la categoría/.  Un monoide en una categoría monoidal viene determinado por
+los siguientes morfismos.
+\begin{center}
+\begin{tabular}{c c c c}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=below:\ensuremath{m}]
+ (eta) ++(-1,-1) coordinate (a) ++(0,-1) coordinate (tl)
+ (eta) ++(1,-1) coordinate (b) ++(0,-1) coordinate (tr)
+ (eta) ++(0,2) coordinate (e);
+\draw[black] (tl) -- (a) to[out=90, in=180] (eta.east);
+\draw[black] (eta.west) to[out=0, in=90] (b) -- (tr);
+\draw[black] (eta) -- (e);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(eta) + (-3,2)$) rectangle ($(eta) + (3,-2)$);
+\end{pgfonlayer}
+\end{tikzpicture} &
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=below:\ensuremath{u}]
+ (eta) ++(0,2) coordinate (e);
+\draw[black] (eta) -- (e);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(eta) + (-2,2)$) rectangle ($(eta) + (2,-2)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{tabular}
+\end{center}
+Cumpliendo los axiomas de un monoide, que son las siguientes ecuaciones.
+La primera se llama *unitalidad* y comprueba que la unidad es neutra respecto
+al producto.
+\begin{center}
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label={[label distance=1ex]0:$\small{m}$}]
+ (eta) ++(0,1.333) coordinate (tl)
+ (eta) ++(-1,-1.333) coordinate[dot, label=left:$u$] (c) ++(0,-1.333) coordinate (el)
+ (eta) ++(1,-1.333)  coordinate (d) ++(0,-1.333) coordinate (er);
+\draw[black] (tl) -- (eta);
+\draw[black] (c) to[out=90, in=180] (eta.west);
+\draw (eta.west) -- (eta.east);
+\draw[black] (eta.east) to[out=0, in=90] (d);
+\draw[black] (d) -- (er);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(eta) + (-3,1.333)$) rectangle ($(eta) + (3,-2.666)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+=
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate
+ (eta) ++(0,1.333) coordinate (tl)
+ (eta) ++(0,-1.333) coordinate (c) ++(0,-1.333) coordinate (el)
+ (eta) ++(0,-1.333)  coordinate (d) ++(0,-1.333) coordinate (er);
+\draw[black] (tl) -- (er);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(eta) + (-3,1.333)$) rectangle ($(eta) + (3,-2.666)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+=
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label={[label distance=1ex]0:$\small{m}$}]
+ (eta) ++(0,1.333) coordinate (tl)
+ (eta) ++(-1,-1.333) coordinate (c) ++(0,-1.333) coordinate (el)
+ (eta) ++(1,-1.333)  coordinate[dot, label=right:$u$] (d) ++(0,-1.333) coordinate (er);
+\draw[black] (tl) -- (eta);
+\draw[black] (el) -- (c);
+\draw[black] (c) to[out=90, in=180] (eta.west);
+\draw (eta.west) -- (eta.east);
+\draw[black] (eta.east) to[out=0, in=90] (d);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(eta) + (-3,1.333)$) rectangle ($(eta) + (3,-2.666)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+\end{center}
+La segunda se llama *asociatividad* y nos permite aplicar las multiplicaciones
+en cualquier orden.
+\begin{center}
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label={[label distance=1ex]180:$\small{m}$}]
+ (eta) ++(0,1.333) coordinate (tl)
+ (eta) ++(-1,-1.333) coordinate[dot, label={[label distance=1ex]180:$\small{m}$}] (c) ++(0,-1.333) coordinate (el)
+ (c) ++(-0.666,-1.333) coordinate (pl)
+ (c) ++(0.666,-1.333) coordinate (pr)
+ (eta) ++(1,-1.333)  coordinate (d) ++(0,-1.333) coordinate (er);
+\draw[black] (tl) -- (eta);
+\draw[black] (c) to[out=90, in=180] (eta.west);
+\draw[black] (pl) to[out=90, in=180] (c.west);
+\draw (eta.west) -- (eta.east);
+\draw[black] (eta.east) to[out=0, in=90] (d);
+\draw[black] (c.east) to[out=0, in=90] (pr);
+\draw[black] (d) -- (er);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(eta) + (-3,1.333)$) rectangle ($(eta) + (3,-2.666)$);
+ñ\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+=
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label={[label distance=1ex]0:$\small{m}$}]
+ (eta) ++(0,1.333) coordinate (tl)
+ (eta) ++(-1,-1.333) coordinate (c) ++(0,-1.333) coordinate (el)
+ (eta) ++(1,-1.333)  coordinate[dot, label={[label distance=1ex]0:$\small{m}$}] (d) ++(0,-1.333) coordinate (er)
+ (d) ++(-0.666,-1.333) coordinate (pl)
+ (d) ++(0.666,-1.333) coordinate (pr);
+\draw[black] (tl) -- (eta);
+\draw[black] (el) -- (c);
+\draw[black] (c) to[out=90, in=180] (eta.west);
+\draw (eta.west) -- (eta.east);
+\draw[black] (eta.east) to[out=0, in=90] (d);
+\draw[black] (pl) to[out=90, in=180] (d.west);
+\draw[black] (d.east) to[out=0, in=90] (pr);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(eta) + (-3,1.333)$) rectangle ($(eta) + (3,-2.666)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+\end{center}
+Los números complejos con la multiplicación, las cadenas de caracteres
+con la concatenación o los naturales con la suma son ejemplos clásicos
+de monoide.
+#+end_ejemplo
+
+Dada una teoría, consideramos su teoría *dual* como aquella que resulta de
+invertir la dirección de los diagramas.
+
+#+begin_definicion
+Un *comonoide* es el dual de un monoide.  Esto quiere decir que tendrá una
+/counidad/ y una /comultiplicación/.
+\begin{center}
+\begin{tabular}{c c c c}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=above:\ensuremath{n}]
+ (eta) ++(-1,1) coordinate (a) ++(0,1) coordinate (tl)
+ (eta) ++(1,1) coordinate (b) ++(0,1) coordinate (tr)
+ (eta) ++(0,-2) coordinate (e);
+\draw[black] (tl) -- (a) to[out=-90, in=180] (eta.east);
+\draw[black] (eta.west) to[out=0, in=-90] (b) -- (tr);
+\draw[black] (eta) -- (e);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(eta) + (-3,2)$) rectangle ($(eta) + (3,-2)$);
+\end{pgfonlayer}
+\end{tikzpicture} &
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=above:\ensuremath{c}]
+ (eta) ++(0,-2) coordinate (e);
+\draw[black] (eta) -- (e);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(eta) + (-2,2)$) rectangle ($(eta) + (2,-2)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{tabular}
+\end{center}
+Satisfaciendo axiomas de *counitalidad* y *coasociatividad*.
+
+¿Por qué no solemos hablar de comonoides cuando estudiamos álgebra?
+Nuestra notación es siempre unidimensional, y eso hace un poco difícil hablar
+de operaciones con más de una salida; además de esta limitación, esencialmente
+existe un único comonoide en la categoría de conjuntos. El único comonoide de la
+categoría de conjuntos es el comonoide de *copia y borrado*, donde la multiplicación
+es la diagonal $A \to A \times A$ y el borrado es la única función $A \to 1$.  Nunca hablamos
+de este comonoide, pero aparece continuamente cuando hacemos álgebra: lo que hacemos
+para evitar hablar de él es repetir nombres de variables, por ejemplo, la función
+$x \mapsto x + x$ es realmente la composición de la suma con la copia.
+#+end_definicion
+
+*** Trenzados
+Otra condición que suele considerarse para monoides es la
+*conmutatividad*.  Para ella, necesitamos un poco más de estructura
+en nuestra categoría monoidal.
+
+#+begin_definicion
+Una *categoría monoidal trenzada* es aquella en la que las cuerdas
+pueden trenzarse. Es decir, existe un morfismo, llamado
+/trenzado/, que escribimos como en el siguiente diagrama.
+\begin{center}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate
+ (eta) ++(-1,1) coordinate (a) ++(0,1) coordinate (tl)
+ (eta) ++(1,1) coordinate (b) ++(0,1) coordinate (tr)
+ (eta) ++(-1,-1) coordinate (c) ++(0,-1) coordinate (el)
+ (eta) ++(1,-1) coordinate (d) ++(0,-1) coordinate (er);
+\draw[red!75!black] (tl) -- (a);
+\draw[red!75!black] (a) to[out=-90, in=90] (d);
+\draw[red!75!black] (d) -- (er);
+\foreach \arrow in {1, ..., 2} {
+        \fill[white!95!black, name intersections={of=bg arrow and fg arrow\arrow, name=i}] (i-1) circle (4pt);
+    }
+\draw[blue!75!black] (b) -- (tr);
+\draw[blue!75!black] (b) to[out=-90, in=90] (c);
+\draw[blue!75!black] (el) -- (c);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(tl) + (-2,0)$) rectangle ($(tr) + (2,-4)$);
+%\fill[white!95!black] (tl) -- (a) to[out=-90, in=180] (eta.west) -- (eta.east) to[out=0, in=-90] (b) -- (tr) -- cycle;
+%\fill[white!95!black] ($(tl) + (-1,-2)$) rectangle ($(tr) + (1,-4)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{center}
+#+end_definicion
+
+#+begin_ejemplo
+En una categoría monoidal, un monoide es *conmutativo* si el componer
+con una trenza no altera su multiplicación. La *coconmutatividad* se
+define de forma análoga.
+\begin{center}
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=below:\ensuremath{m}]
+ (eta) ++(-1,-1) coordinate (a) ++(0,-1) coordinate (tl)
+ (eta) ++(1,-1) coordinate (b) ++(0,-1) coordinate (tr)
+ (eta) ++(0,2) coordinate (e);
+\draw[black] (a) to[out=90, in=180] (eta.east);
+\draw[black] (eta.west) to[out=0, in=90] (b);
+\draw[black] (eta) -- (e);
+\draw[name path=fgarrow, black] (tl) to[out=90,in=-90] (b);
+\draw[name path=bgarrow, black] (tr) to[out=90,in=-90] (a);
+\fill[white!95!black, name intersections={of=bgarrow and fgarrow, name=i}] (i-1) circle (13pt);
+\draw[name path=ubgarrow, black] (tr) to[out=90,in=-90] (a);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(eta) + (-3,2)$) rectangle ($(eta) + (3,-2)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered} =
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=below:\ensuremath{m}]
+ (eta) ++(-1,-1) coordinate (a) ++(0,-1) coordinate (tl)
+ (eta) ++(1,-1) coordinate (b) ++(0,-1) coordinate (tr)
+ (eta) ++(0,2) coordinate (e);
+\draw[black] (tl) -- (a) to[out=90, in=180] (eta.east);
+\draw[black] (eta.west) to[out=0, in=90] (b) -- (tr);
+\draw[black] (eta) -- (e);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(eta) + (-3,2)$) rectangle ($(eta) + (3,-2)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+\end{center}
+#+end_ejemplo
+
+*** Dualidades y espacios vectoriales
+Antes de dar el siguiente paso, vamos a considerar dualidades y vamos a
+trabajar con uno de los ejemplos más interesantes de categoría monoidal:
+los espacios vectoriales.
+
+#+begin_definicion
+Una *dualidad* entre dos cuerdas $f \dashv g$ viene dada por una forma de crearlas
+desde la nada y una forma de fundirlas.  ¡Nótese que la definición no es
+simétrica! Si $f \dashv g$, no necesariamente se tiene $g \dashv f$.
+\begin{center}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=below:\ensuremath{\eta}] 
+ (eta) ++(-1,1) coordinate (a) ++(0,0.5) coordinate[label=above:\ensuremath{f}] (tl)
+ (eta) ++(1,1) coordinate (b) ++(0,0.5) coordinate[label=above:\ensuremath{g}] (tr);
+\draw[red!75!black] (tl) -- (a) to[out=-90, in=180] (eta.west);
+\draw[blue!75!black] (eta.east) to[out=0, in=-90] (b) -- (tr);
+\begin{pgfonlayer}{background}
+\fill[white] ($(tl) + (-1,0)$) rectangle ($(tr) + (1,-2)$);
+\fill[white] (tl) -- (a) to[out=-90, in=180] (eta.west) -- (eta.east) to[out=0, in=-90] (b) -- (tr) -- cycle;
+\fill[white] ($(tl) + (-1,-2)$) rectangle ($(tr) + (1,-3)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+&
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=above:\ensuremath{\varepsilon}] 
+ (epsilon) ++(-1,-1) coordinate (a) ++(0,-0.5) coordinate[label=below:\ensuremath{g}] (bl)
+ (epsilon) ++(1,-1) coordinate (b) ++(0,-0.5) coordinate[label=below:\ensuremath{f}] (br);
+\draw[blue!75!black] (bl) -- (a) to[out=90, in=180] (epsilon.west);
+\draw[red!75!black] (epsilon.east) to[out=0, in=90] (b) -- (br);
+\begin{pgfonlayer}{background}
+\fill[white] ($(bl) + (-1,0)$) rectangle ($(br) + (1,2)$);
+\fill[white] (bl) -- (a) to[out=90, in=180] (epsilon.west) -- (epsilon.east) to[out=0, in=90] (b) -- (br) -- cycle;
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{center}
+Satisfaciendo las siguientes *ecuaciones de zig-zag*.
+\begin{center}
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=above:$\eta$] (eta) ++(1,1) coordinate (a) ++(1,1) coordinate[dot, label=below:$\varepsilon$] (epsilon) 
+ ++(1,-1) coordinate (b) ++(0,-2) coordinate (br)
+ (eta) ++(-1,1) coordinate (c) ++(0,2) coordinate (tl);
+\draw[red!75!black] (tl) -- (c) to[out=-90, in=180] (eta);
+\draw[blue!75!black] (eta) to[out=0, in=-90] (a) to[out=90, in=180] (epsilon);
+\draw[red!75!black] (epsilon) to[out=0, in=90] (b) -- (br);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] (tl) -- (c) to[out=-90, in=180] (eta) to[out=0, in=-90] (a) to[out=90, in=180] (epsilon) to[out=0, in=90] (b) -- (br)
+ -- ++(0.5,0) -- ++(0,4) -- cycle;
+\fill[white!95!black] (tl) -- (c) to[out=-90, in=180] (eta) to[out=0, in=-90] (a) to[out=90, in=180] (epsilon) to[out=0, in=90] (b) -- (br)
+ -- ++(-4.5,0) -- ++(0,4) -- cycle;
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+\enskip=\enskip
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate (b) ++(0,4) coordinate (t);
+\draw[red!75!black] (b) -- (t);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(t) + (-1,0)$) rectangle (b);
+\fill[white!95!black] (t) rectangle ($(b) + (1,0)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+\qquad
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=below:$\varepsilon$] (epsilon) ++(1,-1) coordinate (a) ++(1,-1) coordinate[dot, label=above:$\eta$] (eta)
+ ++(1,1) coordinate (b) ++(0,2) coordinate (tr)
+ (epsilon) ++(-1,-1) coordinate (c) ++(0,-2) coordinate (bl);
+\draw[blue!75!black] (bl) -- (c) to[out=90, in=180] (epsilon);
+\draw[red!75!black] (epsilon) to[out=0, in=90] (a) to[out=-90, in=180] (eta);
+\draw[blue!75!black] (eta) to[out=0, in=-90] (b) -- (tr);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] (bl) -- (c) to[out=90, in=180] (epsilon) to[out=0, in=90] (a) to[out=-90, in=180] (eta) to[out=0, in=-90] (b) -- (tr)
+ -- ++(0.5,0) -- ++(0,-4) -- cycle;
+\fill[white!95!black] (bl) -- (c) to[out=90, in=180] (epsilon) to[out=0, in=90] (a) to[out=-90, in=180] (eta) to[out=0, in=-90] (b) -- (tr)
+ -- ++(-4.5,0) -- ++(0,-4) -- cycle;
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+\enskip=\enskip
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate (b) ++(0,4) coordinate (t);
+\draw[blue!75!black] (b) -- (t);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(t) + (-1,0)$) rectangle (b);
+\fill[white!95!black] (t) rectangle ($(b) + (1,0)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+\end{center}
+#+end_definicion
+
+#+begin_ejemplo
+Consideramos la categoría mononidal de los espacios vectoriales
+finitos, fijada una base ortonormal.[fn:2] Los morfismos son funciones
+lineales, y los espacios vectoriales en sí forman un monoide con el
+producto tensor de espacios vectoriales.
+Pero además, cada espacio vectorial es dual consigo mismo, $V \dashv V^{\ast} \cong V$, 
+gracias al producto escalar, que es una función $\varepsilon \colon V \otimes V \to V$, y a
+la diagonal de la base $\eta \colon I \to V \otimes V$, que está definida por el
+elemento $\sum (e_i \otimes e_i)$.
+
+Con todo esto, la *traspuesta* de una función lineal $f \colon V \to W$
+es una función $f \colon W \to V$ definida como sigue. Nótese que aquí
+$\eta$ y $\varepsilon$ se refieren a distintas dualidades, cada una de uno de los
+espacios es dual consigo mismo.
+\begin{center}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=below:$\eta$] (eta) ++(1,1) coordinate[dot, label=right:$f$] (a) ++(1,1) coordinate[dot, label=above:$\varepsilon$] (epsilon) 
+ ++(1,-1) coordinate (b) ++(0,-2) coordinate (br)
+ (eta) ++(-1,1) coordinate (c) ++(0,2) coordinate (tl);
+\draw[orange!75!black] (tl) -- (c) to[out=-90, in=180] (eta);
+\draw[orange!75!black] (eta) to[out=0, in=-90] (a);
+\draw[violet!75!black] (a) to[out=90, in=180] (epsilon);
+\draw[violet!75!black] (epsilon) to[out=0, in=90] (b) -- (br);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] (tl) -- (c) to[out=-90, in=180] (eta) to[out=0, in=-90] (a) to[out=90, in=180] (epsilon) to[out=0, in=90] (b) -- (br)
+ -- ++(0.5,0) -- ++(0,4) -- cycle;
+\fill[white!95!black] (tl) -- (c) to[out=-90, in=180] (eta) to[out=0, in=-90] (a) to[out=90, in=180] (epsilon) to[out=0, in=90] (b) -- (br)
+ -- ++(-4.5,0) -- ++(0,4) -- cycle;
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{center}
+Usando trenzados y moviendo el diagrama, podemos demostrar que la
+traspuesta de la traspuesta es de nuevo la función original.
+
+[fn:2] Sobre los reales, por ejemplo. Pero todo lo que hagamos
+funciona para cualquier cuerpo en general e incluso para módulos sobre
+un semianillo arbitrario.  Si tomamos por ejemplo el semianillo de los
+booleanos, obtenemos la categoría de relaciones $\mathbf{Rel}$.
+#+end_ejemplo
+
+#+begin_ejemplo
+<<ejemplo-dualidad-monoide>>
+Toda dualidad $f \dashv g$ da lugar a un monoide en el producto tensorial $f \otimes g$. Su multiplicación
+y su unidad son las siguientes. Los axiomas se siguen de las ecuaciones de zig-zag.
+\begin{center}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=below:\ensuremath{\eta}] 
+ (eta) ++(-1,1) coordinate (a) ++(0,0.5) coordinate[label=above:\ensuremath{f}] (tl)
+ (eta) ++(1,1) coordinate (b) ++(0,0.5) coordinate[label=above:\ensuremath{g}] (tr);
+\draw[red!75!black] (tl) -- (a) to[out=-90, in=180] (eta.west);
+\draw[blue!75!black] (eta.east) to[out=0, in=-90] (b) -- (tr);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(tl) + (-1,0)$) rectangle ($(tr) + (1,-2)$);
+\fill[white!95!black] (tl) -- (a) to[out=-90, in=180] (eta.west) -- (eta.east) to[out=0, in=-90] (b) -- (tr) -- cycle;
+\fill[white!95!black] ($(tl) + (-1,-2)$) rectangle ($(tr) + (1,-3)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+&
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=below:$\varepsilon$] 
+ (epsilon) ++(-1,-1) coordinate (a) ++(0,-0.5) coordinate (bl) ++(-1,0) coordinate (bll) 
+  ++(0,3) coordinate[label=above:$f$] (tl)
+ (epsilon) ++(1,-1) coordinate (b) ++(0,-0.5) coordinate (br) ++(1,0) coordinate (brr) 
+  ++(0,3) coordinate[label=above:$g$] (tr);
+\draw[red!75!black] (bll) -- (tl);
+\draw[blue!75!black] (brr) -- (tr);
+\draw[blue!75!black] (bl) -- (a) to[out=90, in=180] (epsilon.west);
+\draw[red!75!black] (epsilon.east) to[out=0, in=90] (b) -- (br);
+\begin{pgfonlayer}{background}
+\fill[white!95!black] ($(tl) + (-1,0)$) rectangle (bll);
+\fill[white!95!black] ($(tr) + (1,0)$) rectangle (brr);
+\fill[white!95!black] (bll) rectangle (tr);
+\fill[white!95!black] (bl) -- (a) to[out=90, in=180] (epsilon.west) -- (epsilon.east) to[out=0, in=90] (b) -- (br) -- cycle;
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{center}
+#+end_ejemplo
+
+*** Bicategorías
+El siguiente paso es colorear las regiones.  Esto limitará qué cuerdas
+podemos colocar al lado de otras cuerdas.
+
+#+begin_definicion
+Una *bicategoría* es una categoría monoidal coloreada en las regiones.
+Alternativamente, una categoría monoidal es una bicategoría monocroma.
+\begin{center}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label={[label distance=0.25cm]right:\ensuremath{\alpha}}] (sigma) 
+ ++(-2,1) coordinate[dot, label=below:\ensuremath{\beta}] (epsilon) ++(-1,-1) coordinate (a)
+ ++(0,-0.5) coordinate[label=below:\ensuremath{f}] (bl)
+ (sigma) ++(1,1.5) coordinate[label=above:\ensuremath{h}] (tr)
+ (sigma) ++(0,1.5) coordinate[label=above:\ensuremath{e}] (tl)
+ (sigma) ++(0,-0.5) coordinate[label=below:\ensuremath{g}] (br);
+\draw (tr) to[out=-90, in=0] (sigma) to[out=180, in=0] (epsilon) to[out=180, in=90] (a) -- (bl);
+\draw (br) -- (tl);
+\begin{pgfonlayer}{background}
+\fill[green!20] ($(bl) + (-1,0)$) rectangle (tl);
+\fill[green!50] ($(tr) + (1,0)$) rectangle (br);
+\begin{scope}
+\clip ($(bl) + (-1,0)$) rectangle (tl);
+\fill[blue!20] (tr) to[out=-90, in=0] (sigma) to[out=180, in=0] (epsilon) to[out=180, in=90] (a) -- (bl) -- ++(5,0) -- ++(0,2) -- cycle;
+\end{scope}
+\begin{scope}
+\clip ($(tr) + (1,0)$) rectangle (br);
+\fill[blue!50] (tr) to[out=-90, in=0] (sigma) to[out=180, in=0] (epsilon) to[out=180, in=90] (a) -- (bl) -- ++(5,0) -- ++(0,2) -- cycle;
+\end{scope}
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{center}
+#+end_definicion
+
+#+begin_ejemplo
+La bicategoría $\mathbf{Cat}$ tiene regiones dadas por categorías. Una cuerda
+entre dos regiones es un funtor, y los funtores forman una categoría
+con la composición de funtores.  Un nodo viene dado por una transformación
+natural, que convierte la composición de varios funtores en otra composición
+de funtores.  Por ejemplo, una *mónada* resulta de dibujar un monoide en esta
+categoría.
+\begin{center}
+\begin{tabular}{c c c c}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=below:\ensuremath{\mu}]
+ (eta) ++(-1,-1) coordinate (a) ++(0,-1) coordinate[label=below:{$T$}] (tl)
+ (eta) ++(1,-1) coordinate (b) ++(0,-1) coordinate[label=below:{$T$}] (tr)
+ (eta) ++(0,2) coordinate[label=above:{$T$}] (e);
+\draw[black] (tl) -- (a) to[out=90, in=180] (eta.east);
+\draw[black] (eta.west) to[out=0, in=90] (b) -- (tr);
+\draw[black] (eta) -- (e);
+\begin{pgfonlayer}{background}
+\fill[blue!20] ($(eta) + (-3,2)$) rectangle ($(eta) + (3,-2)$);
+\end{pgfonlayer}
+\end{tikzpicture} &
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=below:\ensuremath{\eta}]
+ (eta) ++(0,2) coordinate[label=above:{$T$}] (e)
+ (eta) ++(0,-2) coordinate[label=below:{$\phantom{t}$}] (ep);
+\draw[black] (eta) -- (e);
+\begin{pgfonlayer}{background}
+\fill[blue!20] ($(eta) + (-2,2)$) rectangle ($(eta) + (2,-2)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{tabular}
+\end{center}
+En otras palabras, una mónada viene determinada por una transformación
+natural llamada /multiplicación/ $\mu \colon T \circ T \tonat T$ y una transformación natural
+llamada /unidad/ $\eta \colon 1 \tonat T$, donde $1$ es el funtor identidad.  Esto son dos
+familias de funciones indexadas sobre los objetos de una categoría $c \in \mathbf{C}$,
+donde la multiplicación es $\mu_c \colon T(T(c)) \to T(c)$ y la unidad es $\eta_c \colon c \to T(c)$.
+Cumplirán además los axiomas de un monoide.
+#+end_ejemplo
+
+#+begin_ejemplo
+Una dualidad en la bicategoría $\mathbf{Cat}$ se llama *adjunción*.  Por el Ejemplo [[ejemplo-dualidad-monoide]],
+sabemos entonces que toda adjunción $F \dashv G$ da lugar a una mónada $G \circ F$.
+
+Es decir, estos diagramas de cite:marsden14 representan una adjunción.
+\begin{center}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=above:\ensuremath{\eta}] 
+ (eta) ++(-1,1) coordinate (a) ++(0,0.5) coordinate[label=above:\ensuremath{F}] (tl)
+ (eta) ++(1,1) coordinate (b) ++(0,0.5) coordinate[label=above:\ensuremath{G}] (tr);
+\draw (tl) -- (a) to[out=-90, in=180] (eta.west) -- (eta.east) to[out=0, in=-90] (b) -- (tr);
+\begin{pgfonlayer}{background}
+\fill[catc] ($(tl) + (-1,0)$) rectangle ($(tr) + (1,-2)$);
+\fill[catd] (tl) -- (a) to[out=-90, in=180] (eta.west) -- (eta.east) to[out=0, in=-90] (b) -- (tr) -- cycle;
+\fill[white] ($(tl) + (-1,-2)$) rectangle ($(tr) + (1,-3)$);
+\end{pgfonlayer}
+\end{tikzpicture}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=below:\ensuremath{\epsilon}] 
+ (epsilon) ++(-1,-1) coordinate (a) ++(0,-0.5) coordinate[label=below:\ensuremath{G}] (bl)
+ (epsilon) ++(1,-1) coordinate (b) ++(0,-0.5) coordinate[label=below:\ensuremath{F}] (br);
+\draw (bl) -- (a) to[out=90, in=180] (epsilon.west) -- (epsilon.east) to[out=0, in=90] (b) -- (br);
+\begin{pgfonlayer}{background}
+\fill[catd] ($(bl) + (-1,0)$) rectangle ($(br) + (1,2)$);
+\fill[catc] (bl) -- (a) to[out=90, in=180] (epsilon.west) -- (epsilon.east) to[out=0, in=90] (b) -- (br) -- cycle;
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{center}
+
+La unitalidad de la mónada se demuestra gracias al zig-zag.
+\begin{equation*}
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=above:$\eta$] (eta) ++(2,1) coordinate[dot, label=below:$\epsilon$] (epsilon)
+ ++(1,-1) coordinate (a) ++(0,-0.5) coordinate[label=below:$F$] (bl)
+ (eta) ++(-1,1) coordinate (b) ++(0,0.5) coordinate[label=above:$F$] (tl)
+ (bl) ++(1,0) coordinate[label=below:$G$] (br) ++(0,2) coordinate[label=above:$G$] (tr);
+\draw (tl) -- (b) to[out=-90, in=180] (eta.west) -- (eta.east) to[out=0, in=180] (epsilon.west) -- (epsilon.east) to[out=0, in=90] (a) -- (bl);
+\draw (br) -- (tr);
+\begin{pgfonlayer}{background}
+\fill[catc] ($(tl) + (-1,0)$) rectangle ($(br) + (1,0)$);
+\fill[catd] (tl) -- (b) to[out=-90, in=180] (eta.west) -- (eta.east) to[out=0, in=180] (epsilon.west) -- (epsilon.east) to[out=0, in=90] (a) -- (bl) -- (br) -- (tr) -- cycle;
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}=
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[label=above:$F$] (tl) ++(1,0) coordinate[label=above:$G$] (tr)
+ (tl) ++(0,-2) coordinate[label=below:$F$] (bl)
+ (tr) ++(0,-2) coordinate[label=below:$G$] (br);
+\draw (bl) -- (tl)
+ (br) -- (tr);
+\begin{pgfonlayer}{background}
+\fill[catc] ($(tl) + (-1,0)$) rectangle (bl);
+\fill[catc] ($(tr) + (1,0)$) rectangle (br);
+\fill[catd] (tl) rectangle (br);
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+=
+\begin{gathered}
+\begin{tikzpicture}[scale=0.5]
+\path coordinate[dot, label=above:$\eta$] (eta) ++(-2,1) coordinate[dot, label=below:$\epsilon$] (epsilon)
+ ++(-1,-1) coordinate (a) ++(0,-0.5) coordinate[label=below:$G$] (br)
+ (eta) ++(1,1) coordinate (b) ++(0,0.5) coordinate[label=above:$G$] (tr)
+ (br) ++(-1,0) coordinate[label=below:$F$] (bl) ++(0,2) coordinate[label=above:$F$] (tl);
+\draw (tr) -- (b) to[out=-90, in=0] (eta.east) -- (eta.west) to[out=180, in=0] (epsilon.east) -- (epsilon.west) to[out=180, in=90] (a) -- (br)
+ (bl) -- (tl);
+\begin{pgfonlayer}{background}
+\fill[catc] ($(bl) + (-1,0)$) rectangle ($(tr) + (1,0)$);
+\fill[catd] (tr) -- (b) to[out=-90, in=0] (eta.east) -- (eta.west) to[out=180, in=0] (epsilon.east) -- (epsilon.west) to[out=180, in=90] (a) -- (br)
+ -- (bl) -- (tl) -- cycle;
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+\end{equation*}
+Y la asociatividad gracias a las isotopías.
+\begin{equation*}
+\begin{gathered}
+\begin{tikzpicture}[auto,scale=0.3]
+\path (0,-2.5) coordinate (base) 
+ (-1.5,-1) coordinate[dot, label=below:$\epsilon$] 
+ (epsilon1) ++(-1,-1) coordinate (a)
+ (epsilon1) ++(1,-1) coordinate (b)
+ (1.5,1) coordinate[dot, label=below:$\epsilon$] (epsilon2)
+ (epsilon2) ++(-1,-1) coordinate (c)
+ (epsilon2) ++(1,-1) coordinate (d);
+\path let \p1 = (base) in
+      let \p2 = (a) in
+      let \p3 = (b) in
+      let \p4 = (c) in
+      let \p5 = (d) in
+ coordinate[label=below:$G$] (bll) at (\x2, \y1)
+ coordinate[label=below:$F$] (bl) at (\x3, \y1)
+ coordinate[label=below:$G$] (br) at (\x4, \y1)
+ coordinate[label=below:$F$] (brr) at (\x5, \y1);
+\path 
+ (bll) ++(-1,0) coordinate[label=below:$F$] (blll) ++(0,4) coordinate[label=above:$F$] (tlll)
+ (brr) ++(1,0) coordinate[label=below:$G$] (brrr) +(0,4) coordinate[label=above:$G$] (trrr);
+\draw (bll) -- (a) to[out=90, in=180] (epsilon1.west) -- (epsilon1.east) to[out=0, in=90] (b) -- (bl)
+      (br) -- (c) to[out=90, in=180] (epsilon2.west) -- (epsilon2.east) to[out=0, in=90] (d) -- (brr)
+ (blll) -- (tlll)
+ (brrr) -- (trrr);
+\begin{pgfonlayer}{background}
+\fill[catd] ($(blll) + (-1,0)$) rectangle ($(trrr) + (1,0)$);
+\fill[catc] ($(blll) + (-1,0)$) rectangle (tlll);
+\fill[catc] ($(brrr) + (1,0)$) rectangle (trrr);
+\fill[catc] (bll) -- (a) to[out=90, in=180] (epsilon1.west) -- (epsilon1.east) to[out=0, in=90] (b) -- (bl) -- cycle;
+\fill[catc] (br) -- (c) to[out=90, in=180] (epsilon2.west) -- (epsilon2.east) to[out=0, in=90] (d) -- (brr) -- cycle;
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+=
+\begin{gathered}
+\begin{tikzpicture}[auto,scale=0.3]
+\path (0,-2.5) coordinate (base) 
+ (-1.5,0) coordinate[dot, label=below:$\epsilon$] 
+ (epsilon1) ++(-1,-1) coordinate (a)
+ (epsilon1) ++(1,-1) coordinate (b)
+ (1.5,0) coordinate[dot, label=below:$\epsilon$] (epsilon2)
+ (epsilon2) ++(-1,-1) coordinate (c)
+ (epsilon2) ++(1,-1) coordinate (d);
+\path let \p1 = (base) in
+      let \p2 = (a) in
+      let \p3 = (b) in
+      let \p4 = (c) in
+      let \p5 = (d) in
+ coordinate[label=below:$G$] (bll) at (\x2, \y1)
+ coordinate[label=below:$F$] (bl) at (\x3, \y1)
+ coordinate[label=below:$G$] (br) at (\x4, \y1)
+ coordinate[label=below:$F$] (brr) at (\x5, \y1);
+\path 
+ (bll) ++(-1,0) coordinate[label=below:$F$] (blll) ++(0,4) coordinate[label=above:$F$] (tlll)
+ (brr) ++(1,0) coordinate[label=below:$G$] (brrr) +(0,4) coordinate[label=above:$G$] (trrr);
+\draw (bll) -- (a) to[out=90, in=180] (epsilon1.west) -- (epsilon1.east) to[out=0, in=90] (b) -- (bl)
+      (br) -- (c) to[out=90, in=180] (epsilon2.west) -- (epsilon2.east) to[out=0, in=90] (d) -- (brr)
+ (blll) -- (tlll)
+ (brrr) -- (trrr);
+\begin{pgfonlayer}{background}
+\fill[catd] ($(blll) + (-1,0)$) rectangle ($(trrr) + (1,0)$);
+\fill[catc] ($(blll) + (-1,0)$) rectangle (tlll);
+\fill[catc] ($(brrr) + (1,0)$) rectangle (trrr);
+\fill[catc] (bll) -- (a) to[out=90, in=180] (epsilon1.west) -- (epsilon1.east) to[out=0, in=90] (b) -- (bl) -- cycle;
+\fill[catc] (br) -- (c) to[out=90, in=180] (epsilon2.west) -- (epsilon2.east) to[out=0, in=90] (d) -- (brr) -- cycle;
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+=
+\begin{gathered}
+\begin{tikzpicture}[auto,scale=0.3]
+\path (0,-2.5) coordinate (base) 
+ (-1.5,1) coordinate[dot, label=below:$\epsilon$] 
+ (epsilon1) ++(-1,-1) coordinate (a)
+ (epsilon1) ++(1,-1) coordinate (b)
+ (1.5,-1) coordinate[dot, label=below:$\epsilon$] (epsilon2)
+ (epsilon2) ++(-1,-1) coordinate (c)
+ (epsilon2) ++(1,-1) coordinate (d);
+\path let \p1 = (base) in
+      let \p2 = (a) in
+      let \p3 = (b) in
+      let \p4 = (c) in
+      let \p5 = (d) in
+ coordinate[label=below:$G$] (bll) at (\x2, \y1)
+ coordinate[label=below:$F$] (bl) at (\x3, \y1)
+ coordinate[label=below:$G$] (br) at (\x4, \y1)
+ coordinate[label=below:$F$] (brr) at (\x5, \y1);
+\path 
+ (bll) ++(-1,0) coordinate[label=below:$F$] (blll) ++(0,4) coordinate[label=above:$F$] (tlll)
+ (brr) ++(1,0) coordinate[label=below:$G$] (brrr) +(0,4) coordinate[label=above:$G$] (trrr);
+\draw (bll) -- (a) to[out=90, in=180] (epsilon1.west) -- (epsilon1.east) to[out=0, in=90] (b) -- (bl)
+      (br) -- (c) to[out=90, in=180] (epsilon2.west) -- (epsilon2.east) to[out=0, in=90] (d) -- (brr)
+ (blll) -- (tlll)
+ (brrr) -- (trrr);
+\begin{pgfonlayer}{background}
+\fill[catd] ($(blll) + (-1,0)$) rectangle ($(trrr) + (1,0)$);
+\fill[catc] ($(blll) + (-1,0)$) rectangle (tlll);
+\fill[catc] ($(brrr) + (1,0)$) rectangle (trrr);
+\fill[catc] (bll) -- (a) to[out=90, in=180] (epsilon1.west) -- (epsilon1.east) to[out=0, in=90] (b) -- (bl) -- cycle;
+\fill[catc] (br) -- (c) to[out=90, in=180] (epsilon2.west) -- (epsilon2.east) to[out=0, in=90] (d) -- (brr) -- cycle;
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{gathered}
+\end{equation*}
+El ejemplo común de una situación como esta lo dan el funtor que crea
+la mónada libre sobre un conjunto $F \colon \mathbf{Set} \to \mathbf{Mon}$ y el funtor de
+olvido $G \colon \mathbf{Mon} \to \mathbf{Set}$. La mónada $G \circ F$ se llama en programación
+funcional la *mónada Lista* (/List monad/).
+
+De forma dual, podemos definir comónadas y demostrar que toda adjunción
+$F \dashv G$ da lugar a una comónada $F \circ G$.
+#+end_ejemplo
+
+
+*** Conclusión
+Tenemos la siguiente tabla y nada nos impide continuar hacia más
+dimensiones y más colores.  Calcular manipulaciones de diagramas en
+dimensiones arbitrarias es lo que hace el asistente [[https://homotopy.io/][homotopy.io]] cite:homotopyio
+de Vicary-Hu-Liss.
+
+|---------------------+---------------+-------------+--------------------|
+| Estructuras         | 0 dimensiones | 1 dimensión | 2 dimensiones      |
+|---------------------+---------------+-------------+--------------------|
+| Blanco y negro      | Conjunto      | Monoide     | PRO                |
+| Cuerdas coloreadas  |               | Categoría   | Categoría monoidal |
+| Regiones coloreadas |               |             | Bicategoría        |
+|---------------------+---------------+-------------+--------------------|
+
+Una estructura tricolor, por ejemplo, nos permite llegar a
+tricategorías y bicategorías monoidales.
+
+*** references                                                                            :ignore:
+bibliographystyle:alpha
+bibliography:Math.bib
+
+** Diagramas para categorías monoidales                                                      :note:
+:PROPERTIES:
+:TITLE: Diagramas para categorías monoidales
+:EXPORT_FILE_NAME: diagramascategoriasmonoidales.pdf
+:INDEX_DATE: <2019-01-21 Mon 19:01>
+:END:
+
+Este es un post de enlaces sobre lenguajes diagramáticos. Me temo que
+todo el material está en inglés, pero quería tener una nota sobre el
+tema que no estuviera en inglés. \\
+
+Vamos a motivarlos primero siguiendo un ejemplo de cite:coecke17; la
+explicación de todo está en el libro, aquí sólo quiero dar una idea.
+Supongamos que tenemos los siguientes ingredientes representados en un
+diagrama. Dos partes (Alice y Bob) comparten un /estado/ común
+representado como un cable en forma de U. Alice tiene además cierta información propia
+ψ que quiere enviar a Bob. Por último,
+Alice puede tomar dos estados y hacerlos iguales introduciendo un
+error en el proceso.  Bob puede corregir este error una vez Alice le
+informa de él. Todos los procesos se representan como cajas con una
+serie de entradas (abajo) y salidas (arriba). El eje y se interpreta
+como una línea temporal de abajo a arriba.
+
+#+attr_latex: :width 5cm
+#+caption: Los ingredientes.
+[[./alicebob1.jpg]]
+
+¿Cómo combinamos estas piezas? La respuesta obvia es el siguiente
+diagrama. Aquí, Alice toma el estado que quiere enviar y el estado
+compartido y los hace iguales introduciendo un error; Bob corrige
+este error. Las siguientes igualdades son válidas en el cálculo
+diagramático y muestran que esto es equivalente a que Bob acabe
+teniendo la información que Alice le quería mandar.
+
+#+caption: La solución.
+[[./alicebob2.jpg]]
+
+Este diagrama puede traducirse formalmente a un morfismo en una
+categoría con suficiente estructura (explícitamente, a una categoría
+monoidal cerrada compacta, pero no necesitamos detalles).  La
+categoría de conjuntos cuyos morfismos son relaciones, *Rel*, tiene esa
+estructura; y cuando interpretamos este diagrama obtenemos el
+protocolo de /libreta de un solo uso/ (one-time pad).  La categoría de
+espacios de Hilbert con matrices unitarias tiene esa estructura
+también, y cuando interpretamos el morfismo ¡obtenemos un protocolo de
+/teleportación cuántica/!  Es decir, un poco de razonamiento
+diagramático nos ha servido para obtener en abstracto un protocolo y
+descubrir que dos protocolos conocidos son dos de sus instancias
+particulares en distintas categorías. Podríamos estudiar otros
+protocolos, y podríamos interpretarlos en otras categorías. ¿Qué más
+podemos hacer con diagramas?, lo que sigue es una lista no exhaustiva.
+
+ * *Álgebra lineal.* Un ejemplo perfecto de categorías con esta estructura
+   son los espacios vectoriales. En el blog [[https://graphicallinearalgebra.net/][Graphical Linear Algebra]],
+   [[https://www.southampton.ac.uk/~ps1a06/][Pawel Sobocinski]] da una introducción informal al álgebra
+   lineal y al razonamiento diagramático.
+
+ * *Mecánica cuántica diagramática.* /Picturing Quantum Processes/, de [[https://www.cs.ox.ac.uk/people/bob.coecke/][Coecke]] y [[http://www.cs.ru.nl/A.Kissinger/][Kissinger]]
+   cite:coecke17, de donde viene el primer ejemplo. Es una introducción
+   elemental que no asume prácticamente ningún conocimiento previo: ni de
+   mecánica cuántica ni de diagramas. Profundiza mucho en los diagramas en sí y
+   no requiere conocer la teoría de categorías subyacente.
+
+ * *Mecánica cuántica categórica.* /Categorical Quantum Mechanics ([[https://www.cs.ox.ac.uk/files/10510/notes.pdf][link]]),/ de
+   [[https://www.cs.ox.ac.uk/people/jamie.vicary/][Vicary]] y [[http://homepages.inf.ed.ac.uk/cheunen/teaching.html][Heunen]] da otra introducción a las aplicaciones en
+   mecánica cuántica. Enfatiza mucho más la teoría de categorías, aquí
+   sí es un prerrequisito haber leído teoría de categorías. Como bonus,
+   hay un estudio muy detallado de cómo las categorías justifican el
+   razonamiento diagramático.
+
+ * *Teoría de categorías*. /Category theory with string diagrams/, de [[https://www.cs.ox.ac.uk/people/dan.marsden/][Marsden]],
+   es muy accesible y explica 2-categorías, adjunciones, mónadas e incluso 
+   límites; usando razonamiento gráfico.
+
+ * *Lingüística.* /Distributional compositional categorical semantics/ es
+   un marco teórico para calcular el significado de las frases en función
+   del significado de las palabras. Es /distribucional/ porque el significado
+   de una palabra se calcula según las palabras que aparecen cerca de ella
+   en un corpus de texto suficientemente grande; es /composicional/ porque
+   podemos componer esos significados usando la estructura categórica para
+   calcular el significado de frases completas. Una introducción es
+   cite:coecke10 de [[https://www.cs.ox.ac.uk/people/bob.coecke/][Coecke]], [[http://www.eecs.qmul.ac.uk/profiles/sadrzadehmehrnoosh.html][Sadrzadeh]] y [[https://sites.google.com/site/stephenclark609/][Clark]].
+
+ * *Teoría de juegos*, usando una categoría de [[https://julesh.com/2018/08/16/lenses-for-philosophers/][lentes]]. Hay una [[https://www.youtube.com/watch?v=C64905vTT3s&feature=youtu.be][charla introductoria]]
+   de Jules Hedges y varios artículos como cite:hedges18.
+   
+Por último, una visión general de los lenguages diagramáticos es cite:selinger10.
+
+*** references                                                                            :ignore:
+bibliographystyle:alpha
+bibliography:Math.bib
+
+** Every surjection to a projective R-module is split                                        :note:
+:PROPERTIES:
+:TITLE: Every surjection to a projective R-module is split
+:EXPORT_FILE_NAME: everysurjectiontoprojectiveissplit.pdf
+:INDEX_DATE: <2018-12-24 Sun 09:07>
+:EXPORT_DATE: 24th December 2018
+:END:
+
+/The statement comes from an exercise on André Henriques' course on/
+/[[https://courses.maths.ox.ac.uk/node/36705][Homological Algebra]]/.
+
+#+begin_statement
+Let $R$ be a ring. Prove that an $R\mathrm{-module}$ $P$ is projective iff every surjective
+map $A \to P$ admits a section.
+#+end_statement
+
+Given a projective module $P$, we can apply the definition to any surjection
+$f \colon A \twoheadrightarrow P$ to get the existence of a section.
+\[\begin{tikzcd}
+& P \dar{\mathrm{id}} \dlar[dashed,swap]{\exists s}\\
+A \rar{f} & P 
+\end{tikzcd}\]
+Suppose every surjection admits a section, we can take a surjection from the
+free module over $P$, which we call $\pi \colon F \to P$ and take a section $s \colon P \to F$.
+Then the sequence $0 \to \mathrm{ker}(\pi) \to F \to P \to 0$ splits,
+$P$ is a direct summand of a free module and thus a projective module.
+
+** Hom is continuous and then all right adjoints are                                         :note:
+:PROPERTIES:
+:TITLE: Hom is continuous
+:EXPORT_FILE_NAME: homcontinuous.pdf
+:INDEX_DATE: <2018-12-23 Sun 16:20>
+:EXPORT_DATE: 23th December 2018
+:END:
+
+/This is an exercise on Samson Abramsky's notes/
+/on the course Categories, Proofs and Processes./ cite:abramsky10 \\
+
+#+begin_statement
+Let $A$ be an object in the category ${\cal C}$. Show that the covariant $\mathrm{hom}$ functor
+${\cal C}(A,-)$, as defined in Lecture III, preserves all limits.
+#+end_statement
+#+begin_proof
+Let ${\cal I}$ be a small category, $F \colon {\cal I} \to {\cal C}$ a functor and let $L$ with the
+morphisms $(l_{I})_{I \in {\cal I}}$ be the limit of that functor. We know that for every
+morphism $i \colon I \to J$ in ${\cal I}$, we have $l_J = Fi\circ l_I$.
+
+Let $Z$ be a set with a family of morphisms $f_I \colon Z \to {\cal C}(A,FI)$ determining
+a cone to ${\cal C}(A,F-) \colon {\cal I} \to \mathbf{Sets}$; that is, such that for each $i \colon I \to J$ in ${\cal I}$, we 
+have that $f_J = (Fi \circ -) \circ f_I$; or, in other words, for each $z \in Z$ we have
+$f_J(z) = Fi \circ f_I(z)$. Thus, fixing any $z \in Z$ gives as a family of morphisms
+$f_I(z) \in {\cal C}(A,FI)$ defining a cone. This implies that there exists some
+unique morphism $a(z) \colon A \to L$ such that $l_{I} \circ a(z) = f_I(z)$.
+
+Repeating this for every $z \in Z$ we have obtained a function $a \colon Z \to {\cal C}(A,L)$
+with the property $l_I \circ a = f_I$. This function must be the unique one with this
+property, because for any other $a' \colon Z \to {\cal C}(A,L)$, for each $z \in Z$ 
+we would have $l_I \circ a'(z) = f_I(z)$ and that would imply that $a'(z) = a(z)$.
+#+end_proof
+
+#+begin_proposition
+Right adjoints preserve limits.
+#+end_proposition
+#+begin_proof
+(From cite:awodey10) Let $L \colon \mathbb{C} \to \mathbb{D}$ and $R \colon \mathbb{D} \to \mathbb{C}$ be a pair of adjoints
+$L \dashv R$. Let $X_i$ be objects determining any diagram and $Y$ an arbitrary object.
+We have the following chain of natural transformations between
+hom-sets.
+\[\begin{aligned}
+\hom(Y,R \lim X_i) &\cong \hom(LY,\lim X_i) \\
+&\cong \lim\hom(LY,X_i) \\
+&\cong \lim\hom(Y,RX_i) \\
+&\cong \hom(Y,\lim RX_i)
+\end{aligned}\]
+By Yoneda Lemma, $R\lim X_i \cong \lim RX_i$.
+#+end_proof
+
+*** references                                                                            :ignore:
+bibliographystyle:alpha
+bibliography:Math.bib
+
+** Pasting pullbacks                                                                         :note:
+:PROPERTIES:
+:TITLE: Pasting pullbacks
+:EXPORT_FILE_NAME: pastingpullbacks.pdf
+:INDEX_DATE: <2018-12-23 Sun 16:09>
+:END:
+
+/This is an exercise on Samson Abramsky's notes/
+/on the course Categories, Proofs and Processes./ cite:abramsky10 \\
+
+#+begin_proposition
+In the following commutative diagram, 
+if $ABCD$ and $BEDF$ are pullback squares, so is $AECF$.
+\[\begin{tikzcd}
+A \rar\dar & B \rar\dar & E \dar \\
+C \rar & D \rar & F
+\end{tikzcd}\]
+#+end_proposition
+#+begin_proof
+Given some $u \colon Z \to E$ and $v \colon Z \to C$ such that $tu = dcv$, we can use 
+the pullback to construct some $Z \to B$ and the other pullback to construct
+some $Z \to A$. This proves existence.  Given two morphisms $z$ and $z'$ such that
+$baz = u = baz'$ and $rz = v = rz'$, as in the following diagram, we will prove
+they are equal.
+\[\begin{tikzcd}
+Z\ar[dashed,bend left]{drr}{w} \drar[dashed,bend left]{z} \drar[dashed,bend right]{z'} \ar[bend left]{rrrd}{u} \ar[bend right]{ddr}{v} &&&\\
+& A \rar{a}\dar{r} & B \rar{b}\dar{s} & E \dar{t} \\
+& C \rar{c} & D \rar{d} & F
+\end{tikzcd}\]
+By the universal property of the pullback $BEDF$ there is a unique morphism
+$w \colon Z \to B$ such that $bw = u$ and $sw = cv$, but $baz = baz' = u$ and
+$saz = crz = cv = crz' = saz'$, so $az = az'$. Then using the pullback $ABCD$,
+there would be a unique morphism $y \colon Z \to A$ such that $ay = az$ and $v = ry$, 
+but both $z$ and $z'$ satisfy this condition and thus they are equal.
+#+end_proof
+
+#+begin_proposition
+In the following commutative diagram, 
+if $BEDF$ and $AECF$ are pullback squares, so is $ABCD$.
+\[\begin{tikzcd}
+A \rar\dar & B \rar\dar & E \dar \\
+C \rar & D \rar & F
+\end{tikzcd}\]
+#+end_proposition
+#+begin_proof
+Given some $u \colon Z \to B$ and $v \colon Z \to C$ such that $su = cv$, we
+can apply the universal property of the pullback $AECF$ to the
+maps $bu$ and $v$, which satisfy $tbu = dsu = dcv$, to construct some
+$z \colon Z \to A$ such that $baz = bu$ and $v = rz$.
+
+By the universal property of $BEDF$, there exists a unique $y$
+such that $by = bu$ and $sy = cv$, but both $az$ and $u$ satisfy that,
+and thus they are equal. This proves existence.
+\[\begin{tikzcd}
+Z\drar[dashed,bend left]{z} \drar[dashed,bend right]{z'} \ar[bend left]{rrd}{u} \ar[bend right]{ddr}{v} &&&\\
+& A \rar{a}\dar{r} & B \rar{b}\dar{s} & E \dar{t} \\
+& C \rar{c} & D \rar{d} & F
+\end{tikzcd}\]
+Given two morphisms $z,z' \colon Z \to A$ such that $az = u = az'$ and
+$rz = rz' = v$; we know by the universal property of the pullback
+$AECF$ applied to $bu$ and $v$ that there is a unique morphism $x \colon Z \to A$
+such that $bax = bu$ and $v = rx$; and thus they must be equal.
+#+end_proof
+
+
+*** references                                                                            :ignore:
+bibliographystyle:alpha
+bibliography:Math.bib
+
+** Linear logic is quantity-sensitive                                                        :note:
+:PROPERTIES:
+:TITLE: Linear logic is quantity-sensitive
+:EXPORT_FILE_NAME: countinginlinearlogic.pdf
+:EXPORT_DATE: 23th December 2018
+:INDEX_DATE: <2018-12-23 Sun 15:50>
+:END:
+
+/This is an exercise on Samson Abramsky's notes/
+/on the course Categories, Proofs and Processes./ cite:abramsky10 \\
+
+The main idea here is that we can formalize the notion that linear
+logic is sensitive to the number of ocurrences of each variable
+using the model it has on groups, which are particular cases of
+symmetric monoidal closed categories.
+
+#+begin_statement
+Can you construct proofs in Linear Logic of the following sequents?
+
+ * $A \vdash A \otimes A$
+ * $\vdash (A \multimap (A \multimap B)) \multimap (A \multimap B)$
+ * $\vdash A \multimap (B \multimap A)$
+#+end_statement
+
+Consider the discrete category of the integers with the monoidal
+structure given by addition, which is associative, and $0$ as the unit.
+With this we can construct the structural isomorphisms as identities.
+This is a symmetric category because addition is commutative. It
+is monoidal closed with $(a \multimap b) = b - a$ because we have the following
+adjunction, where morphisms represent equalities.
+\begin{prooftree}
+\AXC{$a + b = c$}
+\UIC{$a = c - b$}
+\end{prooftree}
+Naturality of the structural isomorphisms and of the
+adjunction follow from the fact that we are in a discrete category. \\
+
+Now, neither $a = a + a$, $0 = (b-a) - ((b-a)-a) = a$, nor $0 = (a-b)-a = -b$
+are true in general. It is impossible to create a morphism of
+these types in a symmetric monoidal closed category in general. \\
+
+This shows that linear logic is resource sensitive.  We could assume
+that each object has a weight and that morphisms have to be
+balanced.  The interpretation on integers precisely reflects this
+'weight'.
+
+*** references                                                                            :ignore:
+bibliographystyle:alpha
+bibliography:Math.bib
+
+** Powerset-algebras are complete semilattices                                               :note:
+:PROPERTIES:
+:TITLE: Powerset-algebras are complete semilattices
+:EXPORT_FILE_NAME: powersetalgebrascompletesemilattices.pdf
+:EXPORT_DATE: 23th December 2018
+:INDEX_DATE: <2018-12-23 Sun 13:10>
+:END:
+
+/This is a combination of two exercises from Samson Abramsky's notes/
+/on the course Categories, Proofs and Processes./ cite:abramsky10 \\
+
+#+begin_definition
+We take a *complete semilattice* to mean a poset $(P, \leq)$ where every
+subset $S \subseteq P$ has a least upper bound we write as $\bigvee S$. That is to
+say that it is a category with at most one morphism between any two
+objects that has all coproducts.
+#+end_definition
+
+A morphism between complete semilattices is a map between posets that
+preserves all least upper bounds, that is $h \left( \bigvee S \right) = \bigvee h(S)$, where we
+write $h(S) = \left\{ h(x) \mid x \in S \right\}$. This property implies monotonicity: note
+that from $x \leq y$ we get $h(y) = h(x \vee y) = h(x) \vee h(y)$, and thus $h(x) \leq h(y)$.
+We have created a category of complete semilattices with morphisms
+between them that we call $\mathbf{SL}$. There is a forgetful functor $U \colon \mathbf{SL} \to \mathbf{Set}$
+assigning the underlying set to each poset.
+
+*** Free-forgetful adjunction
+#+begin_proposition
+The forgetful functor $U \colon \mathbf{SL} \to \mathbf{Set}$ has a left adjoint.
+#+end_proposition
+#+begin_proof
+We will show that the left adjoint is the functor ${\cal P} \colon \mathbf{Set} \to \mathbf{SL}$ sending each set to its powerset
+ordered by inclusion, which is a complete semilattice because
+the union of a family of sets is its least upper bound. Given 
+two sets $A$ and $B$, any
+function $f \colon A \to B$ induces a $f^{\ast} \colon {\cal P}A \to {\cal P}B$
+sending a subset to its image under $f$; this constitutes the action
+of the functor on morphisms. We can check that this
+is a morphism of complete semilattices because, for any family
+${\cal X} \subseteq {\cal P}(A)$, we have
+
+\[
+f^{\ast} \left( \bigcup_{Y \in {\cal X}} Y \right) = 
+\left\{ f(y) \;\middle|\; y \in \bigcup_{Y \in {\cal X}} Y \right\} =
+\bigcup_{Y \in {\cal X}} \left\{ f(y) \mid y \in  Y \right\} =
+\bigcup_{Y \in {\cal X}} f^{\ast}(Y).
+\]
+
+To construct the adjunction, we start by defining an isomorphism $\mathbf{Set}(A,UB) \to \mathbf{SL}({\cal P}A,B)$ that sends
+$f \colon A \to B$ to the function that acts on some $Y \subseteq A$ as
+
+\[
+\overline{f}(Y) = \bigvee_{y \in Y} f(y).
+\]
+
+This is a morphism of complete semilattices because for any family
+of subsets ${\cal X} \subseteq {\cal P}(A)$ we have
+
+\[
+\overline{f} \left( \bigcup_{Y \in {\cal X}} Y  \right) =
+\bigvee_{y \in \bigcup_{Y \in {\cal X}} Y} f(y) =
+\bigvee_{Y \in {\cal X}} \bigvee_{y \in Y} f(y) =
+\bigvee_{Y \in {\cal X}} \overline{f}(Y)
+\]
+
+This isomorphism has an inverse sending each morphism $h \colon {\cal P}(A) \to B$ to
+the function $A \to B$ defined as $a \mapsto h(\left\{ a \right\})$. We
+can check that these are in fact inverses because for any $f \colon A \to B$
+and $a \in A$ we have
+
+\[
+\overline{f}(\left\{ a \right\}) = \bigvee_{a \in \left\{ a \right\}} f(a) = f(a)
+\]
+
+and for any semilattice morphism $h \colon {\cal P}(A) \to B$ we have for any $X \subseteq A$,
+using that it preserves least upper bounds, that
+
+\[
+\overline{h(\{-\})}(X) =
+\bigvee_{x \in X} h(\left\{ x \right\}) = 
+h \left( \bigvee_{x \in X} \left\{ x \right\} \right) = 
+h(X).
+\]
+
+We now show that the isomorphism is in fact natural. Given any
+$f \colon A \to UB$, any function $a \colon A' \to A$ and any morphism of semilattices
+$b \colon B \to B'$, we have for a given $Y \in {\cal P}(A)$ that
+
+\[
+b \overline{f} a^{\ast}(Y) = b \left( \bigvee_{y \in Y}f(a(y))  \right) =
+\bigvee_{y \in Y} b f a(y) = \overline{b f a}(Y),
+\]
+
+because $b$ preserves least upper bounds. This proves that
+$b\circ \overline{f} \circ a^{\ast} = \overline{b \circ f \circ a}$ and the isomorphism is thus natural.
+#+end_proof
+
+*** Powerset-algebras
+Note that the powerset monad acts on objects as $U{\cal P}$, simply
+taking the powerset and forgetting about its semilattice structure.
+The unit of the adjunction, $a \mapsto \left\{ a \right\}$ is precisely the unit of the
+monad, and the counit of the adjunction, the lattice homomorphism
+$\bigvee \colon {\cal P}L \to L$ for any lattice $L$, is such that $U\bigvee_{{\cal P}} = \bigcup \colon {\cal P}{\cal P}A \to {\cal P}A$
+is precisely the multiplication of the monad for any set $A$. \\
+
+We can now prove that ${\cal P}\mbox{-algebras}$ are complete semilattices.
+Note that an algebra would be a function $f \colon {\cal P}A \to A$ such that
+
+\[
+f \left\{ a \right\} = a, \qquad f \left( \bigcup_{i \in I} A_i \right) = f \left\{ f(A_i) \mid i \in I \right\},
+\]
+
+for any element $a \in A$ and any family of subsets $A_i \subseteq A$. We can define
+a partial order where for any two elements $x,y \in A$, we have that $x \leq y$
+when $f \left\{ x,y \right\} = y$. This satisfies
+
+ * *reflexivity*, because $f \left\{ x,x \right\} = x$;
+ * *transitivity*, because if $x \leq y \leq z$, then we have
+   $f \left\{ x,z \right\} = f \left\{ f\{x\}, f\{y,z\} \right\} = f \left\{ x,y,z \right\} = f \left\{ f\{x,y\},f\{z\} \right\} = z$;
+ * and *antisymmetry*, because $x \leq y \leq x$ implies $x = f \left\{ x,y \right\} = y$.
+
+For this particular preorder, the function $f$ is the lowest great bound
+$\bigvee$; this can be proved checking that, for any subset $S \subseteq A$,
+
+ * for each $s \in S$, we have $f \left\{ s , f(S) \right\} = f(S \cup \left\{ s \right\})= f(S)$,
+   so $s \leq f(S)$;
+ * and given some $x \in A$ such that $s \leq x$ for all $s \in S$, we have
+   $f \left\{ f(S),x \right\} = f \left( \bigcup_{s \in S} \left\{ s,x \right\} \right) = f \left\{ x \right\} = x$, and thus $f(S) \leq x$.
+
+Finally, we can check that taking the lowest great bound on a subset
+of a poset provides a valid algebra.
+
+\[
+\bigvee \left\{ a \right\} = a, \qquad
+\bigvee \left( \bigcup_{i \in I} A_i \right) = \bigvee \left\{ \bigvee A_i \mid i \in I \right\}.
+\]
+
+Note that once we know that all algebras are of this form, a ${\cal P}\mbox{-algebra}$
+morphism is precisely a function between complete semilattices $f \colon A \to B$
+satisfying, $f \left( \bigvee A \right) = \bigvee f(A)$; that is, a complete semilattice morphism.
+
+*** Monadicity theorem
+This is also a consequence of Beck's monadicity theorem. The adjunction ${\cal P} \dashv U$ is
+monadic and that implies that the comparison functor $\mathbf{SL} \to \mathbf{Set}^{{\cal P}}$ between complete
+semilattices and powerset-algebras is an equivalence.
+
+*** references                                                                            :ignore:
+bibliographystyle:alpha
+bibliography:Math.bib
+
+** Uniqueness of identity proofs                                                             :note:
+:PROPERTIES:
+:TITLE: Uniqueness of identity proofs
+:EXPORT_FILE_NAME: uniquenessofidentityproofs.pdf
+:INDEX_DATE: <2018-08-25 Sat 21:57>
+:END:
+
+#+BEGIN_quote
+/Attribution: this is only a summary, the original ideas exposed here
+can be found on the reference articles./
+#+END_quote
+
+Equality in Martin-Löf type theory is a beautiful concept but it is
+notoriously tricky to understand.  This is the second time I feel like
+I get it; and it probably won't be the last one.  I have been reading
+the groupoid interpretation article, and at least the first sections
+are recommended lecture to anyone interested in the topic; it is
+really well-written and does not require any previous
+knowledge. cite:hofmann98
+
+Let's talk about *Uniqueness of identity proofs* (UIP). This is the principle
+that says that any two proofs of the same equality must be equal
+themselves. That is, for any type $A$, the following type is inhabited
+
+\[
+\prod_{x,y : A} \prod_{p, q : x = y} p = q.
+\]
+
+Idris and Agda allow the user to prove this proposition in general via
+pattern matching.
+
+#+BEGIN_ haskell
+-- In Agda.
+uip : {A : Set} -> {x y : A} -> (p q : x ≡ y) -> p ≡ q
+uip refl refl = refl
+#+END_SRC
+
+#+BEGIN_SRC haskell
+-- In Idris
+uip : (t : Type) 
+    -> (x : t) -> (y : t) 
+    -> (p : x = y) -> (q : x = y) 
+    -> p = q
+uip t x x Refl Refl = Refl
+#+END_SRC
+
+However, UIP is not valid in general in Martin-Löf type theory.
+Hofmann and Streicher's groupoid interpretation provides a model where
+the UIP fails. In particular, this proves that pattern matching, in full
+generality, is not conservative over Martin-Löf type theory. cite:hofmann98
+In Agda, we can disable this behaviour with the flag ~--without-K~, this
+is necessary if we want to do Homotopy Type Theory, for example.
+
+In general, the rule we /can/ use in Intensional Type Theory is the
+J-eliminator. The usual properties of equality, like the Leibniz'
+indiscernibility of identicals, are consequences of it. It is subtle
+to notice how it works as it should while not implying UIP. For
+any type $C$ depending two variables $x : A$ and $y : A$ we have the
+following rule.
+
+\begin{prooftree}
+\AXC{$\Gamma \vdash a : A$}
+\noLine
+\UIC{$\Gamma, x : A \vdash c:C(x,x)$}
+\AXC{$\Gamma \vdash b : A$}
+\noLine
+\UIC{$\Gamma \vdash p : a = b$}
+\BIC{$\Gamma \vdash \mathsf{J}_C(c,p) : C(a,b)$}
+\end{prooftree}
+
+There is also a nice justification of the rule from category theory
+and an adjoint characterization of equality due to Lawvere. More on
+this can be read on the Michael's Shulman article on homotopy type
+theory. cite:shulman17
+
+*** references                                                                            :ignore:
+bibliographystyle:alpha
+bibliography:Math.bib
+
+** Coinduction                                                                               :note:
+:PROPERTIES:
+:TITLE: Coinduction
+:EXPORT_FILE_NAME: coinduction.pdf
+:INDEX_DATE: <2018-08-15 Wed 23:08>
+:ID:       174d185e-2269-40f2-935c-e8d45e08bfc8
+:END:
+
+The following article by Jacobs and Rutten is a really nice
+introduction to the notion of coinduction.  It assumes almost no prior
+knowledge of categories and details algebras, initiality, coalgebras,
+finality, induction and bisimulation.
+
+ * [[http://www.cs.ru.nl/~bart/PAPERS/JR.pdf][A tutorial on (Co)algebras and (Co)induction - Bart Jacobs, Jan Rutten]]
+
+Conatural numbers can be implemented in Agda using [[https://agda.readthedocs.io/en/v2.5.4.1/language/coinduction.html#coinduction][coinductive records]]
+as in the following example.  If you are interested in understanding
+coinduction, it might be a good idea to experiment in Agda; I learnt a
+lot writing basic coinductive definitions.
+
+#+BEGIN_SRC haskell
+data Maybe (A : Set) : Set where
+  Nothing : Maybe A
+  Just : A -> Maybe A
+
+record coNat : Set where
+  coinductive
+  field
+    pred : Maybe coNat
+open coNat public    
+
+coZero : coNat
+pred coZero = Nothing
+
+coInf : coNat
+pred coInf = Just coInf
+
+succ : coNat -> coNat
+pred (succ n) = Just n
+
+infixl 20 _+_
+_+_ : coNat -> coNat -> coNat
+pred (a + b) with pred a
+pred (a + b) | Nothing = pred b
+pred (a + b) | Just a' = Just (a' + b)
+#+END_SRC
+
+** Cartesian closed categories                                                               :note:
+:PROPERTIES:
+:TITLE: Cartesian closed categories
+:EXPORT_FILE_NAME: cartesianclosedcategories.pdf
+:INDEX_DATE: <2018-07-01 Sun 11:30>
+:ID:       3d52d110-822a-4f85-a1c4-57d868b527d5
+:END:
+
+A *cartesian closed category* $\mathbb{C}$ can be defined as a category having a right adjoint
+of the unique functor to the terminal category $\ast \colon \mathbb{C} \to 1$, a right adjoint of the
+diagonal functor $\Delta \colon \mathbb{C} \to \mathbb{C} \times \mathbb{C}$, and a right adjoint of $- \times A \colon \mathbb{C} \to \mathbb{C}$ for
+each $A \in \mathbb{C}$. These three adjoints correspond to the existence of a /terminal/ object,
+binary /products/ and /exponentials/.
+
+\begin{prooftree}
+\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] \ast \rar{}\& \ast \end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&] C \rar{!}\& 1 \end{tikzcd}}
+\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] C,C \rar{f,g}\& A,B \end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&] C \rar{\langle f,g \rangle}\& A \times B \end{tikzcd}}
+\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] C \times A \rar{f}\& B \end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&] C \rar{\widetilde{f}}\& B^A \end{tikzcd}}
+\noLine
+\TIC{}
+\end{prooftree}
+
+These three rules match the three introduction rules for the simply
+typed lambda calculus. We interpret $C$ as a context $\Gamma$ and each morphism
+$a \colon C \to A$ as a term $\Gamma \vdash a : A$.
+
+\begin{prooftree}
+\AXC{}
+\UIC{$\Gamma \vdash \ast : 1$}
+\AXC{$\Gamma \vdash a : A$}
+\AXC{$\Gamma \vdash b : B$}
+\BIC{$\Gamma \vdash \pair{a,b} : A \times B$}
+\AXC{$\Gamma, a : A \vdash b : B$}
+\UIC{$\Gamma \vdash (\lambda a.b) : A \to B$}
+\noLine
+\TIC{}
+\end{prooftree}
+
+Now, we should discuss if \beta-equivalence corresponds to the equality between morphisms.
 
 * About
 :PROPERTIES:
@@ -5448,70 +5552,6 @@ write articles and organize seminars.
 All the articles in this page are licensed under [[https://creativecommons.org/licenses/by-sa/2.0/][Creative Commons BY-SA 2.0]]
 unless otherwise specified.
 
-* Index
-:PROPERTIES:
-:TITLE:  Index
-:EXPORT_FILE_NAME: index.html
-:INDEX_DATE: <2018-05-25 Fri 18:12>
-:END:
-
-#+begin_src emacs-lisp :exports results :results output html :eval never-export
-  (defun print-post-at-point () 
-    (princ (concat  
-      " <li><a href=" 
-      (concat (org-entry-get (point) "EXPORT_FILE_NAME")  "> ") 
-      (org-entry-get (point) "TITLE") "</a><em>"
-      (format-time-string ", %d %B %Y" (date-to-time (org-entry-get (point) "INDEX_DATE"))) "</em><br></li>\n")))
-
-  (defun print-index ()
-    (progn 
-      (princ "<ul>\n") 
-      (org-map-entries (lambda () (print-post-at-point)) "+post" nil) 
-      (princ "</ul>\n")))
-
-  (print-index)
-#+end_src
-#+RESULTS:
-#+BEGIN_EXPORT html
-<ul>
- <li><a href=glass.pdf> The glass optic</a><em>, 27 April 2019</em><br></li>
- <li><a href=traversals.pdf> The traversal is the optic for polynomial functors</a><em>, 24 April 2019</em><br></li>
- <li><a href=monoidesgrouposcategorias.pdf> Monoides, groupos, grupoides, categorías</a><em>, 01 April 2019</em><br></li>
- <li><a href=dedekindrealsagda.html> Dedekind reals in Agda</a><em>, 20 April 2019</em><br></li>
- <li><a href=monoidescoloreadosbimonoidescoloreados.pdf> Monoides coloreados y bi(monoides coloreados)</a><em>, 14 April 2019</em><br></li>
- <li><a href=lawverefixedpoint.html> Lawvere's fixed point theorem</a><em>, 28 February 2019</em><br></li>
- <li><a href=apuntesdehaskell.html> Apuntes de Haskell</a><em>, 27 February 2019</em><br></li>
- <li><a href=diagramascategoriasmonoidales.pdf> Diagramas para categorías monoidales</a><em>, 21 January 2019</em><br></li>
- <li><a href=dotfilesinasingleorg.html> dotfiles in a single org-file</a><em>, 21 January 2019</em><br></li>
- <li><a href=everysurjectiontoprojectiveissplit.pdf> Every surjection to a projective R-module is split</a><em>, 24 December 2018</em><br></li>
- <li><a href=homcontinuous.pdf> Hom is continuous</a><em>, 23 December 2018</em><br></li>
- <li><a href=pastingpullbacks.pdf> Pasting pullbacks</a><em>, 23 December 2018</em><br></li>
- <li><a href=countinginlinearlogic.pdf> Linear logic is quantity-sensitive</a><em>, 23 December 2018</em><br></li>
- <li><a href=powersetalgebrascompletesemilattices.pdf> Powerset-algebras are complete semilattices</a><em>, 23 December 2018</em><br></li>
- <li><a href=picadolawvereinterview.html> Picado's Interview with Lawvere</a><em>, 08 September 2018</em><br></li>
- <li><a href=quoteampere.html> A quote by Ampère</a><em>, 03 September 2018</em><br></li>
- <li><a href=libreimquintoaniversario.html> LibreIM, casi cinco años después</a><em>, 03 September 2018</em><br></li>
- <li><a href=orgdrillspacedrepetition.html> Org-drill and spaced repetition</a><em>, 03 September 2018</em><br></li>
- <li><a href=uniquenessofidentityproofs.pdf> Uniqueness of identity proofs</a><em>, 25 August 2018</em><br></li>
- <li><a href=bachelorsthesisinorgmode.html> Writing a bachelor's thesis in org-mode</a><em>, 15 August 2018</em><br></li>
- <li><a href=bloggingwithasingleorgfile.html> Blogging with a single org-file</a><em>, 15 August 2018</em><br></li>
- <li><a href=coinduction.pdf> Coinduction</a><em>, 15 August 2018</em><br></li>
- <li><a href=cartesianclosedcategories.pdf> Cartesian closed categories</a><em>, 01 July 2018</em><br></li>
- <li><a href=categorytheoryandlambdacalculus.html> Category theory and lambda calculus</a><em>, 01 July 2018</em><br></li>
- <li><a href=evaluacionlambda.html> Evaluación en cálculo lambda</a><em>, 25 May 2018</em><br></li>
- <li><a href=mikrokosmos.html> Mikrokosmos</a><em>, 25 May 2018</em><br></li>
- <li><a href=aprendiendoemacs.html> Aprendiendo Emacs</a><em>, 25 May 2018</em><br></li>
- <li><a href=capturandolinksenorgmode.html> Capturando links en org-mode</a><em>, 23 March 2017</em><br></li>
- <li><a href=distribucionesmonadas.html> Distribuciones discretas con mónadas</a><em>, 25 May 2018</em><br></li>
- <li><a href=induccionestructural.html> Inducción estructural</a><em>, 14 March 2015</em><br></li>
- <li><a href=monadas.html> Mónadas</a><em>, 24 December 2016</em><br></li>
- <li><a href=matematicasemacs.html> Matemáticas en emacs</a><em>, 26 September 2016</em><br></li>
- <li><a href=ideasteoriatipos.html> Ideas de teoría de tipos</a><em>, 08 January 2016</em><br></li>
- <li><a href=informalcv.html> Informal CV</a><em>, 21 October 2018</em><br></li>
- <li><a href=wikipediacontributions.html> Wikipedia contributions</a><em>, 17 February 2018</em><br></li>
-</ul>
-#+END_EXPORT
-
 * Publishing                                                                              :noexport:
 The =cosmoi/publish= command exports all posts into HTML and PDF on the
 main folder. You may want to regenerate the index first. Every post
@@ -5525,7 +5565,7 @@ must have the tag :post: and must have the properties
   ;; The exporter only works on the headers tagged as :post:. This tag
   ;; should not be inherited because we do not want subheaders to be
   ;; also exported independently.
-  (setq org-tags-exclude-from-inheritance '("post"))
+  (setq org-tags-exclude-from-inheritance '("post" "note"))
 
   ;; Format for the footer of each post.
   (setq org-html-postamble-format 
@@ -5594,11 +5634,9 @@ must have the tag :post: and must have the properties
   (write-region "\n</channel>\n</rss>" nil "feed.xml" 'append)
 #+END_SRC
 
-#+RESULTS:
-
 * Local variables                                                                         :noexport:
 # Local Variables:
 # eval: (defun cosmoi/publish () (interactive) (org-map-entries (lambda () (if (org-entry-get (point) "EXPORT_FILE_NAME") (funcall 'org-html-export-to-html nil t))) "-noexport" nil))
-# eval: (setq org-tags-exclude-from-inheritance '("post"))
+# eval: (setq org-tags-exclude-from-inheritance '("post" "note"))
 # eval: (setq org-html-postamble-format '(("en" "<div id=\"footer\"><p class=\"postamble\">Last edited %d. Written by %c</p></div>")))
 # End:

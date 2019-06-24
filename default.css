@@ -9,6 +9,15 @@ body {
     hyphens: auto
 }
 
+a {
+    color: #07608f
+}
+
+a:hover {
+    color: #ad2231
+}
+
+
 div#header {
     border-bottom: 2px solid black;
     margin-bottom: 30px;
