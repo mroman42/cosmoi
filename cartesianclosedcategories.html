@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-23 Sun 14:54 -->
+<!-- 2019-06-24 Mon 12:02 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Cartesian closed categories</title>
@@ -14,11 +14,12 @@
 <link rel="stylesheet" href="syntax.css" />
 <div id="header">
 <div id="logo">
-<a hrwef="index.html">Cosmoi</a>
+<a hrwef="blog.html">Mario Román</a>
 </div>
 <div id="navigation">
-<a href="index.html">Index</a>
 <a href="about.html">About</a>
+<a href="blog.html">Blog</a>
+<a href="math.html">Math</a>
 <a href="feed.xml">RSS</a>
 </div>
 </div>
@@ -73,38 +74,31 @@ for the JavaScript code in this tag.
 <div id="content">
 <h1 class="title">Cartesian closed categories</h1>
 <p>
-A <b>cartesian closed category</b> <object type="image/svg+xml" data="ltximg/blog_92baa03a922bb6aa3ac1583efd57e73f4eb6296b.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object> can be defined as a category having a right adjoint
-of the unique functor to the terminal category <object type="image/svg+xml" data="ltximg/blog_b546a6ddcdda949bea0d0f924efd94951727e500.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object>, a right adjoint of the
-diagonal functor <object type="image/svg+xml" data="ltximg/blog_78d600acbf108e2b2bb6e2b1c77d2bea51cab877.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object>, and a right adjoint of <object type="image/svg+xml" data="ltximg/blog_aa30982f4ab4d506593807c7628c5410e010910a.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object> for
-each <object type="image/svg+xml" data="ltximg/blog_e7bc2bc2a92db598faf6fdb467c32e923cc66e36.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object>. These three adjoints correspond to the existence of a <i>terminal</i> object,
+A <i>cartesian closed category</i> <b>C</b> can be defined as a category having a right adjoint
+of the unique functor to the terminal category * : <b>C</b> -&gt; 1, a right adjoint of the
+diagonal functor  Δ : <b>C</b> -&gt; <b>C</b> × <b>C</b>, and a right adjoint of (_ × c) : <b>C</b> -&gt; <b>C</b> for
+each c ∈ <b>C</b>. These three adjoints correspond to the existence of a <i>terminal</i> object,
 binary <i>products</i> and <i>exponentials</i>.
 </p>
 
-
-<div class="figure">
-<p><object type="image/svg+xml" data="ltximg/blog_7783ed152a5ab3d2e5da58847fa3baa48756ad36.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object></p>
+<div class="org-src-container">
+<pre class="src src-haskell">  <span style="color: #7590db;">*</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #7590db;">*</span>     c,c <span style="color: #7590db;">-&gt;</span>  a,b      a <span style="color: #7590db;">&#215;</span> c <span style="color: #7590db;">-&gt;</span> b
+ <span style="color: #3E8991; font-style: italic;">--</span><span style="color: #3E8991; font-style: italic;">------   --------------  --------------</span>
+  c <span style="color: #7590db;">-&gt;</span> 1     c  <span style="color: #7590db;">-&gt;</span> a <span style="color: #7590db;">&#215;</span> b     a <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">(</span>c <span style="color: #7590db;">-&gt;</span> b<span style="color: #4f97d7;">)</span>
+</pre>
 </div>
 
 <p>
 These three rules match the three introduction rules for the simply
-typed lambda calculus. We interpret <object type="image/svg+xml" data="ltximg/blog_05eb9f699a9c23c932dfaab5018457d36359893b.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object> as a context <object type="image/svg+xml" data="ltximg/blog_520bfeb0a43bb785d1f0ac5ff2c526b272a71756.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object> and each morphism
-<object type="image/svg+xml" data="ltximg/blog_95a36a8f6daa20ba6bedebc549a562b31d1558a9.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object> as a term <object type="image/svg+xml" data="ltximg/blog_f97fc64b3ed97a84a14ee5348cd8e78074f80b6d.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object>.
+typed lambda calculus. We interpret c as a context Γ and each morphism
+x : c -&gt; a as a term  Γ ⊢ x : a.
 </p>
 
-
-<div class="figure">
-<p><object type="image/svg+xml" data="ltximg/blog_dfe1a08e370b7071a74196f65362bed8740ec0de.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object></p>
+<div class="org-src-container">
+<pre class="src src-haskell">                <span style="color: #ce537a; font-weight: bold;">&#915;</span> <span style="color: #7590db;">&#8866;</span> a <span style="color: #ce537a; font-weight: bold;">:</span> <span style="color: #ce537a; font-weight: bold;">A</span>   <span style="color: #ce537a; font-weight: bold;">&#915;</span> <span style="color: #7590db;">&#8866;</span> b <span style="color: #ce537a; font-weight: bold;">:</span> <span style="color: #ce537a; font-weight: bold;">B</span>     <span style="color: #ce537a; font-weight: bold;">&#915;</span> , a <span style="color: #ce537a; font-weight: bold;">:</span> <span style="color: #ce537a; font-weight: bold;">A</span> <span style="color: #7590db;">&#8866;</span> b <span style="color: #ce537a; font-weight: bold;">:</span> <span style="color: #ce537a; font-weight: bold;">B</span>
+ <span style="color: #3E8991; font-style: italic;">--</span><span style="color: #3E8991; font-style: italic;">---------   ------------------------  ---------------------</span>
+  <span style="color: #ce537a; font-weight: bold;">&#915;</span> <span style="color: #7590db;">&#8866;</span> <span style="color: #7590db;">*</span> <span style="color: #ce537a; font-weight: bold;">:</span> 1       <span style="color: #ce537a; font-weight: bold;">&#915;</span> <span style="color: #7590db;">&#8866;</span> <span style="color: #4f97d7;">&#10216;</span>a,b<span style="color: #4f97d7;">&#10217;</span> <span style="color: #ce537a; font-weight: bold;">:</span> <span style="color: #ce537a; font-weight: bold;">A</span> <span style="color: #7590db;">&#215;</span> <span style="color: #ce537a; font-weight: bold;">B</span>       <span style="color: #ce537a; font-weight: bold;">&#915;</span> <span style="color: #7590db;">&#8866;</span> <span style="color: #4f97d7;">(</span>&#955;a<span style="color: #7590db;">.</span>b<span style="color: #4f97d7;">)</span> <span style="color: #ce537a; font-weight: bold;">:</span> <span style="color: #ce537a; font-weight: bold;">A</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">B</span>
+</pre>
 </div>
 
 <p>
@@ -112,7 +106,7 @@ Now, we should discuss if &beta;-equivalence corresponds to the equality between
 </p>
 </div>
 <div id="postamble" class="status">
-<div id="footer"><p class="postamble">Last edited 2018-07-01 Sun 11:30. Written by <a href="https://mroman42.github.com">@mroman42</a>.</p></div>
+<div id="footer"><p class="postamble">Last edited . Written by <a href="https://mroman42.github.com">@mroman42</a>.</p></div>
 </div>
 </body>
 </html>

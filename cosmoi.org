@@ -449,14 +449,17 @@
 #+RESULTS:
 #+BEGIN_EXPORT html
 <ul>
+ <li><a href=glass.html> The glass optic</a><em>, 27 May 2019</em><br></li>
  <li><a href=dedekindrealsagda.html> Dedekind reals in Agda</a><em>, 20 April 2019</em><br></li>
  <li><a href=lawverefixedpoint.html> Lawvere's fixed point theorem</a><em>, 28 February 2019</em><br></li>
  <li><a href=apuntesdehaskell.html> Apuntes de Haskell</a><em>, 27 February 2019</em><br></li>
+ <li><a href=homcontinuous.html> Right adjoints are continuous</a><em>, 23 December 2018</em><br></li>
  <li><a href=dotfilesinasingleorg.html> dotfiles in a single org-file</a><em>, 21 January 2019</em><br></li>
  <li><a href=picadolawvereinterview.html> Picado's Interview with Lawvere</a><em>, 08 September 2018</em><br></li>
  <li><a href=quoteampere.html> A quote by Ampère</a><em>, 03 September 2018</em><br></li>
  <li><a href=libreimquintoaniversario.html> LibreIM, casi cinco años después</a><em>, 03 September 2018</em><br></li>
  <li><a href=orgdrillspacedrepetition.html> Org-drill and spaced repetition</a><em>, 03 September 2018</em><br></li>
+ <li><a href=coinduction.html> Coinduction</a><em>, 15 August 2018</em><br></li>
  <li><a href=bachelorsthesisinorgmode.html> Writing a bachelor's thesis in org-mode</a><em>, 15 August 2018</em><br></li>
  <li><a href=bloggingwithasingleorgfile.html> Blogging with a single org-file</a><em>, 15 August 2018</em><br></li>
  <li><a href=categorytheoryandlambdacalculus.html> Category theory and lambda calculus</a><em>, 01 July 2018</em><br></li>
@@ -468,6 +471,7 @@
  <li><a href=induccionestructural.html> Inducción estructural</a><em>, 14 March 2015</em><br></li>
  <li><a href=monadas.html> Mónadas</a><em>, 24 December 2016</em><br></li>
  <li><a href=matematicasemacs.html> Matemáticas en emacs</a><em>, 26 September 2016</em><br></li>
+ <li><a href=cartesianclosedcategories.html> Cartesian closed categories</a><em>, 01 July 2018</em><br></li>
  <li><a href=ideasteoriatipos.html> Ideas de teoría de tipos</a><em>, 08 January 2016</em><br></li>
  <li><a href=informalcv.html> Informal CV</a><em>, 21 October 2018</em><br></li>
  <li><a href=wikipediacontributions.html> Wikipedia contributions</a><em>, 17 February 2018</em><br></li>
@@ -1483,6 +1487,44 @@ mountains, but to flatten them." -- Conor McBride
 
 
 
+** The "Glass" optic                                                                         :post:
+:PROPERTIES:
+:TITLE: The glass optic
+:EXPORT_FILE_NAME: glass.html
+:EXPORT_DATE: 27th May, 2019
+:INDEX_DATE: <2019-05-27 Mon>
+:END:
+
+At the intersection between a *lens* and a *grate* there should be an
+optic that I have started to call *glass*.  If the pseudomonoid action
+that describes a lens is  (c × _)  and the one for glass is  (c → _),
+the action that we want to get should be the one given by the
+coproduct pseudomonoid.
+
+We rewrite the action of every word =c₁d₁ ... cₖdₖ= on some object
+=a= as follows, for some  e,f ∈ *C*, a bicartesian closed category.
+
+#+BEGIN_SRC haskell
+  d₁ × (c₁ -> d₂ × (c₂ -> ... x))  ≅
+  d₁ × (c₁ -> d₂) × (c₁ × c₂ -> ... x)  ≅
+  e × (f -> x)
+#+END_SRC
+
+And we derive the concrete representation.
+
+#+BEGIN_SRC haskell
+  ∃ c,d .  (s -> (c × (d -> a))) × (c × (d -> b) -> t)  ≅
+  ∃ c,d .  (s -> c) × (s -> (d -> a)) × (c × (d -> b) -> t)  ≅
+  ∃ d   .  (s -> (d -> a)) × (s × (d -> b) -> t)  ≅
+  ∃ d   .  (d -> (s -> a)) × (s × (d -> b) -> t)  ≅
+  (s × ((s -> a) -> b) -> t)  ≅
+  ((s -> a) -> b) -> s -> t
+#+END_SRC
+
+My intuition at the
+moment is "If from a getter you can create a b, then you can update s
+to t", which apparently also rhymes.
+
 
 ** Dedekind reals in Agda                                                                    :post:
 :PROPERTIES:
@@ -1512,11 +1554,11 @@ This is a note stating the main result
 from [[http://tac.mta.ca/tac/reprints/articles/15/tr15.pdf][Diagonal arguments and Cartesian Closed Categories]] by
 William Lawvere.
 
-*Definition.* A morphism s : X → Y is /point-surjective/ if for each y : 1
-→ Y, there exists some x : 1 → X such that sx = y.
+*Definition.* A morphism s : X -> Y is /point-surjective/ if for each y : 1
+-> Y, there exists some x : 1 -> X such that sx = y.
 
 *Theorem* (Lawvere, 1969). In any cartesian closed category, if there exists a
-point-surjective morphism d : A → (A → B), then each morphism f : B →
+point-surjective morphism d : A -> (A -> B), then each morphism f : B ->
 B has a fixed point, that is, some b : B such that f b = b.
 
 *Proof.* As d is point-surjective, there exists x : A such that dx =
@@ -1535,6 +1577,54 @@ en los seminarios de LibreIM, [[https://github.com/pedritomelenas][Pedro García
 [[https://github.com/libreim/haskell/blob/3acbc2f7088483d3ba69ecdc00891c8419341aaf/PrimeraParte/PrimeraParte.ipynb][cuaderno de Jupyter]] para acompañarlos, y finalmente [[https://github.com/mx-psi][@mx-psi]] ha vuelto a revisarlos
 y dejarlos listos para otro seminario este año. 
 
+** Right adjoints are continuous                                                             :post:
+:PROPERTIES:
+:TITLE: Right adjoints are continuous
+:EXPORT_FILE_NAME: homcontinuous.html
+:INDEX_DATE: <2018-12-23 Sun>
+:EXPORT_DATE: 23th December 2018
+:END:
+
+/This is an exercise on Abramsky and Tzevelekos' notes/
+/on the course [[https://arxiv.org/pdf/1102.1313.pdf][Categories, Proofs and Processes]]./
+
+*Proposition.* Let A be an object in the category *C*. Show that the covariant hom functor
+C(A,-), preserves all limits.
+
+/Proof./ Let *I* be a small category,  F : *I* -> *C* a functor and let L with the
+morphisms lᵢ be the limit of that functor. We know that for every
+morphism  ϕ : i -> j  in *I*, we have lⱼ = Fϕ ∘ lᵢ.
+
+Let Z be a set with a family of morphisms fᵢ : Z -> C(a,Fi) determining
+a cone to C(a,F-) : *I* -> *Sets*; that is, such that for each  ϕ : i -> j in *I*, we 
+have that  fⱼ = (Fϕ ∘ -) ∘ fᵢ; or, in other words, for each z ∈ Z we have
+fⱼ(z) = Fϕ ∘ fᵢ(z). Thus, fixing any  z ∈ Z gives as a family of morphisms
+fᵢ(z) ∈ C(a,Fi) defining a cone.  This implies that there exists some
+unique morphism ψ(z) : A -> L  such that  lᵢ ∘ a(z) = fᵢ(z).
+
+Repeating this for every z ∈ Z we have obtained a function  a : Z -> C(A,L)
+with the property lᵢ ∘ a = fᵢ. This function must be the unique one with this
+property, because for any other  a' : Z -> C(A,L), for each z ∈  
+we would have lᵢ ∘ a'(z) = fᵢ(z) and that would imply that a'(z) = a(z).
+
+\\
+
+*Proposition.* Right adjoints preserve limits.
+
+/Proof./ (From Awodey 2010) Let  L : *C* -> *D*  and  R : *D* -> *C* be a pair of adjoints
+L ⊣ R. Let Xᵢ be objects determining any diagram and Y an arbitrary object.
+We have the following chain of natural transformations between
+hom-sets.
+
+#+BEGIN_SRC haskell
+  hom(Y , R lim Xᵢ) ≅
+  hom(L Y , lim Xᵢ) ≅
+  lim hom(L Y , Xᵢ) ≅
+  lim hom(Y , R Xᵢ) ≅
+  hom(Y , lim R Xᵢ)
+#+END_SRC
+
+By Yoneda Lemma, this means R lim Xᵢ ≅ lim RXᵢ.
 
 ** dotfiles in a single org-file                                                             :post:
 :PROPERTIES:
@@ -1603,6 +1693,7 @@ a substitute for science. Now, one hundred years after Gödel’s birth,
 the organized attempts to harness his great mathematical work to such
 an agenda have become explicit.
 #+END_QUOTE
+
 
 ** A quote by Ampère                                                                         :post:
 :PROPERTIES:
@@ -1674,6 +1765,52 @@ org-drill format would be great.
 If you are not yet committed to Anki and you are already confortable
 with Emacs, it could be a good idea to try both before settling on one.
 
+** Coinduction                                                                               :post:
+:PROPERTIES:
+:TITLE: Coinduction
+:EXPORT_FILE_NAME: coinduction.html
+:INDEX_DATE: <2018-08-15 Wed 23:08>
+:ID:       174d185e-2269-40f2-935c-e8d45e08bfc8
+:END:
+
+The following article by Jacobs and Rutten is a really nice
+introduction to the notion of coinduction.  It assumes almost no prior
+knowledge of categories and details algebras, initiality, coalgebras,
+finality, induction and bisimulation.
+
+ * [[http://www.cs.ru.nl/~bart/PAPERS/JR.pdf][A tutorial on (Co)algebras and (Co)induction - Bart Jacobs, Jan Rutten]]
+
+Conatural numbers can be implemented in Agda using [[https://agda.readthedocs.io/en/v2.5.4.1/language/coinduction.html#coinduction][coinductive records]]
+as in the following example.  If you are interested in understanding
+coinduction, it might be a good idea to experiment in Agda; I learnt a
+lot writing basic coinductive definitions.
+
+#+BEGIN_SRC haskell
+  data Maybe (A : Set) : Set where
+    Nothing : Maybe A
+    Just : A -> Maybe A
+  
+  record coNat : Set where
+    coinductive
+    field
+      pred : Maybe coNat
+  open coNat public    
+  
+  coZero : coNat
+  pred coZero = Nothing
+  
+  coInf : coNat
+  pred coInf = Just coInf
+  
+  succ : coNat -> coNat
+  pred (succ n) = Just n
+  
+  infixl 20 _+_
+  _+_ : coNat -> coNat -> coNat
+  pred (a + b) with pred a
+  pred (a + b) | Nothing = pred b
+  pred (a + b) | Just a' = Just (a' + b)
+#+END_SRC
 
 ** Writing a bachelor's thesis in org-mode                                                   :post:
 :PROPERTIES:
@@ -2260,14 +2397,14 @@ código se implementa el generador congruencial.
 Vemos que funciona como una distribución uniforme.
 
 #+BEGIN_SRC bash
->>> dice 6
-
-1:	 ################
-2:	 ################
-3:	 ################
-4:	 ################
-5:	 ################
-6:	 ################
+  >>> dice 6
+  
+  1:	 ################
+  2:	 ################
+  3:	 ################
+  4:	 ################
+  5:	 ################
+  6:	 ################
 #+END_SRC
 
 Y desde ella generar fácilmente otras usando funciones que
@@ -2317,127 +2454,127 @@ El siguiente código es una primera implementación de este post en
 Haskell.
 
 #+BEGIN_SRC haskell
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE TypeSynonymInstances #-}
-{-
-En este archivo vamos a usar mónadas para definir distribuciones
-discretas de probabilidad y aplicar operaciones algebraicas sobre ellas.
--}
-import Control.Monad.State
+  {-# LANGUAGE FlexibleInstances #-}
+  {-# LANGUAGE TypeSynonymInstances #-}
+  {-
+  En este archivo vamos a usar mónadas para definir distribuciones
+  discretas de probabilidad y aplicar operaciones algebraicas sobre ellas.
+  -}
+  import Control.Monad.State
+  
+  -- Generación aleatoria
+  -- Para generar números pseudoaleatorios usaremos LCGs. La idea es tener
+  -- un dado que nos dé una distribución de probabilidad uniforme dada una
+  -- semilla y nos devuelva el resultado de la tirada y una nueva semilla
+  -- aleatoria. Buscamos que un dado de seis caras sea, por ejemplo:
+  --
+  --   dice 6 :: Seed -> (Int, Seed)
+  --
+  -- Si quisiéramos tirar dos dados, tendríamos que tomar la semilla resultante
+  -- del primer lanzamiento y pasarla al segundo; algo así:
+  --
+  --   let (a,newseed) = dice 6 seed
+  --   let (b,_)       = dice 6 newseed
+  --   print [a,b]
+  --
+  -- Pero esto se hace demasiado complejo. La semilla, en el fondo, es un
+  -- estado, así que podemos modelarla con la mónada State. Cada lanzamiento
+  -- será de la forma:
+  --
+  --   State Seed a   ===   Seed -> (a, Seed)
+  --
+  -- Luego podemos llamar a la distribución: Distribution a = State Seed a, y
+  -- trabajar con ella usando las funciones normales de mónadas.
+  type Seed = Int
+  type Distribution = State Seed
+  
+  
+  
+  -- Nuestra primera distribución es un dado de "n" lados que usa internamente un
+  -- generador de números aleatorios.
+  dice :: Int -> Distribution Int
+  dice n = state (\s -> (s `mod` n + 1, 16807*s `mod` 2147483647))
+  
+  -- Una moneda es un dado de dos caras
+  coin :: Distribution Int
+  coin = dice 2
+    
+  -- Estas funciones pueden ser llamadas con la mónada estado, dada una
+  -- semilla inicial, devuelven el resultado y la nueva semilla:
+  --
+  -- λ> runState (dice 6) 1
+  -- (2,16807)
+  -- λ> runState (dice 6) 16807
+  -- (2,282475249)
+  --
+  -- El usar composición con mónadas nos ahorraba controlar los errores
+  -- en el primer caso, aquí nos ahorra controlar el cambio de semilla,
+  -- por ejemplo: para lanzar dos dados y hacer que la semilla se pase
+  -- internamente.
+  twodices' :: Distribution Int
+  twodices' = do
+    a <- dice 6
+    b <- dice 6
+    return (a+b)
 
--- Generación aleatoria
--- Para generar números pseudoaleatorios usaremos LCGs. La idea es tener
--- un dado que nos dé una distribución de probabilidad uniforme dada una
--- semilla y nos devuelva el resultado de la tirada y una nueva semilla
--- aleatoria. Buscamos que un dado de seis caras sea, por ejemplo:
---
---   dice 6 :: Seed -> (Int, Seed)
---
--- Si quisiéramos tirar dos dados, tendríamos que tomar la semilla resultante
--- del primer lanzamiento y pasarla al segundo; algo así:
---
---   let (a,newseed) = dice 6 seed
---   let (b,_)       = dice 6 newseed
---   print [a,b]
---
--- Pero esto se hace demasiado complejo. La semilla, en el fondo, es un
--- estado, así que podemos modelarla con la mónada State. Cada lanzamiento
--- será de la forma:
---
---   State Seed a   ===   Seed -> (a, Seed)
---
--- Luego podemos llamar a la distribución: Distribution a = State Seed a, y
--- trabajar con ella usando las funciones normales de mónadas.
-type Seed = Int
-type Distribution = State Seed
+  (⊕) :: Distribution Int -> Distribution Int -> Distribution Int
+  (⊕) = liftM2 (+)
+  (⊗) :: Distribution Int -> Distribution Int -> Distribution Int
+  (⊗) = liftM2 (*)
+  
+  twodices :: Distribution Int
+  twodices = dice 6 ⊕ dice 6
+  
+  -- Igual que hago esto, podría hacer:
+  --
+  --   foldr (⊕) (return 0) [dice 6,dice 6,dice 6]
+  --   foldr (⊕) (return 0) (replicate 10 (dice 6))
+  --
+  -- Que da un resultado que se aproxima a una distribución normal.
+  
+  -- Ahora, desde ella, podemos crear otras distribuciones. La distribución de
+  -- bernoulli sería la de una moneda trucada donde una cara tiene probabilidad
+  -- p y la otra tiene probabilidad (1-p).
+  bernoulli :: Double -> Distribution Int
+  bernoulli p = do
+    sample <- dice 1000000
+    if (fromIntegral sample / 1000000.0 < p)
+      then return 1
+      else return 0
 
-
-
--- Nuestra primera distribución es un dado de "n" lados que usa internamente un
--- generador de números aleatorios.
-dice :: Int -> Distribution Int
-dice n = state (\s -> (s `mod` n + 1, 16807*s `mod` 2147483647))
-
--- Una moneda es un dado de dos caras
-coin :: Distribution Int
-coin = dice 2
-
--- Estas funciones pueden ser llamadas con la mónada estado, dada una
--- semilla inicial, devuelven el resultado y la nueva semilla:
---
--- λ> runState (dice 6) 1
--- (2,16807)
--- λ> runState (dice 6) 16807
--- (2,282475249)
---
--- El usar composición con mónadas nos ahorraba controlar los errores
--- en el primer caso, aquí nos ahorra controlar el cambio de semilla,
--- por ejemplo: para lanzar dos dados y hacer que la semilla se pase
--- internamente.
-twodices' :: Distribution Int
-twodices' = do
-  a <- dice 6
-  b <- dice 6
-  return (a+b)
-
-(⊕) :: Distribution Int -> Distribution Int -> Distribution Int
-(⊕) = liftM2 (+)
-(⊗) :: Distribution Int -> Distribution Int -> Distribution Int
-(⊗) = liftM2 (*)
-
-twodices :: Distribution Int
-twodices = dice 6 ⊕ dice 6
-
--- Igual que hago esto, podría hacer:
---
---   foldr (⊕) (return 0) [dice 6,dice 6,dice 6]
---   foldr (⊕) (return 0) (replicate 10 (dice 6))
---
--- Que da un resultado que se aproxima a una distribución normal.
-
--- Ahora, desde ella, podemos crear otras distribuciones. La distribución de
--- bernoulli sería la de una moneda trucada donde una cara tiene probabilidad
--- p y la otra tiene probabilidad (1-p).
-bernoulli :: Double -> Distribution Int
-bernoulli p = do
-  sample <- dice 1000000
-  if (fromIntegral sample / 1000000.0 < p)
-    then return 1
-    else return 0
-
--- La distribución binomial es la suma de k distribuciones de Bernoulli
-binomial :: Int -> Double -> Distribution Int
-binomial k p = sum <$> replicateM k (bernoulli p)
-
--- La distribución constante y otra forma de escribir la distribución
--- binomial, de manera algebraica.
-constant :: Int -> Distribution Int
-constant n = return n
-
-binomial' :: Int -> Double -> Distribution Int
-binomial' k p = foldr (⊕) (constant 0) (replicate k (bernoulli p))
-
-
-
--- Muestra la distribución. Los detalles de implementación no son interesantes.
--- Hemos usado  TypeSynonymInstances para simplificar el proceso de sobrecargar
--- la instancia de Show y poder dibujar directamente por la pantalla las
--- demostraciones.
-instance Show (State Seed Int) where
-  show = showdist
-
-showdist :: Distribution Int -> String
-showdist dist = unlines $ map counter [minimum samples..maximum samples]
-  where samples = fst $ runState (replicateM 50000 dist) 1
-        counter n = show n ++ ":\t " ++ replicate ((count n samples) `div` (3000 `div` range)) '#'
-        range = maximum samples - minimum samples + 1
-
-count :: Eq a => a -> [a] -> Int
-count x = length . filter (x==)
-
-
-main :: IO ()
-main = return ()
+  -- La distribución binomial es la suma de k distribuciones de Bernoulli
+  binomial :: Int -> Double -> Distribution Int
+  binomial k p = sum <$> replicateM k (bernoulli p)
+  
+  -- La distribución constante y otra forma de escribir la distribución
+  -- binomial, de manera algebraica.
+  constant :: Int -> Distribution Int
+  constant n = return n
+  
+  binomial' :: Int -> Double -> Distribution Int
+  binomial' k p = foldr (⊕) (constant 0) (replicate k (bernoulli p))
+  
+  
+  
+  -- Muestra la distribución. Los detalles de implementación no son interesantes.
+  -- Hemos usado  TypeSynonymInstances para simplificar el proceso de sobrecargar
+  -- la instancia de Show y poder dibujar directamente por la pantalla las
+  -- demostraciones.
+  instance Show (State Seed Int) where
+    show = showdist
+  
+  showdist :: Distribution Int -> String
+  showdist dist = unlines $ map counter [minimum samples..maximum samples]
+    where samples = fst $ runState (replicateM 50000 dist) 1
+          counter n = show n ++ ":\t " ++ replicate ((count n samples) `div` (3000 `div` range)) '#'
+          range = maximum samples - minimum samples + 1
+  
+  count :: Eq a => a -> [a] -> Int
+  count x = length . filter (x==)
+  
+  
+  main :: IO ()
+  main = return ()
 #+END_SRC
 ** Inducción estructural                                                                     :post:
 :PROPERTIES:
@@ -3321,6 +3458,38 @@ y cargarlo en cada archivo =org= con =#+SETUPFILE: math.setup=.
 Pueden encontrarse ejemplos de uso en [[https://github.com/mroman42/math][este repositorio]] con mis apuntes
 de matemáticas. Mi archivo de configuración de Emacs está disponible en
 [[https://github.com/M42/.emacs.d][mroman42/emacs.d]].
+** Cartesian closed categories                                                               :post:
+:PROPERTIES:
+:TITLE: Cartesian closed categories
+:EXPORT_FILE_NAME: cartesianclosedcategories.html
+:INDEX_DATE: <2018-07-01 Sun 11:30>
+:ID:       3d52d110-822a-4f85-a1c4-57d868b527d5
+:END:
+
+A /cartesian closed category/ *C* can be defined as a category having a right adjoint
+of the unique functor to the terminal category * : *C* -> 1, a right adjoint of the
+diagonal functor  Δ : *C* -> *C* × *C*, and a right adjoint of (_ × c) : *C* -> *C* for
+each c ∈ *C*. These three adjoints correspond to the existence of a /terminal/ object,
+binary /products/ and /exponentials/.
+
+#+BEGIN_SRC haskell
+  * -> *     c,c ->  a,b      a × c -> b
+ --------   --------------  --------------
+  c -> 1     c  -> a × b     a -> (c -> b)
+#+END_SRC
+
+These three rules match the three introduction rules for the simply
+typed lambda calculus. We interpret c as a context Γ and each morphism
+x : c -> a as a term  Γ ⊢ x : a.
+
+#+BEGIN_SRC haskell
+                Γ ⊢ a : A   Γ ⊢ b : B     Γ , a : A ⊢ b : B
+ -----------   ------------------------  ---------------------
+  Γ ⊢ * : 1       Γ ⊢ ⟨a,b⟩ : A × B       Γ ⊢ (λa.b) : A -> B
+#+END_SRC
+
+Now, we should discuss if \beta-equivalence corresponds to the equality between morphisms.
+
 ** Ideas de teoría de tipos                                                                  :post:
 :PROPERTIES:
 :TITLE:    Ideas de teoría de tipos
@@ -3656,11 +3825,11 @@ Que viene de nuevo dada por $y(\tau) = \tau_A(1_A)$.
  <li><a href=monoidesgrouposcategorias.pdf> Monoides, groupos, grupoides, categorías</a>, <em> (1 de abril de 2019)</em><br></li>
  <li><a href=monoidescoloreadosbimonoidescoloreados.pdf> Monoides coloreados y bi(monoides coloreados)</a>, <em> (14 de abril de 2019)</em><br></li>
  <li><a href=diagramascategoriasmonoidales.pdf> Diagramas para categorías monoidales</a>, <em> ()</em><br></li>
- <li><a href=everysurjectiontoprojectiveissplit.pdf> Every surjection to a projective R-module is split</a>, <em> ()</em><br></li>
- <li><a href=homcontinuous.pdf> Hom is continuous</a>, <em> ()</em><br></li>
+ <li><a href=everysurjectiontoprojectiveissplit.pdf> Every surjection to a projective R-module is split</a>, <em> (24th December 2018)</em><br></li>
+ <li><a href=homcontinuous.pdf> Hom is continuous</a>, <em> (23th December 2018)</em><br></li>
  <li><a href=pastingpullbacks.pdf> Pasting pullbacks</a>, <em> ()</em><br></li>
- <li><a href=countinginlinearlogic.pdf> Linear logic is quantity-sensitive</a>, <em> ()</em><br></li>
- <li><a href=powersetalgebrascompletesemilattices.pdf> Powerset-algebras are complete semilattices</a>, <em> ()</em><br></li>
+ <li><a href=countinginlinearlogic.pdf> Linear logic is quantity-sensitive</a>, <em> (23th December 2018)</em><br></li>
+ <li><a href=powersetalgebrascompletesemilattices.pdf> Powerset-algebras are complete semilattices</a>, <em> (23th December 2018)</em><br></li>
  <li><a href=uniquenessofidentityproofs.pdf> Uniqueness of identity proofs</a>, <em> ()</em><br></li>
  <li><a href=coinduction.pdf> Coinduction</a>, <em> ()</em><br></li>
  <li><a href=cartesianclosedcategories.pdf> Cartesian closed categories</a>, <em> ()</em><br></li>
@@ -3668,42 +3837,6 @@ Que viene de nuevo dada por $y(\tau) = \tau_A(1_A)$.
 #+END_EXPORT
 
 * Math
-** The glass optic                                                                           :note:
-:PROPERTIES:
-:TITLE: The glass optic
-:EXPORT_FILE_NAME: glass.pdf
-:EXPORT_DATE: 27th May, 2019
-:INDEX_DATE: <2019-04-27 Mon>
-:EXPORT_OPTIONS: toc:nil num:t lang:en
-:END:
-
-At the intersection between a *lens* and a *grate* there should be an
-optic that I have started to call *glass*.  If the pseudomonoid action
-that describes a lens is $c \times (-)$ and the one for glass is $c \to (-)$,
-the action that we want to get should be the one given by the
-coproduct pseudomonoid.
-
-We rewrite the action of every word $c_1d_1\dots c_kd_k$ as follows,
-for some $e,f \in \mathbf{C}$ bicartesian closed category.
-\[\begin{aligned}
-a &\mapsto d_1 \times (c_1 \to d_2 \times (c_2 \to \dots x)) \\
-&= d_1 \times (c_1 \to d_2) \times ((c_1 \times c_2) \to \dots x) \\
-&= e \times (f \to x)
-\end{aligned}\]
-And we derive the concrete representation.
-\[\begin{aligned}
-\int^{c,d} & \mathbf{C}(s, c \times (d \to a)) \times \mathbf{C}((d \to b) \times c , t) \\&\cong
-\int^{c,d} \mathbf{C}(s, c) \times \mathbf{C}(s \to d \to a) \times \mathbf{C}((d \to b) \times c , t) \\&\cong
-\int^{d} \mathbf{C}(s \to d \to a) \times \mathbf{C}((d \to b) \times s , t) \\&\cong
-\int^{d} \mathbf{C}(d \to (s \to a)) \times \mathbf{C}((d \to b) \times s , t) \\&\cong
-\mathbf{C}(((s \to a) \to b) \times s , t) \\&\cong
-\mathbf{C}(((s \to a) \to b) , s \to t)
-\end{aligned}\]
-
-The optic in Haskell is =((s -> a) -> b) -> s -> t=. My intuition at the
-moment is "If from a getter you can create a b, then you can update s
-to t", which apparently also rhymes.
-
 ** The traversal is the optic for polynomial functors                                        :note:
 :PROPERTIES:
 :TITLE: The traversal is the optic for polynomial functors
@@ -5038,59 +5171,6 @@ free module over $P$, which we call $\pi \colon F \to P$ and take a section $s \
 Then the sequence $0 \to \mathrm{ker}(\pi) \to F \to P \to 0$ splits,
 $P$ is a direct summand of a free module and thus a projective module.
 
-** Hom is continuous and then all right adjoints are                                         :note:
-:PROPERTIES:
-:TITLE: Hom is continuous
-:EXPORT_FILE_NAME: homcontinuous.pdf
-:INDEX_DATE: <2018-12-23 Sun 16:20>
-:EXPORT_DATE: 23th December 2018
-:END:
-
-/This is an exercise on Samson Abramsky's notes/
-/on the course Categories, Proofs and Processes./ cite:abramsky10 \\
-
-#+begin_statement
-Let $A$ be an object in the category ${\cal C}$. Show that the covariant $\mathrm{hom}$ functor
-${\cal C}(A,-)$, as defined in Lecture III, preserves all limits.
-#+end_statement
-#+begin_proof
-Let ${\cal I}$ be a small category, $F \colon {\cal I} \to {\cal C}$ a functor and let $L$ with the
-morphisms $(l_{I})_{I \in {\cal I}}$ be the limit of that functor. We know that for every
-morphism $i \colon I \to J$ in ${\cal I}$, we have $l_J = Fi\circ l_I$.
-
-Let $Z$ be a set with a family of morphisms $f_I \colon Z \to {\cal C}(A,FI)$ determining
-a cone to ${\cal C}(A,F-) \colon {\cal I} \to \mathbf{Sets}$; that is, such that for each $i \colon I \to J$ in ${\cal I}$, we 
-have that $f_J = (Fi \circ -) \circ f_I$; or, in other words, for each $z \in Z$ we have
-$f_J(z) = Fi \circ f_I(z)$. Thus, fixing any $z \in Z$ gives as a family of morphisms
-$f_I(z) \in {\cal C}(A,FI)$ defining a cone. This implies that there exists some
-unique morphism $a(z) \colon A \to L$ such that $l_{I} \circ a(z) = f_I(z)$.
-
-Repeating this for every $z \in Z$ we have obtained a function $a \colon Z \to {\cal C}(A,L)$
-with the property $l_I \circ a = f_I$. This function must be the unique one with this
-property, because for any other $a' \colon Z \to {\cal C}(A,L)$, for each $z \in Z$ 
-we would have $l_I \circ a'(z) = f_I(z)$ and that would imply that $a'(z) = a(z)$.
-#+end_proof
-
-#+begin_proposition
-Right adjoints preserve limits.
-#+end_proposition
-#+begin_proof
-(From cite:awodey10) Let $L \colon \mathbb{C} \to \mathbb{D}$ and $R \colon \mathbb{D} \to \mathbb{C}$ be a pair of adjoints
-$L \dashv R$. Let $X_i$ be objects determining any diagram and $Y$ an arbitrary object.
-We have the following chain of natural transformations between
-hom-sets.
-\[\begin{aligned}
-\hom(Y,R \lim X_i) &\cong \hom(LY,\lim X_i) \\
-&\cong \lim\hom(LY,X_i) \\
-&\cong \lim\hom(Y,RX_i) \\
-&\cong \hom(Y,\lim RX_i)
-\end{aligned}\]
-By Yoneda Lemma, $R\lim X_i \cong \lim RX_i$.
-#+end_proof
-
-*** references                                                                            :ignore:
-bibliographystyle:alpha
-bibliography:Math.bib
 
 ** Pasting pullbacks                                                                         :note:
 :PROPERTIES:
@@ -5440,100 +5520,12 @@ theory. cite:shulman17
 bibliographystyle:alpha
 bibliography:Math.bib
 
-** Coinduction                                                                               :note:
-:PROPERTIES:
-:TITLE: Coinduction
-:EXPORT_FILE_NAME: coinduction.pdf
-:INDEX_DATE: <2018-08-15 Wed 23:08>
-:ID:       174d185e-2269-40f2-935c-e8d45e08bfc8
-:END:
 
-The following article by Jacobs and Rutten is a really nice
-introduction to the notion of coinduction.  It assumes almost no prior
-knowledge of categories and details algebras, initiality, coalgebras,
-finality, induction and bisimulation.
-
- * [[http://www.cs.ru.nl/~bart/PAPERS/JR.pdf][A tutorial on (Co)algebras and (Co)induction - Bart Jacobs, Jan Rutten]]
-
-Conatural numbers can be implemented in Agda using [[https://agda.readthedocs.io/en/v2.5.4.1/language/coinduction.html#coinduction][coinductive records]]
-as in the following example.  If you are interested in understanding
-coinduction, it might be a good idea to experiment in Agda; I learnt a
-lot writing basic coinductive definitions.
-
-#+BEGIN_SRC haskell
-data Maybe (A : Set) : Set where
-  Nothing : Maybe A
-  Just : A -> Maybe A
-
-record coNat : Set where
-  coinductive
-  field
-    pred : Maybe coNat
-open coNat public    
-
-coZero : coNat
-pred coZero = Nothing
-
-coInf : coNat
-pred coInf = Just coInf
-
-succ : coNat -> coNat
-pred (succ n) = Just n
-
-infixl 20 _+_
-_+_ : coNat -> coNat -> coNat
-pred (a + b) with pred a
-pred (a + b) | Nothing = pred b
-pred (a + b) | Just a' = Just (a' + b)
-#+END_SRC
-
-** Cartesian closed categories                                                               :note:
-:PROPERTIES:
-:TITLE: Cartesian closed categories
-:EXPORT_FILE_NAME: cartesianclosedcategories.pdf
-:INDEX_DATE: <2018-07-01 Sun 11:30>
-:ID:       3d52d110-822a-4f85-a1c4-57d868b527d5
-:END:
-
-A *cartesian closed category* $\mathbb{C}$ can be defined as a category having a right adjoint
-of the unique functor to the terminal category $\ast \colon \mathbb{C} \to 1$, a right adjoint of the
-diagonal functor $\Delta \colon \mathbb{C} \to \mathbb{C} \times \mathbb{C}$, and a right adjoint of $- \times A \colon \mathbb{C} \to \mathbb{C}$ for
-each $A \in \mathbb{C}$. These three adjoints correspond to the existence of a /terminal/ object,
-binary /products/ and /exponentials/.
-
-\begin{prooftree}
-\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] \ast \rar{}\& \ast \end{tikzcd}}
-\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&] C \rar{!}\& 1 \end{tikzcd}}
-\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] C,C \rar{f,g}\& A,B \end{tikzcd}}
-\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&] C \rar{\langle f,g \rangle}\& A \times B \end{tikzcd}}
-\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] C \times A \rar{f}\& B \end{tikzcd}}
-\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&] C \rar{\widetilde{f}}\& B^A \end{tikzcd}}
-\noLine
-\TIC{}
-\end{prooftree}
-
-These three rules match the three introduction rules for the simply
-typed lambda calculus. We interpret $C$ as a context $\Gamma$ and each morphism
-$a \colon C \to A$ as a term $\Gamma \vdash a : A$.
-
-\begin{prooftree}
-\AXC{}
-\UIC{$\Gamma \vdash \ast : 1$}
-\AXC{$\Gamma \vdash a : A$}
-\AXC{$\Gamma \vdash b : B$}
-\BIC{$\Gamma \vdash \pair{a,b} : A \times B$}
-\AXC{$\Gamma, a : A \vdash b : B$}
-\UIC{$\Gamma \vdash (\lambda a.b) : A \to B$}
-\noLine
-\TIC{}
-\end{prooftree}
-
-Now, we should discuss if \beta-equivalence corresponds to the equality between morphisms.
 
 * About
 :PROPERTIES:
 :TITLE:  About
-:EXPORT_FILE_NAME: about.html
+:EXPORT_FILE_NAME: index.html
 :END:
 
 Hi! I'm *Mario Román*.  I am studying an MSc on Mathematics and Computer
@@ -5638,5 +5630,6 @@ must have the tag :post: and must have the properties
 # Local Variables:
 # eval: (defun cosmoi/publish () (interactive) (org-map-entries (lambda () (if (org-entry-get (point) "EXPORT_FILE_NAME") (funcall 'org-html-export-to-html nil t))) "-noexport" nil))
 # eval: (setq org-tags-exclude-from-inheritance '("post" "note"))
+# eval: (set-face-attribute 'font-lock-comment-face nil :background nil)
 # eval: (setq org-html-postamble-format '(("en" "<div id=\"footer\"><p class=\"postamble\">Last edited %d. Written by %c</p></div>")))
 # End:

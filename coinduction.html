@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-12-23 Sun 14:54 -->
+<!-- 2019-06-24 Mon 11:48 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Coinduction</title>
@@ -14,11 +14,12 @@
 <link rel="stylesheet" href="syntax.css" />
 <div id="header">
 <div id="logo">
-<a hrwef="index.html">Cosmoi</a>
+<a hrwef="blog.html">Mario Román</a>
 </div>
 <div id="navigation">
-<a href="index.html">Index</a>
 <a href="about.html">About</a>
+<a href="blog.html">Blog</a>
+<a href="math.html">Math</a>
 <a href="feed.xml">RSS</a>
 </div>
 </div>
@@ -91,35 +92,35 @@ lot writing basic coinductive definitions.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-agda">data Maybe (A : Set) : Set where
-  Nothing : Maybe A
-  Just : A → Maybe A
-
-record coNat : Set where
-  coinductive
-  field
-    pred : Maybe coNat
-open coNat public    
-
-coZero : coNat
-pred coZero = Nothing
-
-coInf : coNat
-pred coInf = Just coInf
-
-succ : coNat → coNat
-pred (succ n) = Just n
-
-infixl 20 _+_
-_+_ : coNat → coNat → coNat
-pred (a + b) with pred a
-pred (a + b) | Nothing = pred b
-pred (a + b) | Just a' = Just (a' + b)
+<pre class="src src-haskell">  <span style="color: #4f97d7; font-weight: bold;">data</span> <span style="color: #ce537a; font-weight: bold;">Maybe</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">A</span> <span style="color: #ce537a; font-weight: bold;">:</span> <span style="color: #ce537a; font-weight: bold;">Set</span><span style="color: #4f97d7;">)</span> <span style="color: #ce537a; font-weight: bold;">:</span> <span style="color: #ce537a; font-weight: bold;">Set</span> <span style="color: #4f97d7; font-weight: bold;">where</span>
+    <span style="color: #ce537a; font-weight: bold;">Nothing</span> <span style="color: #ce537a; font-weight: bold;">:</span> <span style="color: #ce537a; font-weight: bold;">Maybe</span> <span style="color: #ce537a; font-weight: bold;">A</span>
+    <span style="color: #ce537a; font-weight: bold;">Just</span> <span style="color: #ce537a; font-weight: bold;">:</span> <span style="color: #ce537a; font-weight: bold;">A</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Maybe</span> <span style="color: #ce537a; font-weight: bold;">A</span>
+  
+  record coNat <span style="color: #ce537a; font-weight: bold;">:</span> <span style="color: #ce537a; font-weight: bold;">Set</span> <span style="color: #4f97d7; font-weight: bold;">where</span>
+    coinductive
+    field
+      pred <span style="color: #ce537a; font-weight: bold;">:</span> <span style="color: #ce537a; font-weight: bold;">Maybe</span> coNat
+  open coNat public    
+  
+  coZero <span style="color: #ce537a; font-weight: bold;">:</span> coNat
+  pred coZero <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Nothing</span>
+  
+  coInf <span style="color: #ce537a; font-weight: bold;">:</span> coNat
+  pred coInf <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Just</span> coInf
+  
+  succ <span style="color: #ce537a; font-weight: bold;">:</span> coNat <span style="color: #7590db;">-&gt;</span> coNat
+  pred <span style="color: #4f97d7;">(</span>succ n<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Just</span> n
+  
+  <span style="color: #4f97d7; font-weight: bold;">infixl</span> 20 <span style="color: #4f97d7; font-weight: bold;">_</span><span style="color: #7590db;">+</span><span style="color: #4f97d7; font-weight: bold;">_</span>
+  <span style="color: #4f97d7; font-weight: bold;">_</span><span style="color: #7590db;">+</span><span style="color: #4f97d7; font-weight: bold;">_</span> <span style="color: #ce537a; font-weight: bold;">:</span> coNat <span style="color: #7590db;">-&gt;</span> coNat <span style="color: #7590db;">-&gt;</span> coNat
+  pred <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">+</span> b<span style="color: #4f97d7;">)</span> with pred a
+  pred <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">+</span> b<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">|</span> <span style="color: #ce537a; font-weight: bold;">Nothing</span> <span style="color: #7590db;">=</span> pred b
+  pred <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">+</span> b<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">|</span> <span style="color: #ce537a; font-weight: bold;">Just</span> a' <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Just</span> <span style="color: #4f97d7;">(</span>a' <span style="color: #7590db;">+</span> b<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 </div>
 <div id="postamble" class="status">
-<div id="footer"><p class="postamble">Last edited 2018-08-15 Wed 23:08. Written by <a href="https://mroman42.github.com">@mroman42</a>.</p></div>
+<div id="footer"><p class="postamble">Last edited . Written by <a href="https://mroman42.github.com">@mroman42</a>.</p></div>
 </div>
 </body>
 </html>
