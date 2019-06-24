@@ -61,6 +61,10 @@ td.sourceCode {
     font-size: 10pt;
     font-family: Iosevka;
 }
+.src {
+    font-family: Iosevka;
+}
+
 .example {
     font-size: 10pt;
     font-family: Iosevka, sans-serif;
