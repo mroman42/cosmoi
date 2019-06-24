@@ -59,9 +59,11 @@ td.sourceCode {
 }
 .org-src-container  {
     font-size: 10pt;
+    font-family: Iosevka;
 }
 .example {
-  font-size: 10pt;
+    font-size: 10pt;
+    font-family: Iosevka, sans-serif;
 }
 .org-svg {
     transform: scale(0.95);
