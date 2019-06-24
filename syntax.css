@@ -59,15 +59,15 @@ td.sourceCode {
 }
 .org-src-container  {
     font-size: 10pt;
-    font-family: Iosevka;
+    font-family: Iosevka, Fira Mono, Ubuntu Mono, monospace;
 }
 .src {
-    font-family: Iosevka;
+    font-family: Iosevka, Fira Mono, Ubuntu Mono, monospace;
 }
 
 .example {
     font-size: 10pt;
-    font-family: Iosevka, sans-serif;
+    font-family: Iosevka, Fira Mono, Ubuntu Mono, monospace, sans-serif;
 }
 .org-svg {
     transform: scale(0.95);
