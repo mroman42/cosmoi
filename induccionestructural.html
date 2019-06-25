@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-02-28 Thu 10:27 -->
+<!-- 2019-06-25 Tue 14:35 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Inducción estructural</title>
@@ -14,11 +14,12 @@
 <link rel="stylesheet" href="syntax.css" />
 <div id="header">
 <div id="logo">
-<a hrwef="index.html">Cosmoi</a>
+<a hrwef="blog.html">Mario Román</a>
 </div>
 <div id="navigation">
-<a href="index.html">Index</a>
 <a href="about.html">About</a>
+<a href="blog.html">Blog</a>
+<a href="math.html">Math</a>
 <a href="feed.xml">RSS</a>
 </div>
 </div>
@@ -84,9 +85,9 @@ estructura de los tipos de datos para simplificar todas esas
 demostraciones.
 </p>
 
-<div id="outline-container-org9df747c" class="outline-2">
-<h2 id="org9df747c">Conjuntos bien fundados</h2>
-<div class="outline-text-2" id="text-org9df747c">
+<div id="outline-container-org0426c87" class="outline-2">
+<h2 id="org0426c87">Conjuntos bien fundados</h2>
+<div class="outline-text-2" id="text-org0426c87">
 <p>
 Vamos a definir las relaciones bien fundadas, que nos permitirán definir
 una inducción generalizada. [1]
@@ -106,28 +107,24 @@ bien fundada.
 
 <ul class="org-ul">
 <li><p>
-<b>Inducción noetheriana:</b> sea <object type="image/svg+xml" data="ltximg/cosmoi_54f77d17ee387dd933d2c18fba2af7ec4cea1a4c.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object> un conjunto bien fundado con
-<object type="image/svg+xml" data="ltximg/cosmoi_00cb6f2a119cd03299147c0f33e84da660255e7e.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object>. Si se cumple:
+<b>Inducción noetheriana:</b> sea X un conjunto bien fundado con
+A ⊂ X. Si se cumple:
 </p>
 
 <p>
-<object type="image/svg+xml" data="ltximg/cosmoi_9ea9e0ea967ea6636c3ac1c5545ffb3acb1f3f31.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object>
+(y &lt; x =&gt; y ∈ A) =&gt; x ∈ A
 </p>
 
 <p>
-Entonces <object type="image/svg+xml" data="ltximg/cosmoi_42f5427f57f97f78d651628ca7e58a87458020b2.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object>.
+Entonces A = X.
 </p></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orga578ce3" class="outline-2">
-<h2 id="orga578ce3">Inducción sobre tipos</h2>
-<div class="outline-text-2" id="text-orga578ce3">
+<div id="outline-container-org848fd44" class="outline-2">
+<h2 id="org848fd44">Inducción sobre tipos</h2>
+<div class="outline-text-2" id="text-org848fd44">
 <p>
 Ahora vamos a aplicar esto a teoría de tipos. Sea un tipo con sus
 constructores. Para todas las instancias constructibles del tipo (es decir,
@@ -138,20 +135,14 @@ definimos un orden parcial:
 
 <ul class="org-ul">
 <li><p>
-<b>Orden constructivo:</b> para dos instancias del tipo: <object type="image/svg+xml" data="ltximg/cosmoi_25f5762e9ffe87f892eca9843a00fa99cd3d53eb.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object>,
-<object type="image/svg+xml" data="ltximg/cosmoi_a7621676e72c38cf6f192ebe3bad5b0e1d96a622.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object> se construye con <object type="image/svg+xml" data="ltximg/cosmoi_c7dd3247d271d1926bd005413a5619cbf7c58e97.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object> si el constructor de <object type="image/svg+xml" data="ltximg/cosmoi_a7621676e72c38cf6f192ebe3bad5b0e1d96a622.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object> toma a <object type="image/svg+xml" data="ltximg/cosmoi_c7dd3247d271d1926bd005413a5619cbf7c58e97.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object>
+<b>Orden constructivo:</b> para dos instancias del tipo: a, b : A,
+b <i>se construye con</i> a si el constructor de b toma a
 como argumento. La clausura transitiva de esta relación forma un
 orden parcial:
 </p>
 
 <p>
-<object type="image/svg+xml" data="ltximg/cosmoi_004db442d0b9ce6057ae694ae0fa34837174f007.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object>
+a ≤ b  =&gt;  a  se usa en la construcción de  b 
 </p></li>
 </ul>
 
@@ -162,32 +153,26 @@ describimos ahora.
 
 <ul class="org-ul">
 <li><p>
-<b>Inducción sobre tipos</b>: sea un tipo <object type="image/svg+xml" data="ltximg/cosmoi_8c5c7b238da7a1cfc3df49d7bd6409b6bd865040.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object> con constructores y sea
-<object type="image/svg+xml" data="ltximg/cosmoi_6024742583a36de6637f3db98e609cdceaa17a10.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object> una propiedad. Siendo
-<object type="image/svg+xml" data="ltximg/cosmoi_53f40a0b9e9e5f3f799cd1a5abff333442528d0a.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object> argumentos del constructor, si se cumple
-la condición de inducción para cada constructor <object type="image/svg+xml" data="ltximg/cosmoi_0c82c28033d7581d7f2aad4efb05c51eadc47504.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object>:
+<b>Inducción sobre tipos</b>: sea un tipo A con constructores y sea
+P : A -&gt; Bool una propiedad. Siendo
+a₁, a₂ &#x2026; aᵢ : A argumentos del constructor, si se cumple
+la condición de inducción para cada constructor Cᵢ:
 </p>
 
 <p>
-<object type="image/svg+xml" data="ltximg/cosmoi_c3049038f89d3669d89807812586db0002620914.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object>
+P(a₁) ∧ P(a₂) ∧ &#x2026; ∧ P(aᵢ)  =&gt;  P(Cᵢ(a₁,a₂,&#x2026;,b₀,b₁,&#x2026;))
 </p></li>
 </ul>
 
 <p>
-Entonces <object type="image/svg+xml" data="ltximg/cosmoi_2ef8000dbd7ecaa89addcc1b9b1bed55f777abb4.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object>.
+Entonces a : A =&gt; P(a).
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgde5f862" class="outline-2">
-<h2 id="orgde5f862">Ejemplo 1: Naturales</h2>
-<div class="outline-text-2" id="text-orgde5f862">
+<div id="outline-container-orgc4c0bbc" class="outline-2">
+<h2 id="orgc4c0bbc">Ejemplo 1: Naturales</h2>
+<div class="outline-text-2" id="text-orgc4c0bbc">
 <p>
 Nuestro primer ejemplo va a ser obtener la inducción sobre los naturales
 como caso particular. Damos una definición de los naturales en lenguaje
@@ -196,8 +181,8 @@ natural:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">data</span> <span style="color: #ce537a; font-weight: bold;">Nat</span> <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">O</span>
-         <span style="color: #7590db;">|</span> <span style="color: #ce537a; font-weight: bold;">S</span> <span style="color: #ce537a; font-weight: bold;">Nat</span>
+<pre class="src src-haskell">    <span style="color: #4f97d7; font-weight: bold;">data</span> <span style="color: #ce537a; font-weight: bold;">Nat</span> <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">O</span>
+             <span style="color: #7590db;">|</span> <span style="color: #ce537a; font-weight: bold;">S</span> <span style="color: #ce537a; font-weight: bold;">Nat</span>
 </pre>
 </div>
 
@@ -206,9 +191,9 @@ Que equivale a la definición en Coq:
 </p>
 
 <pre class="example">
-Inductive nat : Type :=
-  | O : nat
-  | S : nat -&gt; nat
+    Inductive nat : Type :=
+      | O : nat
+      | S : nat -&gt; nat
 </pre>
 
 <p>
@@ -218,9 +203,9 @@ lo hemos demostrado para todos los naturales.
 </div>
 </div>
 
-<div id="outline-container-orga2fb93c" class="outline-2">
-<h2 id="orga2fb93c">Ejemplo 2: Árboles binarios</h2>
-<div class="outline-text-2" id="text-orga2fb93c">
+<div id="outline-container-orgc276d4f" class="outline-2">
+<h2 id="orgc276d4f">Ejemplo 2: Árboles binarios</h2>
+<div class="outline-text-2" id="text-orgc276d4f">
 <p>
 Ahora vamos a intentar el ejemplo que motivó esta búsqueda. Definimos un
 árbol binario como un árbol vacío o como un nodo del que surgen dos
@@ -228,8 +213,8 @@ Ahora vamos a intentar el ejemplo que motivó esta búsqueda. Definimos un
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">data</span> <span style="color: #ce537a; font-weight: bold;">Tree</span> a <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Empty</span>
-            <span style="color: #7590db;">|</span> <span style="color: #ce537a; font-weight: bold;">Node</span> a <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Tree</span> a<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Tree</span> a<span style="color: #4f97d7;">)</span>
+<pre class="src src-haskell">    <span style="color: #4f97d7; font-weight: bold;">data</span> <span style="color: #ce537a; font-weight: bold;">Tree</span> a <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Empty</span>
+                <span style="color: #7590db;">|</span> <span style="color: #ce537a; font-weight: bold;">Node</span> a <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Tree</span> a<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Tree</span> a<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -238,9 +223,9 @@ Que equivale a la definición en Coq:
 </p>
 
 <pre class="example">
-Inductive tree (X:Type) : Type :=
-  | nilt : tree X
-  | node : X -&gt; tree X -&gt; tree X -&gt; tree X.
+    Inductive tree (X:Type) : Type :=
+      | nilt : tree X
+      | node : X -&gt; tree X -&gt; tree X -&gt; tree X.
 </pre>
 
 <p>
@@ -262,7 +247,7 @@ demostraciones Coq.
 </div>
 </div>
 <div id="postamble" class="status">
-<div id="footer"><p class="postamble">Last edited 2015-03-14 Sat 15:02. Written by <a href="https://mroman42.github.com">@mroman42</a>.</p></div>
+<div id="footer"><p class="postamble">Last edited . Written by <a href="https://mroman42.github.com">@mroman42</a>.</p></div>
 </div>
 </body>
 </html>
