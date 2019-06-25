@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-02-28 Thu 10:27 -->
+<!-- 2019-06-25 Tue 11:41 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Evaluación en cálculo lambda</title>
@@ -14,11 +14,12 @@
 <link rel="stylesheet" href="syntax.css" />
 <div id="header">
 <div id="logo">
-<a hrwef="index.html">Cosmoi</a>
+<a hrwef="blog.html">Mario Román</a>
 </div>
 <div id="navigation">
-<a href="index.html">Index</a>
 <a href="about.html">About</a>
+<a href="blog.html">Blog</a>
+<a href="math.html">Math</a>
 <a href="feed.xml">RSS</a>
 </div>
 </div>
@@ -81,9 +82,9 @@ teórica para implementar <a href="mikrokosmos.html">Mikrokosmos</a> Detallo est
 enunciados recopilando sus demostraciones en <a href="https://github.com/M42/lambda.notes">M42/lambda.notes</a>.
 </p>
 
-<div id="outline-container-orgd4e6545" class="outline-2">
-<h2 id="orgd4e6545">Forma normal</h2>
-<div class="outline-text-2" id="text-orgd4e6545">
+<div id="outline-container-org3bd6fa5" class="outline-2">
+<h2 id="org3bd6fa5">Forma normal</h2>
+<div class="outline-text-2" id="text-org3bd6fa5">
 <p>
 Una expresión está en <i>forma normal</i> si no se le pueden aplicar más
 &beta;-reducciones. La forma normal es <i>única</i> como consecuencia del
@@ -97,22 +98,13 @@ a su vez reducirse a un término común. Es decir,
 </p>
 
 <ul class="org-ul">
-<li>si <object type="image/svg+xml" data="ltximg/cosmoi_8c5c7b238da7a1cfc3df49d7bd6409b6bd865040.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object> puede reducirse mediante &beta;-reducciones a otro término
-<object type="image/svg+xml" data="ltximg/cosmoi_ed462e54296ae5e9331ddf43b08272888a4b8276.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object>, lo que se nota por <object type="image/svg+xml" data="ltximg/cosmoi_5ada681bb09e71c70e78ae79d2e0992078ed5684.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object>,</li>
-<li>y <object type="image/svg+xml" data="ltximg/cosmoi_8c5c7b238da7a1cfc3df49d7bd6409b6bd865040.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object> puede reducirse también mediante otras &beta;-reducciones,
-posiblemente distintas o en distinto orden, a <object type="image/svg+xml" data="ltximg/cosmoi_38b42081de6fa2aab75a1a3260a8f37ba019acec.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object>, <object type="image/svg+xml" data="ltximg/cosmoi_29c63fd2682bf879ef78631ea484c81836c9fa06.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object>,</li>
-<li>entonces existe un término <object type="image/svg+xml" data="ltximg/cosmoi_8e6634756b7f26f1f7db0c9edc6ca3bfdbf74a68.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object> tal que ambos se pueden reducir
-mediante &beta;-reducciones a él; es decir, tal que <object type="image/svg+xml" data="ltximg/cosmoi_7c8758499504215a8234d4f78f2bed49bc2de2f2.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object>
-y <object type="image/svg+xml" data="ltximg/cosmoi_63c3a4775a93addd31eddf1edbf399fa4248fa7b.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object>.</li>
+<li>si A puede reducirse mediante β-reducciones a otro término
+B, lo que se nota por  A -{β}-&gt; B,</li>
+<li>y A puede reducirse también mediante otras β-reducciones,
+posiblemente distintas o en distinto orden, a C, como A -{β}-&gt; C,</li>
+<li>entonces existe un término D tal que ambos se pueden reducir
+mediante β-reducciones a él; es decir, tal que B -{β}-&gt; D
+y C -{β}-&gt; D.</li>
 </ul>
 
 <p>
@@ -124,35 +116,29 @@ implicar que son iguales.
 </div>
 </div>
 
-<div id="outline-container-orgabbfa01" class="outline-2">
-<h2 id="orgabbfa01">Divergencia</h2>
-<div class="outline-text-2" id="text-orgabbfa01">
+<div id="outline-container-org416e609" class="outline-2">
+<h2 id="org416e609">Divergencia</h2>
+<div class="outline-text-2" id="text-org416e609">
 <p>
 Hemos visto que la forma normal es única, pero no que exista o que
 sepamos encontrarla de alguna forma. Puede ocurrir que un término no
 esté en forma normal y sin embargo las reducciones no lo lleven a
-ella. Por ejemplo, el término <object type="image/svg+xml" data="ltximg/cosmoi_6283b3afc3d9248951888b99b8484c3c6b932fbc.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object>
-es invariante a &beta;-reducciones y <b>no llega a forma normal</b>. O por 
-ejemplo, el término <object type="image/svg+xml" data="ltximg/cosmoi_5fcc402515e42a9aa557f996d7b0708b6cf49869.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object> se hace cada vez más grande
+ella.  Por ejemplo, el término Ω = (λ x.x x)(λ x.x x)
+es invariante a β-reducciones y <b>no llega a forma normal</b>. O por 
+ejemplo, el término (λ x.x x x)(λ x.x x x) se hace cada vez más grande
 al aplicarle reducciones, decimos que <i>diverge</i>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgb730ffe" class="outline-2">
-<h2 id="orgb730ffe">Evaluación a izquierda</h2>
-<div class="outline-text-2" id="text-orgb730ffe">
+<div id="outline-container-org2c25fc9" class="outline-2">
+<h2 id="org2c25fc9">Evaluación a izquierda</h2>
+<div class="outline-text-2" id="text-org2c25fc9">
 <p>
 Hay expresiones que llegarán a una forma normal o no dependiendo de
-cómo los evaluemos. Por ejemplo, el término <object type="image/svg+xml" data="ltximg/cosmoi_eb42f20766d969772be7545a3a1a7510c81e6bb9.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object> llega a
-la forma normal <object type="image/svg+xml" data="ltximg/cosmoi_eda8581071d7d9ce09d53d0dc6db278c32c181cb.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object> si evaluamos primero la aplicación de <object type="image/svg+xml" data="ltximg/cosmoi_52b8586dcd8c314557dccbd95ff9d871892cd17b.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object>,
-pero diverge si empezamos intentando evaluar <object type="image/svg+xml" data="ltximg/cosmoi_2b69dfe32e243f2f55f0794fd887cffc82fc33dd.svg" class="org-svg">
-Sorry, your browser does not support SVG.</object>. 
+cómo los evaluemos. Por ejemplo, el término <code>(const id Ω)</code> llega a
+la forma normal <code>id</code> si evaluamos primero la aplicación de <code>const</code>,
+pero diverge si empezamos intentando evaluar Ω. 
 Sin embargo, existe una estrategia de reducción que siempre encuentra
 una forma normal si esta existe. Tenemos el siguiente teorema.
 </p>
@@ -175,12 +161,13 @@ posible la encuentra.</li>
 
 <p>
 Estas dos formas de evaluación se suelen llamar <i>call-by-value</i> y
-<i>call-by-name</i>.</p>
+<i>call-by-name</i>.
+</p>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<div id="footer"><p class="postamble">Last edited 2018-05-25 Fri 18:02. Written by <a href="https://mroman42.github.com">@mroman42</a>.</p></div>
+<div id="footer"><p class="postamble">Last edited . Written by <a href="https://mroman42.github.com">@mroman42</a>.</p></div>
 </div>
 </body>
 </html>

@@ -449,6 +449,7 @@
 #+RESULTS:
 #+BEGIN_EXPORT html
 <ul>
+ <li><a href=discokittyimplementation.html> Discokitty, an implementation</a><em>, 24 July 2019</em><br></li>
  <li><a href=glass.html> The glass optic</a><em>, 27 May 2019</em><br></li>
  <li><a href=dedekindrealsagda.html> Dedekind reals in Agda</a><em>, 20 April 2019</em><br></li>
  <li><a href=lawverefixedpoint.html> Lawvere's fixed point theorem</a><em>, 28 February 2019</em><br></li>
@@ -1481,11 +1482,24 @@ Double dual of a vector space.
 ** TODO Recursion schemes
 ** TODO A quote by Conor McBride
 #+begin_quote
-"The task of the academic is not to scale great intellectual
-mountains, but to flatten them." -- Conor McBride
+  "The task of the academic is not to scale great intellectual
+  mountains, but to flatten them." -- Conor McBride
 #+end_quote
 
+** Discokitty, an implementation                                                             :post:
+:PROPERTIES:
+:TITLE: Discokitty, an implementation
+:EXPORT_FILE_NAME: discokittyimplementation.html
+:EXPORT_DATE: 24th June, 2019
+:INDEX_DATE: <2019-07-24 Mon>
+:END:
 
+As a part of the course on Distributional Models of Meaning by [[https://www.cs.ox.ac.uk/people/bob.coecke/][Coecke]]
+and [[https://www.cs.ox.ac.uk/people/dan.marsden/][Marsden]], I wrote an educational implementation of the DisCoCat
+framework (as described in 
+/"[[https://arxiv.org/abs/1003.4394][Mathematical Foundations for a Compositional Distributional Model of Meaning]]"/).
+
+*Discokitty* is written on Haskell and the code can be found [[https://github.com/mroman42/discokitty][on GitHub]].
 
 ** The "Glass" optic                                                                         :post:
 :PROPERTIES:
@@ -1497,7 +1511,7 @@ mountains, but to flatten them." -- Conor McBride
 
 At the intersection between a *lens* and a *grate* there should be an
 optic that I have started to call *glass*.  If the pseudomonoid action
-that describes a lens is  (c × _)  and the one for glass is  (c → _),
+that describes a lens is  (c × _)  and the one for glass is  (c -> _),
 the action that we want to get should be the one given by the
 coproduct pseudomonoid.
 
@@ -1524,7 +1538,6 @@ And we derive the concrete representation.
 My intuition at the
 moment is "If from a getter you can create a b, then you can update s
 to t", which apparently also rhymes.
-
 
 ** Dedekind reals in Agda                                                                    :post:
 :PROPERTIES:
@@ -1903,13 +1916,13 @@ teorema de Church-Rosser.
 cadenas de reducciones distintas, los términos que se obtienen pueden
 a su vez reducirse a un término común. Es decir,
 
- * si $A$ puede reducirse mediante \beta-reducciones a otro término
-   $B$, lo que se nota por $A \twoheadrightarrow_{\beta} B$,
- * y $A$ puede reducirse también mediante otras \beta-reducciones,
-   posiblemente distintas o en distinto orden, a $C$, $A \twoheadrightarrow_{\beta} C$,
- * entonces existe un término $D$ tal que ambos se pueden reducir
-   mediante \beta-reducciones a él; es decir, tal que $B \twoheadrightarrow_{\beta} D$
-   y $C \twoheadrightarrow_{\beta} D$.
+ * si A puede reducirse mediante β-reducciones a otro término
+   B, lo que se nota por  A -{β}-> B,
+ * y A puede reducirse también mediante otras β-reducciones,
+   posiblemente distintas o en distinto orden, a C, como A -{β}-> C,
+ * entonces existe un término D tal que ambos se pueden reducir
+   mediante β-reducciones a él; es decir, tal que B -{β}-> D
+   y C -{β}-> D.
 
 En particular, esto implica que si un término tuviera dos formas
 normales, debería existir otro término al cual se pudieran reducir
@@ -1920,16 +1933,16 @@ implicar que son iguales.
 Hemos visto que la forma normal es única, pero no que exista o que
 sepamos encontrarla de alguna forma. Puede ocurrir que un término no
 esté en forma normal y sin embargo las reducciones no lo lleven a
-ella. Por ejemplo, el término $\Omega = (\lambda x.x\ x)(\lambda x.x\ x)$
-es invariante a \beta-reducciones y *no llega a forma normal*. O por 
-ejemplo, el término $(\lambda x.x\ x\ x)(\lambda x.x\ x\ x)$ se hace cada vez más grande
+ella.  Por ejemplo, el término Ω = (λ x.x x)(λ x.x x)
+es invariante a β-reducciones y *no llega a forma normal*. O por 
+ejemplo, el término (λ x.x x x)(λ x.x x x) se hace cada vez más grande
 al aplicarle reducciones, decimos que /diverge/.
 
 *** Evaluación a izquierda
 Hay expresiones que llegarán a una forma normal o no dependiendo de
-cómo los evaluemos. Por ejemplo, el término $(\mathtt{const}\ \mathtt{id}\ \Omega)$ llega a
-la forma normal $\mathtt{id}$ si evaluamos primero la aplicación de $\mathtt{const}$,
-pero diverge si empezamos intentando evaluar $\Omega$. 
+cómo los evaluemos. Por ejemplo, el término =(const id Ω)= llega a
+la forma normal =id= si evaluamos primero la aplicación de =const=,
+pero diverge si empezamos intentando evaluar Ω. 
 Sin embargo, existe una estrategia de reducción que siempre encuentra
 una forma normal si esta existe. Tenemos el siguiente teorema.
 
@@ -1945,6 +1958,7 @@ encuentra la forma de *no* llegar a la forma normal si esta existiera.
 
 Estas dos formas de evaluación se suelen llamar /call-by-value/ y
 /call-by-name/.
+
 ** Mikrokosmos                                                                               :post:
 :PROPERTIES:
 :TITLE: Mikrokosmos
