@@ -857,10 +857,62 @@ A B                                        Cin
 │
 Cout
 #+END_SRC
-
-** TODO Adjunciones                                                                          :post:
+** Discokitty, an implementation                                                             :post:
 :PROPERTIES:
-:TITLE: Adjunciones
+:TITLE: Discokitty, an implementation
+:EXPORT_FILE_NAME: discokittyimplementation.html
+:EXPORT_DATE: 24th June, 2019
+:INDEX_DATE: <2019-07-24 Mon>
+:END:
+
+As a part of the course on Distributional Models of Meaning by [[https://www.cs.ox.ac.uk/people/bob.coecke/][Coecke]]
+and [[https://www.cs.ox.ac.uk/people/dan.marsden/][Marsden]], I wrote an educational implementation of the DisCoCat
+framework (as described in 
+/"[[https://arxiv.org/abs/1003.4394][Mathematical Foundations for a Compositional Distributional Model of Meaning]]"/).
+
+*Discokitty* is written on Haskell and the code can be found [[https://github.com/mroman42/discokitty][on GitHub]].
+
+** The "Glass" optic                                                                         :post:
+:PROPERTIES:
+:TITLE: The glass optic
+:EXPORT_FILE_NAME: glass.html
+:EXPORT_DATE: 27th May, 2019
+:INDEX_DATE: <2019-05-27 Mon>
+:END:
+
+At the intersection between a *lens* and a *grate* there should be an
+optic that I have started to call *glass*.  If the pseudomonoid action
+that describes a lens is  (c × _)  and the one for glass is  (c -> _),
+the action that we want to get should be the one given by the
+coproduct pseudomonoid.
+
+We rewrite the action of every word =c₁d₁ ... cₖdₖ= on some object
+=a= as follows, for some  e,f ∈ *C*, a bicartesian closed category.
+
+#+BEGIN_SRC haskell
+  d₁ × (c₁ -> d₂ × (c₂ -> ... x))  ≅
+  d₁ × (c₁ -> d₂) × (c₁ × c₂ -> ... x)  ≅
+  e × (f -> x)
+#+END_SRC
+
+And we derive the concrete representation.
+
+#+BEGIN_SRC haskell
+  ∃ c,d .  (s -> (c × (d -> a))) × (c × (d -> b) -> t)  ≅
+  ∃ c,d .  (s -> c) × (s -> (d -> a)) × (c × (d -> b) -> t)  ≅
+  ∃ d   .  (s -> (d -> a)) × (s × (d -> b) -> t)  ≅
+  ∃ d   .  (d -> (s -> a)) × (s × (d -> b) -> t)  ≅
+  (s × ((s -> a) -> b) -> t)  ≅
+  ((s -> a) -> b) -> s -> t
+#+END_SRC
+
+My intuition at the
+moment is "If from a getter you can create a b, then you can update s
+to t", which apparently also rhymes.
+
+** Adjunciones (WIP)                                                                         :post:
+:PROPERTIES:
+:TITLE: Adjunciones (WIP)
 :EXPORT_FILE_NAME: sobreadjunciones.html
 :EXPORT_DATE: 21 de abril de 2019
 :INDEX_DATE: <2019-04-21 Sun>
@@ -1470,58 +1522,6 @@ usar cite:maclane78.
 *** references                                                                   :ignore:noexport:
 bibliographystyle:alpha
 bibliography:Math.bib
-** Discokitty, an implementation                                                             :post:
-:PROPERTIES:
-:TITLE: Discokitty, an implementation
-:EXPORT_FILE_NAME: discokittyimplementation.html
-:EXPORT_DATE: 24th June, 2019
-:INDEX_DATE: <2019-07-24 Mon>
-:END:
-
-As a part of the course on Distributional Models of Meaning by [[https://www.cs.ox.ac.uk/people/bob.coecke/][Coecke]]
-and [[https://www.cs.ox.ac.uk/people/dan.marsden/][Marsden]], I wrote an educational implementation of the DisCoCat
-framework (as described in 
-/"[[https://arxiv.org/abs/1003.4394][Mathematical Foundations for a Compositional Distributional Model of Meaning]]"/).
-
-*Discokitty* is written on Haskell and the code can be found [[https://github.com/mroman42/discokitty][on GitHub]].
-
-** The "Glass" optic                                                                         :post:
-:PROPERTIES:
-:TITLE: The glass optic
-:EXPORT_FILE_NAME: glass.html
-:EXPORT_DATE: 27th May, 2019
-:INDEX_DATE: <2019-05-27 Mon>
-:END:
-
-At the intersection between a *lens* and a *grate* there should be an
-optic that I have started to call *glass*.  If the pseudomonoid action
-that describes a lens is  (c × _)  and the one for glass is  (c -> _),
-the action that we want to get should be the one given by the
-coproduct pseudomonoid.
-
-We rewrite the action of every word =c₁d₁ ... cₖdₖ= on some object
-=a= as follows, for some  e,f ∈ *C*, a bicartesian closed category.
-
-#+BEGIN_SRC haskell
-  d₁ × (c₁ -> d₂ × (c₂ -> ... x))  ≅
-  d₁ × (c₁ -> d₂) × (c₁ × c₂ -> ... x)  ≅
-  e × (f -> x)
-#+END_SRC
-
-And we derive the concrete representation.
-
-#+BEGIN_SRC haskell
-  ∃ c,d .  (s -> (c × (d -> a))) × (c × (d -> b) -> t)  ≅
-  ∃ c,d .  (s -> c) × (s -> (d -> a)) × (c × (d -> b) -> t)  ≅
-  ∃ d   .  (s -> (d -> a)) × (s × (d -> b) -> t)  ≅
-  ∃ d   .  (d -> (s -> a)) × (s × (d -> b) -> t)  ≅
-  (s × ((s -> a) -> b) -> t)  ≅
-  ((s -> a) -> b) -> s -> t
-#+END_SRC
-
-My intuition at the
-moment is "If from a getter you can create a b, then you can update s
-to t", which apparently also rhymes.
 
 ** Dedekind reals in Agda                                                                    :post:
 :PROPERTIES:
