@@ -454,6 +454,7 @@
  <li><a href=glass.html> The glass optic</a><em>, 27 May 2019</em><br></li>
  <li><a href=dedekindrealsagda.html> Dedekind reals in Agda</a><em>, 20 April 2019</em><br></li>
  <li><a href=lawverefixedpoint.html> Lawvere's fixed point theorem</a><em>, 28 February 2019</em><br></li>
+ <li><a href=granasatclient.html> The GranaSAT client</a><em>, 03 July 2019</em><br></li>
  <li><a href=apuntesdehaskell.html> Apuntes de Haskell</a><em>, 27 February 2019</em><br></li>
  <li><a href=homcontinuous.html> Right adjoints are continuous</a><em>, 23 December 2018</em><br></li>
  <li><a href=dotfilesinasingleorg.html> dotfiles in a single org-file</a><em>, 21 January 2019</em><br></li>
@@ -1559,6 +1560,24 @@ B has a fixed point, that is, some b : B such that f b = b.
 
 *Proof.* As d is point-surjective, there exists x : A such that dx =
 λa.f(daa), but then, dxx = (λa.f(daa)) x = f(dxx) is a fixed point.
+
+** The GranaSAT client                                                                       :post:
+:PROPERTIES:
+:TITLE: The GranaSAT client
+:EXPORT_FILE_NAME: granasatclient.html
+:INDEX_DATE: <2019-07-03 Wed>
+:END:
+
+Some time ago I wrote a GTK+ app in C for the [[https://github.com/mroman42/granasatClient][GranaSAT project]]. I did
+not know anything about GUI design but I was eager to learn.  The only
+requirement was that it had to be written in C (or Java) and using
+Eclipse (that should set your alarm bells ringing); but the rest of
+the specifications were changing every day, making this a very
+challenging /software engineering/ project. The code is licensed under
+GPLv3 and you can browse it in [[https://github.com/mroman42/granasatClient][its repository]], the correspoding server
+was written by [[https://github.com/agarciamontoro/granasatServer][@agarciamontoro]].
+
+/Bonus track:/ the team ended up capturing an [[https://www.youtube.com/watch?v=YUlWg6wuCxo][aurora borealis]]!
 
 ** Apuntes de Haskell                                                                        :post:
 :PROPERTIES:
@@ -6211,8 +6230,9 @@ bibliography:Math.bib
 
 Hi! I'm *Mario Román*.  I am studying an MSc on Mathematics and Computer
 Science at the University of Oxford; my main interests being
-[[https://en.wikipedia.org/wiki/Category_theory][categories]], [[https://en.wikipedia.org/wiki/Type_theory][types]], [[https://en.wikipedia.org/wiki/Functional_programming][functional programming]] and logic.  I completed my
-(double) bachelor's degree at the [[https://www.ugr.es/en/][University of Granada]] (Spain).  I am a
+[[https://en.wikipedia.org/wiki/Category_theory][categories]], [[https://en.wikipedia.org/wiki/Type_theory][types]], [[https://en.wikipedia.org/wiki/Functional_programming][functional programming]] and logic.  I completed
+two bachelor's degrees in Mathematics and Computer Engineering at
+the [[https://www.ugr.es/en/][University of Granada]] (Spain).  I am a
 founder and ex-organizer of the [[https://libreim.github.io/][LibreIM]] community, for which I still
 write articles and organize seminars.
 
