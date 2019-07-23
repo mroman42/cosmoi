@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-07-23 Tue 12:33 -->
+<!-- 2019-07-23 Tue 12:48 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Caleidoscopes, monoidal lenses, comonoidal prisms</title>
@@ -92,7 +92,7 @@ the complements are comonad coalgebras, we get <b>monadic lenses</b> and
 
 <div class="org-src-container">
 <pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">type</span> <span style="color: #ce537a; font-weight: bold;">MonLens</span> m s t a b <span style="color: #7590db;">=</span> <span style="color: #4f97d7;">(</span>s <span style="color: #7590db;">-&gt;</span> a , m s <span style="color: #7590db;">-&gt;</span> b <span style="color: #7590db;">-&gt;</span> t<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7; font-weight: bold;">type</span> <span style="color: #ce537a; font-weight: bold;">ComonPrism</span> n s t a b <span style="color: #7590db;">=</span> <span style="color: #4f97d7;">(</span>s <span style="color: #7590db;">-&gt;</span> a , m s <span style="color: #7590db;">-&gt;</span> b <span style="color: #7590db;">-&gt;</span> t<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7; font-weight: bold;">type</span> <span style="color: #ce537a; font-weight: bold;">ComonPrism</span> n s t a b <span style="color: #7590db;">=</span> <span style="color: #4f97d7;">(</span>s <span style="color: #7590db;">-&gt;</span> n t <span style="color: #7590db;">+</span> a , b <span style="color: #7590db;">-&gt;</span> t<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
