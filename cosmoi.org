@@ -887,6 +887,9 @@ access data structures.  I have written a note with a proof of
 Boisseau and Gibbons' profunctor representation theorem that follows
 the structure of Tannakian reconstruction.
 
+*Bartosz Milewski* suggested me to look into Tannakian reconstruction
+and try to apply it to optics.
+
  * [[./tannaka.pdf][Tannakian reconstruction of Tambara modules (pdf)]].
 
 ** Kaleidoscopes, monoidal lenses, comonoidal prisms                                         :post:
