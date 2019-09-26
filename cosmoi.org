@@ -449,7 +449,8 @@
 #+RESULTS:
 #+BEGIN_EXPORT html
 <ul>
- <li><a href=caleidoscopesmonadiclens.html> Caleidoscopes, monadic lenses, comonadic prisms</a><em>, 23 July 2019</em><br></li>
+ <li><a href=tannakiantambara.html> Tannakian reconstruction of Tambara modules</a><em>, 26 September 2019</em><br></li>
+ <li><a href=kaleidoscopesmonadiclens.html> Kaleidoscopes, monadic lenses, comonadic prisms</a><em>, 23 July 2019</em><br></li>
  <li><a href=profunctoropticscategoricalupdate.html> Profunctor optics: a categorical update</a><em>, 05 July 2019</em><br></li>
  <li><a href=discokittyimplementation.html> Discokitty, an implementation</a><em>, 24 July 2019</em><br></li>
  <li><a href=glass.html> The glass optic</a><em>, 27 May 2019</em><br></li>
@@ -860,20 +861,48 @@ A B                                        Cin
 Cout
 #+END_SRC
 
-** Caleidoscopes, monoidal lenses, comonoidal prisms                                         :post:
+** TODO Kaleidoscopes, or how to invent an optic
+
+*** TODO Definition of optic, profunctor representation
+# Following Boisseau.
+
+*** TODO Kaleidoscope
+# Applicative functors.
+
+*** TODO Composing with a classifying lens
+*** TODO Use case: the iris dataset
+
+** Tannakian reconstruction of Tambara modules                                               :post:
 :PROPERTIES:
-:TITLE: Caleidoscopes, monadic lenses, comonadic prisms
-:EXPORT_FILE_NAME: caleidoscopesmonadiclens.html
+:TITLE: Tannakian reconstruction of Tambara modules
+:EXPORT_FILE_NAME: tannakiantambara.html
+:EXPORT_DATE: 26th September, 2019
+:INDEX_DATE: <2019-09-26 Thu>
+:END:
+
+The profunctor representation of optics can be seen as a case of
+Tannakian reconstruction for Tambara modules.  That is, functional
+programmers have been for years using Tannakian reconstruction to
+access data structures.  I have written a note with a proof of
+Boisseau and Gibbons' profunctor representation theorem that follows
+the structure of Tannakian reconstruction.
+
+ * [[./tannaka.pdf][Tannakian reconstruction of Tambara modules (pdf)]].
+
+** Kaleidoscopes, monoidal lenses, comonoidal prisms                                         :post:
+:PROPERTIES:
+:TITLE: Kaleidoscopes, monadic lenses, comonadic prisms
+:EXPORT_FILE_NAME: kaleidoscopesmonadiclens.html
 :EXPORT_DATE: 23th July, 2019
 :INDEX_DATE: <2019-07-23 Tue>
 :END:
 
-A *caleidoscope* is the optic for applicative functors. Using the free
+A *kaleidoscope* is the optic for applicative functors. Using the free
 applicative construction from Capriotti-Kaposi, we can show their
 concrete representation is the following.
 
 #+BEGIN_SRC haskell
-type Caleidoscope s t a b = forall n . (Vec n a -> b) -> (Vec n s -> t)
+type Kaleidoscope s t a b = forall n . (Vec n a -> b) -> (Vec n s -> t)
 #+END_SRC
 
 If we take lenses where complements are monad algebras or prisms where
