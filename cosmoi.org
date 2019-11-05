@@ -449,6 +449,7 @@
 #+RESULTS:
 #+BEGIN_EXPORT html
 <ul>
+ <li><a href=combsint.html> Combs and the Int construction</a><em>, 05 November 2019</em><br></li>
  <li><a href=tannakiantambara.html> Tannakian reconstruction of Tambara modules</a><em>, 26 September 2019</em><br></li>
  <li><a href=kaleidoscopesmonadiclens.html> Kaleidoscopes, monadic lenses, comonadic prisms</a><em>, 23 July 2019</em><br></li>
  <li><a href=profunctoropticscategoricalupdate.html> Profunctor optics: a categorical update</a><em>, 05 July 2019</em><br></li>
@@ -871,6 +872,35 @@ Cout
 
 *** TODO Composing with a classifying lens
 *** TODO Use case: the iris dataset
+
+** Combs and the Int construction                                                            :post:
+:PROPERTIES:
+:TITLE: Combs and the Int construction
+:EXPORT_FILE_NAME: combsint.html
+:EXPORT_DATE: 5th November 2019
+:INDEX_DATE: <2019-11-05 Tue>
+:END:
+
+After seeing my MSc colleague Daphne Wang working on [[https://arxiv.org/pdf/1701.04732.pdf][Kissinger and
+Uiljen]]'s /combs/ for the whole term, I realized at [[https://twitter.com/mroman42/status/1178776527279988736][some point]] that these
+were lenses in a compact closed category.  The proof goes as follows.
+
+#+BEGIN_SRC haskell
+ ∫ᵂ (A → W ⊗ B)×(C ⊗ W → D)
+≅ ⟨ Duals ⟩
+ ∫ᵂ (A → W ⊗ B)×(W → C* ⊗ D)
+≅ ⟨ Yoneda ⟩
+ A → (C* ⊗ D) ⊗ B
+≅ ⟨ Duals, symmetry ⟩
+ I → A* ⊗ B ⊗ C* ⊗ D
+#+END_SRC
+
+The same proof can be used to show that Int(C)≅Optic(C) when C is
+compact closed. Here ~Int~ is the [[https://arxiv.org/abs/1904.11287][Int construction]].
+
+In the general case, after a suggestion by Jules that came from a
+tweet by Piedeleu; Elena Di Lavore and me wrote down an explicit
+Optic(C)→Int(C) embedding.
 
 ** Tannakian reconstruction of Tambara modules                                               :post:
 :PROPERTIES:
