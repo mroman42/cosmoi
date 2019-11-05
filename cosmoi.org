@@ -902,6 +902,8 @@ In the general case, after a suggestion by Jules that came from a
 tweet by Piedeleu; Elena Di Lavore and me wrote down an explicit
 Optic(C)→Int(C) embedding.
 
+ * [[./opticint.pdf][Optic embeds into the Int construction]].
+
 ** Tannakian reconstruction of Tambara modules                                               :post:
 :PROPERTIES:
 :TITLE: Tannakian reconstruction of Tambara modules
