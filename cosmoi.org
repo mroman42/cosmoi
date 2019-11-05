@@ -449,6 +449,7 @@
 #+RESULTS:
 #+BEGIN_EXPORT html
 <ul>
+ <li><a href=autolens.html> Autonomous lenses</a><em>, 05 November 2019</em><br></li>
  <li><a href=combsint.html> Combs and the Int construction</a><em>, 05 November 2019</em><br></li>
  <li><a href=tannakiantambara.html> Tannakian reconstruction of Tambara modules</a><em>, 26 September 2019</em><br></li>
  <li><a href=kaleidoscopesmonadiclens.html> Kaleidoscopes, monadic lenses, comonadic prisms</a><em>, 23 July 2019</em><br></li>
@@ -872,6 +873,32 @@ Cout
 
 *** TODO Composing with a classifying lens
 *** TODO Use case: the iris dataset
+
+** Autonomous lenses                                                                         :post:
+:PROPERTIES:
+:TITLE: Autonomous lenses
+:EXPORT_FILE_NAME: autolens.html
+:EXPORT_DATE: 5th November 2019
+:INDEX_DATE: <2019-11-05 Tue>
+:END:
+
+An interesting consideration is to see what happens if we extend the Optic
+formula on the product to a more symmetric case.
+
+#+BEGIN_SRC haskell
+∫ᶜᵈ (D×S→C×A)×(C×B→D×T)
+≅
+∫ᶜ (C×B → (S→C×A)×T)
+≅
+∫ᶜ (C×B → T) × (C×B → S → C×A)
+≅
+(B → T)×B → S → (B → T)×A
+#+END_SRC
+
+In the same way that lenses give teleological categories, this should give
+a category with formal cups and caps. I am interested on this because that
+means it would be a way of constructing models of DisCoCat following this
+idea by [[https://arxiv.org/abs/1411.3827][Delpeuch]].
 
 ** Combs and the Int construction                                                            :post:
 :PROPERTIES:
