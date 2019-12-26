@@ -14,8 +14,8 @@ studied an MSc on Mathematics and Computer
 Science at the University of Oxford.  Even before, completed
 two bachelor's degrees in Mathematics and Computer Engineering at
 the [[https://www.ugr.es/en/][University of Granada]] (Spain).  I am a
-founder and ex-organizer of the [[https://libreim.github.io/][LibreIM]] community, for which I still
-write articles and organize seminars.
+founder and ex-organizer of a local free software community ([[https://libreim.github.io/][LibreIM]]), 
+for which I still write articles and organize seminars.
 
   - GitHub: [[https://github.com/mroman42][@mroman42]]
   - GitLab: [[https://gitlab.com/mroman42][@mroman42]]
