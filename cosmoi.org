@@ -6,7 +6,6 @@
 #+Options: toc:nil date:t num:nil
 #+Options: html-style:nil
 #+Options: html-postamble:t
-#+Options: tex:dvisvgm
 
 * Header                                                                                    :ignore:
 ** html-header                                                                             :ignore:
@@ -19,10 +18,9 @@
 #+HTML_HEAD:         <a hrwef="blog.html">Mario Román</a>
 #+HTML_HEAD:     </div>
 #+HTML_HEAD:     <div id="navigation">
-#+HTML_HEAD:         <a href="about.html">About</a>
+#+HTML_HEAD:         <a href="index.html">About</a>
 #+HTML_HEAD:         <a href="blog.html">Blog</a>
-#+HTML_HEAD:         <a href="math.html">Math</a>
-#+HTML_HEAD:         <a href="feed.xml">RSS</a>
+#+HTML_HEAD:         <a href="https://github.com/mroman42/">Github</a>
 #+HTML_HEAD:     </div>
 #+HTML_HEAD: </div>
 
@@ -425,7 +423,7 @@
 * Blog index
 :PROPERTIES:
 :TITLE:  Blog
-:EXPORT_FILE_NAME: blog.html
+:EXPORT_FILE_NAME: docs/blog.html
 :EXPORT_TITLE: Blog index
 :INDEX_DATE: <2018-05-25 Fri 18:12>
 :END:
@@ -488,6 +486,13 @@
 #+END_EXPORT
 
 * Blog
+:PROPERTIES:
+:TITLE:  Blog
+:EXPORT_FILE_NAME: docs/blog.html
+:EXPORT_OPTIONS: toc:2 tasks:nil
+:EXPORT_DATE: 26 December 2019
+:END:
+
 ** TODO Yoneda y ópticas
 # A blog post on Yoneda lemma. Use the analogy of city travelling (@
 # iceland jack) and give examples both in mathematics and optics.
@@ -874,6 +879,14 @@ Cout
 *** TODO Composing with a classifying lens
 *** TODO Use case: the iris dataset
 
+** Lawful mixed optics
+A first notion of what a lawful mixed optic should be is to push both
+parts of the optic into the same category and consider lawfulness
+there.
+
+In the case of monadic lenses for copointed monads, this can give a
+reasonable notion of laws.
+
 ** Autonomous lenses                                                                         :post:
 :PROPERTIES:
 :TITLE: Autonomous lenses
@@ -885,14 +898,17 @@ Cout
 An interesting consideration is to see what happens if we extend the Optic
 formula on the product to a more symmetric case.
 
-#+BEGIN_SRC haskell
-∫ᶜᵈ (D×S→C×A)×(C×B→D×T)
-#+END_SRC
+\[
+\int^{C,D} \mathbf{C}(D \times S, C \times A) \times \mathbf{C}(C \times B, D \times T)
+\]
 
 In the same way that lenses give teleological categories, this should give
 a category with formal cups and caps. I am interested on this because that
 means it would be a way of constructing models of DisCoCat following this
 idea by [[https://arxiv.org/abs/1411.3827][Delpeuch]].
+
+I have now realized that this is in fact the category of learners as described
+by Fong and Johnson.  Can we use learners in DisCoCat?
 
 ** Combs and the Int construction                                                            :post:
 :PROPERTIES:
@@ -912,7 +928,7 @@ were lenses in a compact closed category.  The proof goes as follows.
  ∫ᵂ (A → W ⊗ B)×(W → C* ⊗ D)
 ≅ ⟨ Yoneda ⟩
  A → (C* ⊗ D) ⊗ B
-≅ ⟨ Duals, symmetry ⟩
+≅ ⟨ Duals, Symmetry ⟩
  I → A* ⊗ B ⊗ C* ⊗ D
 #+END_SRC
 
@@ -925,7 +941,7 @@ Optic(C)→Int(C) embedding.
 
  * [[./opticint.pdf][Optic embeds into the Int construction]].
 
-** Tannakian reconstruction of Tambara modules                                               :post:
+** TODO Tannakian reconstruction of Tambara modules                                          :post:
 :PROPERTIES:
 :TITLE: Tannakian reconstruction of Tambara modules
 :EXPORT_FILE_NAME: tannakiantambara.html
@@ -945,7 +961,7 @@ and try to apply it to optics.
 
  * [[./tannaka.pdf][Tannakian reconstruction of Tambara modules (pdf)]].
 
-** Kaleidoscopes, monoidal lenses, comonoidal prisms                                         :post:
+** TODO Kaleidoscopes, monoidal lenses, comonoidal prisms                                    :post:
 :PROPERTIES:
 :TITLE: Kaleidoscopes, monadic lenses, comonadic prisms
 :EXPORT_FILE_NAME: kaleidoscopesmonadiclens.html
@@ -973,7 +989,7 @@ type ComonPrism n s t a b = (s -> n t + a , b -> t)
 I am not sure if these optics are elsewhere in the literature, but I have not
 been able to find them so far.
 
-** Profunctor optics: a categorical update                                                   :post:
+** TODO Profunctor optics: a categorical update                                              :post:
 :PROPERTIES:
 :TITLE: Profunctor optics: a categorical update
 :EXPORT_FILE_NAME: profunctoropticscategoricalupdate.html
@@ -988,7 +1004,7 @@ traversal.
 
  * [[./mfocs-profunctoroptics-presentation.pdf][Link to the slides]].
 
-** Discokitty, an implementation                                                             :post:
+** TODO Discokitty, an implementation                                                        :post:
 :PROPERTIES:
 :TITLE: Discokitty, an implementation
 :EXPORT_FILE_NAME: discokittyimplementation.html
@@ -1003,7 +1019,7 @@ framework (as described in
 
 *Discokitty* is written on Haskell and the code can be found [[https://github.com/mroman42/discokitty][on GitHub]].
 
-** The "Glass" optic                                                                         :post:
+** TODO The "Glass" optic                                                                    :post:
 :PROPERTIES:
 :TITLE: The glass optic
 :EXPORT_FILE_NAME: glass.html
@@ -1041,7 +1057,7 @@ My intuition at the
 moment is "If from a getter you can create a b, then you can update s
 to t", which apparently also rhymes.
 
-** Adjunciones (WIP)                                                                         :post:
+** TODO Adjunciones (WIP)                                                                    :post:
 :PROPERTIES:
 :TITLE: Adjunciones (WIP)
 :EXPORT_FILE_NAME: sobreadjunciones.html
@@ -1654,7 +1670,7 @@ usar cite:maclane78.
 bibliographystyle:alpha
 bibliography:Math.bib
 
-** Dedekind reals in Agda                                                                    :post:
+** TODO Dedekind reals in Agda                                                               :post:
 :PROPERTIES:
 :TITLE: Dedekind reals in Agda
 :EXPORT_FILE_NAME: dedekindrealsagda.html
@@ -1671,7 +1687,7 @@ from its definition.
 The code is on [[https://github.com/mroman42/dedekind-reals][GitHub]].
 
 
-** Lawvere's fixed point theorem                                                             :post:
+** TODO Lawvere's fixed point theorem                                                        :post:
 :PROPERTIES:
 :TITLE: Lawvere's fixed point theorem
 :EXPORT_FILE_NAME: lawverefixedpoint.html
@@ -1692,7 +1708,7 @@ B has a fixed point, that is, some b : B such that f b = b.
 *Proof.* As d is point-surjective, there exists x : A such that dx =
 λa.f(daa), but then, dxx = (λa.f(daa)) x = f(dxx) is a fixed point.
 
-** The GranaSAT client                                                                       :post:
+** TODO The GranaSAT client                                                                  :post:
 :PROPERTIES:
 :TITLE: The GranaSAT client
 :EXPORT_FILE_NAME: granasatclient.html
@@ -1710,7 +1726,7 @@ was written by [[https://github.com/agarciamontoro/granasatServer][@agarciamonto
 
 /Bonus track:/ the team ended up capturing an [[https://www.youtube.com/watch?v=YUlWg6wuCxo][aurora borealis]]!
 
-** Apuntes de Haskell                                                                        :post:
+** TODO Apuntes de Haskell                                                                   :post:
 :PROPERTIES:
 :TITLE: Apuntes de Haskell
 :EXPORT_FILE_NAME: apuntesdehaskell.html
@@ -1723,7 +1739,7 @@ en los seminarios de LibreIM, [[https://github.com/pedritomelenas][Pedro García
 [[https://github.com/libreim/haskell/blob/3acbc2f7088483d3ba69ecdc00891c8419341aaf/PrimeraParte/PrimeraParte.ipynb][cuaderno de Jupyter]] para acompañarlos, y finalmente [[https://github.com/mx-psi][@mx-psi]] ha vuelto a revisarlos
 y dejarlos listos para otro seminario este año. 
 
-** Right adjoints are continuous                                                             :post:
+** TODO Right adjoints are continuous                                                        :post:
 :PROPERTIES:
 :TITLE: Right adjoints are continuous
 :EXPORT_FILE_NAME: homcontinuous.html
@@ -1772,7 +1788,7 @@ hom-sets.
 
 By Yoneda Lemma, this means R lim Xᵢ ≅ lim RXᵢ.
 
-** dotfiles in a single org-file                                                             :post:
+** TODO dotfiles in a single org-file                                                        :post:
 :PROPERTIES:
 :TITLE: dotfiles in a single org-file
 :EXPORT_FILE_NAME: dotfilesinasingleorg.html
@@ -1808,7 +1824,7 @@ until now).
 As always with Emacs, this use case is obvious in retrospect, but /why
 didn't anyone tell me?/
 
-** Picado's Interview with Lawvere                                                           :post:
+** TODO Picado's Interview with Lawvere                                                      :post:
 :PROPERTIES:
 :TITLE: Picado's Interview with Lawvere
 :EXPORT_FILE_NAME: picadolawvereinterview.html
@@ -1841,7 +1857,7 @@ an agenda have become explicit.
 #+END_QUOTE
 
 
-** A quote by Ampère                                                                         :post:
+** TODO A quote by Ampère                                                                    :post:
 :PROPERTIES:
 :TITLE: A quote by Ampère
 :EXPORT_FILE_NAME: quoteampere.html
@@ -1856,7 +1872,7 @@ sentence and I am also not sure in which sense should be interpreted;
 but I somehow imagined that the idea of languages as algebras would
 be more modern than this.
 
-** LibreIM, casi cinco años después                                                          :post:
+** TODO LibreIM, casi cinco años después                                                     :post:
 :PROPERTIES:
 :TITLE: LibreIM, casi cinco años después
 :EXPORT_FILE_NAME: libreimquintoaniversario.html
@@ -1886,7 +1902,7 @@ bien en el doble grado y merece mucho la pena cuidarlo.  Estaría muy
 orgulloso de todo esto si colectivamente conseguimos mantenerlo en un
 futuro.
 
-** Org-drill and spaced repetition                                                           :post:
+** TODO Org-drill and spaced repetition                                                      :post:
 :PROPERTIES:
 :TITLE: Org-drill and spaced repetition
 :EXPORT_FILE_NAME: orgdrillspacedrepetition.html
@@ -1911,7 +1927,7 @@ org-drill format would be great.
 If you are not yet committed to Anki and you are already confortable
 with Emacs, it could be a good idea to try both before settling on one.
 
-** Coinduction                                                                               :post:
+** TODO Coinduction                                                                          :post:
 :PROPERTIES:
 :TITLE: Coinduction
 :EXPORT_FILE_NAME: coinduction.html
@@ -1958,7 +1974,7 @@ lot writing basic coinductive definitions.
   pred (a + b) | Just a' = Just (a' + b)
 #+END_SRC
 
-** Writing a bachelor's thesis in org-mode                                                   :post:
+** TODO Writing a bachelor's thesis in org-mode                                              :post:
 :PROPERTIES:
 :TITLE: Writing a bachelor's thesis in org-mode
 :EXPORT_FILE_NAME: bachelorsthesisinorgmode.html
@@ -1987,7 +2003,7 @@ use the first one; the relevant line on the makefile looks as follows
     -f org-latex-export-to-pdf
 #+END_SRC
 
-** Blogging with a single org-file                                                           :post:
+** TODO Blogging with a single org-file                                                      :post:
 :PROPERTIES:
 :TITLE: Blogging with a single org-file
 :EXPORT_FILE_NAME: bloggingwithasingleorgfile.html
@@ -2005,7 +2021,7 @@ headers.
 
 
 
-** Category theory and lambda calculus                                                       :post:
+** TODO Category theory and lambda calculus                                                  :post:
 :PROPERTIES:
 :TITLE: Category theory and lambda calculus
 :EXPORT_FILE_NAME: categorytheoryandlambdacalculus.html
@@ -2027,7 +2043,7 @@ final [[https://mroman42.github.io/ctlc/ctlc.pdf][PDF]] is also available, but i
 details, you may prefer to simply read the [[https://mroman42.github.io/ctlc-slides/slides.pdf][commented slides]] (in
 Spanish), which are a reasonable summary of the ideas presented there.
 
-** Evaluación en cálculo lambda                                                              :post:
+** TODO Evaluación en cálculo lambda                                                         :post:
 :PROPERTIES:
 :TITLE: Evaluación en cálculo lambda
 :EXPORT_FILE_NAME: evaluacionlambda.html
@@ -2092,7 +2108,7 @@ encuentra la forma de *no* llegar a la forma normal si esta existiera.
 Estas dos formas de evaluación se suelen llamar /call-by-value/ y
 /call-by-name/.
 
-** Mikrokosmos                                                                               :post:
+** TODO Mikrokosmos                                                                          :post:
 :PROPERTIES:
 :TITLE: Mikrokosmos
 :EXPORT_FILE_NAME: mikrokosmos.html
@@ -2115,7 +2131,7 @@ Thanks to [[https://github.com/ghcjs/ghcjs][GHCJS]] and [[http://codemirror.net/
 lambda interpreter in your browser. Press the *evaluate* button there
 and play with the code!
 
-** Aprendiendo Emacs                                                                         :post:
+** TODO Aprendiendo Emacs                                                                    :post:
 :PROPERTIES:
 :TITLE:    Aprendiendo Emacs
 :EXPORT_FILE_NAME: aprendiendoemacs.html
@@ -2434,7 +2450,7 @@ con más funcionalidad. Un tutorial básico sobre Elisp es
 
 [3] De hecho, podemos seleccionar qué párrafos dentro de un fichero
     queremos añadir al commit.
-** Capturando links en org-mode                                                              :post:
+** TODO Capturando links en org-mode                                                         :post:
 :PROPERTIES:
 :TITLE:    Capturando links en org-mode
 :EXPORT_FILE_NAME: capturandolinksenorgmode.html
@@ -2513,7 +2529,7 @@ En la plantilla de captura, me gustaría poder usar además =%^g=, que crea un p
 diálogo donde insertar tags al link que se está guardando. El problema con esto es que,
 hasta que ese diálogo no ha terminado, no se ejecutan los hooks y el frame no se hace
 único (ni se reposiciona en i3).
-** Distribuciones discretas con mónadas                                                      :post:
+** TODO Distribuciones discretas con mónadas                                                 :post:
 :PROPERTIES:
 :TITLE: Distribuciones discretas con mónadas
 :EXPORT_FILE_NAME: distribucionesmonadas.html
@@ -2723,7 +2739,7 @@ Haskell.
   main :: IO ()
   main = return ()
 #+END_SRC
-** Inducción estructural                                                                     :post:
+** TODO Inducción estructural                                                                :post:
 :PROPERTIES:
 :TITLE:    Inducción estructural
 :EXPORT_FILE_NAME: induccionestructural.html
@@ -2836,7 +2852,7 @@ en lenguaje natural y demostrados luego sobre el asistente de
 demostraciones Coq.
 
 [1] Post sobre generalizaciones de la inducción [[http://math.blogoverflow.com/2015/03/10/when-can-we-do-induction/][en Stack Overflow]].   
-** Mónadas                                                                                   :post:
+** TODO Mónadas                                                                              :post:
 :PROPERTIES:
 :TITLE:    Mónadas
 :EXPORT_FILE_NAME: monadas.html
@@ -3408,7 +3424,7 @@ como en teoría de categorías:
 [5] Por qué en ocasiones puede ser útil pensar en ellos como una
     categoría.
     [[https://ro-che.info/articles/2016-08-07-hask-category][Does it matter if Hask is (not) a category?]]
-** Matemáticas en emacs                                                                      :post:
+** TODO Matemáticas en emacs                                                                 :post:
 :PROPERTIES:
 :TITLE:    Matemáticas en emacs
 :EXPORT_FILE_NAME: matematicasemacs.html
@@ -3605,7 +3621,7 @@ y cargarlo en cada archivo =org= con =#+SETUPFILE: math.setup=.
 Pueden encontrarse ejemplos de uso en [[https://github.com/mroman42/math][este repositorio]] con mis apuntes
 de matemáticas. Mi archivo de configuración de Emacs está disponible en
 [[https://github.com/M42/.emacs.d][mroman42/emacs.d]].
-** Cartesian closed categories                                                               :post:
+** TODO Cartesian closed categories                                                          :post:
 :PROPERTIES:
 :TITLE: Cartesian closed categories
 :EXPORT_FILE_NAME: cartesianclosedcategories.html
@@ -3637,7 +3653,7 @@ x : c -> a as a term  Γ ⊢ x : a.
 
 Now, we should discuss if \beta-equivalence corresponds to the equality between morphisms.
 
-** Ideas de teoría de tipos                                                                  :post:
+** TODO Ideas de teoría de tipos                                                             :post:
 :PROPERTIES:
 :TITLE:    Ideas de teoría de tipos
 :EXPORT_FILE_NAME: ideasteoriatipos.html
@@ -3779,7 +3795,7 @@ asistente de demostraciones *COQ*, desarrollado por el INRIA. El
 -  [[http://ac.els-cdn.com/0890540188900053/1-s2.0-0890540188900053-main.pdf?_tid=3846e956-b301-11e5-8e78-00000aab0f02&acdnat=1451925532_87ac5a8e6a7bd6477746a55c17130f43][Calculus of Constructions - T. Coquand, G. Huet]].
 -  [[https://coq.inria.fr/][The Coq proof assistant - INRIA]]
 
-** Informal CV                                                                               :post:
+** TODO Informal CV                                                                          :post:
 :PROPERTIES:
 :TITLE:    Informal CV
 :EXPORT_FILE_NAME: informalcv.html
@@ -3798,7 +3814,7 @@ asistente de demostraciones *COQ*, desarrollado por el INRIA. El
  * September 2012. Started a double degree in [[http://grados.ugr.es/informaticaymatematicas/][Mathematics and Computer Engineering]]. (University of Granada)
  * July 2012. Attended the [[http://oma.org.ar/imo2012/][53rd International Mathematical Olympiad]]. (Mar del Plata, Argentina)
 
-** Projective, injective and flat modules
+** TODO Projective, injective and flat modules
 :PROPERTIES:
 :TITLE:    Projective, injective and flat modules
 :HUGO_TAGS: math
@@ -3830,7 +3846,7 @@ $D\otimes -$ is right-exact; so for them to be exact, we only need:
    
 - A module $D$ is *flat* when $f : A \longrightarrow B$ injective induces 
   $f' : D\otimes A \longrightarrow D \otimes B$ injective.
-** Wikipedia contributions                                                                   :post:
+** TODO Wikipedia contributions                                                              :post:
 :PROPERTIES:
 :TITLE:    Wikipedia contributions
 :EXPORT_FILE_NAME: wikipediacontributions.html
@@ -3861,7 +3877,7 @@ I have contributed to.
  * [[https://es.wikipedia.org/wiki/Fibraci%25C3%25B3n_de_Grothendieck][Fibración de Grothendieck]].
 
 
-** Yoneda lemma                                                                              :post:
+** TODO Yoneda lemma                                                                         :post:
 :PROPERTIES:
 :TITLE:    Yoneda lemma
 :EXPORT_FILE_NAME: yonedalemma.html
@@ -3896,7 +3912,7 @@ For any functor H : *C* -> *Sets* (any copresheaf), we have
   H  ≅  ∃ c ∈ C .  H c × C(c,_)
 #+END_SRC
 
-** Yoneda lemma
+** TODO Yoneda lemma
 :PROPERTIES:
 :TITLE:    Yoneda lemma
 :EXPORT_FILE_NAME: yonedalemma.pdf
@@ -6353,16 +6369,19 @@ theory. cite:shulman17
 bibliographystyle:alpha
 bibliography:Math.bib
 
-
-* About
+* Index
 :PROPERTIES:
 :TITLE:  About
-:EXPORT_FILE_NAME: index.html
+:EXPORT_FILE_NAME: docs/index.html
+:EXPORT_OPTIONS: toc:nil
+:EXPORT_DATE: 26 December 2019
 :END:
 
-Hi! I'm *Mario Román*.  I am studying an MSc on Mathematics and Computer
-Science at the University of Oxford; my main interests being
-[[https://en.wikipedia.org/wiki/Category_theory][categories]], [[https://en.wikipedia.org/wiki/Type_theory][types]], [[https://en.wikipedia.org/wiki/Functional_programming][functional programming]] and logic.  I completed
+Hi! I'm *Mario Román*.  I am studying a PhD at [[https://www.ttu.ee/][Tallinn University of Technology]] 
+under the supervision of [[https://www.ioc.ee/~pawel/][Pawel Sobociński]]; my main interests being
+[[https://en.wikipedia.org/wiki/Category_theory][categories]] and [[https://en.wikipedia.org/wiki/Functional_programming][functional programming]].  Before this, I
+studied an MSc on Mathematics and Computer
+Science at the University of Oxford.  Even before, completed
 two bachelor's degrees in Mathematics and Computer Engineering at
 the [[https://www.ugr.es/en/][University of Granada]] (Spain).  I am a
 founder and ex-organizer of the [[https://libreim.github.io/][LibreIM]] community, for which I still
@@ -6376,6 +6395,64 @@ write articles and organize seminars.
 
 All the articles in this page are licensed under [[https://creativecommons.org/licenses/by-sa/2.0/][Creative Commons BY-SA 2.0]]
 unless otherwise specified.
+
+\\
+
+\\
+
+#+TOC: headlines 1
+
+** Papers
+
+ * *[[http://jose.theoj.org/papers/8324e9aa1019760e987673f55e335f34][Mikrokosmos: an educational lambda interpreter]]*. /Mario Román/. The
+   Journal of Open Source Education, 2018.
+ 
+** External Posts
+
+ * [[https://libreim.github.io/blog/2016/12/21/monadas/][*Mónadas*]], LibreIM 2016.
+ * [[https://libreim.github.io/blog/2016/09/19/aprendiendo-emacs/][*Aprendiendo Emacs*]], LibreIM 2016.
+
+** Talks
+
+ * *[[./mfocs-profunctoroptics-presentation.pdf][Profunctor optics: a categorical update]]*. MFoCS dissertation proposals. (/14th June 2019, University of Oxford/)
+ * *[[https://mroman42.github.io/ctlc-slides/slides.pdf][Category Theory and Lambda Calculus]]*, BSc Dissertation defense. /(24th June 2018, [[https://fciencias.ugr.es/en/][Universidad de Granada]])/
+ * *[[https://mroman42.github.io/cosmoi/monoidescoloreadosbimonoidescoloreados.pdf][Monoides coloreados, bi(monoides coloreados)]]*. /(26th April 2019, [[https://wpd.ugr.es/~iemath/][IEMath]])/
+ * *[[https://mroman42.github.io/libreim-constructiva/constructiva.pdf][Ideas sobre constructivismo y computabilidad]]*. /(21st September 2018, [[https://wpd.ugr.es/~iemath/][IEMath]])/
+ * *[[https://github.com/mroman42/lambda.notes][Lógica intuicionista y cálculo lambda]]*. /(19th January 2018, [[https://wpd.ugr.es/~iemath/][IEMath]])/
+ * *[[https://github.com/mroman42/lambda.notes][Categorías, funtores y transformaciones naturales]]*. /(18th November 2017, [[https://wpd.ugr.es/~iemath/][IEMath]])/
+ 
+** Short notes
+#+begin_src emacs-lisp :exports results :results output html :eval never-export
+  (defun print-post-at-point () 
+    (princ (concat  
+      " <li><a href=" 
+      (concat (org-entry-get (point) "EXPORT_FILE_NAME")  "> ") 
+      (org-entry-get (point) "TITLE") "</a>, <em> ("
+      (org-entry-get (point) "EXPORT_DATE") ")</em><br></li>\n")))
+
+  (defun print-index ()
+    (progn 
+      (princ "<ul>\n") 
+      (org-map-entries (lambda () (print-post-at-point)) "+note" nil) 
+      (princ "</ul>\n")))
+
+  (print-index)
+#+end_src
+
+#+RESULTS:
+#+BEGIN_EXPORT html
+<ul>
+ <li><a href=traversals.pdf> The traversal is the optic for polynomial functors</a>, <em> (24th May, 2019)</em><br></li>
+ <li><a href=monoidesgrouposcategorias.pdf> Monoides, groupos, grupoides, categorías</a>, <em> (1 de abril de 2019)</em><br></li>
+ <li><a href=monoidescoloreadosbimonoidescoloreados.pdf> Monoides coloreados y bi(monoides coloreados)</a>, <em> (14 de abril de 2019)</em><br></li>
+ <li><a href=diagramascategoriasmonoidales.pdf> Diagramas para categorías monoidales</a>, <em> (21st January 2019)</em><br></li>
+ <li><a href=everysurjectiontoprojectiveissplit.pdf> Every surjection to a projective R-module is split</a>, <em> (24th December 2018)</em><br></li>
+ <li><a href=pastingpullbacks.pdf> Pasting pullbacks</a>, <em> (23rd December 2018)</em><br></li>
+ <li><a href=countinginlinearlogic.pdf> Linear logic is quantity-sensitive</a>, <em> (23th December 2018)</em><br></li>
+ <li><a href=powersetalgebrascompletesemilattices.pdf> Powerset-algebras are complete semilattices</a>, <em> (23th December 2018)</em><br></li>
+ <li><a href=uniquenessofidentityproofs.pdf> Uniqueness of identity proofs</a>, <em> (25th August 2018)</em><br></li>
+</ul>
+#+END_EXPORT
 
 * Publishing                                                                              :noexport:
 The =cosmoi/publish= command exports all posts into HTML and PDF on the
