@@ -887,12 +887,6 @@ formula on the product to a more symmetric case.
 
 #+BEGIN_SRC haskell
 ∫ᶜᵈ (D×S→C×A)×(C×B→D×T)
-≅
-∫ᶜ (C×B → (S→C×A)×T)
-≅
-∫ᶜ (C×B → T) × (C×B → S → C×A)
-≅
-(B → T)×B → S → (B → T)×A
 #+END_SRC
 
 In the same way that lenses give teleological categories, this should give

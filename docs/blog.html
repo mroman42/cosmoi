@@ -3,24 +3,23 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-11-09 Sat 15:33 -->
+<!-- 2019-12-26 Thu 19:22 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Autonomous lenses</title>
+<title>Blog index</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Mario Román" />
-<link rel="stylesheet" href="default.css" />
-<link rel="stylesheet" href="mathjax_fonts.css" />
-<link rel="stylesheet" href="syntax.css" />
+<link rel="stylesheet" href="../default.css" />
+<link rel="stylesheet" href="../mathjax_fonts.css" />
+<link rel="stylesheet" href="../syntax.css" />
 <div id="header">
 <div id="logo">
 <a hrwef="blog.html">Mario Román</a>
 </div>
 <div id="navigation">
-<a href="about.html">About</a>
+<a href="index.html">About</a>
 <a href="blog.html">Blog</a>
-<a href="math.html">Math</a>
-<a href="feed.xml">RSS</a>
+<a href="https://github.com/mroman42/">Github</a>
 </div>
 </div>
 <script type="text/javascript">
@@ -72,26 +71,21 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">Autonomous lenses</h1>
-<p>
-An interesting consideration is to see what happens if we extend the Optic
-formula on the product to a more symmetric case.
-</p>
+<h1 class="title">Blog index</h1>
+<ul>
+ <li><a href=sts/lawfulmixed.html> Lawful mixed optics</a><em>, 05 November 2019</em><br></li>
+</ul>
 
-<div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #7590db;">&#8747;</span>&#7580;&#7496; <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">D</span><span style="color: #7590db;">&#215;</span><span style="color: #ce537a; font-weight: bold;">S</span><span style="color: #7590db;">&#8594;</span><span style="color: #ce537a; font-weight: bold;">C</span><span style="color: #7590db;">&#215;</span><span style="color: #ce537a; font-weight: bold;">A</span><span style="color: #4f97d7;">)</span><span style="color: #7590db;">&#215;</span><span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">C</span><span style="color: #7590db;">&#215;</span><span style="color: #ce537a; font-weight: bold;">B</span><span style="color: #7590db;">&#8594;</span><span style="color: #ce537a; font-weight: bold;">D</span><span style="color: #7590db;">&#215;</span><span style="color: #ce537a; font-weight: bold;">T</span><span style="color: #4f97d7;">)</span>
-</pre>
-</div>
-
-<p>
-In the same way that lenses give teleological categories, this should give
-a category with formal cups and caps. I am interested on this because that
-means it would be a way of constructing models of DisCoCat following this
-idea by <a href="https://arxiv.org/abs/1411.3827">Delpeuch</a>.
-</p>
+<ul>
+  {% for post in site.posts %}
+    <li>
+      <a href="{{ post.url }}">{{ post.title }}</a>
+    </li>
+  {% endfor %}
+</ul>
 </div>
 <div id="postamble" class="status">
-<div id="footer"><p class="postamble">Last edited 5th November 2019. Written by <a href="https://mroman42.github.com">@mroman42</a>.</p></div>
+<div id="footer"><p class="postamble">Last edited 26 December 2019. Written by <a href="https://mroman42.github.com">@mroman42</a>.</p></div>
 </div>
 </body>
 </html>
