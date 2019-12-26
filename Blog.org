@@ -1,0 +1,3527 @@
+#+Title: Blog
+#+Author: Mario Román
+#+Email: mromang08@gmail.com
+#+Date: 26 December 2019
+#+Creator: <a href="https://mroman42.github.com">@mroman42</a>.
+#+Options: toc:nil date:t num:nil html-style:nil html-postamble:t
+#+export_file_name: docs/blog.html
+
+* Blog index                                                                                :ignore:
+:PROPERTIES:
+:TITLE:  Blog
+:EXPORT_FILE_NAME: docs/blog.html
+:EXPORT_TITLE: Blog index
+:INDEX_DATE: <2018-05-25 Fri 18:12>
+:END:
+
+#+begin_export html
+<ul>
+  {% for post in site.posts %}
+    <li>
+      <a href="{{ post.url }}">{{ post.title }}</a>
+    </li>
+  {% endfor %}
+</ul>
+#+end_export
+
+* TODO Yoneda y ópticas
+# A blog post on Yoneda lemma. Use the analogy of city travelling (@
+# iceland jack) and give examples both in mathematics and optics.
+
+** Bidireccionalidad y profuntores
+# Por qué nos preocupa la bidireccionalidad.
+
+** Fines y cofines
+Nuestra herramienta principal será el cálculo de fines y cofines
+cite:loregian15.
+
+*** Definiciones                                                                          :ignore:
+#+begin_definicion
+Dado un profuntor $p \colon \mathbf{C}^{op} \times \mathbf{C} \to \mathbf{Set}$,
+su *fin* es un objeto, que escribimos como una integral,
+junto a una familia de proyecciones a la diagonal del profuntor,
+\[
+\pi_{a} \colon \left(  
+\int_{x \in \mathbf{C}} p(x,x)
+\right) \to p(a,a),
+\mbox{ para cada }
+a \in \mathbf{C}.
+\]
+Esta familia cumple una condición de coherencia, que dice que
+para cualquier función $f \colon a \to b$, las dos formas posibles de llegar
+desde la diagonal hasta $p(a,b)$ coinciden.
+\[\begin{tikzcd}
+& {\displaystyle \int_{x \in \mathbf{C}} p(x,x)} \dlar[swap]{\pi_{a}}\drar{\pi_{b}} & \\
+p(a,a) \drar[swap]{p( \mathrm{id} ,f)} && p(b,b) \dlar{p(f , \mathrm{id})} \\
+& p(a,b) &
+\end{tikzcd}\]
+Y además, es universal respecto a esta propiedad. Si tenemos cualquier
+otro objeto con una familia coherente de proyecciones $z \to p(a,a)$
+para todo $a \in \mathbf{C}$, entonces tenemos un único $z \to \int_{x \in \mathbf{C}} p(x,x)$ haciendo
+los diagramas conmutar.
+#+end_definicion
+
+#+begin_definicion
+Dado un profuntor $p \colon \mathbf{C}^{op} \times \mathbf{C} \to \mathbf{Set}$,
+su *cofin* es un objeto, que escribimos como una integral (esta vez
+con el índice arriba), junto a una familia de inclusiones a la
+diagonal del profuntor,
+\[
+i_{a} \colon p(a,a) \to
+\left(  
+\int^{x \in \mathbf{C}} p(x,x)
+\right),
+\mbox{ para cada }
+a \in \mathbf{C}.
+\]
+Esta familia cumple una condición de coherencia, que dice que
+para cualquier función $f \colon a \to b$, las dos formas posibles de llegar
+desde $p(a,b)$ hasta el cofin coinciden.
+\[\begin{tikzcd}
+& {\displaystyle \int^{x \in \mathbf{C}} p(x,x)} & \\
+p(a,a) \urar  && p(b,b) \ular \\
+& p(a,b) \urar[swap]{f}\ular{f} &
+\end{tikzcd}\]
+Y además, es universal respecto a esta propiedad. Si tenemos cualquier
+otro objeto con una familia coherente de inclusiones $p(a,a) \to z$
+para todo $a \in \mathbf{C}$, entonces tenemos un único $\int_{x \in \mathbf{C}} p(x,x) \to z$ haciendo
+los diagramas conmutar.
+#+end_definicion
+
+*** Cuantificadores                                                                       :ignore:
+Los fines son límites, parecidos a los productos (de hecho, son
+ecualizadores); los cofines son colímites, parecidos a las sumas
+(coecualizadores).  Una intuición es que los fines son cuantificadores
+universales (=∀)= y los cofines son cuantificadores existenciales (=∃=).
+¡Esta es sólo una notación!, pero será útil para simplificar cálculos
+y para implementar las ideas en Haskell.
+
+#+ATTR_LATEX: :options style=xcode
+#+BEGIN_SRC haskell
+    -- Fines.
+    (∀ x . p x x)
+    (∀ x . p x x) -> p a a
+    (z -> p a a) -> (z -> (∀ x . p x x))
+      
+    -- Cofines
+    (∃ x . p x x)
+    p a a -> (∃ x . p x x)
+    (p a a -> z) -> ((∃ x . p x x) -> z)
+#+END_SRC
+
+En este código, las proyecciones coinciden con instanciar el cuantificador.
+Las propiedades universales se corresponden con reglas de deducción de los
+cuantificadores. En todo el código usamos =a= como una variable de tipo, asumiendo
+parametricidad.
+
+*** Transformaciones naturales                                                            :ignore:
+#+begin_ejemplo
+Dados funtores $F,G \colon \mathbf{C} \to \mathbf{D}$, las transformaciones naturales entre ellos
+vienen dadas por el siguiente fin.
+\[
+\mathrm{Nat}(F,G) = \int_{x \in \mathbf{C}} \mathbf{D}(Fx,Gx)
+\]
+Cuando la categoría de destino es $\mathbf{Sets}$ podemos escribir esto como sigue.
+#+end_ejemplo
+#+ATTR_LATEX: :options style=xcode
+#+BEGIN_SRC haskell
+    Nat f g  =  ∀ x . f x -> g x
+#+END_SRC
+#+begin_proof
+Sea $z$ un conjunto con morfismos $z \to \mathbf{D}(Fx, Gx)$ para cada $x \in \mathbf{C}$.
+Para cada $\alpha \in z$, los morfismos determinan una familia $\alpha_x \in \mathbf{D}(Fx,Gx)$.
+Las condiciones de coherencia dicen que para cualquier $f \circ a \to b$
+se tiene $Gf \circ\alpha_{a} = \alpha_{b} \circ Ff$. Eso quiere decir que $\alpha$ es una transformación
+natural.
+#+end_proof
+
+** Lema de Yoneda
+#+attr_latex: :options [Lema de Yoneda]
+#+begin_theorem
+Sea $\mathbf{C}$ una categoría y $F \colon \mathbf{C} \to \mathbf{Set}$ un funtor.  Para cualquier $a \in \mathbf{C}$,
+el conjunto de transformaciones naturales del funtor $\mathbf{C}(a,-)$ al funtor $F$
+es naturalmente isomorfo a $Fa$.
+\[
+\left(  \int_{x \in \mathbf{C}} \mathbf{C}(a,x) \to Fx \right) \cong F a
+\]
+En el caso de aplicarlo sobre la categoría de conjuntos obtenemos lo
+siguiente.
+#+BEGIN_verbatim 
+∏    ∀ x . (a -> x) -> f x  ≅  f a
+#+END_verbatim
+#+end_theorem
+#+begin_proof
+Vamos a construir la biyección y demostrar que es una biyección.
+Dado $u \in Fa$, tenemos un elemento de $\mathbf{C}(a,x) \to Fx$ para cualquier
+$x \in \mathbf{C}$, dado por la acción del funtor.  En el otro sentido, dada
+cualquier transformación natural $\mathbf{C}(a,x) \to Fx$, podemos aplicarla
+sobre la identidad $\mathrm{id} \in \mathbf{C}(a,a)$ para obtener $Fa$.
+
+Ahora debemos demostrar que esto es una biyección. En un sentido es
+trivial, en el contrario, debemos demostrar que dos transformaciones
+naturales con la misma acción en la identidad son iguales. Pero
+precisamente por coherencia (o /naturalidad/) tenemos
+$Ff(\eta_a( \mathrm{id})) =\eta_x(f)$.
+#+end_proof
+
+** TODO Isos
+** TODO Tambara
+#+begin_definicion
+Un *módulo de Tambara* para un producto monoidal $\otimes$ es un profuntor
+$p \colon \mathbf{C}^{op} \times \mathbf{C} \to \mathbf{Set}$ con una transformación
+\[
+p(x,y) \to p(c \otimes x , c \otimes y)
+\]
+natural en los tres argumentos y satisfaciendo cierta coherencia
+que no detallamos.
+#+end_definicion
+
+#+begin_statement
+Los módulos de Tambara forman una categoría con las transformaciones
+naturales entre profuntores que respetan la estructura de módulo.
+En particular, existe un funtor de olvido $U \colon \mathbf{Tamb}_{\otimes} \to \mathbf{Prof}$ y
+tiene un adjunto izquierdo dado por
+\[
+\Phi(p)(s,t) = \int
+\]
+#+end_statement
+
+** Drafts                                                                                :noexport:
+*** Introducción
+**** Funtor hom
+Fijemos una categoría $\mathbf{C}$.  Dados cualesquiera dos objetos $a, b \in \mathbf{C}$, 
+podemos considerar el conjunto de homomorfismos entre ellos,
+$\mathbf{C}(a,b) \in \mathbf{Sets}$.  Además, dado un morfismo $f \colon b \to d$,
+su /postcomposición/ $(f \circ -) \colon \mathbf{C}(a,b) \to \mathbf{C}(a,d)$ es una /función/,
+un morfismo de conjuntos que transforma cada morfismo $u \colon a \to b$
+en un morfismo $f \circ u \colon a \to d$. Y también, dado un mofismo $g \colon c \to a$,
+su /precomposición/ $(- \circ g) \colon \mathbf{C}(a,b) \to \mathbf{C}(c,b)$ es otra función. Esto
+determina un funtor.
+
+#+begin_proposition
+Fijado cualquier objeto $a \in \mathbf{C}$, podemos construir un funtor al que
+llamaremos $\mathbf{C}(a,-) \colon \mathbf{C} \to \mathbf{Sets}$.  Su acción en morfismos viene dada
+por la postcomposición.
+#+end_proposition
+#+begin_proof
+Para demostrar que es un funtor, debemos demostrar que preserva
+identidades y composiciones.  Para cualquier objeto $b \in \mathbf{C}$, sea
+el morfismo identidad $\mathrm{id} \colon b \to b$.  Demostramos que la postcomposición
+con la identidad, $(\mathrm{id} \circ -) \colon \mathbf{C}(a,b) \to \mathbf{C}(a,b)$ es a su vez la identidad en ese
+conjunto: nótese que $( \mathrm{id}_b \circ -) h = \mathrm{id} \circ h = h = \mathrm{id}_{\mathbf{C}(a,b)}(h)$, luego
+$(\mathrm{id}_{b} \circ -) = \mathrm{id}_{\mathbf{C}(a,b)}$.
+
+Ahora demostraremos que también preserva composiciones. Dadas dos
+funciones $f \colon b \to c$ y $g \colon c \to d$, queremos demostrar que la postcomposición
+con $(g \circ f)$ es exactamente igual que la postcomposición $f$ /compuesta/
+con la postcomposición con $g$. Tenemos que
+\[\begin{aligned} ((g \circ -) \circ (f \circ -)) h &= (g \circ -) (f \circ h) & \mbox{ \textit{ (definición)}} \\&=
+g \circ (f \circ h) & \mbox{ \textit{ (asociatividad)}}  \\&=
+(g \circ f) \circ h & \mbox{ \textit{ (definición)}} \\&=
+((g \circ f) \circ -) h,
+\end{aligned}\]
+luego $(g \circ -)\circ (f \circ -) = ((g \circ f) \circ -)$.
+#+end_proof
+
+/Nota:/ en las dos partes de esta demostración usamos dos veces el hecho
+de que si dos funciones son iguales en cada punto, entonces son iguales.
+Esto es, asumimos que $\forall x \in a, f(a) = g(a)$ implica $f = g$. Esto se
+conoce como el principio de /extensionalidad de las funciones/, y es cierto
+para morfismos de la categoría $\mathbf{Sets}$, pero no es cierto en general y podemos
+encontrar contraejemplos en la categoría dada por los homomorfismos entre grafos.
+Es decir, en esta demostración estamos usando crucialmente las propiedades de
+los conjuntos. \\
+
+Ahora podemos aplicar este mismo resultado a la categoría opuesta, para
+tener que $\mathbf{C}(-,d) \cong \mathbf{C}^{op}(d,-) \colon \mathbf{C}^{op} \to \mathbf{Sets}$ también determina un funtor.
+Nótese que este segundo funtor es contravariante, llevará cada morfismo
+$f \colon a \to b$ a su /precomposición/ $(- \circ f) \colon \mathbf{C}(b,d) \to \mathbf{C}(a,d)$. \\
+
+Todavía podemos ir más lejos, teniendo un funtor $\mathbf{C}(a,-) \colon \mathbf{C} \to \mathbf{Sets}$ y un funtor
+$\mathbf{C}^{op} \to \mathbf{Sets}$, tenemos por la propiedad universal del producto un funtor
+$\mathbf{C} \times \mathbf{C}^{op} \to \mathbf{Sets}$. Este funtor lleva pares de objetos $(a,b) \in \mathbf{C} \times \mathbf{C}^{op}$ de
+forma covariante y contravariante respectivamente
+
+#+begin_proposition
+La asignación $\mathbf{C}(-,-) \colon \mathbf{C} \times \mathbf{C}^{op} \to \mathbf{Sets}$ que acabamos de describir
+es funtorial.
+#+end_proposition
+#+begin_proof
+#+end_proof
+
+*** El lema de Yoneda
+Fijemos una categoría $\mathbf{C}$.  Cada objeto $c \in \mathbf{C}$ determina un funtor contravariante
+$\mathbf{C}(-,c) \in \mathbf{Cat}(\mathbf{C}^{op}, \mathbf{Sets})$. Los funtores de esta forma se llaman /representables/,
+y decimos que $\mathbf{C}(-,c)$ está representado por $c$. Dada una función $f \colon c \to d$, su
+postcomposición puede verse como una transformación natural
+$(f \circ -) \colon \mathbf{C}(-,c) \tonat \mathbf{C}(-,d)$.  Esto induce un funtor.
+
+#+begin_proposition
+El *embebimiento de Yoneda* es un funtor $\hirayo \colon \mathbf{C} \to \mathbf{Cats}(\mathbf{C}^{op}, \mathbf{Sets})$ que está
+determinado en objetos por $c \mapsto \mathbf{C}(-,c)$ y en morfismos por $f \mapsto (f \circ -)$.
+#+end_proposition
+
+#+attr_latex: :options [Lema de Yoneda]
+#+begin_theorem
+El *lema de Yoneda* dice que para toda categoría $\mathbf{C}$, existe una biyección
+$[ \mathbf{C} , \mathbf{Set} ](\hirayo(A), F ) \cong FA$ natural en $F \in [ \mathbf{C} , \mathbf{Sets} ]$ y en $A \in \mathbf{C}$.
+#+end_theorem
+#+begin_proof
+
+#+end_proof
+
+*** Ópticas                                                                             :noexport:
+
+**** Invariantes
+
+**** Polimórficas
+
+**** Composicionalmente
+# Pickering. Compositionality fails.
+
+*** Representación profuntorial de una óptica                                           :noexport:
+
+*** En la práctica                                                                      :noexport:
+
+*** Apéndice                                                                            :noexport:
+
+**** Categoría producto
+**** Categorías de funtores
+*** TODO Van Laarhoven representation for lenses                                        :noexport:
+# Derive it from Yoneda.
+# Live code.
+* TODO Diagonal arguments since Epimenides
+** Epimenides
+#+begin_quote
+Epimenides the Cretan said that all Cretans were liars, and all other
+statements made by Cretans were certainly lies. Was this a lie?
+  -- /Mathematical logic as based on the theory of types/, Bertrand Russell.
+#+end_quote
+
+The first historical example of a diagonal argument is, in fact, not
+an example. The negation of a universal quantifier is not an universal
+quantifier; "not all Cretans are liars" is not the same as "all
+Cretans are honest", and we can make the whole situation consistent by
+simply assuming that *Epimenides* (a Cretan) is a liar, but not all
+Cretans are.
+
+A correct example would be the simpler "I am lying", which cannot be
+neither true nor false without leading to contradiction. The example
+presented by *Russell* is known as the [[https://en.wikipedia.org/wiki/Barber_paradox][Barber's paradox]].
+
+** TODO Cantor's theorem
+# http://www.goodmath.org/blog/category/bad-math/cantor-crankery/
+
+** TODO Tarski-Gödel's theorem
+#+BEGIN_corollary
+A consistent theory cannot express its own truth. In particular, no
+consistent formal system of arithmetic can encode the truth of
+arithmetic statements.
+#+END_corollary
+
+** Lawvere
+So, what is a diagonal argument? My intention here is to introduce you
+to the *Lawvere's fixed-point theorem*, a result that captures all
+these diagonal arguments.
+
+First, let's consider some preliminary definitions.  Let $\mathbb{C}$
+be a category with a terminal object. We say that any morphism
+$a \colon 1 \to A$ from the terminal object to an arbitrary
+object $A \in\mathbb{C}$ is an *element* of $A$, and we write this as $a : A$.
+A morphism $g \colon A \to B$ is *point-surjective* if, for every element
+$b : B$, there exists an element $a : A$ such that $g\ a = b$ (composition
+of morphism is yuxtaposition here).  The name for these two definitions comes from their interpretation
+in $\mathsf{Sets}$, where $1 \to A$ corresponds to an element of the set $A$ and
+a point-surjective function is precisely a surjection. With these
+definitions, the theorem can be stated in any [[id:3d52d110-822a-4f85-a1c4-57d868b527d5][cartesian closed
+category]].
+
+#+begin_theorem
+(Lawvere's fixed point theorem). In any cartesian closed category, if
+there exists a point-surjective morphism $d : A \to B^A$, then each
+morphism $f : B \to B$ has a fixed point $b : B$, such that $f\ b = b$.
+#+end_theorem
+#+BEGIN_proof
+As $d$ is point-surjective, there exists $x : A$ such that $d\ x \equiv \lambda a. f\ (d\ a\ a)$,
+but then, $d\ x\ x \equiv (\lambda a.f\ (d\ a\ a))\ x \equiv f\ (d\ x\ x)$ is a fixed point.
+#+END_proof
+
+** Fixed points in untyped lambda calculus
+#+BEGIN_corollary
+Every term in untyped \lambda-calculus has a fixed point.
+#+END_corollary
+
+** References
+
+ * http://math.andrej.com/2007/04/08/on-a-proof-of-cantors-theorem/
+ * http://tac.mta.ca/tac/reprints/articles/15/tr15abs.html
+* TODO A nice definition of "model of computation"
+# Bauer's thesis
+# Partial functions must appear in the definition anyway
+# SKI happen to correspond to logical tautologies
+
+* TODO The type-theoretic axiom of choice
+* TODO Bach sonata
+* TODO The natural example of natural transformation
+Double dual of a vector space.
+* TODO Categorical programming with CAP
+* TODO A geodesic to Freyd-Mitchell
+* TODO Etimología para Mikrokosmos
+# Bartok
+# Cosmoi -> Benabou
+* TODO Media 2018
+* TODO Three Emacs
+* TODO Notes and spaced repetition cards in org-mode
+* TODO Applicative functors
+* TODO Recursion schemes
+* TODO A quote by Conor McBride
+#+begin_quote
+  "The task of the academic is not to scale great intellectual
+  mountains, but to flatten them." -- Conor McBride
+#+end_quote
+
+* TODO Readings for the ACT School 2019
+* TODO Iosevka, ligatures, and box-drawing
+https://github.com/be5invis/Iosevka/issues/227
+
+#+BEGIN_SRC haskell
+A B                                        Cin
+║ ║                                         │
+║ ╚═══╤════╤════╤════╤════╤════╤════╤════╕  │
+╚════╤╪═══╤╪═══╤╪═══╤╪═══╤╪═══╤╪═══╤╪═══╕│  │
+    ┌┴┴─┐┌┴┴─┐┌┴┴─┐┌┴┴─┐┌┴┴─┐┌┴┴─┐┌┴┴─┐┌┴┴─┐│
+┌───┤ 7 ├┤ 6 ├┤ 5 ├┤ 4 ├┤ 3 ├┤ 2 ├┤ 1 ├┤ 0 ├┘
+│   └──┬┘└──┬┘└──┬┘└──┬┘└──┬┘└──┬┘└──┬┘└──┬┘
+│ ╔════╧════╧════╧════╧════╧════╧════╧════╛
+│ ║
+│ Y
+│
+Cout
+#+END_SRC
+
+* TODO Kaleidoscopes, or how to invent an optic
+
+** TODO Definition of optic, profunctor representation
+# Following Boisseau.
+
+** TODO Kaleidoscope
+# Applicative functors.
+
+** TODO Composing with a classifying lens
+** TODO Use case: the iris dataset
+
+* Lawful mixed optics                                                                         :post:
+:PROPERTIES:
+:TITLE: Lawful mixed optics
+:EXPORT_FILE_NAME: docs/_posts/2019-11-05-lawfulmixed.html
+:EXPORT_DATE: 5th November 2019
+:END:
+A first notion of what a lawful mixed optic should be is to push both
+parts of the optic into the same category and consider lawfulness
+there.
+
+In the case of monadic lenses for copointed monads, this can give a
+reasonable notion of laws.
+
+* Autonomous lenses                                                                           :post:
+:PROPERTIES:
+:TITLE: Autonomous lenses
+:EXPORT_FILE_NAME: autolens.html
+:EXPORT_DATE: 5th November 2019
+:INDEX_DATE: <2019-11-05 Tue>
+:END:
+
+An interesting consideration is to see what happens if we extend the Optic
+formula on the product to a more symmetric case.
+
+\[
+\int^{C,D} \mathbf{C}(D \times S, C \times A) \times \mathbf{C}(C \times B, D \times T)
+\]
+
+In the same way that lenses give teleological categories, this should give
+a category with formal cups and caps. I am interested on this because that
+means it would be a way of constructing models of DisCoCat following this
+idea by [[https://arxiv.org/abs/1411.3827][Delpeuch]].
+
+I have now realized that this is in fact the category of learners as described
+by Fong and Johnson.  Can we use learners in DisCoCat?
+
+* TODO Combs and the Int construction                                                         :post:
+:PROPERTIES:
+:TITLE: Combs and the Int construction
+:EXPORT_FILE_NAME: combsint.html
+:EXPORT_DATE: 5th November 2019
+:INDEX_DATE: <2019-11-05 Tue>
+:END:
+
+After seeing my MSc colleague Daphne Wang working on [[https://arxiv.org/pdf/1701.04732.pdf][Kissinger and
+Uiljen]]'s /combs/ for the whole term, I realized at [[https://twitter.com/mroman42/status/1178776527279988736][some point]] that these
+were lenses in a compact closed category.  The proof goes as follows.
+
+#+BEGIN_SRC haskell
+ ∫ᵂ (A → W ⊗ B)×(C ⊗ W → D)
+≅ ⟨ Duals ⟩
+ ∫ᵂ (A → W ⊗ B)×(W → C* ⊗ D)
+≅ ⟨ Yoneda ⟩
+ A → (C* ⊗ D) ⊗ B
+≅ ⟨ Duals, Symmetry ⟩
+ I → A* ⊗ B ⊗ C* ⊗ D
+#+END_SRC
+
+The same proof can be used to show that Int(C)≅Optic(C) when C is
+compact closed. Here ~Int~ is the [[https://arxiv.org/abs/1904.11287][Int construction]].
+
+In the general case, after a suggestion by Jules that came from a
+tweet by Piedeleu; Elena Di Lavore and me wrote down an explicit
+Optic(C)→Int(C) embedding.
+
+ * [[./opticint.pdf][Optic embeds into the Int construction]].
+
+* TODO Tannakian reconstruction of Tambara modules                                            :post:
+:PROPERTIES:
+:TITLE: Tannakian reconstruction of Tambara modules
+:EXPORT_FILE_NAME: tannakiantambara.html
+:EXPORT_DATE: 26th September, 2019
+:INDEX_DATE: <2019-09-26 Thu>
+:END:
+
+The profunctor representation of optics can be seen as a case of
+Tannakian reconstruction for Tambara modules.  That is, functional
+programmers have been for years using Tannakian reconstruction to
+access data structures.  I have written a note with a proof of
+Boisseau and Gibbons' profunctor representation theorem that follows
+the structure of Tannakian reconstruction.
+
+*Bartosz Milewski* suggested me to look into Tannakian reconstruction
+and try to apply it to optics.
+
+ * [[./tannaka.pdf][Tannakian reconstruction of Tambara modules (pdf)]].
+
+* TODO Kaleidoscopes, monoidal lenses, comonoidal prisms                                      :post:
+:PROPERTIES:
+:TITLE: Kaleidoscopes, monadic lenses, comonadic prisms
+:EXPORT_FILE_NAME: kaleidoscopesmonadiclens.html
+:EXPORT_DATE: 23th July, 2019
+:INDEX_DATE: <2019-07-23 Tue>
+:END:
+
+A *kaleidoscope* is the optic for applicative functors. Using the free
+applicative construction from Capriotti-Kaposi, we can show their
+concrete representation is the following.
+
+#+BEGIN_SRC haskell
+type Kaleidoscope s t a b = forall n . (Vec n a -> b) -> (Vec n s -> t)
+#+END_SRC
+
+If we take lenses where complements are monad algebras or prisms where
+the complements are comonad coalgebras, we get *monadic lenses* and
+*comonadic prisms*, that we can write as
+
+#+BEGIN_SRC haskell
+type MonLens m s t a b = (s -> a , m s -> b -> t)
+type ComonPrism n s t a b = (s -> n t + a , b -> t)
+#+END_SRC
+
+I am not sure if these optics are elsewhere in the literature, but I have not
+been able to find them so far.
+
+* TODO Profunctor optics: a categorical update                                                :post:
+:PROPERTIES:
+:TITLE: Profunctor optics: a categorical update
+:EXPORT_FILE_NAME: profunctoropticscategoricalupdate.html
+:EXPORT_DATE: 5th July, 2019
+:INDEX_DATE: <2019-07-05 Fri>
+:END:
+
+Being the slides for a presentation for the MFoCS at Oxford.  I
+describe the motivation behind studying optics, study the general
+definition of optic and provide an elementary derivation for the
+traversal.
+
+ * [[./mfocs-profunctoroptics-presentation.pdf][Link to the slides]].
+
+* TODO Discokitty, an implementation                                                          :post:
+:PROPERTIES:
+:TITLE: Discokitty, an implementation
+:EXPORT_FILE_NAME: discokittyimplementation.html
+:EXPORT_DATE: 24th June, 2019
+:INDEX_DATE: <2019-07-24 Mon>
+:END:
+
+As a part of the course on Distributional Models of Meaning by [[https://www.cs.ox.ac.uk/people/bob.coecke/][Coecke]]
+and [[https://www.cs.ox.ac.uk/people/dan.marsden/][Marsden]], I wrote an educational implementation of the DisCoCat
+framework (as described in 
+/"[[https://arxiv.org/abs/1003.4394][Mathematical Foundations for a Compositional Distributional Model of Meaning]]"/).
+
+*Discokitty* is written on Haskell and the code can be found [[https://github.com/mroman42/discokitty][on GitHub]].
+
+* TODO The "Glass" optic                                                                      :post:
+:PROPERTIES:
+:TITLE: The glass optic
+:EXPORT_FILE_NAME: glass.html
+:EXPORT_DATE: 27th May, 2019
+:INDEX_DATE: <2019-05-27 Mon>
+:END:
+
+At the intersection between a *lens* and a *grate* there should be an
+optic that I have started to call *glass*.  If the pseudomonoid action
+that describes a lens is  (c × _)  and the one for glass is  (c -> _),
+the action that we want to get should be the one given by the
+coproduct pseudomonoid.
+
+We rewrite the action of every word =c₁d₁ ... cₖdₖ= on some object
+=a= as follows, for some  e,f ∈ *C*, a bicartesian closed category.
+
+#+BEGIN_SRC haskell
+  d₁ × (c₁ -> d₂ × (c₂ -> ... x))  ≅
+  d₁ × (c₁ -> d₂) × (c₁ × c₂ -> ... x)  ≅
+  e × (f -> x)
+#+END_SRC
+
+And we derive the concrete representation.
+
+#+BEGIN_SRC haskell
+  ∃ c,d .  (s -> (c × (d -> a))) × (c × (d -> b) -> t)  ≅
+  ∃ c,d .  (s -> c) × (s -> (d -> a)) × (c × (d -> b) -> t)  ≅
+  ∃ d   .  (s -> (d -> a)) × (s × (d -> b) -> t)  ≅
+  ∃ d   .  (d -> (s -> a)) × (s × (d -> b) -> t)  ≅
+  (s × ((s -> a) -> b) -> t)  ≅
+  ((s -> a) -> b) -> s -> t
+#+END_SRC
+
+My intuition at the
+moment is "If from a getter you can create a b, then you can update s
+to t", which apparently also rhymes.
+
+* TODO Adjunciones (WIP)                                                                      :post:
+:PROPERTIES:
+:TITLE: Adjunciones (WIP)
+:EXPORT_FILE_NAME: sobreadjunciones.html
+:EXPORT_DATE: 21 de abril de 2019
+:INDEX_DATE: <2019-04-21 Sun>
+:EXPORT_OPTIONS: toc:1 num:t lang:es
+:END:
+
+/Este es un post en construcción que me gustaría expandir./
+/No es una prioridad ahora mismo y no sé cuánto me llevará escribirlo./
+
+*Introducción.* Las *adjunciones* son un concepto básico que no suele
+aparecer en cursos de matemáticas hasta que se empieza a usar teoría
+de categorías.  Muchas construcciones pueden expresarse como
+adjunciones, y saber identificarlas y usarlas simplifica muchos
+razonamientos.  La mayoría de estas notas vienen de traducir partes de
+mi trabajo de fin de grado, pero pueden encontrarse (y bastante mejor
+explicadas) en cualquier libro básico de teoría de categorías (/Awodey/,
+/Riehl/ o /MacLane/), quizá con otra notación.  Especialmente la notación
+como secuentes en lógica viene inspirada por teoría de tipos y no
+parece especialmente común, pero aquí la usaremos en la mayoría de
+demostraciones.
+
+** Adjunciones
+*Definición.* Una *adjunción* entre dos categorías *X* e *Y* es un par de
+funtores F : *X* -> *Y* y G : *Y* -> *X*, junto a una biyección 
+φ : hom(FX,Y) ≅ hom(X,GY) natural en X ∈ *X* y en Y ∈ *Y*.  Decimos que F
+es /adjunto izquierdo/ a G y que G es /adjunto derecho/ a F, y escribimos eso
+como F ⊣ G.
+
+Decir que φ es natural significa para cualquier h : X -> X' y para cualquier
+k : Y -> Y', los siguientes cuadrados conmutan.  Como además φ es una biyección,
+podemos tomar φ⁻¹, darle la vuelta a las flechas, y seguir teniendo cuadrados
+que conmutan.
+#+BEGIN_SRC haskell
+  hom(FX, Y)  -{φ}->  hom(X, GY)     hom(FX, Y)  -{φ}->  hom(X, GY)   
+    |                   |              |                   |          
+  {_∘Fh}              {_∘h}          {k∘_}              {Gk∘_}        
+    ↓                   ↓              ↓                   ↓          
+  hom(FX',Y) -{φ}->  hom(X',GY)      hom(FX,Y') -{φ}->  hom(X,GY')    
+#+END_SRC
+
+*Notación de Lawvere.* Una notación más sencilla para condensar toda
+esta información es usando diagramas que simulan relaciones
+lógicas. Aprendí esta notación en /Use of logical operators in Mathematics/,
+unas notas de William Lawvere que me recomendó [[https://wpd.ugr.es/~bullejos/wordpress/][Manuel Bullejos]]. 
+No he podido trazar cuál es el origen exacto, parece que es "folklore"
+en teoría de categorías.
+
+Una adjunción F ⊣ G puede escribirse como sigue.
+#+BEGIN_SRC haskell
+    F X -{f}-> Y
+  ──────────────────
+    X -{φ(f)}-> G Y
+#+END_SRC
+
+Esta notación enfatiza que a cada morfismo FX -> Y le corresponde un
+morfismo X -> GY; y que esta es una relación biyectiva, yendo en ambas
+direcciones.  La naturalidad se traduce en que la precomposición y la
+poscomposición de morfismos son respetados por esta regla de inferencia.
+Dados cualesquiera h : X' -> X y k : Y -> Y', sabemos por naturalidad
+que las flechas compuestas en los siguientes diagramas son adjuntas entre
+sí.
+
+#+BEGIN_SRC haskell
+    F X' -{Fh}-> F X -{f}-> Y        F X -{f}-> Y -{k}-> Y'
+  ─────────────────────────────  ──────────────────────────────
+    X' -{h}-> X -{φ(f)}-> G Y      X -{φ(f)}-> G Y -{Gk}-> G Y'
+#+END_SRC
+
+Es decir, φ(f) ∘ h = φ(f ∘ Fh) y Gk ∘ φ(f) = φ(k ∘ f).
+
+*Definición.* Dada una adjunción F ⊣ G, la *unidad* y la *counidad* son las
+familias de morfismos η : X -> GFX y ε : FGY -> Y, que se obtienen al
+aplicar el isomorfismo a las identidades.
+
+#+BEGIN_SRC haskell
+    F X -{id}-> F X      F G Y -{ε}-> Y  
+  ───────────────────   ───────────────────
+     X -{η}-> G F X       G Y -{id}-> G Y
+#+END_SRC
+
+*** Unidad y counidad son transformaciones naturales                             :noexport:ignore:
+#+begin_proposicion
+La unidad y la counidad son transformaciones naturales.
+#+end_proposicion
+#+begin_proof
+Sean $h \colon X \to X'$ y $k \colon Y \to Y'$. Comprobaremos que el
+morfismo adjunto a $Fh$ es $GFh \circ \eta_X$ y $\eta_X' \circ h$ al
+mismo tiempo, lo que implica que deben ser iguales. De
+la misma forma, el adjunto a $Gk$ es $k \circ \varepsilon_Y$ pero
+tambień $\varepsilon_{Y'} \circ FGk$.
+\begin{prooftree}
+\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] 
+\phantom{Fx}\&
+X \rar{h}\& 
+Y \rar{\eta}\& 
+GFY
+\end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&] 
+FX \rar{\id}\& 
+FX \rar{Fh}\& 
+FY \rar{\id}\& 
+FY 
+\end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&]
+X \rar{\eta}\& 
+GFX \rar{GFh}\&
+GFY \&
+\phantom{Gy}
+\end{tikzcd}}
+\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] 
+FGX \rar{\varepsilon} \&
+X \rar{k}\& 
+Y \& 
+\phantom{GFy}
+\end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&]
+GX \rar{\id}\&
+GX \rar{Gk}\&
+GY \rar{\id} \&
+GY
+\end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&]
+\phantom{Gx}\&
+FGx \rar{FGk}\&
+FGy \rar{\varepsilon}\&
+y \end{tikzcd}}
+\noLine
+\BIC{}
+\end{prooftree}
+#+end_proof
+
+*** Unidad y counidad cumplen las ecuaciones de zig-zag                          :noexport:ignore:
+#+begin_proposicion
+La unidad y la counidad cumplen las ecuaciones dadas
+en los siguientes diagramas, llamadas /ecuaciones triangulares/
+o /ecuaciones de zig-zag/.
+\[\begin{tikzcd}
+G \drar[equal] \rar{\eta} & GFG \dar{G \varepsilon} &
+FGF \dar[swap]{\varepsilon} & F \lar[swap]{F\eta} \dlar[equal] \\
+& G & F &
+\end{tikzcd}\]
+Es decir, tenemos $G\varepsilon \circ \eta = \mathrm{id}$ y también $\varepsilon \circ F\eta = \mathrm{id}$.
+#+end_proposicion
+#+begin_proof
+Probaremos algo todavía más general, que $Gf \circ \eta = \varphi(f)$ y que
+también $\varepsilon \circ Fg = \varphi^{-1}(g)$ para cualesquiera $f \colon FX \to Y$ y
+$g \colon X \to GY$.  En efecto, aplicando naturalidad en los diagramas
+tenemos que deben coincidir.
+\begin{prooftree}
+\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] 
+FX \ar[bend left=45]{rr}{\varepsilon_{Y} \circ Fg} \rar{Fg}\& 
+FGY \rar{\varepsilon_Y}\& 
+Y 
+\end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&]
+X \ar[bend right=45]{rr}[swap]{g} \rar[swap]{g}\& 
+GY \rar[swap]{\id}\&
+GY 
+\end{tikzcd}}
+\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&]
+FX \ar[bend left=45]{rr}{f} \rar{\id}\&
+FX \rar{f}\&
+Y \end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&]
+X \ar[bend right=45]{rr}[swap]{Gf \circ \eta_X} \rar[swap]{\eta_X}\&
+GFX \rar[swap]{Gf}\&
+GY \end{tikzcd}}
+\noLine
+\BIC{}
+\end{prooftree}
+#+end_proof
+
+** Caracterización y propiedades                                                         :noexport:
+Las adjunciones contienen muchísima información.  Ahora mismo nos
+sería muy difícil probar que dos funtores forman una adjunción. Lo que
+necesitamos son formas de caracterizarlas.
+
+*** Caracterización                                                                       :ignore:
+#+attr_latex: :options [Caracterización de adjunciones]
+#+begin_proposition
+<<prop-characterize-adjunctions>>
+Una adjunción $F \dashv G$ entre categorías $\mathbf{X}$ y $\mathbf{Y}$ 
+viene determinada por cualesquiera de las siguientes opciones,
+
+ 1. funtores $F,G$ y $\eta\colon 1 \tonat GF$ donde $\eta_X\colon X \to GFX$ es universal sobre $G$.
+ 2. funtor $G$ y universales $\eta_X \colon X \to GF_0 X$; aquí $F_0X \in \mathbf{Y}$ crea un funtor $F$.
+ 3. funtores $F,G$ y $\varepsilon\colon FG \tonat 1$ donde $\varepsilon_Y\colon FGY \to Y$ es universal sobre $F$.
+ 4. funtor $F$ y universales $\varepsilon_Y\colon FG_0Y \to Y$; aquí $G_0Y \in \mathbf{X}$ crea un funtor $G$.
+ 5. funtores $F,G$, con transformaciones naturales satisfaciendo $G\varepsilon \circ \eta G = \id$ y $\varepsilon F \circ F\eta = \id$
+    (zig-zag).
+#+end_proposition
+#+begin_proof
+/1./ Universality of $\eta_X$ gives a isomorphism $\varphi \colon \hom(FX,Y) \cong \hom(X,GY)$ between 
+the arrows in the following diagram
+\[\begin{tikzcd}
+& GY & Y \\
+X \rar[swap]{\eta_x}\urar{f} & GFX \uar[swap,dashed]{Gg} & FX \uar[dashed,swap]{\exists! g}
+\end{tikzcd}\]
+defined as $\varphi(g) = Gg \circ \eta_X$. This isomorphism is natural in $X$; for every
+$h \colon X' \to X$ we know by naturality of $\eta$ that $Gg \circ \eta \circ h = G(g \circ Fh) \circ \eta$.
+The isomorphism is also natural in $Y$; for every $k \colon Y \to Y'$ we know by
+functoriality of $G$ that $Gh\circ Gg \circ \eta = G(h \circ g) \circ \eta$.
+
+/2./ We can define a functor $F$ on objects as $FX = F_0X$. Given any
+$h \colon X \to X'$, we can use the universality of $\eta$ to define
+$Fh$ as the unique arrow making this diagram commute
+\[\begin{tikzcd}
+& GFX' & FX' \\
+X \rar[swap]{\eta_X}\urar{\eta_{X'} \circ h} & GFX \uar[swap,dashed]{GFh} &
+FX \uar[dashed,swap]{\exists! Fh}
+\end{tikzcd}\]
+and this choice makes $F$ a functor and $\eta$ a natural transformation,
+as it can be checked in the following diagrams using the existence
+and uniqueness given by the universality of $\eta$ in both cases.
+\[\begin{tikzcd}
+&&& X'' \rar{\eta_{X''}}  & GFX''  & FX'' \\
+& GFX & FX & X'  \uar{h'} \rar{\eta_{X'}}  & GFX'  \uar[swap]{GFh'}  & 
+FX' \uar[dashed]{\exists! Fh'} \\
+X \rar[swap]{\eta_X}\urar{\eta_{X}} & GFX \uar[swap,dashed]{\id} & 
+FX \uar[dashed,swap]{\id} & 
+X \rar{\eta_{X}}\uar{h} & GFX \uar[swap]{GFh} & 
+FX \uar[dashed]{\exists! Fh'} \ar[dashed,swap,bend right]{uu}{\exists! F(h' \circ h)}
+\end{tikzcd}\]
+
+/3./ The proof is dual to that of /1/.
+
+/4./ The proof is dual to that of /2/.
+
+/5./ We can define two functions $\varphi(f) = Gf \circ \eta_X$ and $\theta(g) = \varepsilon_Y \circ Fg$.
+We checked in 1 (and 3) that these functions are natural in both arguments;
+now we will see that they are inverses of each other using naturality
+and the triangle identities
+
+ * $\varphi(\theta(g)) &= G\varepsilon \circ GFg \circ \eta = G\varepsilon \circ \eta \circ g = g$;
+ * $\theta(\varphi(f)) = \varepsilon \circ FGf \circ F\eta = f \circ \varepsilon \circ F\eta = f$.\qedhere
+#+end_proof
+
+*** Unicidad                                                                              :ignore:
+#+ATTR_LATEX: :options [Unicidad esencial de adjuntos]
+#+BEGIN_proposition
+Dos adjuntos al mismo funtor $F,F' \dashv G$ son naturalmente isomorfos.
+#+END_proposition
+#+BEGIN_proof
+Construiremos un isomorfismo natural a partir de las dos unidades $\eta, \eta'$
+que determinan las adjunciones. Para cada $X$, sabemos que $\eta_X \colon X \to GFX$
+y $\eta_{X'} \colon X \to GF'X$ son universales desde $X$ hacia $G$.  Se puede ver que
+en general los morfismos universales son únicos salvo isomorfismo, así que
+existe un $\theta_X \colon FX \to F'X$ tal que $G\theta_X \circ \eta_X = \eta'_X$. \\
+
+Sabemos que $\theta$ es natural porque para cualquier $f \colon X \to Y$ los morfismos
+$\theta \circ Ff$ y $F'f \circ \theta$, hacen conmutar el siguiente diagrama.
+\[\begin{tikzcd}
+Y \rar{\eta'} & GF'Y & F'Y\\
+X \rar{\eta}\uar{f} & GFX \uar[dashed,swap]{} & FX \uar[dashed]{\exists!}
+\end{tikzcd}\]
+En efecto,
+
+ * $G(\theta \circ Ff) \circ \eta = G\theta \circ GFf \circ \eta = G\theta \circ \eta \circ f = \eta' \circ f$;
+ * $G(F'f \circ \theta) \circ \eta = GF'f \circ G\theta \circ \eta = GF'f \circ \eta' = \eta' \circ f$.
+
+Pero el morfismo haciendo conmutar el diagrama debería ser único, así
+que $\theta \circ Ff = F'f \circ \theta$.
+#+END_proof
+
+*** Composición                                                                           :ignore:
+#+ATTR_LATEX: :options [Composición de adjunciones]
+#+BEGIN_theorem
+Dadas dos adjunciones $\varphi \colon F \dashv G$ y $\theta \colon F' \dashv G'$ entre dos
+pares de categorías ${\cal X},{\cal Y}$ y ${\cal Y},{\cal Z}$ respectivamente, los funtores
+compuestos crean una adjunción $\varphi \cdot \theta \colon F'\circ F \dashv G\circ G'$. 
+#+END_theorem
+#+BEGIN_proof
+La composición de isomorfismos naturales es de nuevo un isomorfismo natural,
+así que lo único que hacemos es obtener el isomorfismo que buscamos por
+composición.
+\begin{prooftree}
+\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&]
+F'FX \rar{f}\& Y
+\end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&]
+FX \rar{\theta(f)}\& G'Y
+\end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&]
+X \rar{\varphi\theta(f)}\& GG'Y
+\end{tikzcd}}
+\end{prooftree}
+#+END_proof
+
+Si además queremos conocer la unidad y counidad de esta adjunción, podemos
+aplicar la biyección compuesta a las identidades, como sigue.
+Si la unidad y la counidad de $\varphi$ son $\pair{\eta,\varepsilon}$ y las de
+$\theta$ son $\pair{\eta',\varepsilon'}$, la unidad y la counidad de la adjunción
+compuesta vienen dadas por $\pair{G \eta' F \circ \eta,\ \varepsilon' \circ F' \varepsilon G'}$.
+\begin{prooftree}
+\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] 
+\phantom{FX}\&
+F'FX \rar{\id}\& 
+F'FX 
+\end{tikzcd}}
+\doubleLine
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&] 
+FX \rar{\id}\& 
+FX \rar{\eta'_{FX}}\& 
+G'F'FX
+\end{tikzcd}}
+\doubleLine
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&]
+X \rar[swap]{\eta}\& 
+GFX \rar[swap]{G\eta'_{FX}}\&
+GG'F'FX
+\end{tikzcd}}
+
+\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] 
+GG'Z \rar{\id} \&
+GG'Z \& 
+\phantom{FFGy}
+\end{tikzcd}}
+\doubleLine
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&]
+FGG'Z \rar{\varepsilon_{G'Z}}\&
+G'Z \rar{\id}\&
+G'Z \end{tikzcd}}
+\doubleLine
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&]
+F'FGG'Z  \rar[swap]{F'\varepsilon_{G'Z}}\&
+F'G'Z \rar[swap]{\varepsilon'}\&
+Z \end{tikzcd}}
+\noLine
+\BIC{}
+\end{prooftree}
+
+** Muchas adjunciones                                                                    :noexport:
+Esta parte viene inspirada por la numerosísima cantidad de adjunciones que
+pueden encontrarse al hacer categorías y por un hilo en [[https://math.stackexchange.com/questions/46708/a-bestiary-about-adjunctions][Math.SE]].
+
+*** Monoides libres
+#+begin_proposicion
+Consideremos la categoría de los monoides con los homomorfismos de
+monoide.  El funtor $F \colon \mathbf{Set} \to \mathbf{Mon}$ que envía cada conjunto a su
+monoide libre es el adjunto izquierdo del funtor $U \colon \mathbf{Mon} \to \mathbf{Set}$
+que a cada monoide le asocia su conjunto subyacente.
+#+end_proposicion
+#+begin_proof
+Vamos a usar la caracterización de las adjunciones. Crearemos una
+familia de funciones $\eta_X \colon X \to UFX$ y probaremos la universalidad
+del siguiente diagrama.  Aquí $M$ es un monoide con unidad $e$ y multiplicación
+$(\cdot)$.
+\[\begin{tikzcd}
+& UM & M \\
+X \rar[swap]{\eta_x}\urar{f} & UFX \uar[swap,dashed]{Uh} & FX \uar[dashed,swap]{\exists! h}
+\end{tikzcd}\]
+Puede ayudar pensar que si $X$ es un conjunto, $FX$ es el conjunto de
+las listas finitas sobre $X$.  Por el diagrama sabemos que $h[x] = f(x)$
+está determinado; pero además, como $h$ debe ser un homomorfismo de
+monoides, esto lo hace estar determinado sobre cualquier lista.
+Concluimos que el único morfismo posible está definido como
+$h[x_1,\dots,x_{n}] = f(x_1) \cdot \ldots \cdot f(x_{n})$.
+#+end_proof
+
+La mónada asociada a esta adjunción es la mónada lista.  Las álgebras
+sobre esta mónada son precisamente los monoides.
+
+*** Conexiones de Galois
+#+begin_definicion
+Los conjuntos parcialmente ordenados forman categorías en las que
+hay un único morfismo $a \to b$ cuando $a \leq b$.  Un funtor entre dos
+conjuntos parcialmente ordenados es una función monótona. Una
+*conexión de Galois* es una adjunción entre conjuntos parcialmente
+ordenados.
+#+end_definicion
+
+Es decir, una adjunción entre $P$ y $Q$ consiste en funciones monótonas
+$f \colon P \to Q$ y $g \colon Q \to P$, con la siguiente doble implicación para
+cualesquiera $x \in P$, $y \in Q$.
+\begin{prooftree}
+\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] f(x) \leq y \end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&] x \leq g(y) \end{tikzcd}}
+\end{prooftree}
+Estos casos son especialmente fáciles de identificar y de demostrar
+porque en ellos las condiciones de naturalidad se satisfacen
+automáticamente. Esto es así porque hay a lo sumo un único morfismo
+entre cualesquiera dos objetos, y por tanto, dos morfismos entre los
+mismos objetos deben coincidir.
+
+#+begin_ejemplo
+Sea una topología en un conjunto $X$.  Los abiertos forman un conjunto
+parcialmente ordenado con la inclusión ${\cal O}(X)$, pero de hecho todos los
+elementos del conjunto potencia forman un conjunto parcialmente ordenado
+con la inclusión, ${\cal P}(X)$.  Podemos ver un abierto como un elemento del
+conjunto potencia $i \colon {\cal O}(X) \to {\cal P}(X)$.  El *interior* de un conjunto
+$\mathsf{int} \colon {\cal P}(X) \to {\cal O}(X)$ es el adjunto derecho a esa inclusión, $i \dashv \mathsf{int}$.
+\begin{prooftree}
+\AXC{\begin{tikzcd}[fragile,ampersand replacement=\&] i(U) \subseteq A \end{tikzcd}}
+\UIC{\begin{tikzcd}[fragile,ampersand replacement=\&] U \subseteq \textsf{int}(A) \end{tikzcd}}
+\end{prooftree}
+Nótese que ambos son equivalentes para cualquier $U \in {\cal O}(X)$ y cualquier
+$A \in {\cal P}(X)$.  Esto también nos dice que el interior es comonádico; y sus
+coálgebras son los conjuntos abiertos.
+#+end_ejemplo
+
+*** Distribuciones y símplices
+Consideramos un funtor que envía un conjunto $X$ al conjunto de
+distribuciones finitas sobre él, $DX$.  Las álgebras sobre la mónada
+de esta adjunción son los conjuntos convexos; en particular las
+álgebras libres sobre conjuntos finitos se llaman *símplices*.
+
+*** Los cuantificadores son adjunciones
+# Fibraciones de Grothendieck
+** Mónadas y álgebras                                                                    :noexport:
+
+*** Mónadas                                                                               :ignore:
+#+begin_definicion
+Una *mónada* es un funtor $T\colon X \to X$ con una transformación natural
+$\eta\colon \Id \tonat T$ llamada *unidad* y una transformación natural $\mu \colon T^2 \tonat T$,
+llamada /multiplicación/; tales que los siguientes diagramas conmutan.
+\[\begin{tikzcd}
+T^3 \rar{T\mu}\dar{\mu T} & T^2\dar{\mu} \\
+T^2 \rar{\mu} & T
+\end{tikzcd}
+\qquad
+\begin{tikzcd}
+\Id \circ T \rar{\eta T}\drar[swap]{\cong} & T^2\dar{\mu} & \lar[swap]{T\eta}\dlar{\cong} T\circ \Id \\
+& T &
+\end{tikzcd}\]
+Una *comónada* es el dual a una mónada, con una *counidad* $\varepsilon \colon T \tonat \Id$
+y una comultiplicación $T \tonat T^2$.
+#+end_definicion
+
+#+begin_ejemplo
+Las mónadas en un preorden son funciones idempotentes crecientes.
+#+end_ejemplo
+
+*** Cada adjunción da lugar a una mónada                                                  :ignore:
+#+begin_proposicion
+Dada una adjunción $G \dashv F$, la composición $G \circ F$ es una mónada.
+#+end_proposicion
+#+begin_proof
+La unidad de la adjunción es la unidad de la mónada. El producto
+será $\mu = G\varepsilon$.  La asociatividad es el siguiente diagrama, que se
+obtiene primero por naturalidad y luego aplicando funtores.
+\[\begin{tikzcd}
+FGFG\rar{FG\varepsilon} \dar[swap]{\varepsilon} & FG \dar{\varepsilon} \\
+FG\rar{\varepsilon} & I
+\end{tikzcd}
+\qquad
+\begin{tikzcd}
+GFGFGF\rar{GFG\varepsilon} \dar[swap]{G\varepsilon} & GFGF \dar{G\varepsilon} \\
+GFGF\rar{G\varepsilon} & GF
+\end{tikzcd}\]
+La unitalidad viene dada precisamente por las ecuaciones de zigzag.
+#+end_proof
+
+** Álgebras                                                                              :noexport:
+
+*** Álgebras                                                                              :ignore:
+#+begin_definicion
+Un *álgebra* sobre un funtor $F \colon \mathbf{C} \to \mathbf{C}$ viene dada por un objeto
+$X \in \mathbf{C}$ equipado con un morfismo $FX \to X$ llamado /morfismo/ /de/
+/estructura/.
+#+end_definicion
+
+Un morfismo entre dos álgebras dadas por $FX \to X$ y por $FY \to Y$
+viene dado por un $h \colon X \to Y$ haciendo conmutar el siguiente
+diagrama.
+\[\begin{tikzcd}
+FX \rar{Fh}\dar{\mu} & FY\dar{\nu} \\
+X \rar{h} & Y
+\end{tikzcd}\]
+Con estos morfismos, las álgebras sobre un funtor forman una
+categoría.  El objeto inicial de esta categoría no necesita existir,
+pero cuando lo hace es único salvo isomorfismo.
+
+*** Lambek                                                                                :ignore:
+#+ATTR_LATEX: :options [Lambek]
+#+begin_teorema
+El morfismo de estructura de un álgebra inicial es un isomorfismo.
+Es decir, si $X$ es un álgebra inicial, entonces $\mu \colon FX \cong X$ (véase cite:awodey10).
+#+end_teorema
+#+begin_proof
+Consideremos el siguiente diagrama conmutativo, donde $l \colon X \to FX$ 
+viene dado por la inicialidad de $X$.
+\[\begin{tikzcd}
+FX\rar{Fl} \dar[swap]{\mu} &
+FFX \dar{F\mu} \rar{F\mu} &
+FX \dar{\mu} \\
+X\rar{l} &
+FX\rar{\mu} &
+X
+\end{tikzcd}\]
+Por inicialidad de $X$ sabemos que $\mu \circ l = \id$, y por conmutatividad
+de la parte izquierda,  $l \circ \mu = F(\mu \circ l) = \id$.
+#+end_proof
+
+*** Catamorfismos, anamorfismos e hilomorfismos                                           :ignore:
+Podemos usar el punto fijo de los funtores para definir catamorfismos
+y anamorfismos. Hay un problema y es que =Fix= encontrará /un/ punto fijo
+si lo hay (teorema de reducción a izquierda para el cálculo lambda),
+pero no tenemos forma de fijar el que queremos.
+
+#+BEGIN_SRC haskell
+    -- Declaramos el punto fijo de un funtor.  Si nos da el álgebra
+    -- o la coálgebra inicial, 'In' y 'out' serán isomorfismos por
+    -- el teorema de Lambek.
+    newtype Fix f = In { out :: f (Fix f) }
+    
+    type Algebra f a = f a -> a
+    type Coalgebra f a = a -> f a
+    
+    -- Usando el teorema de Lambek.
+    cata :: (Functor f) => Algebra f a -> Fix f -> a
+    cata alg = alg . fmap (cata alg) . out
+    
+    ana :: (Functor f) => Coalgebra f b -> b -> Fix f
+    ana coalg = In . fmap (ana coalg) . coalg
+#+END_SRC
+
+*** Catamorfismo: listas                                                                  :ignore:
+#+begin_ejemplo
+El funtor polinómico $1+A \times (-)$ tiene como álgebra inicial
+las listas de tipo $A$.
+#+end_ejemplo
+#+BEGIN_SRC haskell
+    -- Listas, monoides libres.
+    data ListF a f = NilF | ConsF a f deriving (Functor)
+    type List a = Fix (ListF a)
+    
+    nil = In NilF
+    cons = ((In .) . ConsF)
+    
+    algsum :: (Num a) => Algebra (ListF a) a
+    algsum NilF        = 0
+    algsum (ConsF a b) = a + b
+    
+    sumlist :: (Num a) => List a -> a
+    sumlist = cata algsum
+#+END_SRC
+
+
+*** Los números naturales son un álgebra inicial                                          :ignore:
+#+ATTR_LATEX: :options [Objeto de números naturales]
+#+BEGIN_exampleth
+<<example-naturalnumbersobj>>
+Consider the functor $F(X) = 1 + X$ in a category ${\cal C}$ with coproducts
+and a terminal object. Its initial algebra is called a *natural numbers object*
+due to the fact that, in $\Set$, this initial algebra is precisely the
+set of natural numbers $\mathbb{N}$ with the successor function $\mathrm{succ}\colon \mathbb{N} \to \mathbb{N}$
+and the zero element given as a morphism from the terminal object, $0 \colon 1 \to \mathbb{N}$.
+\[\begin{tikzcd}
+1+\mathbb{N}\rar{} \dar[swap]{\pair{0,\mathrm{succ}}} & 1+X\dar{\pair{x,f}} \\
+\mathbb{N}\rar{\varphi} & X
+\end{tikzcd}\]
+Let $X$ be an $F\text{-algebra}$ given by $x \colon 1 \to X$ and $f \colon X \to X$; by induction over
+the natural numbers we can show that a morphism of algebras $\varphi$ making that diagram
+commute must follow $\varphi(0) = x$ and $\varphi(\mathrm{succ}(n)) = f(\varphi(n))$. Thus, in a certain sense, 
+initiality captures the principle of induction.
+
+For instance, we can define addition $+ \colon \mathbb{N} \times \mathbb{N} \to \mathbb{N}$, interpreted
+as a unary operation $+ \colon \mathbb{N} \to \hom(\mathbb{N},\mathbb{N})$, as the unique morphism $\varphi$
+from the initial algebra to the algebra given by $\hom(\mathbb{N},\mathbb{N})$ with $\id$
+and postcomposition with $\mathrm{succ}$.
+\[\begin{tikzcd}
+1+\mathbb{N}\rar{} \dar[swap]{\pair{0,\mathrm{succ}}} & 
+1+\hom(\mathbb{N},\mathbb{N}) \dar{\pair{\id, \mathrm{succ}\,\circ\, -}} \\
+\mathbb{N}\rar{+} &
+\hom(\mathbb{N},\mathbb{N})
+\end{tikzcd}\]
+This definition immediately implies the equalities $0+m = \id(m) = m$
+and $\mathrm{succ}(n) + m = (\mathrm{succ}\circ (n+\_))(m) = \mathrm{succ}(n+m)$.
+#+END_exampleth
+
+** Los adjuntos derechos preservan límites                                               :noexport:
+*** Límites                                                                               :ignore:
+#+begin_definicion
+Dada una categoría $\mathbf{C}$ y cualquier categoría $n$ podemos considerar un *funtor diagonal*
+$\Delta_n \colon \mathbf{C} \to \mathbf{C}^n$ que se define constante como $\Delta(X,k) = X$ en objetos y $\Delta(f,k) = f$ 
+en morfismos.  Un *límite* es un adjunto derecho al funtor diagonal; un *colímite* es
+un adjunto izquierdo al funtor diagonal. [fn:deflimite]
+#+end_definicion
+
+El funtor diagonal tiene una propiedad interesante, es una /comultiplicación/ que
+preserva cualquier funtor. Esto quiere decir que para cualquier $F \colon \mathbf{C} \to \mathbf{C}$,
+podemos considerar $F_{(n)} \colon \mathbf{C}^n \to \mathbf{C}^{n}$ como el funtor que resulta de aplicar $F$ en
+cada uno de los índices. Tenemos entonces $\Delta \circ F = F_{(n)} \circ \Delta$. 
+
+#+begin_teorema
+Los adjuntos derechos son continuos. Los adjuntos izquierdos son
+cocontinuos.
+#+end_teorema
+#+begin_proof
+Sea un límite $\Delta^n \dashv \mathsf{lim}$. Si tenemos una adjunción $L \dashv R$, podemos componerlas
+para obtener $\Delta^n \circ L \dashv R \circ \mathsf{lim}$. Por otro lado, podemos ver que $L^{(n)} \dashv R^{(n)}$ y
+podemos componer la adjunción $L^{(n)} \circ \Delta^{(n)} \dashv \mathsf{lim} \circ R^{(n)}$.  Pero sabemos que
+$\Delta^n \circ L = L^{(n)} \circ \Delta^{n}$ y que las adjunciones son únicas salvo isomorfismo, así
+que $\mathsf{lim} \circ R^{(n)} \cong R \circ \mathsf{lim}$.
+#+end_proof
+
+#+begin_corolario
+Para cualesquiera conjuntos $A,B,C \in \mathbf{Set}$, se tiene $(A + B) \times C \cong A \times C + B \times C$.
+#+end_corolario
+
+[fn:deflimite] Los límites suelen considerarse en más generalidad, permitiendo que
+no formen un funtor sino que sólo se den determinados casos.  Esta presentación va
+a ayudar a simplificar mucho la próxima demostración y no perdemos nada que nos
+importe especialmente ahora.  Para una definición estándar de límite se puede
+usar cite:maclane78.
+
+** references                                                                     :ignore:noexport:
+bibliographystyle:alpha
+bibliography:Math.bib
+
+* TODO Dedekind reals in Agda                                                                 :post:
+:PROPERTIES:
+:TITLE: Dedekind reals in Agda
+:EXPORT_FILE_NAME: dedekindrealsagda.html
+:INDEX_DATE: <2019-04-20 Fri 14:31>
+:END:
+
+For my Bachelor's dissertation I wrote an implementation of the
+positive Dedekind real numbers in Agda.  The formalization is not
+completely sound, using =--type-in-type= to simplify dealing with
+universes; but it is enough to successfully compile to Haskell code
+and compute the first digits of the binary representation of =sqrt(2)=
+from its definition.
+
+The code is on [[https://github.com/mroman42/dedekind-reals][GitHub]].
+
+
+* TODO Lawvere's fixed point theorem                                                          :post:
+:PROPERTIES:
+:TITLE: Lawvere's fixed point theorem
+:EXPORT_FILE_NAME: lawverefixedpoint.html
+:INDEX_DATE: <2019-02-28 Mon 10:23>
+:END:
+
+This is a note stating the main result 
+from [[http://tac.mta.ca/tac/reprints/articles/15/tr15.pdf][Diagonal arguments and Cartesian Closed Categories]] by
+William Lawvere.
+
+*Definition.* A morphism s : X -> Y is /point-surjective/ if for each y : 1
+-> Y, there exists some x : 1 -> X such that sx = y.
+
+*Theorem* (Lawvere, 1969). In any cartesian closed category, if there exists a
+point-surjective morphism d : A -> (A -> B), then each morphism f : B ->
+B has a fixed point, that is, some b : B such that f b = b.
+
+*Proof.* As d is point-surjective, there exists x : A such that dx =
+λa.f(daa), but then, dxx = (λa.f(daa)) x = f(dxx) is a fixed point.
+
+* TODO The GranaSAT client                                                                    :post:
+:PROPERTIES:
+:TITLE: The GranaSAT client
+:EXPORT_FILE_NAME: granasatclient.html
+:INDEX_DATE: <2019-07-03 Wed>
+:END:
+
+Some time ago I wrote a GTK+ app in C for the [[https://github.com/mroman42/granasatClient][GranaSAT project]]. I did
+not know anything about GUI design but I was eager to learn.  The only
+requirement was that it had to be written in C (or Java) and using
+Eclipse (that should set your alarm bells ringing); but the rest of
+the specifications were changing every day, making this a very
+challenging /software engineering/ project. The code is licensed under
+GPLv3 and you can browse it in [[https://github.com/mroman42/granasatClient][its repository]], the correspoding server
+was written by [[https://github.com/agarciamontoro/granasatServer][@agarciamontoro]].
+
+/Bonus track:/ the team ended up capturing an [[https://www.youtube.com/watch?v=YUlWg6wuCxo][aurora borealis]]!
+
+* TODO Apuntes de Haskell                                                                     :post:
+:PROPERTIES:
+:TITLE: Apuntes de Haskell
+:EXPORT_FILE_NAME: apuntesdehaskell.html
+:INDEX_DATE: <2019-02-27 Mon 21:00>
+:END:
+
+Hace ya un tiempo, [[https://github.com/mx-psi][@mx-psi]] y yo escribimos estos 
+[[https://github.com/libreim/haskell][apuntes de introducción a Haskell]].  Los hemos usado varias veces
+en los seminarios de LibreIM, [[https://github.com/pedritomelenas][Pedro García-Sánchez]] añadió un 
+[[https://github.com/libreim/haskell/blob/3acbc2f7088483d3ba69ecdc00891c8419341aaf/PrimeraParte/PrimeraParte.ipynb][cuaderno de Jupyter]] para acompañarlos, y finalmente [[https://github.com/mx-psi][@mx-psi]] ha vuelto a revisarlos
+y dejarlos listos para otro seminario este año. 
+
+* TODO Right adjoints are continuous                                                          :post:
+:PROPERTIES:
+:TITLE: Right adjoints are continuous
+:EXPORT_FILE_NAME: homcontinuous.html
+:INDEX_DATE: <2018-12-23 Sun>
+:EXPORT_DATE: 23th December 2018
+:END:
+
+/This is an exercise on Abramsky and Tzevelekos' notes/
+/on the course [[https://arxiv.org/pdf/1102.1313.pdf][Categories, Proofs and Processes]]./
+
+*Proposition.* Let A be an object in the category *C*. Show that the covariant hom functor
+C(A,-), preserves all limits.
+
+/Proof./ Let *I* be a small category,  F : *I* -> *C* a functor and let L with the
+morphisms lᵢ be the limit of that functor. We know that for every
+morphism  ϕ : i -> j  in *I*, we have lⱼ = Fϕ ∘ lᵢ.
+
+Let Z be a set with a family of morphisms fᵢ : Z -> C(a,Fi) determining
+a cone to C(a,F-) : *I* -> *Sets*; that is, such that for each  ϕ : i -> j in *I*, we 
+have that  fⱼ = (Fϕ ∘ -) ∘ fᵢ; or, in other words, for each z ∈ Z we have
+fⱼ(z) = Fϕ ∘ fᵢ(z). Thus, fixing any  z ∈ Z gives as a family of morphisms
+fᵢ(z) ∈ C(a,Fi) defining a cone.  This implies that there exists some
+unique morphism ψ(z) : A -> L  such that  lᵢ ∘ a(z) = fᵢ(z).
+
+Repeating this for every z ∈ Z we have obtained a function  a : Z -> C(A,L)
+with the property lᵢ ∘ a = fᵢ. This function must be the unique one with this
+property, because for any other  a' : Z -> C(A,L), for each z ∈  
+we would have lᵢ ∘ a'(z) = fᵢ(z) and that would imply that a'(z) = a(z).
+
+\\
+
+*Proposition.* Right adjoints preserve limits.
+
+/Proof./ (From Awodey 2010) Let  L : *C* -> *D*  and  R : *D* -> *C* be a pair of adjoints
+L ⊣ R. Let Xᵢ be objects determining any diagram and Y an arbitrary object.
+We have the following chain of natural transformations between
+hom-sets.
+
+#+BEGIN_SRC haskell
+  hom(Y , R lim Xᵢ) ≅
+  hom(L Y , lim Xᵢ) ≅
+  lim hom(L Y , Xᵢ) ≅
+  lim hom(Y , R Xᵢ) ≅
+  hom(Y , lim R Xᵢ)
+#+END_SRC
+
+By Yoneda Lemma, this means R lim Xᵢ ≅ lim RXᵢ.
+
+* TODO dotfiles in a single org-file                                                          :post:
+:PROPERTIES:
+:TITLE: dotfiles in a single org-file
+:EXPORT_FILE_NAME: dotfilesinasingleorg.html
+:INDEX_DATE: <2019-01-21 Mon 19:01>
+:END:
+
+I was thinking that it would be nice to have all your configuration
+files on a single, literate, org-mode file... and actually it should
+be really easy to make it work: take an org file and create an org-babel block 
+for the contents of each configuration file. They can be tangled
+back into the filesystem using the property =:tangle /path/tofile=,
+where =/path/tofile= is the desired location of the config file.
+If =sudo= is needed, =tramp= can be used with =:tangle /sudo::/path/tofile=.
+
+For instance, this is how =.Xresources= looks now inside my org file.
+Highlighting works perfectly thanks to org-babel.
+
+#+BEGIN_EXAMPLE
+    ** X resources
+    
+    Configuration parameters for X client applications.
+   
+    #+BEGIN_SOURCE conf /home/mario/.Xresources
+    xterm*font: *-fixed-*-*-*-24-*
+    Xft.dpi:    192
+    #+END_SOURCE
+#+END_EXAMPLE
+
+This file can be put under version control and a /dotfiles repository/
+can be created without having to use hard links (yep, I was doing that
+until now).
+
+As always with Emacs, this use case is obvious in retrospect, but /why
+didn't anyone tell me?/
+
+* TODO Picado's Interview with Lawvere                                                        :post:
+:PROPERTIES:
+:TITLE: Picado's Interview with Lawvere
+:EXPORT_FILE_NAME: picadolawvereinterview.html
+:INDEX_DATE: <2018-09-08 Sat 17:20>
+:END:
+
+[[http://www.mat.uc.pt/~picado/][Jorge Picado]] (who is also coauthor of the book on [[https://www.maa.org/press/maa-reviews/frames-and-locales-topology-without-points][locales]] I am reading) has
+many nice 'popularisation of mathematics' articles on his webpage. I
+have enjoyed a lot his interview with William Lawvere.
+
+ * http://www.mat.uc.pt/~picado/lawvere/interview.pdf
+
+Specially interesting is this criticism to the extra-mathematical
+publicity around Gödel's theorem. However, I cannot locate exactly
+what 'organized attempts' is he referring to.
+
+#+BEGIN_QUOTE
+In Diagonal arguments and Cartesian closed categories we demystified
+the incompleteness theorem of Gödel and the truth-definition theory of
+Tarski by showing that both are consequences of some very simple
+algebra in the Cartesian-closed setting. It was always hard for many
+to comprehend how Cantor’s mathematical theorem could be re-christened
+as a “paradox” by Russell and how Gödel’s theorem could be so often
+declared to be the most significant result of the 20th century.  There
+was always the suspicion among scientists that such extra-mathematical
+publicity movements concealed an agenda for re-establishing belief as
+a substitute for science. Now, one hundred years after Gödel’s birth,
+the organized attempts to harness his great mathematical work to such
+an agenda have become explicit.
+#+END_QUOTE
+
+
+* TODO A quote by Ampère                                                                      :post:
+:PROPERTIES:
+:TITLE: A quote by Ampère
+:EXPORT_FILE_NAME: quoteampere.html
+:INDEX_DATE: <2018-09-03 Mon 21:55>
+:END:
+
+/[Les langues] commencent par être una musique, et finissent par être une algèbre./ 
+  -- [[https://fr.wikisource.org/wiki/Essai_sur_l%25E2%2580%2599histoire_de_la_langue_bretonne][M. Ampère]].
+
+I am having a bit of trouble locating the exact source of this
+sentence and I am also not sure in which sense should be interpreted;
+but I somehow imagined that the idea of languages as algebras would
+be more modern than this.
+
+* TODO LibreIM, casi cinco años después                                                       :post:
+:PROPERTIES:
+:TITLE: LibreIM, casi cinco años después
+:EXPORT_FILE_NAME: libreimquintoaniversario.html
+:INDEX_DATE: <2018-09-03 Mon 21:54>
+:END:
+
+Tengo un correo de diciembre de 2013 en el que David Charte consiguió
+meter un foro de Moot en una página de Github. En julio de 2014 entre
+Nacho Cordón, David Charte y yo perfilamos la idea de reunirnos en la
+facultad; tuvimos mucha ayuda del departamento de álgebra; y el 27 de
+septiembre de 2014 a las 10:00 en el A13 de Ciencias empezamos el
+primer seminario, sobre teoría de categorías y Haskell, con Pablo
+Baeyens en la segunda parte.
+
+Llevamos 48 seminarios, y la asistencia ha ido creciendo poco a poco.
+Me hace cierta ilusión que, aun con algún problema que otro, haya
+funcionado.  Mientras sirvan para seguir poniendo ideas en común y
+siga habiendo gente dispuesta a ir y a prepararlos, son una
+herramienta muy útil para tener en un grado.  Han servido para
+conocer un montón de gente con ganas de explorar y compartir las
+matemáticas y la informática.  Y la comunidad motiva mucho; el doble
+grado hubiera sido muy árido de otra forma.
+
+No sé muy bien cómo hemos llegado a este equilibrio en el que el
+comportamiento por defecto es compartir, pero creo que se ha arraigado
+bien en el doble grado y merece mucho la pena cuidarlo.  Estaría muy
+orgulloso de todo esto si colectivamente conseguimos mantenerlo en un
+futuro.
+
+* TODO Org-drill and spaced repetition                                                        :post:
+:PROPERTIES:
+:TITLE: Org-drill and spaced repetition
+:EXPORT_FILE_NAME: orgdrillspacedrepetition.html
+:INDEX_DATE: <2018-09-03 Mon 21:53>
+:END:
+
+When it comes to [[https://www.gwern.net/Spaced-repetition][spaced]] [[https://codual.github.io/2016/07/07/repeticion-espaciada/][repetition]] software, [[https://ankiweb.net/about][Anki]] is probably the most
+popular option. It is free software, provides syncronization with an
+online server, has both desktop and Android applications, and it is
+capable of rendering arbitrary Latex and multimedia. I would recommend
+Anki to anyone starting with spaced repetition.
+
+However, I do not myself use Anki; I have been using [[https://orgmode.org/worg/org-contrib/org-drill.pdf][org-drill]] for a
+few months. The primary reason being Emacs. I really like having all
+the cards in plain text and editing them from the text
+editor. Org-mode has latex and multimedia support, and most of my math
+notes are already there. Its big drawback is that it currently cannot
+be used directly from the mobile phone ([[https://termux.com/][Termux]] is an option, but it
+won't render Latex); a spaced repetition Android app supporting the
+org-drill format would be great.
+
+If you are not yet committed to Anki and you are already confortable
+with Emacs, it could be a good idea to try both before settling on one.
+
+* TODO Coinduction                                                                            :post:
+:PROPERTIES:
+:TITLE: Coinduction
+:EXPORT_FILE_NAME: coinduction.html
+:INDEX_DATE: <2018-08-15 Wed 23:08>
+:ID:       174d185e-2269-40f2-935c-e8d45e08bfc8
+:END:
+
+The following article by Jacobs and Rutten is a really nice
+introduction to the notion of coinduction.  It assumes almost no prior
+knowledge of categories and details algebras, initiality, coalgebras,
+finality, induction and bisimulation.
+
+ * [[http://www.cs.ru.nl/~bart/PAPERS/JR.pdf][A tutorial on (Co)algebras and (Co)induction - Bart Jacobs, Jan Rutten]]
+
+Conatural numbers can be implemented in Agda using [[https://agda.readthedocs.io/en/v2.5.4.1/language/coinduction.html#coinduction][coinductive records]]
+as in the following example.  If you are interested in understanding
+coinduction, it might be a good idea to experiment in Agda; I learnt a
+lot writing basic coinductive definitions.
+
+#+BEGIN_SRC haskell
+  data Maybe (A : Set) : Set where
+    Nothing : Maybe A
+    Just : A -> Maybe A
+  
+  record coNat : Set where
+    coinductive
+    field
+      pred : Maybe coNat
+  open coNat public    
+  
+  coZero : coNat
+  pred coZero = Nothing
+  
+  coInf : coNat
+  pred coInf = Just coInf
+  
+  succ : coNat -> coNat
+  pred (succ n) = Just n
+  
+  infixl 20 _+_
+  _+_ : coNat -> coNat -> coNat
+  pred (a + b) with pred a
+  pred (a + b) | Nothing = pred b
+  pred (a + b) | Just a' = Just (a' + b)
+#+END_SRC
+
+* TODO Writing a bachelor's thesis in org-mode                                                :post:
+:PROPERTIES:
+:TITLE: Writing a bachelor's thesis in org-mode
+:EXPORT_FILE_NAME: bachelorsthesisinorgmode.html
+:INDEX_DATE: <2018-08-15 Wed 23:37>
+:END:
+
+My [[https://github.com/mroman42/ctlc/][bachelor's thesis]] has been completely written in org-mode
+format. At first, I supposed that org-mode would not be powerful
+enough for a really long document with templates and lots of latex
+customizations, but I stand corrected. You can insert arbitrary latex
+code when needed and there is nothing preventing you to create a complex
+header for your org-mode document.
+
+After the experience, I would recommend using org-mode. You can manage
+your tasks, your references and your text in a single file; and the
+org-mode format is much more pleasant to read and write than the usual
+tex format. The only problem I had was compilation: Emacs is really
+slow and freezes while compiling. My solution was to use a second
+Emacs instance which compiles on the background while I continue to
+use the first one; the relevant line on the makefile looks as follows
+(thanks to [[https://github.com/ncordon][@ncordon]] for the idea!).
+
+#+BEGIN_SRC bash
+  emacs thesis.org --batch -u `id -un` \
+    --eval '(load user-init-file)' \
+    -f org-latex-export-to-pdf
+#+END_SRC
+
+* TODO Blogging with a single org-file                                                        :post:
+:PROPERTIES:
+:TITLE: Blogging with a single org-file
+:EXPORT_FILE_NAME: bloggingwithasingleorgfile.html
+:INDEX_DATE: <2018-08-15 Wed 23:19>
+:ID:       64a920ed-1914-4e64-997d-837f14815cdd
+:END:
+
+This blog is generated by a single org-file that can be found
+[[https://github.com/mroman42/cosmoi/blob/master/cosmoi.org][here]]. The file contains some org-babel elisp blocks that export the
+HTML files, create the index and populate the RSS feed. This is
+possible using [[https://orgmode.org/manual/Tags.html#Tags][tags]] that signal whether any specific header is a post,
+[[https://orgmode.org/manual/Property-syntax.html][properties]] that store the name and the html direction of the articles,
+and the =org-map-entries= function, which maps a function over all
+headers.
+
+
+
+* TODO Category theory and lambda calculus                                                    :post:
+:PROPERTIES:
+:TITLE: Category theory and lambda calculus
+:EXPORT_FILE_NAME: categorytheoryandlambdacalculus.html
+:INDEX_DATE: <2018-07-01 Sun 11:00>
+:END:
+
+*Category theory and lambda calculus* is the title of my bachelor's
+thesis.  It discusses the implementation of [[./mikrokosmos.html][Mikrokosmos]] and
+categorical semantics for the simply typed lambda calculus in its
+first half. It later extends these notions to dependently typed
+programming languages (Agda is used as an example) and locally closed
+cartesian categories.  It must be seen as a summary of my study during
+these months and as a literature review: there is no claim of
+originality more than the way the ideas are presented.
+
+The complete thesis was written with Emacs in [[https://orgmode.org/][org-mode format]] (highly
+recommended) and the source code is publicly available [[https://github.com/mroman42/ctlc][at GitHub]]. The
+final [[https://mroman42.github.io/ctlc/ctlc.pdf][PDF]] is also available, but if you are not that interested on the
+details, you may prefer to simply read the [[https://mroman42.github.io/ctlc-slides/slides.pdf][commented slides]] (in
+Spanish), which are a reasonable summary of the ideas presented there.
+
+* TODO Evaluación en cálculo lambda                                                           :post:
+:PROPERTIES:
+:TITLE: Evaluación en cálculo lambda
+:EXPORT_FILE_NAME: evaluacionlambda.html
+:INDEX_DATE: <2018-05-25 Fri 18:02>
+:END:
+Esta es una recopilación de los enunciados que nos llevan a usar la
+evaluación mediante \beta-reducciones del cálculo lambda como un
+lenguaje de programación.  Los obtuve principalmente del libro de
+Barendregt y de las notas de Peter Selinger cuando buscaba la base
+teórica para implementar [[file:mikrokosmos.html][Mikrokosmos]] Detallo estos mismos
+enunciados recopilando sus demostraciones en [[https://github.com/M42/lambda.notes][M42/lambda.notes]].
+
+** Forma normal
+Una expresión está en /forma normal/ si no se le pueden aplicar más
+\beta-reducciones. La forma normal es /única/ como consecuencia del
+teorema de Church-Rosser.
+
+*Teorema de Chuch-Rosser.* Si a un mismo término se le aplican dos
+cadenas de reducciones distintas, los términos que se obtienen pueden
+a su vez reducirse a un término común. Es decir,
+
+ * si A puede reducirse mediante β-reducciones a otro término
+   B, lo que se nota por  A -{β}-> B,
+ * y A puede reducirse también mediante otras β-reducciones,
+   posiblemente distintas o en distinto orden, a C, como A -{β}-> C,
+ * entonces existe un término D tal que ambos se pueden reducir
+   mediante β-reducciones a él; es decir, tal que B -{β}-> D
+   y C -{β}-> D.
+
+En particular, esto implica que si un término tuviera dos formas
+normales, debería existir otro término al cual se pudieran reducir
+ambas; como son formas normales y no pueden reducirse, esto debe
+implicar que son iguales.
+
+** Divergencia
+Hemos visto que la forma normal es única, pero no que exista o que
+sepamos encontrarla de alguna forma. Puede ocurrir que un término no
+esté en forma normal y sin embargo las reducciones no lo lleven a
+ella.  Por ejemplo, el término Ω = (λ x.x x)(λ x.x x)
+es invariante a β-reducciones y *no llega a forma normal*. O por 
+ejemplo, el término (λ x.x x x)(λ x.x x x) se hace cada vez más grande
+al aplicarle reducciones, decimos que /diverge/.
+
+** Evaluación a izquierda
+Hay expresiones que llegarán a una forma normal o no dependiendo de
+cómo los evaluemos. Por ejemplo, el término =(const id Ω)= llega a
+la forma normal =id= si evaluamos primero la aplicación de =const=,
+pero diverge si empezamos intentando evaluar Ω. 
+Sin embargo, existe una estrategia de reducción que siempre encuentra
+una forma normal si esta existe. Tenemos el siguiente teorema.
+
+ * Si existe una forma normal, la estrategia que reduce a cada paso
+   la aplicación más a la izquierda posible la encuentra.
+
+Y quizá sorprendentemente, existe otra estrategia de reducción que siempre
+encuentra la forma de *no* llegar a la forma normal si esta existiera.
+
+ * Si existe alguna sucesión que no llega a forma normal, la
+   estrategia que reduce a cada paso la aplicación más a la derecha
+   posible la encuentra.
+
+Estas dos formas de evaluación se suelen llamar /call-by-value/ y
+/call-by-name/.
+
+* TODO Mikrokosmos                                                                            :post:
+:PROPERTIES:
+:TITLE: Mikrokosmos
+:EXPORT_FILE_NAME: mikrokosmos.html
+:INDEX_DATE: <2018-05-25 Fri 18:01>
+:ID:       5e645152-8b35-4236-bf9a-95b0d3bcb85d
+:END:
+
+*Mikrokosmos* is an untyped and simply typed λ-calculus interpreter,
+borrowing its name from the series of progressive piano études
+Mikrokosmos written by Bela Bartok. It aims to provide students with a
+tool to learn and understand the λ-calculus.
+
+ * [[https://github.com/mroman42/mikrokosmos][GitHub repository]].
+ * [[https://mroman42.github.io/mikrokosmos/][User's guide]].
+ * [[https://github.com/mroman42/jupyter-mikrokosmos][Jupyter kernel]].
+
+Since version 0.3.0, it comes bundled with a Jupyter Notebook kernel,
+a tutorial on lambda calculus and specific modes for SKI combinators.
+Thanks to [[https://github.com/ghcjs/ghcjs][GHCJS]] and [[http://codemirror.net/][Codemirror]], you can also try the [[https://github.com/mroman42/mikrokosmos][Mikrokosmos]]
+lambda interpreter in your browser. Press the *evaluate* button there
+and play with the code!
+
+* TODO Aprendiendo Emacs                                                                      :post:
+:PROPERTIES:
+:TITLE:    Aprendiendo Emacs
+:EXPORT_FILE_NAME: aprendiendoemacs.html
+:INDEX_DATE: <2018-05-25 Fri 18:34>
+:END:
+
+** Emacs
+
+*[[https://www.gnu.org/software/emacs/][Emacs]]* es un editor de texto construido sobre un intérprete del lenguaje
+*[[https://es.wikipedia.org/wiki/Emacs_Lisp][Elisp]]* para hacerlo
+extensible. Cada acción del editor constituye un comando sobre el
+intérprete, por lo que podemos reescribir sus comandos o crear nuevos
+comandos simplemente programando sobre el intérprete.
+
+[[https://github.com/libreim/blog/raw/post-emacs/images/emacs.png]]
+/Emacs editando este mismo artículo en Markdown/
+
+Emacs sirve como IDE para la mayoría de lenguajes de programación y como
+editor para programación literaria y ciencia reproducible; se integra
+con git y con el sistema de archivos y tiene extensiones disponibles
+para usarse como aplicación para organizar listas de tareas, leer el
+correo o servir como hoja de cálculo.
+
+#+BEGIN_QUOTE
+  I use Emacs, which might be thought of as a thermonuclear word
+  processor.
+
+  -- *Neal Stephenson*, /In the Beginning... was the command line./
+#+END_QUOTE
+
+En este artículo haré una referencia breve a todo lo que me ha ido
+sirviendo para aprender Emacs mientras enlazo a fuentes que tratan cada
+uno de los temas más extensamente. Como recursos generales para aprender
+Emacs, puedo recomendar:
+
+-  [[https://www.youtube.com/playlist?list=PLxj9UAX4Em-IiOfvF2Qs742LxEK4owSkr][*.Emacs Tutorials*]] de /jekor/, explican todo lo necesario para aprender
+   Emacs en 10 videotutoriales que pueden seguirse progresivamente.
+-  [[https://www.youtube.com/playlist?list=PL8tzorAO7s0he-pp7Y_JDl7-Kz2Qlr_Pj][*Emacs Meetups*]] de Thoughtbot, que profundizan sobre temas concretos de
+   uso de Emacs.
+-  [[http://emacsrocks.com/][*Emacs Rocks*]], vídeos breves sobre casos
+   concretos de uso de Emacs.
+-  [[https://www.emacswiki.org/emacs/SiteMap][*Emacs wiki*]], una wiki
+   que documenta todo lo relacionado con Emacs.
+-  [[http://sachachua.com/blog/category/geek/emacs/][*sachachua.com*]],
+   donde se hace referencia periódicamente a noticias de Emacs, y tiene
+   escritas hojas de referencia de atajos de teclado de Emacs.
+-  [[http://cestlaz.github.io/stories/emacs/][*C'est la z*]], otro blog
+   en el que se tratan temas relacionados con Emacs.
+-  [[https://www.gnu.org/software/emacs/manual/][*GNU Emacs*]], la
+   documentación oficial de Emacs.
+-  [[https://elbauldelprogramador.com/chuleta-atajos-teclado-emacs/][*El baúl del programador*]], que ha empeazado una recopilación colaborativa de
+   los comandos y paquetes más útiles para Emacs.
+
+*** Instalación
+
+Emacs puede encontrarse en la mayoría de gestores de paquetes, pero
+puede no estar en su versión más actualizada.
+
+#+BEGIN_EXAMPLE
+    sudo apt install emacs
+#+END_EXAMPLE
+
+Para escribir este artículo estoy usando =GNU Emacs 25.1=, pero la
+última versión estable es la *24.5*. La versión estable actual puede
+descargarse desde [[https://www.gnu.org/software/emacs/][GNU]].
+
+** Atajos de teclado
+En Emacs se usa una [[https://www.emacswiki.org/emacs/EmacsKeyNotation][notación específica]] para escribir un atajos de teclado. 
+La mayoría de
+documentación que consultes usará =C-x= en lugar de =Control+x=; usará
+=C-x C-s= para indicar que debes dejar pulsado =Control= mientras pulsas
+=x= y =s=; y por último, usará =M-x=, donde la =M= se referirá a la
+tecla =Meta=. La tecla =Meta= en Emacs se refiere normalmente a dos
+opciones equivalentes, o bien pulsar =alt izq.= mientras se pulsa =x=, o
+pulsar =Esc= y luego pulsar =x=. En resumen:
+
+|---------+-----------------------------------------------+-----------------|
+| Atajo   | Descripción                                   | Comando         |
+|---------+-----------------------------------------------+-----------------|
+| C-n     | Mantener control pulsado mientras se pulsa n  | Next line       |
+| C-x C-s | Mantener control pulsado pulsando x y luego s | Save file       |
+| M-x     | Mantener alt o pulsar esc para luego pulsar x | Execute Command |
+| RET     | Salto de línea, pulsar enter antes de seguir  |                 |
+|---------+-----------------------------------------------+-----------------|
+
+Usar atajos de teclado facilita mucho usar Emacs rápidamente después del
+tiempo de aprendizaje.  [1]
+
+Cuando abras el programa por primera vez, te ofrecerá seguir un tutorial
+de Emacs escrito en Emacs. El tutorial es muy útil para aprender a
+moverse dentro de Emacs, pero la mayoría de lo que cuenta no es
+especialmente fácil de aprender de una sola vez. Lo más chocante para un
+usuario nuevo puede ser el sistema de copiar-pegar; que de forma muy
+simplificada se resume en:  [2]
+
+-  =M-w= copia.
+-  =C-w= corta.
+-  =C-y= pega.
+
+Pero si no te convence, puedes usar [[https://www.emacswiki.org/emacs/CuaMode][CUA Mode]], que te permite
+volver a usar =C-c= y =C-v= para copiar y pegar. Otros comandos útiles
+de aprender antes de empezar con nada más son =C-x C-s= para guardar y
+=C-x C-f= para abrir un archivo.
+
+*** Documentación
+
+Emacs es un editor autodocumentado, es decir, la documentación del
+editor puede consultarse dentro del propio programa. Para llamar a la
+ayuda se puede pulsar =C-h ?=, que nos dejará elegir si necesitamos
+ayuda sobre comandos, atajos de teclados, variables, licencias, etc.
+Especialmente útiles son:
+
+-  =C-h c <atajo de teclado>= nos da el nombre de la función que se
+   ejecuta al pulsar esas teclas.
+-  =C-h f <nombre de función>= documenta la función.
+
+*** Buffers y ventanas
+
+Cada vez que abrimos un archivo, o pedimos un apartado de documentación,
+o abrimos la configuración, se abre un nuevo buffer. Un
+[[https://www.emacswiki.org/emacs/Buffer][buffer]] es el equivalente a un documento o un espacio de trabajo en otros 
+editores. Podemos movernos
+entre los buffers actualmente abiertos pulsando =C-x <left>= o
+=C-x <right>=; y podemos mostrar la lista de buffers actualmente
+abiertos con =C-x C-b= (¡en un nuevo buffer!).
+
+Además de los buffers que tengamos actualmente abiertos, tenemos
+ventanas que los muestran. Podemos partir la pantalla de Emacs en varias
+ventanas con =C-x 2= y =C-x 3=, que la parten horizontal y verticalmente
+respectivamente. Para volver a quedarnos sólo con la ventana en la que
+está el cursor, podemos pulsar =C-x 1=; y para cambiar de ventana sobre
+la que actúa el cursor podemos usar =C-x o=.
+
+*** Modos de Emacs
+
+El comportamiento de Emacs sobre cada buffer que abra será distinto
+dependiendo normalmente de la extensión del archivo. Esto le permite
+colorear de manera distinta distintas sintaxis, o tener comportamientos
+específicos (indentación, atajos de teclado, formateo) cuando está
+editando cada lenguaje.
+
+Cada una de estas formas de edición se llama [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Major-Modes.html][*modo*]],
+y el *modo* actual aparece resaltado entre paréntesis en la barra
+inferior de Emacs. El modo básico es =Fundamental=, pero para cada
+propósito existen modos específicos. Para casi todos los lenguajes de
+programación tendremos un modo. Existen, por ejemplo,
+[[https://www.emacswiki.org/emacs/RubyMode][=Ruby-mode=]], [[https://www.emacswiki.org/emacs?action=browse;oldid=PythonMode;id=PythonProgrammingInEmacs#toc2][=Python-mode=]] o [[https://www.emacswiki.org/emacs/CcMode][=CC-mode=]].
+
+Además de los /modos mayores/ de los que hemos hablado hasta ahora,
+existen /modos menores/ que son opcionales y complementan a los modos
+mayores. Por ejemplo, mientras escribo este artículo estoy usando
+[[https://www.emacswiki.org/emacs/MarkdownMode][=Markdown=]] como modo mayor y =ARev= ([[https://www.gnu.org/software/emacs/manual/html_node/emacs/Reverting.html][Auto-revert mode]]) como modo menor.
+
+** Personalización
+
+Prácticamente todos los parámetros que uses en Emacs pueden ser
+ajustados a tu necesidad. Desde los atajos de teclado hasta el tema de
+color y fuentes que usa el editor.
+
+La forma más básica de editar todas estas configuraciones es
+=M-x customize group=, que accede a un menú en el que se pueden
+modificar todas ellas. Todos los cambios que aquí se hagan se guardarán
+en un archivo =.emacs= (o =init.el=, en las versiones nuevas de Emacs).
+Este archivo es la otra forma de configurar Emacs; el archivo de inicio
+=.emacs= contiene código en Elisp que se ejecutará al iniciar el editor
+y podemos incluir allí todo lo que queramos configurar. Algunos
+paquetes, por ejemplo, necesitarán configuración adicional que habrá que
+incluir en este archivo.
+
+[[https://youtu.be/mMcc0IF1hV0][*.Emacs #2 - Customizations and themes* - /jekor/]]
+
+** Sistemas de paquetes
+   :PROPERTIES:
+   :CUSTOM_ID: sistemas-de-paquetes
+   :END:
+
+*** Melpa
+    :PROPERTIES:
+    :CUSTOM_ID: melpa
+    :END:
+
+Es conveniente añadir un repositorio más grande que el que trae GNU por
+defecto, y [[https://melpa.org/#/][MELPA]] es uno de los repositorios de
+paquetes de Emacs más grandes y actualizados. El repositorio de MELPA se
+añade desde =M-x customize-group RET package=. Dentro de la pestaña de
+repositorios puede insertarse la dirección de MELPA:
+
+#+BEGIN_EXAMPLE
+     Archive name: melpa-stable
+     URL or directory name: https://stable.melpa.org/packages/
+#+END_EXAMPLE
+
+Para salir de cualquiera de las pantallas de personalización se usa =q=.
+
+Otra forma de conseguir este mismo efecto es añadirlo directamente a
+nuestro archivo de configuración (=.emacs=/=init.el=), como se indica en
+las [[https://melpa.org/packages/][instrucciones de instalación]] del
+repositorio.
+
+*** Paquetes
+    :PROPERTIES:
+    :CUSTOM_ID: paquetes
+    :END:
+
+Podemos listar los paquetes que podemos instalar usado
+=M-x list-packages= y podemos buscar entre los paquetes pulsando varias
+veces el comando =C-s=. Si pulsamos =i= al lado de uno de ellos se
+marcará para instalar y al pulsar =x= se ejecutará la instalación de
+todos los paquetes marcados.
+
+[[https://youtu.be/Cf6tRBPbWKs][*.Emacs #3 - Installing packages and
+extensions* - /jekor/]]
+
+** Paquetes útiles
+   :PROPERTIES:
+   :CUSTOM_ID: paquetes-útiles
+   :END:
+
+*** Dired
+    :PROPERTIES:
+    :CUSTOM_ID: dired
+    :END:
+
+Dired viene instalado por defecto con Emacs y permite navegar la
+estructura de directorios del sistema operativo. Podemos empezar a
+navegarla usando =M-x dired= y pulsando =RET= cada vez que queramos
+abrir un archivo o una carpeta.
+
+Podemos además afectar a los archivos. Por ejemplo, si queremos eliminar
+algunos archivos, podemos marcarlos con =d= y eliminarlos
+definitivamente con =x=.
+
+[[https://youtu.be/7jZdul2fC94][*.Emacs #4 - Exploring the filesystem* -
+/jekor/]]
+
+*** org-mode
+:PROPERTIES:
+:CUSTOM_ID: org-mode
+:END:
+
+*org-mode* es un modo de Emacs que se creó originalmente para gestionar
+listas de tareas, agendas y calendarios; pero además, contiene en su
+interior un completo lenguaje de marcado. Permite exportar documentos a
+una gran variedad de formatos (pdf, html, latex o markdown) e incluir
+internamente trozos de código y ejecutarlos. Además, tiene un sistema de
+tablas en texto plano capaz de sustituir la hoja de cálculo para tareas
+sencillas. Por todo esto, puede ser usado en tareas como la ciencia
+reproducible o la programación literaria cuando Latex es demasiado
+complejo, ayudando además a manejar la bibliografía y los enlaces tanto
+externos como entre archivos.
+
+[[https://youtu.be/SzA2YODtgK4][*Getting started with org-mode* - /Harry Schwartz/]]
+
+Especialmente útil para matemáticas es la
+[[http://orgmode.org/worg/org-tutorials/org-latex-preview.html][previsualización de Latex]] y el poder incluir los paquetes de la
+[[ftp://ftp.ams.org/pub/tex/doc/amsmath/amsldoc.pdf][AMS]] para marcar teoremas o definiciones.
+
+[[https://github.com/libreim/blog/raw/post-emacs/images/org-math.png]]
+/Apuntes de matemáticas en org-mode/
+
+*** magit
+    :PROPERTIES:
+    :CUSTOM_ID: magit
+    :END:
+
+*magit* permite integrar Emacs con *git* fácilmente para incluir los
+commits desde dentro del mismo editor. Usando =magit-status= llegamos a
+una pantalla en la que podemos elegir qué ficheros añadir al commit con
+=s=  [3] y visualizar las diferencias con el commit anterior usando
+=tab=; ejecutar el commit con =c c=, que nos mostrará el buffer con el
+mensaje de commit y por último usar =C-c C-c= para enviarlo. El push y
+pull los haremos desde =magit-status= con =P u= y =F u=,
+respectivamente.
+
+Es útil asignar un atajo de teclado al comando =magit-status=, que es el
+que muestra la ventana desde la que controlamos el añadir y hacer commit
+de ficheros. Por ejemplo, podemos fijarlo en =f5= añadiendo a nuestro
+archivo de configuración:
+
+#+BEGIN_SRC lisp
+    (global-set-key (kbd "<f5>") 'magit-status)
+#+END_SRC
+
+** Macros de teclado
+   :PROPERTIES:
+   :CUSTOM_ID: macros-de-teclado
+   :END:
+
+Las macros de teclado nos dejan grabar una secuencia de acciones y
+volver a repetirla tantas veces como sea necesaria. Se puede empezar a
+grabar con =f3= y terminar la grabación y repetirla tantas veces como
+sea necesario con =f4=.
+
+[[https://youtu.be/JfZ9fCHzkJw][*.Emacs #9 - Keyboard macros* -
+/jekor/]]
+
+** Elisp
+   :PROPERTIES:
+   :CUSTOM_ID: elisp
+   :END:
+
+[[https://www.gnu.org/software/emacs/manual/html_node/elisp/][Emacs Lisp]], o Elisp, es un lenguaje de programación diseñado específicamente
+para escribir un editor de texto. Facilita el tratamiento de texto y el
+manejo de archivos y buffers.
+
+Podemos escribir scripts en Elisp que se encarguen de tareas repetitivas
+en nuestro editor de texto y asignarlas a atajos de teclado o ampliarlo
+con más funcionalidad. Un tutorial básico sobre Elisp es
+[[http://emacs-doctor.com/learn-emacs-lisp-in-15-minutes.html][Learn Emacs Lisp in 15 minutes]].
+
+** Notas
+[1] Realmente solo puedo decir que a mí me funciona y que en general los
+    atajos de teclado parecen ser [[http://ux.stackexchange.com/a/30749][mejores que usar el ratón]].
+
+[2] El [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Killing.html#Killing][sistema]] que Emacs usa para esto es bastante más sofisticado.
+
+[3] De hecho, podemos seleccionar qué párrafos dentro de un fichero
+    queremos añadir al commit.
+* TODO Capturando links en org-mode                                                           :post:
+:PROPERTIES:
+:TITLE:    Capturando links en org-mode
+:EXPORT_FILE_NAME: capturandolinksenorgmode.html
+:INDEX_DATE: <2017-03-23 Thu 14:54>
+:END:
+
+** Capturando links
+El objetivo de este post es describir el proceso que uso para capturar links
+desde Firefox y almacenarlos en un archivo de org-mode, que puede leerse luego
+desde el propio navegador.
+
+** Org-capture
+La primera parte será activar =org-capture= y =org-protocol= en Emacs. [[https://www.gnu.org/software/emacs/manual/html_node/org/Capture.html#Capture][org-capture]]
+puede ser usado también para escribir pequeñas ideas y almacenarlas en ficheros org
+rápidamente; pero, en este caso, lo usaremos sólo para recibir el link desde Firefox.
+
+#+BEGIN_SRC emacs-lisp
+  (require 'org-protocol)
+#+END_SRC
+
+Lo primero que debemos hacer es definir la plantilla que queremos usar para capturar
+los links. La sintaxis usada se explica en la [[https://www.gnu.org/software/emacs/manual/html_node/org/Template-expansion.html#Template-expansion][documentación]] de org-mode, así como
+las opciones que usa después:
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-capture-templates
+	(quote (
+		("x" "org-protocol" entry (file "~/links.org")
+		 "** %c %?" :kill-buffer t :prepend t))))
+#+END_SRC
+
+En este caso, guardará los links en un archivo llamado =links.org= en el directorio
+=home=. Pueden añadirse [[https://www.gnu.org/software/emacs/manual/html_node/org/Template-elements.html#Template-elements][opciones]] para explicitar en qué punto exacto del archivo
+queremos insertar el link una vez lo capturemos.
+
+** Extensión de firefox
+El uso de =org-protocol= desde Firefox puede gestionarse más detalladamente usando
+[[http://orgmode.org/worg/org-contrib/org-protocol.html#sec-4][marcadores]] que activen la captura. En nuestro caso, como sólo necesitamos la configuración
+básica, podemos ahorrarnos este trabajo y dejárselo a la extensión [[http://chadok.info/firefox-org-capture/][org-capture for Firefox]].
+
+La extensión nos deja elegir en sus opciones si queremos que use una nueva ventana (me
+parece lo más conveniente y además veremos cómo controlarla luego con i3); la letra
+asignada a la plantilla (en nuestro caso hemos usado la =x= en la configuración
+anterior); y el atajo de teclado para activarla, que por defecto es =Ctrl-Alt-r=.
+
+Una vez activemos la extensión, podremos capturar enlaces pulsando el atajo.
+
+** Cerrando ventanas
+Un problema menor al usar esta extensión es que crea ventanas de Emacs que no cierra
+al terminar. Otro problema es que suele crear también un buffer inicial al lado de nuestro
+buffer de captura. Podemos usar *hooks* para forzarlo a corregir ese comportamiento:
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'org-capture-mode-hook 'delete-other-windows)
+  (add-hook 'org-capture-after-finalize-hook 'delete-frame)
+#+END_SRC
+
+** Integrándolo en i3
+Para los usuarios de i3, puede ser útil poder controlar dónde y cómo se crea la ventana
+de captura de Emacs. Un ejemplo de configuración es la siguiente, que coloca la ventana
+como flotante y en el centro de la pantalla; como si fuera un popup:
+
+#+BEGIN_SRC bash
+for_window [class="Emacs" title="CAPTURE"] floating enable
+for_window [class="Emacs" title="CAPTURE"] resize set 1880 480
+for_window [class="Emacs" title="CAPTURE"] move position center
+#+END_SRC
+
+** Mostrando los links en el navegador
+Para que además los links se muestren en el navegador, pueden usarse también *hooks* que
+se activen al guardado para exportar a HTML. En este post de [[https://rafaelleru.github.io/2017/01/22/to_read_list_emacs/][@rafaelleru]] se explica el
+proceso en detalle.
+
+** Un detalle sin solucionar
+En la plantilla de captura, me gustaría poder usar además =%^g=, que crea un pequeño
+diálogo donde insertar tags al link que se está guardando. El problema con esto es que,
+hasta que ese diálogo no ha terminado, no se ejecutan los hooks y el frame no se hace
+único (ni se reposiciona en i3).
+* TODO Distribuciones discretas con mónadas                                                   :post:
+:PROPERTIES:
+:TITLE: Distribuciones discretas con mónadas
+:EXPORT_FILE_NAME: distribucionesmonadas.html
+:INDEX_DATE: <2018-05-25 Fri 18:34>
+:END:
+
+** El modelo
+Como parte de una serie de ejemplos sobre uso de mónadas, he escrito
+un poco de código para modelar distribuciones discretas usando
+mónadas.  Por un lado, usa un [[https://math.dartmouth.edu/archive/m20f11/public_html/RANDOMNESS_LCG.pdf][generador congruencial lineal]] para
+generar números aleatorios; y por otro, usa la mónada [[https://wiki.haskell.org/State_Monad][State]] para pasar
+una semilla aleatoria de una función a otra que me permita seguir
+generado números aleatorios.  Por último, aporta un método que deriva
+[[http://www.zvon.org/other/haskell/Outputprelude/Show_c.html][Show]] para probar las distribuciones y dibujar un histograma de
+cualquiera de ella.
+
+** Componiendo distribuciones
+Lo más útil de esta idea es el poder generar unas distribuciones a
+partir de otras. La primera que intentamos es una uniforme discreta
+(un dado de =n= caras) usando una semilla inicial. En el siguiente
+código se implementa el generador congruencial.
+
+#+BEGIN_SRC haskell
+  dice :: Int -> Distribution Int
+  dice n = state (\s -> (s `mod` n + 1, 16807*s `mod` 2147483647))
+#+END_SRC
+
+Vemos que funciona como una distribución uniforme.
+
+#+BEGIN_SRC bash
+  >>> dice 6
+  
+  1:	 ################
+  2:	 ################
+  3:	 ################
+  4:	 ################
+  5:	 ################
+  6:	 ################
+#+END_SRC
+
+Y desde ella generar fácilmente otras usando funciones que
+compongan distribuciones. Un ejemplo es usar =(⊕) = liftM2 (+)= para
+sumar dados.
+
+#+BEGIN_SRC bash
+>>> dice 6 ⊕ dice 6
+
+2:	 #####
+3:	 ##########
+4:	 ###############
+5:	 ####################
+6:	 ##########################
+7:	 ##############################
+8:	 #########################
+9:	 ####################
+10:	 ###############
+11:	 ##########
+12:	 #####
+#+END_SRC
+
+** Otras distribuciones
+Si seguimos componiendo usando la estructura de mónada, podemos crear
+otras distribuciones simples como la distribución de *Bernoulli* y la
+distribución *binomial*.
+
+#+BEGIN_SRC haskell
+  bernoulli :: Double -> Distribution Int
+  bernoulli p = do
+    sample <- dice 1000000
+    if (fromIntegral sample / 1000000.0 < p)
+      then return 1
+      else return 0
+
+  binomial :: Int -> Double -> Distribution Int
+  binomial k p = sum <$> replicateM k (bernoulli p)
+#+END_SRC
+
+Lo interesante de este código es que dejamos a la estructura de
+mónada encargarse internamente de el paso de la semilla de
+aleatoriedad y la construcción de distribuciones complejas
+puede hacerse composicionalmente.
+
+** El código
+El siguiente código es una primera implementación de este post en
+Haskell.
+
+#+BEGIN_SRC haskell
+  {-# LANGUAGE FlexibleInstances #-}
+  {-# LANGUAGE TypeSynonymInstances #-}
+  {-
+  En este archivo vamos a usar mónadas para definir distribuciones
+  discretas de probabilidad y aplicar operaciones algebraicas sobre ellas.
+  -}
+  import Control.Monad.State
+  
+  -- Generación aleatoria
+  -- Para generar números pseudoaleatorios usaremos LCGs. La idea es tener
+  -- un dado que nos dé una distribución de probabilidad uniforme dada una
+  -- semilla y nos devuelva el resultado de la tirada y una nueva semilla
+  -- aleatoria. Buscamos que un dado de seis caras sea, por ejemplo:
+  --
+  --   dice 6 :: Seed -> (Int, Seed)
+  --
+  -- Si quisiéramos tirar dos dados, tendríamos que tomar la semilla resultante
+  -- del primer lanzamiento y pasarla al segundo; algo así:
+  --
+  --   let (a,newseed) = dice 6 seed
+  --   let (b,_)       = dice 6 newseed
+  --   print [a,b]
+  --
+  -- Pero esto se hace demasiado complejo. La semilla, en el fondo, es un
+  -- estado, así que podemos modelarla con la mónada State. Cada lanzamiento
+  -- será de la forma:
+  --
+  --   State Seed a   ===   Seed -> (a, Seed)
+  --
+  -- Luego podemos llamar a la distribución: Distribution a = State Seed a, y
+  -- trabajar con ella usando las funciones normales de mónadas.
+  type Seed = Int
+  type Distribution = State Seed
+  
+  
+  
+  -- Nuestra primera distribución es un dado de "n" lados que usa internamente un
+  -- generador de números aleatorios.
+  dice :: Int -> Distribution Int
+  dice n = state (\s -> (s `mod` n + 1, 16807*s `mod` 2147483647))
+  
+  -- Una moneda es un dado de dos caras
+  coin :: Distribution Int
+  coin = dice 2
+    
+  -- Estas funciones pueden ser llamadas con la mónada estado, dada una
+  -- semilla inicial, devuelven el resultado y la nueva semilla:
+  --
+  -- λ> runState (dice 6) 1
+  -- (2,16807)
+  -- λ> runState (dice 6) 16807
+  -- (2,282475249)
+  --
+  -- El usar composición con mónadas nos ahorraba controlar los errores
+  -- en el primer caso, aquí nos ahorra controlar el cambio de semilla,
+  -- por ejemplo: para lanzar dos dados y hacer que la semilla se pase
+  -- internamente.
+  twodices' :: Distribution Int
+  twodices' = do
+    a <- dice 6
+    b <- dice 6
+    return (a+b)
+
+  (⊕) :: Distribution Int -> Distribution Int -> Distribution Int
+  (⊕) = liftM2 (+)
+  (⊗) :: Distribution Int -> Distribution Int -> Distribution Int
+  (⊗) = liftM2 (*)
+  
+  twodices :: Distribution Int
+  twodices = dice 6 ⊕ dice 6
+  
+  -- Igual que hago esto, podría hacer:
+  --
+  --   foldr (⊕) (return 0) [dice 6,dice 6,dice 6]
+  --   foldr (⊕) (return 0) (replicate 10 (dice 6))
+  --
+  -- Que da un resultado que se aproxima a una distribución normal.
+  
+  -- Ahora, desde ella, podemos crear otras distribuciones. La distribución de
+  -- bernoulli sería la de una moneda trucada donde una cara tiene probabilidad
+  -- p y la otra tiene probabilidad (1-p).
+  bernoulli :: Double -> Distribution Int
+  bernoulli p = do
+    sample <- dice 1000000
+    if (fromIntegral sample / 1000000.0 < p)
+      then return 1
+      else return 0
+
+  -- La distribución binomial es la suma de k distribuciones de Bernoulli
+  binomial :: Int -> Double -> Distribution Int
+  binomial k p = sum <$> replicateM k (bernoulli p)
+  
+  -- La distribución constante y otra forma de escribir la distribución
+  -- binomial, de manera algebraica.
+  constant :: Int -> Distribution Int
+  constant n = return n
+  
+  binomial' :: Int -> Double -> Distribution Int
+  binomial' k p = foldr (⊕) (constant 0) (replicate k (bernoulli p))
+  
+  
+  
+  -- Muestra la distribución. Los detalles de implementación no son interesantes.
+  -- Hemos usado  TypeSynonymInstances para simplificar el proceso de sobrecargar
+  -- la instancia de Show y poder dibujar directamente por la pantalla las
+  -- demostraciones.
+  instance Show (State Seed Int) where
+    show = showdist
+  
+  showdist :: Distribution Int -> String
+  showdist dist = unlines $ map counter [minimum samples..maximum samples]
+    where samples = fst $ runState (replicateM 50000 dist) 1
+          counter n = show n ++ ":\t " ++ replicate ((count n samples) `div` (3000 `div` range)) '#'
+          range = maximum samples - minimum samples + 1
+  
+  count :: Eq a => a -> [a] -> Int
+  count x = length . filter (x==)
+  
+  
+  main :: IO ()
+  main = return ()
+#+END_SRC
+* TODO Inducción estructural                                                                  :post:
+:PROPERTIES:
+:TITLE:    Inducción estructural
+:EXPORT_FILE_NAME: induccionestructural.html
+:INDEX_DATE: <2015-03-14 Sat 15:02>
+:END:
+
+Normalmente aplicamos inducción sobre los números naturales, y cuando
+necesitamos aplicar inducción en otro contexto lo hacemos corresponder con los 
+números naturales. Por ejemplo, si queremos demostrar una propiedad sobre los
+árboles binarios, la demostraríamos por inducción sobre la altura del
+árbol. Pero el proceso de llevar todo a los naturales puede ser
+incómodo, tedioso y puede complicar la demostración innecesariamente. En
+este post vamos a desarrollar una forma de ampliar la inducción a la
+estructura de los tipos de datos para simplificar todas esas
+demostraciones.
+
+** Conjuntos bien fundados
+
+Vamos a definir las relaciones bien fundadas, que nos permitirán definir
+una inducción generalizada. [1]
+
+-  *Relación bien fundada:* una relación en un conjunto de elementos
+   es bien fundada si todo subconjunto no vacío tiene un elemento
+   minimal. Dado un orden parcial, es bien fundado si todo subconjunto
+   no vacío tiene un elemento tal que ninguno es menor que él.
+
+Y podemos realizar inducción sobre cualquier conjunto con una relación
+bien fundada.
+
+-  *Inducción noetheriana:* sea X un conjunto bien fundado con
+   A ⊂ X. Si se cumple:
+
+   (y < x => y ∈ A) => x ∈ A
+
+   Entonces A = X.
+
+** Inducción sobre tipos
+Ahora vamos a aplicar esto a teoría de tipos. Sea un tipo con sus
+constructores. Para todas las instancias constructibles del tipo (es decir,
+aquellas que pueden
+generarse en un número finito de pasos desde sus constructores),
+definimos un orden parcial:
+
+-  *Orden constructivo:* para dos instancias del tipo: a, b : A,
+   b /se construye con/ a si el constructor de b toma a
+   como argumento. La clausura transitiva de esta relación forma un
+   orden parcial:
+
+     a ≤ b  =>  a  se usa en la construcción de  b 
+
+Y ahora tenemos una inducción sobre los constructores de los tipos, que
+describimos ahora.
+
+-  *Inducción sobre tipos*: sea un tipo A con constructores y sea
+   P : A -> Bool una propiedad. Siendo
+   a₁, a₂ ... aᵢ : A argumentos del constructor, si se cumple
+   la condición de inducción para cada constructor Cᵢ:
+
+   P(a₁) ∧ P(a₂) ∧ ... ∧ P(aᵢ)  =>  P(Cᵢ(a₁,a₂,...,b₀,b₁,...))
+
+Entonces a : A => P(a).
+
+** Ejemplo 1: Naturales
+Nuestro primer ejemplo va a ser obtener la inducción sobre los naturales
+como caso particular. Damos una definición de los naturales en lenguaje
+Haskell, con los axiomas de Peano, un natural es 0 o el siguiente de un
+natural:
+
+#+BEGIN_SRC haskell
+    data Nat = O
+             | S Nat
+#+END_SRC
+
+Que equivale a la definición en Coq:
+
+#+BEGIN_EXAMPLE
+    Inductive nat : Type :=
+      | O : nat
+      | S : nat -> nat
+#+END_EXAMPLE
+
+Es decir, si lo demostramos para =0= y para =S n= sabiéndolo para =n=,
+lo hemos demostrado para todos los naturales.
+
+** Ejemplo 2: Árboles binarios
+Ahora vamos a intentar el ejemplo que motivó esta búsqueda. Definimos un
+árbol binario como un árbol vacío o como un nodo del que surgen dos
+árboles binarios, en Haskell:
+
+#+BEGIN_SRC haskell
+    data Tree a = Empty
+                | Node a (Tree a) (Tree a)
+#+END_SRC
+
+Que equivale a la definición en Coq:
+
+#+BEGIN_EXAMPLE
+    Inductive tree (X:Type) : Type :=
+      | nilt : tree X
+      | node : X -> tree X -> tree X -> tree X.
+#+END_EXAMPLE
+
+Es decir, si demostramos una propiedad para el árbol vacío y para un
+árbol sabiendo que la cumplen sus subárboles derecho e izquierdo, la
+hemos demostrado para todos los árboles binarios.
+
+En el repositorio [[https://github.com/MROMAN42/recorridosArboles][mroman42/recorridosArboles]] hay
+varias demostraciones por inducción sobre árboles binarios, explicados
+en lenguaje natural y demostrados luego sobre el asistente de
+demostraciones Coq.
+
+[1] Post sobre generalizaciones de la inducción [[http://math.blogoverflow.com/2015/03/10/when-can-we-do-induction/][en Stack Overflow]].   
+* TODO Mónadas                                                                                :post:
+:PROPERTIES:
+:TITLE:    Mónadas
+:EXPORT_FILE_NAME: monadas.html
+:INDEX_DATE: <2016-12-24 Mon 15:09>
+:END:
+
+#+BEGIN_QUOTE
+  A monad is just a monoid in the category of endofunctors, what's the
+  problem?
+
+  -- *Philip Walder* (apócrifa) en /[[http://james-iry.blogspot.com.es/2009/05/brief-incomplete-and-mostly-wrong.html][A Brief, Incomplete, and Mostly Wrong History of programming languages]]/
+#+END_QUOTE
+
+** Prerrequisitos
+Este artículo requiere un conocimiento previo de Haskell, o al menos, de
+otro lenguaje de programación funcional. Puedes consultar nuestra
+[[http://tux.ugr.es/dgiim/blog/2014/10/01/intro-haskell/][introducción a Haskell]] con recursos para iniciarte en el lenguaje.
+
+Por otro lado, para la segunda parte del artículo es recomendable
+conocimiento previo sobre teoría de categorías. Aun así, no es necesaria
+para leer la primera parte del artículo, donde hablamos de mónadas sin
+hacer ninguna referencia explícita a la teoría de categorías. Si quieres
+leer sobre ese tema, puedes consultar nuestros apuntes de
+[[http://tux.ugr.es/dgiim/blog/2014/10/04/intro-categorias/][introducción a teoría de categorías]].
+
+** Motivación para las mónadas
+*** Mónadas en Haskell
+    :PROPERTIES:
+    :CUSTOM_ID: mónadas-en-haskell
+    :END:
+
+Imaginemos que necesitamos controlar cuando una función interna devuelve
+un error, o cuando usa un estado que debe ser pasado al resto de
+funciones. Cuando trabajamos con programación funcional pura, debemos
+devolver explícitamente el error (señalar cómo va a tratarlo cada
+función) o pasar el estado como argumento a cada una de las funciones;
+así que una solución sería modificar cada una de las funciones que
+usamos para que tenga en cuenta ese estado o ese caso de error, pero
+esto añadiría mucha complejidad innecesaria a nuestro código. La
+estructura de mónada simplifica esta escritura.
+
+El siguiente ejemplo, en el que tratamos el manejo de errores
+encapsulado en una mónada, está inspirado en los ejemplos de:
+
+-  [[http://homepages.inf.ed.ac.uk/wadler/papers/marktoberdorf/baastad.pdf][Monads for functional programming]] - /Philip Wadler/
+
+Que es una muy buena introducción al uso de las mónadas en programación
+funcional.
+
+*** Calculando raíces cuadradas
+Por ejemplo, supongamos que intentamos sacar raíces cuadradas en los
+reales usando el [[https://en.wikipedia.org/wiki/Integer_square_root#Algorithm][método de Newton]]. Si intentamos calcular $\sqrt{n}$, 
+podemos tomar a cada paso la aproximación:
+
+\[ x_{k+1} = \frac{1}{2}\left( x_k+\frac{n}{x_k} \right) \]
+
+Y parar cuando estemos suficientemente cerca (más cerca que un ε dado):
+
+\[ |x_{k+1} - x_k| < \varepsilon \]
+
+Escribimos una implementación de ese concepto de convergencia para
+listas infinitas en Haskell y del método de Newton, basado en la función
+[[http://hackage.haskell.org/package/base-4.9.0.0/docs/Prelude.html#v:iterate][=iterate=]]:
+
+#+BEGIN_SRC haskell
+    limit :: Float -> [Float] -> Float
+    limit epsilon (x:y:xs)
+      | abs (x-y) < epsilon = y
+      | otherwise           = limit epsilon (y:xs)
+
+    newtonaprox :: Float -> Float -> Float
+    newtonaprox n x = (x + n/x)/2
+
+    sqroot :: Float -> Float
+    sqroot 0 = 0
+    sqroot x = limit 0.03 (iterate (newtonaprox x) x)
+#+END_SRC
+
+Ahora imaginemos que usamos esta raíz cuadrada recién definida para
+solucionar una ecuación de segundo grado $x^2 + bx + c = 0$:
+
+\[ x = \frac{-b \pm \sqrt{b^2 - 4c}}{2} \]
+
+Podemos definir una estructura de datos =QPol= para el polinomio y una
+función que lo resuelva obteniendo sus dos raíces:
+
+#+BEGIN_SRC haskell
+  data QPol = QPol Float Float Float
+
+  instance Show QPol where
+      show (Qpol a b c) = show a ++ "x² + " ++ show b ++ "x + " show c
+
+  solve :: QPol -> (Float,Float)
+  solve (QPol a b c) = (sol1 sol2)
+      where sol1 = ((-b) + sqroot(b*b-4*c*a))/(2*a)
+            sol2 = ((-b) - sqroot(b*b-4*c*a))/(2*a)
+#+END_SRC
+
+Y podemos comprobar que funciona:
+
+#+BEGIN_EXAMPLE
+    λ> pol = QPol 1 (-5) 6
+    λ> putStrLn $ "Las soluciones de " ++ show pol ++ " son " ++ solve pol
+    Las soluciones de 1.0x² + -5.0x + 6.0 son (3.0,2.0)
+#+END_EXAMPLE
+
+*** Controlando los errores
+Pero ¿qué ocurre cuando intentamos calcular la raíz cuadrada de un
+número no positivo? Este método no la encuentra, por lo que debería
+devolver un error antes de intentar empezar a calcularla. La solución
+obvia es reflejar este error con un =Maybe= en el cálculo de la raíz
+cuadrada.
+
+#+BEGIN_SRC haskell
+    sqroot' :: Float -> Maybe Float
+    sqroot' x
+      | x < 0     = Nothing
+      | x == 0    = Just 0.0
+      | otherwise = Just ( limit 0.03 (iterate (newtonsqrt x) x) )
+#+END_SRC
+
+Esto lo soluciona, pero nos crea un problema mayor. La función =solve=
+está usando la raíz cuadrada y se espera de ella que devuelva un número,
+no un posible error. Si queremos conseguir que funcione con la nueva
+=sqroot'=, necesitaríamos implementar todas sus componentes internas
+teniendo en cuenta ese error. Por ejemplo, deberíamos reescribir el
+=(+)=, para tener en cuenta errores y propagarlos por todos los cálculos
+involucrando a =sqroot'=:
+
+#+BEGIN_SRC haskell
+    (+.) :: Maybe Float -> Maybe Float -> Maybe Float
+    (+.) Nothing _ = Nothing
+    (+.) _ Nothing = Nothing
+    (+.) (Just a) (Just b) = Just (a + b)
+#+END_SRC
+
+Pero esto es muy pesado de implementar; deberíamos implementarlo ¡para
+cada una de las operaciones que usen la raíz cuadrada en algún punto!
+Esto obliga a cada una de nuestras operaciones intermedias a ser
+conscientes de la posibilidad de error, dándonos código mucho menos
+modular y reusable.
+
+Una solución ligeramente mejor es la de abstraer este proceso de hacer a
+una función consciente de la posibilidad de error en una función aparte
+y definir las demás en función suya:
+
+#+BEGIN_SRC haskell
+    errorAware :: (a -> b -> c) -> Maybe a -> Maybe b -> Maybe c
+    errorAware op Nothing _ = Nothing
+    errorAware op _ Nothing = Nothing
+    errorAware op (Just a) (Just b) = Just (op a b)
+
+    (+.), (*.) :: Maybe Float -> Maybe Float -> Maybe Float
+    (+.) = errorAware (+)
+    (*.) = errorAware (*)
+#+END_SRC
+
+Esto nos permite hacer cálculos con ellas:
+
+#+BEGIN_EXAMPLE
+    λ> sqroot' (-3) +. Just 4
+    Nothing
+    λ> sqroot' 3 +. Just 4
+    Just 5.732143
+#+END_EXAMPLE
+
+*** La mónada Maybe
+Esta idea para simplificar el tratamiento de errores, realizada
+correctamente, es lo que nos va a proporcionar la estructura de mónada.
+En Haskell, podemos definir una mónada como:
+
+#+BEGIN_SRC haskell
+    class Monad m where
+      (>>=)  :: m a -> (a -> m b) -> m b
+      return :: a -> m a
+#+END_SRC
+
+La idea intuitiva es que =(>>=)= nos permite tomar una función que puede
+devolver errores pero que no comprueba a la entrada si ha recibido un
+error, es decir, de tipo =(a -> Maybe b)= ; y aplicarla sobre una
+función que puede contener un error. La podríamos usar por ejemplo para
+componer varias =sqroot'=, que era algo que hasta ahora no podíamos
+hacer sin tratar cada posible caso de error. Y la función =return=, que
+en este caso es simplemente =Just=, nos permite considerar una constante
+como un posible error. Podemos calcular fácilmente así
+$$\sqrt{\sqrt{3}}$$ teniendo en cuenta los casos de error:
+
+#+BEGIN_SRC haskell
+    sqroot' (sqroot' 3)              -- ¡Error de tipos!
+    sqroot' 3 >>= sqroot'            -- Usando mónadas
+    Just   3 >>= sqroot' >>= sqroot' -- Usando Just
+    return 3 >>= sqroot' >>= sqroot' -- Equivalente a lo anterior
+#+END_SRC
+
+*** Notación do
+Las mónadas definen las funciones anteriores y muchas más que no vamos a
+tratar ahora mismo, pero como resultado, nos acaban ofreciendo la
+*[[https://en.wikibooks.org/wiki/Haskell/do_notation][notación do]]*,
+que es la que podemos usar para acabar escribiendo nuestra función
+=solve= como:
+
+#+BEGIN_SRC haskell
+    solve :: QPol -> Maybe (Float,Float)
+    solve (QPol a b c) = do
+      discriminant <- sqroot' (b*b - 4*c*a)
+      return (((-b) + discriminant)/(2*a), ((-b) - discriminant)/(2*a))
+#+END_SRC
+
+En la primera línea tenemos en cuenta que la función =sqroot= puede
+producir error, y en la segunda simplemente usamos el /posible/
+resultado de ella sin tener que preocuparnos por el resto de funciones.
+
+Nótese que la notación *do* es sólo una notación diseñada para aliviar
+la escritura de operaciones con mónadas en algunos casos particulares;
+es sólo /azúcar sintáctico/ para operaciones que no dejan de ser
+puramente funcionales. Existen críticas al uso de esta notación. [1]
+
+** Mónadas en programación funcional
+*** Mónadas como clase de tipos
+Las mónadas en Haskell están definidas como una clase de tipos teniendo:
+
+-  Un *constructor* de tipos ~m ∷ * -> *~, que para cada tipo =a=,
+   devuelve una mónada conteniéndolo, =m a=.
+-  Una *función* ~return ∷ a -> m a~, que para todo elemento de tipo
+   =a=, devuelve una mónada que lo contiene.
+-  Una *función* ~(>>=) ∷ m a -> (a -> m b) -> m b~, que dada una
+   mónada y una función que se aplique sobre su interior y devuelva otra
+   mónada, devuelve la mónada resultante. Sirve como composición de
+   funciones monádicas.
+
+La existencia de la última función equivale a la existencia de otras dos
+funciones =fmap ∷ (a -> b) -> m a -> m b= y =join ∷ m (m a) -> m a=.
+
+Nótese entonces que para ser mónada, una clase de tipos debe ser primero
+un funtor. Dentro de los funtores que conocemos, podemos reconocer
+algunas mónadas, incluyendo la mónada =Maybe= que hemos usado hasta
+ahora:
+
+#+BEGIN_SRC haskell
+  -- Return de la mónada Maybe
+  return x = Just x
+
+  -- Bind de la mónada Maybe
+  (Just x) >>= k = k x
+  Nothing  >>= _ = Nothing
+
+  -- Return de la mónada List
+  return x = [x]
+
+  -- Bind de la mónada List
+  xs >>= f = [y | x <- xs, y <- f x]
+#+END_SRC
+
+Puedes empezar a leer tutoriales sobre el uso de las mónadas en Haskell
+en:
+
+ - [[http://learnyouahaskell.com/a-fistful-of-monads][A fistful of monads - Learn you a Haskell]]
+ - [[https://en.wikibooks.org/wiki/Haskell/Understanding_monads][Understanding monads - Wikibooks]]
+
+*** Mónada lista
+En las listas, por ejemplo, tenemos como candidato para
+=join :: [[a]] -> [a]= la concatenación de listas, =concat=. Nuestro
+=return :: a -> [a]= será simplemente incluir un elemento en una lista
+que sólo lo contenga a él.
+
+En esta mónada, =(>>==) mapea una función =a -> [a]= sobre cada elemento
+de la lista y concatena todos los resultados:
+
+#+BEGIN_EXAMPLE
+    λ> [1,2,3] >>= (replicate 3)
+    [1,1,1,2,2,2,3,3,3]
+#+END_EXAMPLE
+
+Nótese que, de la misma manera en la que podemos usar =(>>==), podemos
+usar una versión con sus parámetros cambiados de orden, =(=<<)=. Aquí
+usamos la mónada lista para enumerar los racionales repitiendo
+elementos:[2]
+
+#+BEGIN_SRC haskell
+    import Data.List
+    import Data.Ratio
+
+    -- Crea los racionales con denominador n
+    withDenom :: Integral -> [Rational]
+    withDenom n = map (%n) [1..]
+
+    -- Para cada entero, crea los racionales que lo
+    -- tienen como denominador
+    rationalsDup :: [Rational]
+    rationalsDup = withDenom =<< [1..]
+
+    -- Evita duplicados con 'nub'
+    rationals :: [Rational]
+    rationals = nub rationalsDup
+#+END_SRC
+
+*** Mónada IO
+La mónada IO surge como una solución al problema de implementar efectos
+secundarios (como la lectura o escritura) en un lenguaje puro y de forma
+extensible, sin tener que alterar el sistema de tipos y respetando el
+orden en el que queremos que se ejecuten.
+
+#+BEGIN_SRC haskell
+    greeting :: IO ()
+    greeting = fmap ("Hola, "++) getLine >>= print
+#+END_SRC
+
+Pueden leerse más detalles sobre mónada IO y su implementación en:
+
+-  [[http://chris-taylor.github.io/blog/2013/02/09/io-is-not-a-side-effect/][IO is pure]] - Chris Taylor
+-  [[https://www.microsoft.com/en-us/research/wp-content/uploads/1993/01/imperative.pdf][Imperative functional programming]] - Simon L. Peyton Jones, Philip Wadler
+-  [[https://blog.jle.im/entry/first-class-statements][First-Class “Statements”]] - Justin Le
+
+*** Mónada estado
+En ocasiones necesitamos que nuestras funciones conserven un estado
+además de realizar sus operaciones. Para esos casos existe la mónada
+estado =State s=, que guarda un valor de estado de tipo =s=. Podemos
+pensar en =State s a= como =s -> (a,s)=; es decir, un elemento dentro de
+la mónada es una función dispuesta a tomar un estado inicial y a
+devolver algún elemento junto a un estado final.
+
+Existen tutoriales sobre la mónada estado en:
+
+-  [[https://wiki.haskell.org/State_Monad][State Monad - Haskell wiki]]
+-  [[http://learnyouahaskell.com/for-a-few-monads-more][For a few monads more - Learn you a Haskell]]
+-  [[http://brandon.si/code/the-state-monad-a-tutorial-for-the-confused/][The State Monad: a tutorial for the confused - Brandon Simmons]]
+-  [[http://adit.io/posts/2013-06-10-three-useful-monads.html][Three useful monads - Aditya Bhargava]]
+
+Un uso de la mónada estado puede ser el guardar la semilla de una
+generación pseudoaleatoria de números usando
+[[https://en.wikipedia.org/wiki/Linear_congruential_generator][generadores lineales congruenciales]]. En concreto, usaremos la fórmula iterativa
+$x_{i+1} \equiv 16807x_i \text{ mod } 2147483647$, que se expone [[https://math.dartmouth.edu/archive/m20f11/public_html/RANDOMNESS_LCG.pdf][aquí]].
+Con este generador podremos escribir dados de un número dado de caras y
+llamarlos varias veces. El estado interno pasará la semilla aleatoria de
+un dado al siguiente:
+
+#+BEGIN_SRC haskell
+    import Control.Monad.State
+    type Seed = Int
+
+    dice :: Int -> State Seed Int
+    dice n = state (\s -> (s `mod` n + 1, 16807*s `mod` 2147483647))
+#+END_SRC
+
+Y podríamos llamarlo con la semilla =1000= de la forma siguiente; que
+nos devolverá por un lado el resultado de la tirada y por otro lado la
+nueva semilla:
+
+#+BEGIN_EXAMPLE
+    λ> runState (dice 6) 1000
+    (5,1660)
+#+END_EXAMPLE
+
+Si queremos hacer varias tiradas seguidas, podemos usar
+=replicateM :: Int -> m a -> m [a]=, que se encarga de pasar
+internamente la semilla de cada tirada a la siguiente tirada:
+
+#+BEGIN_EXAMPLE
+    λ> fst (runState (replicateM 100 (dice 6)) 1037)
+
+    [6,6,2,5,4,3,6,1,4,6,3,6,4,4,6,3,5,1,5,2,6,4,2,6,4,2,4,
+    5,1,6,5,4,1,3,5,4,6,4,2,3,4,2,1,1,6,5,5,4,1,1,4,6,5,3,6,
+    3,1,1,5,1,4,1,2,3,5,5,4,5,3,3,2,6,4,1,1,1,2,5,4,5,2,4,5,
+    6,1,2,4,3,3,6,4,6,3,4,5,1,4,2,2,2]
+#+END_EXAMPLE
+
+Incluso podemos crear nuevos generadores aleatorios a partir de los
+anteriores con las operaciones usuales:
+
+#+BEGIN_SRC haskell
+    twodices :: State Seed Int
+    twodices = do
+        a <- dice 6
+        b <- dice 6
+        return (a+b)
+#+END_SRC
+
+Cuando lo llamemos, tomará la distribución suma de las dos
+distribuciones de dados:
+
+#+BEGIN_EXAMPLE
+    λ> fst (runState (replicateM 100 twodices) 1032)
+
+    [8,11,8,8,5,3,7,8,9,5,2,6,7,9,8,7,5,9,3,9,10,7,7,10,
+    8,2,5,6,4,10,8,6,4,6,4,8,9,7,12,11,9,3,2,7,5,5,6,10,
+    6,6,3,11,4,7,3,6,3,7,10,4,4,11,4,10,3,5,2,8,4,10,12,
+    8,9,5,9,11,6,4,10,6,6,12,5,2,7,8,7,4,4,4,9,6,6,6,3,
+    11,11,9,7,6]
+#+END_EXAMPLE
+
+** Mónadas en teoría de categorías
+Para entender cómo funcionan las [[https://es.wikipedia.org/wiki/M%C3%B3nada_(teor%C3%ADa_de_categor%C3%ADas)][mónadas]]
+en teoría de categorías tenemos que entender dos conceptos: los
+/productos en una [[https://es.wikipedia.org/wiki/Categor%C3%ADa_monoidal][categoría monoidal]]/ y /los endofuntores de una categoría/. 
+La unión de ambos conceptos es lo que nos dará las mónadas como una 
+construcción en teoría de categorías.
+
+*** Categorías monoidales
+Simplificando, una categoría monoidal es aquella donde, dados dos
+objetos $A,B$, tenemos un objeto /"producto tensor"/ de ambos,
+$A \otimes B$, donde además existe un objeto identidad $I$
+cumpliendo propiedades como:
+
+\[A \otimes B \cong B \otimes A\]
+
+\[A \otimes (B \otimes C) \cong (A \otimes B) \otimes C\]
+
+\[A \otimes I \cong A\]
+
+*** Ejemplos de categorías monoidales
+Los *conjuntos* con el producto cartesiano y el conjunto de un elemento
+forman ya una categoría monoidal. Puede comprobarse sobre ellos que
+existen los isomorfismos:
+
+\[A \times B \cong B \times A\]
+
+\[A \times (B \times C) \cong (A \times B) \times C\]
+
+\[A \times \{\bullet\} \cong A\]
+
+Pero además, podemos darles /otra/ estructura de categoría monoidal,
+esta vez con la [[https://es.wikipedia.org/wiki/Uni%C3%B3n_disjunta][unión disjunta]] y el conjunto vacío:
+
+\[A \sqcup B \cong B \sqcup A\]
+
+\[A \sqcup (B \sqcup C) \cong (A \sqcup B) \sqcup C\]
+
+\[A \sqcup \varnothing \cong A\]
+
+En general, *todas las categorías con productos finitos son categorías
+monoidales* con el producto categórico y el objeto terminal como unidad.
+Todas las categorías con coproductos finitos son categorías monoidales
+con el coproducto categórico y el objeto inicial como unidad.
+
+Otro ejemplo distinto lo forman los *espacios vectoriales* sobre un
+cuerpo $K$ con el producto tensor y el propio cuerpo sirviendo como
+unidad; o los *grupos abelianos* con el producto tensor y $\mathbb{Z}$
+siendo la unidad.
+
+*** Objetos monoide
+Un objeto $A$ de una categoría monoidal es objeto monoide cuando puedo
+definir un morfismo desde el objeto identidad hacia él y un morfismo
+desde el producto tensor $A \otimes A$ hacia él. Es decir, hay un
+morfismo /unidad/, $I \overset{u}\longrightarrow A$; y hay un morfismo /multiplicación/,
+$A \otimes A \overset{\mu}\longrightarrow A$.
+
+Cumpliendo ciertas propiedades similares a las que exigimos a un
+monoide. De hecho, un objeto monoide en la categoría de los conjuntos
+con el producto cartesiano es simplemente un *monoide* normal y
+corriente.
+
+*** Categorías de endofuntores
+El ejemplo que nos interesa ahora, sin embargo, es el de los
+*endofuntores* de una categoría. Un *funtor*, de forma simplificada, es
+una /aplicación entre categorías/; que lleva objetos en objetos y
+morfismos en morfismos, respetando además el punto de inicio y fin de
+cada morfismo.
+
+Si consideramos los funtores de una categoría a sí misma, tenemos los
+*endofuntores* de la categoría. Y entre ellos existen transformaciones
+naturales que actúan como morfismos en el sentido de que se componen
+para dar otras transformaciones naturales. Teniendo unos objetos (los
+endofuntores), y unos morfismos (las transformaciones naturales),
+tenemos una categoría. Nótese que hemos abstraído mucho, estamos
+trabajando con una categoría en la que cada objeto es en sí mismo un
+endofuntor y cada morfismo es toda una transformación natural entre dos
+funtores.
+
+Esta es además una categoría monoidal. El producto tensor de esta
+categoría monoidal será la composición $\circ$, y el objeto identidad
+el endofuntor identidad, que actúa dejando fijo cada objeto y cada
+morfismo.
+
+*** Mónadas
+Pues bien, una mónada es un objeto monoide en la categoría de los
+endofuntores con la composición como producto tensor. Esto quiere decir
+que es un endofuntor $F$ con transformaciones naturales:
+
+\[F \circ F \Rightarrow F\]
+
+\[I \Rightarrow F\]
+
+Como una transformación natural nos da un morfismo por cada objeto en el
+que se aplica el funtor, lo que tenemos son familias de morfismos:
+
+\[F(F(X)) \overset{\mu_x}\longrightarrow F(X)\]
+
+\[X \overset{r_x}\longrightarrow F(X)\]
+
+*** Una categoría para la programación funcional
+Algunos sistemas de tipos, con las funciones entre ellos =A -> B= como
+morfismos, forman una categoría[3]. No es el caso de Haskell, en el que,
+por varios motivos, sus tipos no forman una categoría[4]; pero las
+construcciones con inspiración en la teoría de categorías toman el
+nombre de sus homólogas.[5]
+
+El primer ejemplo de esto son los *funtores*. En Haskell, un funtor se
+define como:
+
+#+BEGIN_SRC haskell
+  class Functor f where 
+    fmap :: (a -> b) -> f a -> f b 
+#+END_SRC
+
+Es decir un funtor toma un tipo =a= (un objeto de la categoría), y nos
+devuelve otro tipo =f a= (otro objeto de la /misma/ categoría). Por otro
+lado, el funtor toma un morfismo =a -> b= y nos devuelve otro morfismo
+=f a -> f b=. Es decir, los funtores de la programación funcional son
+*endofuntores en la categoría de los tipos*, siempre que conserven
+ciertas reglas que tienen su reflejo en las reglas de funtores en
+Haskell.
+
+*** Monoides en la categoría de los endofuntores
+Entonces, si los funtores =f :: * -> *= son endofuntores en alguna
+categoría, tiene sentido cuestionarse cuáles de ellos son monoides.
+Esto, junto con ciertas restricciones que se le imponen como leyes a las
+mónadas, equivale a decir que existen los morfismos dados por las
+transformaciones naturales que pedíamos antes, es decir, deben existir
+morfismos de tipos =a -> m a= y =m (m a) -> m a=:
+
+#+BEGIN_SRC haskell
+    return :: a -> m a
+    join :: m (m a) -> m a
+#+END_SRC
+
+Así, a cualquier funtor que tiene estos dos morfismos, además del =fmap=
+que tenía por ser funtor, lo llamamos *mónada*. Nótese que =>>== puede
+implementarse desde =join= y viceversa, como:
+
+#+BEGIN_SRC haskell
+    (>>=) :: m a -> (a -> m b) -> m b
+    (>>=) x f = join (fmap f a)
+
+    join :: m (m a) -> m a
+    join x = x >>= id
+#+END_SRC
+
+Tenemos entonces dos definiciones equivalentes de lo que es una mónada.
+Una desde la teoría de categorías y otra desde la teoría de tipos y los
+lenguajes de programación funcional. Una visión desde las mónadas como
+monoides en la categoría de los endofuntores desde dentro de Haskell
+puede verse [[http://blog.sigfpe.com/2008/11/from-monoids-to-monads.html][aquí]].
+
+** Y más
+Además de las enunciadas en este post, existen más otros temas
+relevantes en relación a las mónadas, tanto en programación funcional
+como en teoría de categorías:
+
+-  [[http://book.realworldhaskell.org/read/monad-transformers.html][Transformadores de mónadas]], usadas para componer mónadas.
+-  [[http://stackoverflow.com/questions/8428554/what-is-the-comonad-typeclass-in-haskell][Comónadas]], la noción dual de una mónada.
+-  [[https://en.wikipedia.org/wiki/Kleisli_category][Categorías de Kleisli]], cada mónada da lugar a una categoría de Kleisli.
+-  [[https://en.wikipedia.org/wiki/Adjoint_functors][Funtores adjuntos]], cada par de funtores adjuntos da lugar a una mónada.
+-  [[http://www.cs.tufts.edu/comp/150FP/archive/brent-yorgey/tc.pdf][Typeclassopedia]], una revisión de otras clases de tipos relevantes en Haskell y
+   relacionadas con la teoría de categorías.
+
+** Referencias
+[1] Peligros de la notación do.
+    [[https://wiki.haskell.org/Do_notation_considered_harmful][Do notation considered harmful]]
+
+[2] Enumerando los racionales.
+    [[http://www.cs.ox.ac.uk/people/jeremy.gibbons/publications/rationals.pdf][Enumerating the rationals - J. Gibbons, D. Lester, R. Bird]]
+
+[3] La correspondencia entre tipos, lógica y categorías.
+    [[https://ncatlab.org/nlab/show/computational+trinitarianism][Computational Trinitarianism - NLab]]
+
+[4] Por qué los tipos de Haskell no son una categoría.
+    [[http://math.andrej.com/2016/08/06/hask-is-not-a-category/][Hask is not a category - Andrej Bauer]]
+
+[5] Por qué en ocasiones puede ser útil pensar en ellos como una
+    categoría.
+    [[https://ro-che.info/articles/2016-08-07-hask-category][Does it matter if Hask is (not) a category?]]
+* TODO Matemáticas en emacs                                                                   :post:
+:PROPERTIES:
+:TITLE:    Matemáticas en emacs
+:EXPORT_FILE_NAME: matematicasemacs.html
+:INDEX_DATE: <2016-09-26 Mon 15:07>
+:END:
+
+/Actualizado a 06 de agosto de 2017./
+
+** Apuntes a ordenador
+Tomar apuntes de matemáticas con el ordenador es una tarea difícil por
+lo complejo que es transcribir la notación (símbolos, letras en otros
+alfabetos, índices...) y la velocidad necesaria. Además, los
+diagramas, dibujos, flechas o anotaciones no textuales que tomamos
+parecen imposibles de transcribir fielmente a un fichero.
+
+*[[https://www.latex-project.org/about/][Latex]]* permite notación matemática pero no facilita la velocidad (al fin y
+al cabo, Latex estaría pensado para edición de libros, no para tomar apuntes).
+*[[https://daringfireball.net/projects/markdown/][Markdown]]*, por otro lado, simplifica mucho el poder escribir, pero pierde mucha 
+potencia respecto a Latex. Así que una solución es usar *[[http://orgmode.org/][org-mode]]* como lenguaje
+de marcado; es relativamente simple y fácilmente legible, como markdown, mientras
+que permite visualización de latex conforme se edita, programación literaria y
+exportación a latex y html, permitiendo la inclusión de código latex o html arbitrario
+para exportarlo.
+
+** Ventajas de org-mode
+*org-mode* tiene internamente un lenguaje de marcado similar al de
+markdown, con la ventaja para el usuario de Emacs de que está adaptado
+especialmente al editor. Permite escribir fórmulas en Latex y exportar
+luego a =.tex= y =.pdf=, controlando las opciones de Latex.
+
+Una fórmula en Latex puede escribirse directamente en *org-mode*
+incluyéndola entre $\mathtt{\backslash\left( \dots \backslash\right)}$, si está dentro de una línea de texto 
+(como en \(i \ast x = x\)); o entre $\backslash[\ \dots\ \backslash]$, cuando
+queremos que se muestre aparte del texto como en el siguiente ejemplo
+
+\[ \sum_{n=0}^\infty \frac{1}{2^n}. \]
+
+Cuando terminamos de escribirla podemos [[http://orgmode.org/worg/org-tutorials/org-latex-preview.html][previsualizarla]] directamente con
+=C-c C-x C-l=, como si fuera un editor [[https://es.wikipedia.org/wiki/WYSIWYG][WYSIWYG]].
+
+Si vamos a acabar exportando a latex podemos insertar entornos como los
+que ofrece la biblioteca de la AMS con
+
+#+BEGIN_EXAMPLE
+#+begin_theorem
+[texto del teorema]
+#+end_theorem
+#+END_EXAMPLE
+
+o incluso definir nuestros propios entornos y usarlos después de la misma
+forma. Además, también permite la inclusión de bloques de código con
+
+#+BEGIN_EXAMPLE
+#+begin_src ruby
+[código en ruby]
+#+end_src
+#+END_EXAMPLE
+
+en la mayoría de lenguajes de programación y algunos especialmente útiles
+para matemáticas como =Sage=.
+
+** Zoom
+Un problema menor (y quizá sólo mío) al configurar todo esto es que
+las fórmulas previsualizadas parecen demasiado pequeñas. Aunque estén
+en proporción con el texto, cuesta más leerlas; y cuando aumentamos el
+tamaño del texto con =C-x C-+=, las fórmulas no se amplían con
+él. Para conseguir que lo hagan hay que incluir el siguiente trozo de
+código en el archivo de configuración de Emacs, mezcla de dos
+respuestas de [[http://emacs.stackexchange.com/questions/3387/how-to-enlarge-latex-fragments-in-org-mode-at-the-same-time-as-the-buffer-text][thisirs y Mark]] en Stack Overflow:
+
+#+BEGIN_SRC lisp
+  (defun update-org-latex-fragment-scale ()
+    (let ((text-scale-factor
+           (expt text-scale-mode-step text-scale-mode-amount)))
+      (plist-put org-format-latex-options
+                 :scale (* 1.2 text-scale-factor)))
+  )
+  (add-hook
+   'text-scale-mode-hook
+   'update-org-latex-fragment-scale)
+#+END_SRC
+
+Después de volver a cargar el archivo de configuración, las fórmulas nuevas
+deberían volver a ajustarse con el texto.
+
+** Aumentando la velocidad de escritura
+Mi objetivo principal con todo esto era escribir matemáticas más
+rápidamente, así que [[http://emacs.stackexchange.com/questions/26322/math-autocompletion-in-org-mode][pregunté sobre autocompletado]] y concluí en usar
+=latex-math-mode=. Esto permite incluir comandos de Latex con atajos
+de teclado. En su configuración original usa el caracter =`= para
+acceder a ellos, así que =`-a= escribe =\alpha=.  Yo he decidido
+cambiar el acento invertido, que ya cuesta dos pulsaciones en el
+teclado en español, por la =ç=, que no la suelo usar. Además de los
+que incluye el paquete por defecto, se pueden escribir atajos propios.
+
+Además de =latex-math-mode=, =cdlatex= es un modo de Emacs escrito
+por el mismo creador de org-mode, que facilita la escritura rápida
+de símbolos de latex. Puede añadirse a =org-mode= usando
+
+#+BEGIN_SRC emacs-lisp
+  (use-package cdlatex
+    :ensure t)
+
+  (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
+#+END_SRC
+
+y las instrucciones del paquete pueden encontrarse [[https://github.com/cdominik/cdlatex][aquí]].
+
+Por otro lado, empecé a usar *yasnippets* en Emacs. Son cómodos,
+fáciles de programar, y me permiten simplificar tareas como escribir
+diagramas conmutativos o complejos simpliciales en pocos pasos.
+
+** Diagramas conmutativos
+Ahora estoy escribiendo sobre álgebra homológica y teoría de categorías, así que
+la mayoría de lo que escribo usa secuencias exactas y diagramas conmutativos.
+
+Para las secuencias exactas, por ejemplo, tengo simplemente
+una plantilla con =yasnippet=, que me deja 
+incluirlas escribiendo =complex_= y pulsando =<tab>=:
+
+#+BEGIN_EXAMPLE
+  # -*- mode: snippet -*-
+  # name: complex
+  # key: complex_
+  #--
+  \begin{aligned*} $1 \overset{$6}\longrightarrow 
+  $2 \overset{$7}\longrightarrow 
+  $3 \overset{$8}\longrightarrow 
+  $4 \overset{$9}\longrightarrow 
+  $5 \end{aligned*}
+#+END_EXAMPLE
+
+Para los diagramas conmutativos, la solución es un poco más
+compleja. El paquete *tikz* de Latex es muy útil para escribirlos pero
+tiene una sintaxis es demasiado recargada; así que existe *tikz-cd*, que
+simplifica esa sintaxis para centrarla en diagramas conmutativos. Para
+usarlo, hay que empezar por incluir en el archivo de configuración
+=init.el= las siguientes líneas
+
+#+BEGIN_SRC lisp
+(add-to-list
+  'org-latex-packages-alist '("" "tikz" t))
+
+(eval-after-load "preview"
+  '(add-to-list
+    'preview-default-preamble
+    "\\PreviewEnvironment{tikzpicture}"
+    t))
+#+END_SRC
+
+que pueden modificarse y escribirse de forma análoga si queremos que Emacs
+use internamente otros paquetes de Latex.
+
+Además en mi caso, tuve que cambiar el programa con el que generaba
+las imágenes. Parece funcionar sólo *imagemagick* cuando queremos
+usar diagramas conmutativos
+
+#+BEGIN_SRC lisp
+     (setq org-latex-create-formula-image-program 'imagemagick)
+   #+END_SRC
+
+** Cabeceras en Latex
+Cuando necesitamos funcionalidad adicional que ofrece Latex en bibliotecas aparte,
+como usar =tikz-cd=, podemos incluirlas en la cabecera del archivo org como:
+   
+#+BEGIN_SRC latex 
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{tikz-cd}
+#+END_SRC
+
+Además, si queremos que sea funcionalidad que sólo se use en la exportación de
+latex pero no en la previsualización, podemos incluirla con =#+latex_header_extra=.
+
+** Archivos de configuración de org
+Para evitar tener que repetir varias veces la misma cabecera en varios
+archivos, podemos usar un sólo archivo para escribir matemáticas y
+fraccionarlo en secciones temáticas. Cuando necesitamos tratar una
+sección, podemos usar la funcionalidad de /narrowing/ de [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Narrowing.html][org]] para
+tratar sólo una sección. 
+
+Otra opción es la de tener un sólo archivo de configuración
+=math.setup= con reglas de la forma
+
+#+BEGIN_SRC latex
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{tikz-cd}
+#+END_SRC
+
+y cargarlo en cada archivo =org= con =#+SETUPFILE: math.setup=.
+
+** Ejemplos
+Pueden encontrarse ejemplos de uso en [[https://github.com/mroman42/math][este repositorio]] con mis apuntes
+de matemáticas. Mi archivo de configuración de Emacs está disponible en
+[[https://github.com/M42/.emacs.d][mroman42/emacs.d]].
+* TODO Cartesian closed categories                                                            :post:
+:PROPERTIES:
+:TITLE: Cartesian closed categories
+:EXPORT_FILE_NAME: cartesianclosedcategories.html
+:INDEX_DATE: <2018-07-01 Sun 11:30>
+:ID:       3d52d110-822a-4f85-a1c4-57d868b527d5
+:END:
+
+A /cartesian closed category/ *C* can be defined as a category having a right adjoint
+of the unique functor to the terminal category * : *C* -> 1, a right adjoint of the
+diagonal functor  Δ : *C* -> *C* × *C*, and a right adjoint of (_ × c) : *C* -> *C* for
+each c ∈ *C*. These three adjoints correspond to the existence of a /terminal/ object,
+binary /products/ and /exponentials/.
+
+#+BEGIN_SRC haskell
+  * -> *     c,c ->  a,b      a × c -> b
+ --------   --------------  --------------
+  c -> 1     c  -> a × b     a -> (c -> b)
+#+END_SRC
+
+These three rules match the three introduction rules for the simply
+typed lambda calculus. We interpret c as a context Γ and each morphism
+x : c -> a as a term  Γ ⊢ x : a.
+
+#+BEGIN_SRC haskell
+                Γ ⊢ a : A   Γ ⊢ b : B     Γ , a : A ⊢ b : B
+ -----------   ------------------------  ---------------------
+  Γ ⊢ * : 1       Γ ⊢ ⟨a,b⟩ : A × B       Γ ⊢ (λa.b) : A -> B
+#+END_SRC
+
+Now, we should discuss if \beta-equivalence corresponds to the equality between morphisms.
+
+* TODO Ideas de teoría de tipos                                                               :post:
+:PROPERTIES:
+:TITLE:    Ideas de teoría de tipos
+:EXPORT_FILE_NAME: ideasteoriatipos.html
+:INDEX_DATE: <2016-01-08 Fri 15:13>
+:END:
+
+/Una recopilación de algunas ideas y enlaces después de haber empezado
+a leer sobre teoría de tipos./
+
+Los sistemas de tipos tienen su utilidad en las matemáticas. Sirven para
+modelar una fundamentación de las matemáticas distinta de la usual
+fundamentación conjuntista; y tienen varias aplicaciones interesantes en
+lenguajes funcionales y asistentes de demostración. En particular, sobre
+los tipos se puede definir un álgebra y se pueden representar sistemas
+lógicos. Vamos a tratar esas aplicaciones referenciando en cada caso
+artículos donde se exponen en profundidad.
+
+** Inducción estructural
+La inducción estructural es una generalización de la inducción usual
+sobre los naturales que la extiende a otras estructuras representables
+como tipos de un lenguaje funcional. Sobre la inducción estructural
+hemos escrito previamente en el blog una introducción:
+
+-  [[http://tux.ugr.es/dgiim/blog/2015/03/14/induccion-estructural/][Inducción Estructural - Blog LibreIM]]
+
+En ese post se escriben ejemplos sobre los naturales y los árboles. El
+artículo sobre el que se basa es:
+
+-  [[http://math.blogoverflow.com/2015/03/10/when-can-we-do-induction/][When can we do induction? - math.blogoverflow]]
+
+Ejemplos y más detalles sobre inducción estructural y sus usos pueden
+encontrarse en:
+
+-  [[http://www.cs.cmu.edu/~me/212/handouts/structural.pdf][Some notes on Structural Induction - Michael Erdmann]]
+-  [[http://arxiv.org/pdf/1312.2696.pdf][Structural Induction Principles for Functional Programmers - James Caldwell]]
+
+Y varias demostraciones por inducción estructural implementadas en Coq
+en este repositorio sobre [[https://github.com/mroman42/recorridosArboles][*recorridos en árboles*]].
+
+** Álgebra de tipos
+En un post anterior del blog de *LibreIM* hemos tratado el álgebra de
+tipos. Ese post se basó sobre otros tres publicados en el blog de Chris
+Taylor:
+
+-  [[http://tux.ugr.es/dgiim/blog/2015/03/24/algebra-tipos/][Álgebra de tipos - Blog LibreIM]]
+-  [[http://chris-taylor.github.io/blog/2013/02/10/the-algebra-of-algebraic-data-types/][The algebra of algebraic data types, Part I - Chris Taylor]]
+-  [[http://chris-taylor.github.io/blog/2013/02/11/the-algebra-of-algebraic-data-types-part-ii/][The algebra of algebraic data types, Part II - Chris Taylor]]
+-  [[http://chris-taylor.github.io/blog/2013/02/13/the-algebra-of-algebraic-data-types-part-iii/][The algebra of algebraic data types, Part III - Chris Taylor]]
+
+En el segundo de los artículos se usan funciones generadoras para probar
+resultados sobre los números de Catalan y los árboles binarios. La
+teoría de funciones generadoras necesaria para entender el tratamiento
+de los árboles binarios la explica Mike Spivey en
+/[[https://mikespivey.wordpress.com/2013/03/19/the-catalan-numbers-from-their-generating-function/][The catalan numbers from their generating function]]/.
+
+Además, existe un resultado de *Fiore y Leinster* que afirma que si
+demostramos una relacion polinómica para números complejos, también será
+válida para cualquier
+[[https://en.wikipedia.org/wiki/Semiring][semianillo]]. Y por tanto,
+para los tipos. Esto quiere decir que, en la mayoría de las ocasiones,
+podemos usar la resta o la división de tipos como si existieran. La
+demostración excluye algunos casos particulares y se expone aquí:
+
+-  [[http://arxiv.org/pdf/math/0212377v1.pdf][Objects of categories as
+   complex numbers - Marcelo Fiore y Tom Leinster]]
+
+Sobre el uso de las derivadas en el álgebra de tipos existe un resultado
+de *Conor McBride* que relaciona las derivadas parciales con los
+[[http://learnyouahaskell.com/zippers][/zippers/]] de Haskell usados
+para representar contextos. Puede leerse aquí:
+
+-  [[http://strictlypositive.org/diff.pdf][The derivative of a regular
+   type is its type of one-hole contexts - Conor McBride]].
+
+** Lógica con tipos
+La aplicación de los tipos a la lógica y las demostraciones parte del
+isomorfismo de Curry-Howard, que relaciona los sistemas de tipos con
+sistemas lógicos. El sistema más simple donde puede apreciarse el
+isomorfismo es el
+[[https://en.wikipedia.org/wiki/Typed_lambda_calculus][*cálculo lambda tipado*]], que es isomorfo a la
+[[https://en.wikipedia.org/wiki/Natural_deduction][*deducción natural*]]. La deducción natural es un ejemplo de lógica intuicionista,
+lo que en la práctica quiere decir que /no/ (!) se tienen el /tercio
+excluso/ y la /doble negación/ como axiomas:
+
+$$ A \vee \neg A$$
+
+$$ \neg \neg A \implies A $$
+
+Los apuntes sobre [[https://github.com/libreim/curryHoward/blob/master/CurryHoward.pdf][*Curry-Howard*]]
+de los repositorios del doble grado explican el isomorfismo sobre la
+deducción natural y el cálculo lambda tipado. El
+[[https://github.com/libreim/curryHoward/tree/master/src][código fuente]] acompañando los apuntes está escrito en Coq y Haskell.
+
+La idea de tratar las proposiciones como tipos la expone *Philip Wadler*
+en los dos siguientes artículos: primero de manera didáctica, con una
+introducción histórica y sobre el sistema de la deducción natural, y
+luego de forma más compleja, exponiendo el isomorfismo sobre el sistema
+de tipos de Haskell.
+
+-  [[http://homepages.inf.ed.ac.uk/wadler/papers/propositions-as-types/propositions-as-types.pdf][Propositions
+   as Types - Philip Wadler]]
+-  [[http://homepages.inf.ed.ac.uk/wadler/papers/gr2/gr2.pdf][The
+   Girard-Reynolds Isomorphism - Philip Wadler]]
+
+** Parametricidad
+La parametricidad limita las instancias posibles de los tipos de la
+forma =forall a. p(a)=, y nos permite obtener teoremas sobre todas las
+instancias de esos tipos. Se explica a nivel intuitivo en el siguiente
+post de Bartosz Milewski y más formalmente en este paper de Philip
+Wadler:
+
+-  [[http://bartoszmilewski.com/2014/09/22/parametricity-money-for-nothing-and-theorems-for-free/][Parametricity:
+   Money for Nothing and Theorems for Free - Bartosz Milewski]]
+-  [[http://ttic.uchicago.edu/~dreyer/course/papers/wadler.pdf][Theorems
+   for free! - Philip Wadler]]
+
+** Teoría de tipos
+Los tipos pueden usarse para fundamentar las matemáticas, del mismo modo
+que lo hacen los conjuntos (en sistemas axiomáticos como [[https://en.wikipedia.org/wiki/Zermelo%E2%80%93Fraenkel_set_theory][ZFC]])
+o las categorías (en sistemas como [[https://ncatlab.org/nlab/show/ETCS][ETCS]]). En el siguiente artículo
+se discuten las diferencias de ambos con la *teoría de tipos
+dependientes de Martin-Löf*, que se expone por completo en las notas de
+Nordström, Petersson y Smith:
+
+-  [[https://golem.ph.utexas.edu/category/2013/01/from_set_theory_to_type_theory.html][From Set Theory to Type Theory - The n-Category Café]]
+-  [[http://www.cse.chalmers.se/~bengt/papers/hlcs.pdf][Martin-Löf Type Theory - B. Nordström, K. Petersson, J.M. Smith]]
+
+Esto nos da una fundamentación de las matemáticas con una interpretación
+computacional clara.
+
+Una refinación de esas teorías para producir una fundamentación
+también constructivista de las matemáticas es el Cálculo de
+Construcciones (Calculus of constructions, COC) desarrollado por
+*Thierry Coquand* y *Gérard Huet*, que finalmente dará lugar al
+asistente de demostraciones *COQ*, desarrollado por el INRIA. El
+[[https://en.wikipedia.org/wiki/Lambda_cube][*\lambda-cubo*]] es un diagrama para exponer cómo este sistema amplía al
+/cálculo lambda tipado/ y al /Sistema $F_\omega$/ que usa Haskell.
+
+-  [[http://ac.els-cdn.com/0890540188900053/1-s2.0-0890540188900053-main.pdf?_tid=3846e956-b301-11e5-8e78-00000aab0f02&acdnat=1451925532_87ac5a8e6a7bd6477746a55c17130f43][Calculus of Constructions - T. Coquand, G. Huet]].
+-  [[https://coq.inria.fr/][The Coq proof assistant - INRIA]]
+
+* TODO Informal CV                                                                            :post:
+:PROPERTIES:
+:TITLE:    Informal CV
+:EXPORT_FILE_NAME: informalcv.html
+:INDEX_DATE: <2018-10-21 Sun>
+:END:
+
+ * December 2018. Attended [[http://events.cs.bham.ac.uk/syco/2/][SYCO2]]. (University of Strathclyde)
+ * October 2018. Started a [[https://www.ox.ac.uk/admissions/graduate/courses/msc-mathematics-and-foundations-computer-science?wssl=1][MSc in Mathematics and Foundations of Computer Science]]. (University of Oxford)
+ * August 2018. Participant [[https://homalg-project.github.io/capdays-2018/][CAP days]]. (Universität Siegen)
+ * June 2018. Finished the double degree on Mathematics and Computer Engineering. (University of Granada)
+ * June 2018. Presented my bachelor's thesis. [[https://mroman42.github.io/ctlc/ctlc.pdf][Category theory and lambda calculus]]. (University of Granada)
+ * December 2017. [[https://unimath.github.io/bham2017/][School and Workshop on Univalent Mathematics]]. (University of Birmingham)
+ * July 2017. [[https://sites.google.com/view/summerschool2017-eutypes/][EUTypes Summer School]]. (Ohrid, Macedonia)
+ * March 2017. [[https://sites.google.com/unizar.es/affine-group-schemes-seminar/inicio][Seminar. Affine group schemes, an introduction]]. (University of Zaragoza)
+ * October 2012. Attended the XXVII Olimpiada Iberoamericana de Matemática. (Cochabamba, Bolivia)
+ * September 2012. Started a double degree in [[http://grados.ugr.es/informaticaymatematicas/][Mathematics and Computer Engineering]]. (University of Granada)
+ * July 2012. Attended the [[http://oma.org.ar/imo2012/][53rd International Mathematical Olympiad]]. (Mar del Plata, Argentina)
+
+* TODO Projective, injective and flat modules
+:PROPERTIES:
+:TITLE:    Projective, injective and flat modules
+:HUGO_TAGS: math
+:HUGO_TOPICS: math
+:HUGO_FILE: post/projectivemodules.md
+:HUGO_DATE: [2017-02-18 Sat 15:10]
+:END:
+
+** Definitions
+An R-module $D$ is:
+
+ 1. *Projective* if $Hom(D, -)$ is an exact functor.
+ 2. *Injective* if $Hom(-,D)$ is an exact functor.
+ 3. *Flat* if $D \otimes -$ is an exact functor.
+
+** Characterization
+We know that $Hom(D,-)$ and $Hom(-,D)$ are left-exact and that
+$D\otimes -$ is right-exact; so for them to be exact, we only need:
+
+- A module $D$ is *projective* when every $f : B \longrightarrow C$ surjective induces
+  $(f\circ\_) :Hom(D,B) \longrightarrow Hom(D,C)$ surjective.
+  #+attr_html: :width 300px
+  https://raw.githubusercontent.com/mroman42/mroman42.github.io/images/projective.jpeg
+
+- A module $D$ is *injective* when $f : A \longrightarrow B$ surjective induces
+  $(\_\circ f) : Hom(B,D) \longrightarrow Hom(A,D)$ surjective.
+  #+attr_html: :width 300px
+  https://raw.githubusercontent.com/mroman42/mroman42.github.io/images/injective.jpeg
+   
+- A module $D$ is *flat* when $f : A \longrightarrow B$ injective induces 
+  $f' : D\otimes A \longrightarrow D \otimes B$ injective.
+* TODO Wikipedia contributions                                                                :post:
+:PROPERTIES:
+:TITLE:    Wikipedia contributions
+:EXPORT_FILE_NAME: wikipediacontributions.html
+:INDEX_DATE: <2018-02-17 Tue 12:00>
+:END:
+
+The majority of my math-related contributions to Wikipedia are
+translations from the English language Wikipedia to the Spanish one
+in math-related areas.  There are also some minor contributions to
+other articles. There I keep a (not-that-updated) list of articles
+I have contributed to.
+
+ * [[https://es.wikipedia.org/wiki/Lema_de_escisi%25C3%25B3n][Lema de escisión]].
+ * [[https://es.wikipedia.org/wiki/Compleci%25C3%25B3n_(%25C3%25A1lgebra)][Compleción (Álgebra)]].
+ * [[https://es.wikipedia.org/wiki/Lema_de_la_serpiente][Lema de la serpiente]].
+ * [[https://es.wikipedia.org/wiki/M%25C3%25B3nada_(teor%25C3%25ADa_de_categor%25C3%25ADas)][Mónada (teoría de categorías)]].
+ * [[https://es.wikipedia.org/wiki/Funtor_Tor][Funtor Tor]].
+ * [[https://es.wikipedia.org/wiki/M%25C3%25B3dulo_simple][Módulo simple]].
+ * [[https://es.wikipedia.org/wiki/Teor%25C3%25ADa_de_dominios][Teoría de dominios]].
+ * [[https://es.wikipedia.org/wiki/L%25C3%25ADmite_(teor%25C3%25ADa_de_categor%25C3%25ADas)][Límite]].
+ * [[https://es.wikipedia.org/wiki/Extensi%25C3%25B3n_de_Kan][Extensión de Kan]].
+ * Espacio de Cantor.
+ * [[https://es.wikipedia.org/wiki/Categor%25C3%25ADa_de_espacios_topol%25C3%25B3gicos][Categoría de espacios topológicos]].
+ * [[https://es.wikipedia.org/wiki/Categor%25C3%25ADa_cartesiana_cerrada][Categoría cartesiana cerrada]].
+ * [[https://es.wikipedia.org/wiki/Teor%25C3%25ADa_de_tipos_homot%25C3%25B3pica][Teoría de tipos homotópica]].
+ * [[https://es.wikipedia.org/wiki/C%25C3%25A1lculo_lambda_simplemente_tipado][Cálculo lambda simplemente tipado]].
+ * [[https://es.wikipedia.org/wiki/Bloqueo_del_card%25C3%25A1n][Bloqueo del cardán]].
+ * [[https://es.wikipedia.org/wiki/Fibraci%25C3%25B3n_de_Grothendieck][Fibración de Grothendieck]].
+
+
+* TODO Yoneda lemma                                                                           :post:
+:PROPERTIES:
+:TITLE:    Yoneda lemma
+:EXPORT_FILE_NAME: yonedalemma.html
+:INDEX_DATE: <2019-06-25 Tue>
+:END:
+
+For any covariant  K : D → *Sets*  and r ∈ D, there is a bijection
+#+BEGIN_SRC haskell
+   y  :  Nat(D(r,-), K) ≅ Kr
+#+END_SRC
+sending any natural transformation α : D(r,-) => K to its image on the
+identity, αᵣ(idᵣ).  If we call よ : C -> Cat(Cᵒᵖ, Sets) to the *Yoneda*
+*embedding* that sends each object to its representable presheaf, we can
+also write
+#+BEGIN_SRC haskell
+   Nat(よ(r), K) ≅ K r
+#+END_SRC
+
+The formulation in terms of ends and coends is often called the
+*Ninja Yoneda lemma* (see Loregian's /[[https://arxiv.org/abs/1501.02503][This is the (co)end, my only (co)friend]]/). 
+It can be seen as a sort of Dirac's rule for coend calculus.
+
+For any functor K : *Cᵒᵖ* -> *Sets* (any presheaf), we have
+#+BEGIN_SRC haskell
+  K  ≅  ∀ c ∈ C .  C(c,_) -> K c
+  K  ≅  ∃ c ∈ C .  K c × C(_,c)
+#+END_SRC
+
+For any functor H : *C* -> *Sets* (any copresheaf), we have
+#+BEGIN_SRC haskell
+  H  ≅  ∀ c ∈ C .  C(_,c) -> H c 
+  H  ≅  ∃ c ∈ C .  H c × C(c,_)
+#+END_SRC
+
+* TODO Yoneda lemma
+:PROPERTIES:
+:TITLE:    Yoneda lemma
+:EXPORT_FILE_NAME: yonedalemma.pdf
+:INDEX_DATE: <2018-02-17 Tue 12:00>
+:END:
+
+** Lema de Yoneda
+Sea $G : {\cal C} \longrightarrow \mathtt{Set}$ un funtor covariante. Fijado $A \in obj({\cal C})$, tenemos una
+biyección entre las transformaciones naturales del funtor $Hom(A,-)$ a
+$G$ y los elementos del conjunto $G(A)$:
+
+\[
+y : Nat(Hom_{\cal C}(A,-),G) \longrightarrow G(A)
+\]
+
+Que viene dada por $y(\tau) = \tau_A(1_A)$, la imagen de la identidad por la
+transformación natural.
+
+*** Demostración
+Dado cualquier $p$ crearemos la única transformación natural que cumple
+$\eta_A(1_A) = p$. Por definición de transformación natural, sabemos que debe
+cumplir el siguiente diagrama conmutativo:
+
+#+attr_html: :width 500px
+https://raw.githubusercontent.com/mroman42/mroman42.github.io/images/yonedaproof1.jpeg
+
+Lo que deja determinado a cualquier $\eta_B(f)$, y por tanto a toda la función:
+
+\[\eta_B(f) = \eta_B(f\circ id) = Gf(\eta_A(id_A)) = Gf(p) \]
+
+Nos falta comprobar que la función así construida es de hecho una 
+transformación natural. Es decir, que cumple el siguiente diagrama
+conmutativo:
+
+#+attr_html: :width 500px
+https://raw.githubusercontent.com/mroman42/mroman42.github.io/images/yonedaproof2.jpeg
+
+Y de hecho, dado cualquier elemento $f \in Hom(A,B)$ tenemos:
+
+\[Gg\circ \eta(f) = Gg \circ Gf(p) = G(g\circ f)(p) = \eta(g\circ f)\]
+
+** Lema de Yoneda (caso contravariante)
+Si aplicamos Yoneda sobre $\mathcal{C}^{op}$, dado $G : {\cal C} \longrightarrow \mathtt{Set}$ *contravariante*
+y fijado $A \in obj({\cal C})$; existe una biyección entre las transformaciones naturales
+del funtor $Hom(-,A)$ a $G$ y los elementos del conjunto $G(A)$:
+
+\[
+y : Nat(Hom_{\cal C}(-,A),G) \longrightarrow G(A)
+\]
+
+Que viene de nuevo dada por $y(\tau) = \tau_A(1_A)$.
+
+** Referencias y enlaces
+[1] J. Rotman, An Introduction to Homological Algebra.
+
+[2] Bartosz Milewski's Programming Cafe.
+    [[https://bartoszmilewski.com/2015/09/01/the-yoneda-lemma/][The Yoneda Lemma]]
+
+[3] The Catsters.
+    [[https://www.youtube.com/watch?v=TLMxHB19khE][Representables and Yoneda 3]]
+
+* html-header                                                                               :ignore:
+#+HTML_HEAD: <link rel="stylesheet" href="../default.css" />
+#+HTML_HEAD: <link rel="stylesheet" href="../mathjax_fonts.css" />
+#+HTML_HEAD: <link rel="stylesheet" href="../syntax.css" />
+
+#+HTML_HEAD: <div id="header">
+#+HTML_HEAD:     <div id="logo">
+#+HTML_HEAD:         <a hrwef="blog.html">Mario Román</a>
+#+HTML_HEAD:     </div>
+#+HTML_HEAD:     <div id="navigation">
+#+HTML_HEAD:         <a href="index.html">About</a>
+#+HTML_HEAD:         <a href="blog.html">Blog</a>
+#+HTML_HEAD:         <a href="https://github.com/mroman42/">Github</a>
+#+HTML_HEAD:     </div>
+#+HTML_HEAD: </div>

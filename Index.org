@@ -1,0 +1,101 @@
+#+Title: About
+#+Author: Mario Román
+#+Email: mromang08@gmail.com
+#+Date: 26 December 2019
+#+Creator: <a href="https://mroman42.github.com">@mroman42</a>.
+#+Options: toc:nil date:t num:nil html-style:nil html-postamble:t
+#+export_file_name: docs/index.html
+
+
+Hi! I'm *Mario Román*.  I am studying a PhD at [[https://www.ttu.ee/][Tallinn University of Technology]] 
+under the supervision of [[https://www.ioc.ee/~pawel/][Pawel Sobociński]]; my main interests being
+[[https://en.wikipedia.org/wiki/Category_theory][categories]] and [[https://en.wikipedia.org/wiki/Functional_programming][functional programming]].  Before this, I
+studied an MSc on Mathematics and Computer
+Science at the University of Oxford.  Even before, completed
+two bachelor's degrees in Mathematics and Computer Engineering at
+the [[https://www.ugr.es/en/][University of Granada]] (Spain).  I am a
+founder and ex-organizer of the [[https://libreim.github.io/][LibreIM]] community, for which I still
+write articles and organize seminars.
+
+  - GitHub: [[https://github.com/mroman42][@mroman42]]
+  - GitLab: [[https://gitlab.com/mroman42][@mroman42]]
+  - CV: [[https://mroman42.github.io/friggeri-cv-a4/cv.pdf][My CV on Github pages]].
+  - Email: [[mailto:mromang08+blog@gmail.com][mromang08+cosmoi@gmail.com]]
+  - Mastodon: [[https://mastodon.social/@mroman42][@mroman42@mastodon.social]]
+
+All the articles in this page are licensed under [[https://creativecommons.org/licenses/by-sa/2.0/][Creative Commons BY-SA 2.0]]
+unless otherwise specified.
+
+\\
+
+\\
+
+#+TOC: headlines 1
+
+* Papers
+
+ * *[[http://jose.theoj.org/papers/8324e9aa1019760e987673f55e335f34][Mikrokosmos: an educational lambda interpreter]]*. /Mario Román/. The
+   Journal of Open Source Education, 2018.
+ 
+* External Posts
+
+ * [[https://libreim.github.io/blog/2016/12/21/monadas/][*Mónadas*]], LibreIM 2016.
+ * [[https://libreim.github.io/blog/2016/09/19/aprendiendo-emacs/][*Aprendiendo Emacs*]], LibreIM 2016.
+
+* Talks
+
+ * *[[./mfocs-profunctoroptics-presentation.pdf][Profunctor optics: a categorical update]]*. MFoCS dissertation proposals. (/14th June 2019, University of Oxford/)
+ * *[[https://mroman42.github.io/ctlc-slides/slides.pdf][Category Theory and Lambda Calculus]]*, BSc Dissertation defense. /(24th June 2018, [[https://fciencias.ugr.es/en/][Universidad de Granada]])/
+ * *[[https://mroman42.github.io/cosmoi/monoidescoloreadosbimonoidescoloreados.pdf][Monoides coloreados, bi(monoides coloreados)]]*. /(26th April 2019, [[https://wpd.ugr.es/~iemath/][IEMath]])/
+ * *[[https://mroman42.github.io/libreim-constructiva/constructiva.pdf][Ideas sobre constructivismo y computabilidad]]*. /(21st September 2018, [[https://wpd.ugr.es/~iemath/][IEMath]])/
+ * *[[https://github.com/mroman42/lambda.notes][Lógica intuicionista y cálculo lambda]]*. /(19th January 2018, [[https://wpd.ugr.es/~iemath/][IEMath]])/
+ * *[[https://github.com/mroman42/lambda.notes][Categorías, funtores y transformaciones naturales]]*. /(18th November 2017, [[https://wpd.ugr.es/~iemath/][IEMath]])/
+ 
+* Short notes
+#+begin_src emacs-lisp :exports results :results output html :eval never-export
+  (defun print-post-at-point () 
+    (princ (concat  
+      " <li><a href=" 
+      (concat (org-entry-get (point) "EXPORT_FILE_NAME")  "> ") 
+      (org-entry-get (point) "TITLE") "</a>, <em> ("
+      (org-entry-get (point) "EXPORT_DATE") ")</em><br></li>\n")))
+
+  (defun print-index ()
+    (progn 
+      (princ "<ul>\n") 
+      (org-map-entries (lambda () (print-post-at-point)) "+note" nil) 
+      (princ "</ul>\n")))
+
+  (print-index)
+#+end_src
+
+#+RESULTS:
+#+BEGIN_EXPORT html
+<ul>
+ <li><a href=traversals.pdf> The traversal is the optic for polynomial functors</a>, <em> (24th May, 2019)</em><br></li>
+ <li><a href=monoidesgrouposcategorias.pdf> Monoides, groupos, grupoides, categorías</a>, <em> (1 de abril de 2019)</em><br></li>
+ <li><a href=monoidescoloreadosbimonoidescoloreados.pdf> Monoides coloreados y bi(monoides coloreados)</a>, <em> (14 de abril de 2019)</em><br></li>
+ <li><a href=diagramascategoriasmonoidales.pdf> Diagramas para categorías monoidales</a>, <em> (21st January 2019)</em><br></li>
+ <li><a href=everysurjectiontoprojectiveissplit.pdf> Every surjection to a projective R-module is split</a>, <em> (24th December 2018)</em><br></li>
+ <li><a href=pastingpullbacks.pdf> Pasting pullbacks</a>, <em> (23rd December 2018)</em><br></li>
+ <li><a href=countinginlinearlogic.pdf> Linear logic is quantity-sensitive</a>, <em> (23th December 2018)</em><br></li>
+ <li><a href=powersetalgebrascompletesemilattices.pdf> Powerset-algebras are complete semilattices</a>, <em> (23th December 2018)</em><br></li>
+ <li><a href=uniquenessofidentityproofs.pdf> Uniqueness of identity proofs</a>, <em> (25th August 2018)</em><br></li>
+</ul>
+#+END_EXPORT
+
+* html-header                                                                               :ignore:
+#+HTML_HEAD: <link rel="stylesheet" href="default.css" />
+#+HTML_HEAD: <link rel="stylesheet" href="mathjax_fonts.css" />
+#+HTML_HEAD: <link rel="stylesheet" href="syntax.css" />
+
+#+HTML_HEAD: <div id="header">
+#+HTML_HEAD:     <div id="logo">
+#+HTML_HEAD:         <a hrwef="blog.html">Mario Román</a>
+#+HTML_HEAD:     </div>
+#+HTML_HEAD:     <div id="navigation">
+#+HTML_HEAD:         <a href="index.html">About</a>
+#+HTML_HEAD:         <a href="blog.html">Blog</a>
+#+HTML_HEAD:         <a href="https://github.com/mroman42/">Github</a>
+#+HTML_HEAD:     </div>
+#+HTML_HEAD: </div>
