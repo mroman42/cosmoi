@@ -1,0 +1,18 @@
+#+Title: Mikrokosmos
+#+Date: 5th May 2018
+#+setupfile: ../setup.org
+
+*Mikrokosmos* is an untyped and simply typed λ-calculus interpreter,
+borrowing its name from the series of progressive piano études
+Mikrokosmos written by Bela Bartok. It aims to provide students with a
+tool to learn and understand the λ-calculus.
+
+ * [[https://github.com/mroman42/mikrokosmos][GitHub repository]].
+ * [[https://mroman42.github.io/mikrokosmos/][User's guide]].
+ * [[https://github.com/mroman42/jupyter-mikrokosmos][Jupyter kernel]].
+
+Since version 0.3.0, it comes bundled with a Jupyter Notebook kernel,
+a tutorial on lambda calculus and specific modes for SKI combinators.
+Thanks to [[https://github.com/ghcjs/ghcjs][GHCJS]] and [[http://codemirror.net/][Codemirror]], you can also try the [[https://github.com/mroman42/mikrokosmos][Mikrokosmos]]
+lambda interpreter in your browser. Press the *evaluate* button there
+and play with the code!

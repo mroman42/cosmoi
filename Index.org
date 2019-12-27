@@ -4,6 +4,7 @@
 #+Date: 26 December 2019
 #+Creator: <a href="https://mroman42.github.com">@mroman42</a>.
 #+Options: toc:nil date:t num:nil html-style:nil html-postamble:t
+#+setupfile: setup.org
 #+export_file_name: docs/index.html
 
 
@@ -84,18 +85,3 @@ unless otherwise specified.
 </ul>
 #+END_EXPORT
 
-* html-header                                                                               :ignore:
-#+HTML_HEAD: <link rel="stylesheet" href="default.css" />
-#+HTML_HEAD: <link rel="stylesheet" href="mathjax_fonts.css" />
-#+HTML_HEAD: <link rel="stylesheet" href="syntax.css" />
-
-#+HTML_HEAD: <div id="header">
-#+HTML_HEAD:     <div id="logo">
-#+HTML_HEAD:         <a hrwef="blog.html">Mario Román</a>
-#+HTML_HEAD:     </div>
-#+HTML_HEAD:     <div id="navigation">
-#+HTML_HEAD:         <a href="index.html">About</a>
-#+HTML_HEAD:         <a href="blog.html">Blog</a>
-#+HTML_HEAD:         <a href="https://github.com/mroman42/">Github</a>
-#+HTML_HEAD:     </div>
-#+HTML_HEAD: </div>

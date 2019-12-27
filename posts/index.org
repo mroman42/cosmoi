@@ -1,0 +1,3 @@
+#+Description: Blog index
+#+setupfile: ../setup.org
+#+include: sitemap.org

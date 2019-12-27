@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-12-27 Fri 15:21 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Distribuciones discretas con mónadas</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Mario Román" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" href="../css/default.css" />
+<link rel="stylesheet" href="../css/mathjax_fonts.css" />
+<link rel="stylesheet" href="../css/syntax.css" />
+<div id="header">
+<div id="logo">
+<a hrwef="blog.html">Mario Román</a>
+</div>
+<div id="navigation">
+<a href="/index.html">About</a>
+<a href="/posts/index.html">Blog</a>
+<a href="https://github.com/mroman42/">Github</a>
+</div>
+</div>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Distribuciones discretas con mónadas</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org3238500">El modelo</a></li>
+<li><a href="#org4506233">Componiendo distribuciones</a></li>
+<li><a href="#orgd631d70">Otras distribuciones</a></li>
+<li><a href="#org688899b">El código</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org3238500" class="outline-2">
+<h2 id="org3238500">El modelo</h2>
+<div class="outline-text-2" id="text-org3238500">
+<p>
+Como parte de una serie de ejemplos sobre uso de mónadas, he escrito
+un poco de código para modelar distribuciones discretas usando
+mónadas.  Por un lado, usa un <a href="https://math.dartmouth.edu/archive/m20f11/public_html/RANDOMNESS_LCG.pdf">generador congruencial lineal</a> para
+generar números aleatorios; y por otro, usa la mónada <a href="https://wiki.haskell.org/State_Monad">State</a> para pasar
+una semilla aleatoria de una función a otra que me permita seguir
+generado números aleatorios.  Por último, aporta un método que deriva
+<a href="http://www.zvon.org/other/haskell/Outputprelude/Show_c.html">Show</a> para probar las distribuciones y dibujar un histograma de
+cualquiera de ella.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4506233" class="outline-2">
+<h2 id="org4506233">Componiendo distribuciones</h2>
+<div class="outline-text-2" id="text-org4506233">
+<p>
+Lo más útil de esta idea es el poder generar unas distribuciones a
+partir de otras. La primera que intentamos es una uniforme discreta
+(un dado de <code>n</code> caras) usando una semilla inicial. En el siguiente
+código se implementa el generador congruencial.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell">  dice <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Int</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Distribution</span> <span style="color: #ce537a; font-weight: bold;">Int</span>
+  dice n <span style="color: #7590db;">=</span> state <span style="color: #4f97d7;">(</span><span style="color: #7590db;">\</span>s <span style="color: #7590db;">-&gt;</span> <span style="color: #bc6ec5;">(</span>s <span style="color: #7590db;">`mod`</span> n <span style="color: #7590db;">+</span> 1, 16807<span style="color: #7590db;">*</span>s <span style="color: #7590db;">`mod`</span> 2147483647<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<p>
+Vemos que funciona como una distribución uniforme.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">  &gt;&gt;&gt; dice 6
+  
+  1:     <span style="color: #3E8991; background-color: #292e34; font-style: italic;">################</span>
+  2:     <span style="color: #3E8991; background-color: #292e34; font-style: italic;">################</span>
+  3:     <span style="color: #3E8991; background-color: #292e34; font-style: italic;">################</span>
+  4:     <span style="color: #3E8991; background-color: #292e34; font-style: italic;">################</span>
+  5:     <span style="color: #3E8991; background-color: #292e34; font-style: italic;">################</span>
+  6:     <span style="color: #3E8991; background-color: #292e34; font-style: italic;">################</span>
+</pre>
+</div>
+
+<p>
+Y desde ella generar fácilmente otras usando funciones que
+compongan distribuciones. Un ejemplo es usar <code>(⊕) = liftM2 (+)</code> para
+sumar dados.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">&gt;&gt;&gt; dice 6 &#8853; dice 6
+
+2:       <span style="color: #3E8991; background-color: #292e34; font-style: italic;">#####</span>
+3:       <span style="color: #3E8991; background-color: #292e34; font-style: italic;">##########</span>
+4:       <span style="color: #3E8991; background-color: #292e34; font-style: italic;">###############</span>
+5:       <span style="color: #3E8991; background-color: #292e34; font-style: italic;">####################</span>
+6:       <span style="color: #3E8991; background-color: #292e34; font-style: italic;">##########################</span>
+7:       <span style="color: #3E8991; background-color: #292e34; font-style: italic;">##############################</span>
+8:       <span style="color: #3E8991; background-color: #292e34; font-style: italic;">#########################</span>
+9:       <span style="color: #3E8991; background-color: #292e34; font-style: italic;">####################</span>
+10:      <span style="color: #3E8991; background-color: #292e34; font-style: italic;">###############</span>
+11:      <span style="color: #3E8991; background-color: #292e34; font-style: italic;">##########</span>
+12:      <span style="color: #3E8991; background-color: #292e34; font-style: italic;">#####</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd631d70" class="outline-2">
+<h2 id="orgd631d70">Otras distribuciones</h2>
+<div class="outline-text-2" id="text-orgd631d70">
+<p>
+Si seguimos componiendo usando la estructura de mónada, podemos crear
+otras distribuciones simples como la distribución de <b>Bernoulli</b> y la
+distribución <b>binomial</b>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell">  bernoulli <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Double</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Distribution</span> <span style="color: #ce537a; font-weight: bold;">Int</span>
+  bernoulli p <span style="color: #7590db;">=</span> <span style="color: #4f97d7; font-weight: bold;">do</span>
+    sample <span style="color: #7590db;">&lt;-</span> dice 1000000
+    <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">(</span>fromIntegral sample <span style="color: #7590db;">/</span> 1000000.0 <span style="color: #7590db;">&lt;</span> p<span style="color: #4f97d7;">)</span>
+      <span style="color: #4f97d7; font-weight: bold;">then</span> return 1
+      <span style="color: #4f97d7; font-weight: bold;">else</span> return 0
+
+  binomial <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Int</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Double</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Distribution</span> <span style="color: #ce537a; font-weight: bold;">Int</span>
+  binomial k p <span style="color: #7590db;">=</span> sum <span style="color: #7590db;">&lt;$&gt;</span> replicateM k <span style="color: #4f97d7;">(</span>bernoulli p<span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<p>
+Lo interesante de este código es que dejamos a la estructura de
+mónada encargarse internamente de el paso de la semilla de
+aleatoriedad y la construcción de distribuciones complejas
+puede hacerse composicionalmente.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org688899b" class="outline-2">
+<h2 id="org688899b">El código</h2>
+<div class="outline-text-2" id="text-org688899b">
+<p>
+El siguiente código es una primera implementación de este post en
+Haskell.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell">  <span style="color: #bc6ec5;">{-# LANGUAGE FlexibleInstances #-}</span>
+  <span style="color: #bc6ec5;">{-# LANGUAGE TypeSynonymInstances #-}</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">{-</span>
+<span style="color: #3E8991; background-color: #292e34; font-style: italic;">  En este archivo vamos a usar m&#243;nadas para definir distribuciones</span>
+<span style="color: #3E8991; background-color: #292e34; font-style: italic;">  discretas de probabilidad y aplicar operaciones algebraicas sobre ellas.</span>
+<span style="color: #3E8991; background-color: #292e34; font-style: italic;">  -}</span>
+  <span style="color: #4f97d7; font-weight: bold;">import</span> <span style="color: #ce537a; font-weight: bold;">Control.Monad.State</span>
+  
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">Generaci&#243;n aleatoria</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">Para generar n&#250;meros pseudoaleatorios usaremos LCGs. La idea es tener</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">un dado que nos d&#233; una distribuci&#243;n de probabilidad uniforme dada una</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">semilla y nos devuelva el resultado de la tirada y una nueva semilla</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">aleatoria. Buscamos que un dado de seis caras sea, por ejemplo:</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">--</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">--   </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">dice 6 :: Seed -&gt; (Int, Seed)</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">--</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">Si quisi&#233;ramos tirar dos dados, tendr&#237;amos que tomar la semilla resultante</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">del primer lanzamiento y pasarla al segundo; algo as&#237;:</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">--</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">--   </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">let (a,newseed) = dice 6 seed</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">--   </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">let (b,_)       = dice 6 newseed</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">--   </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">print [a,b]</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">--</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">Pero esto se hace demasiado complejo. La semilla, en el fondo, es un</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">estado, as&#237; que podemos modelarla con la m&#243;nada State. Cada lanzamiento</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">ser&#225; de la forma:</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">--</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">--   </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">State Seed a   ===   Seed -&gt; (a, Seed)</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">--</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">Luego podemos llamar a la distribuci&#243;n: Distribution a = State Seed a, y</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">trabajar con ella usando las funciones normales de m&#243;nadas.</span>
+  <span style="color: #4f97d7; font-weight: bold;">type</span> <span style="color: #ce537a; font-weight: bold;">Seed</span> <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Int</span>
+  <span style="color: #4f97d7; font-weight: bold;">type</span> <span style="color: #ce537a; font-weight: bold;">Distribution</span> <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">State</span> <span style="color: #ce537a; font-weight: bold;">Seed</span>
+  
+  
+  
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">Nuestra primera distribuci&#243;n es un dado de "n" lados que usa internamente un</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">generador de n&#250;meros aleatorios.</span>
+  dice <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Int</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Distribution</span> <span style="color: #ce537a; font-weight: bold;">Int</span>
+  dice n <span style="color: #7590db;">=</span> state <span style="color: #4f97d7;">(</span><span style="color: #7590db;">\</span>s <span style="color: #7590db;">-&gt;</span> <span style="color: #bc6ec5;">(</span>s <span style="color: #7590db;">`mod`</span> n <span style="color: #7590db;">+</span> 1, 16807<span style="color: #7590db;">*</span>s <span style="color: #7590db;">`mod`</span> 2147483647<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+  
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">Una moneda es un dado de dos caras</span>
+  coin <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Distribution</span> <span style="color: #ce537a; font-weight: bold;">Int</span>
+  coin <span style="color: #7590db;">=</span> dice 2
+    
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">Estas funciones pueden ser llamadas con la m&#243;nada estado, dada una</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">semilla inicial, devuelven el resultado y la nueva semilla:</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">--</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">&#955;&gt; runState (dice 6) 1</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">(2,16807)</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">&#955;&gt; runState (dice 6) 16807</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">(2,282475249)</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">--</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">El usar composici&#243;n con m&#243;nadas nos ahorraba controlar los errores</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">en el primer caso, aqu&#237; nos ahorra controlar el cambio de semilla,</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">por ejemplo: para lanzar dos dados y hacer que la semilla se pase</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">internamente.</span>
+  twodices' <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Distribution</span> <span style="color: #ce537a; font-weight: bold;">Int</span>
+  twodices' <span style="color: #7590db;">=</span> <span style="color: #4f97d7; font-weight: bold;">do</span>
+    a <span style="color: #7590db;">&lt;-</span> dice 6
+    b <span style="color: #7590db;">&lt;-</span> dice 6
+    return <span style="color: #4f97d7;">(</span>a<span style="color: #7590db;">+</span>b<span style="color: #4f97d7;">)</span>
+
+  <span style="color: #4f97d7;">(</span><span style="color: #7590db;">&#8853;</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Distribution</span> <span style="color: #ce537a; font-weight: bold;">Int</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Distribution</span> <span style="color: #ce537a; font-weight: bold;">Int</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Distribution</span> <span style="color: #ce537a; font-weight: bold;">Int</span>
+  <span style="color: #4f97d7;">(</span><span style="color: #7590db;">&#8853;</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> liftM2 <span style="color: #4f97d7;">(</span><span style="color: #7590db;">+</span><span style="color: #4f97d7;">)</span>
+  <span style="color: #4f97d7;">(</span><span style="color: #7590db;">&#8855;</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Distribution</span> <span style="color: #ce537a; font-weight: bold;">Int</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Distribution</span> <span style="color: #ce537a; font-weight: bold;">Int</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Distribution</span> <span style="color: #ce537a; font-weight: bold;">Int</span>
+  <span style="color: #4f97d7;">(</span><span style="color: #7590db;">&#8855;</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> liftM2 <span style="color: #4f97d7;">(</span><span style="color: #7590db;">*</span><span style="color: #4f97d7;">)</span>
+  
+  twodices <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Distribution</span> <span style="color: #ce537a; font-weight: bold;">Int</span>
+  twodices <span style="color: #7590db;">=</span> dice 6 <span style="color: #7590db;">&#8853;</span> dice 6
+  
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">Igual que hago esto, podr&#237;a hacer:</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">--</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">--   </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">foldr (&#8853;) (return 0) [dice 6,dice 6,dice 6]</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">--   </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">foldr (&#8853;) (return 0) (replicate 10 (dice 6))</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">--</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">Que da un resultado que se aproxima a una distribuci&#243;n normal.</span>
+  
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">Ahora, desde ella, podemos crear otras distribuciones. La distribuci&#243;n de</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">bernoulli ser&#237;a la de una moneda trucada donde una cara tiene probabilidad</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">p y la otra tiene probabilidad (1-p).</span>
+  bernoulli <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Double</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Distribution</span> <span style="color: #ce537a; font-weight: bold;">Int</span>
+  bernoulli p <span style="color: #7590db;">=</span> <span style="color: #4f97d7; font-weight: bold;">do</span>
+    sample <span style="color: #7590db;">&lt;-</span> dice 1000000
+    <span style="color: #4f97d7; font-weight: bold;">if</span> <span style="color: #4f97d7;">(</span>fromIntegral sample <span style="color: #7590db;">/</span> 1000000.0 <span style="color: #7590db;">&lt;</span> p<span style="color: #4f97d7;">)</span>
+      <span style="color: #4f97d7; font-weight: bold;">then</span> return 1
+      <span style="color: #4f97d7; font-weight: bold;">else</span> return 0
+
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">La distribuci&#243;n binomial es la suma de k distribuciones de Bernoulli</span>
+  binomial <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Int</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Double</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Distribution</span> <span style="color: #ce537a; font-weight: bold;">Int</span>
+  binomial k p <span style="color: #7590db;">=</span> sum <span style="color: #7590db;">&lt;$&gt;</span> replicateM k <span style="color: #4f97d7;">(</span>bernoulli p<span style="color: #4f97d7;">)</span>
+  
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">La distribuci&#243;n constante y otra forma de escribir la distribuci&#243;n</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">binomial, de manera algebraica.</span>
+  constant <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Int</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Distribution</span> <span style="color: #ce537a; font-weight: bold;">Int</span>
+  constant n <span style="color: #7590db;">=</span> return n
+  
+  binomial' <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Int</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Double</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Distribution</span> <span style="color: #ce537a; font-weight: bold;">Int</span>
+  binomial' k p <span style="color: #7590db;">=</span> foldr <span style="color: #4f97d7;">(</span><span style="color: #7590db;">&#8853;</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span>constant 0<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span>replicate k <span style="color: #bc6ec5;">(</span>bernoulli p<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+  
+  
+  
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">Muestra la distribuci&#243;n. Los detalles de implementaci&#243;n no son interesantes.</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">Hemos usado  TypeSynonymInstances para simplificar el proceso de sobrecargar</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">la instancia de Show y poder dibujar directamente por la pantalla las</span>
+  <span style="color: #3E8991; background-color: #292e34; font-style: italic;">-- </span><span style="color: #3E8991; background-color: #292e34; font-style: italic;">demostraciones.</span>
+  <span style="color: #4f97d7; font-weight: bold;">instance</span> <span style="color: #ce537a; font-weight: bold;">Show</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">State</span> <span style="color: #ce537a; font-weight: bold;">Seed</span> <span style="color: #ce537a; font-weight: bold;">Int</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7; font-weight: bold;">where</span>
+    show <span style="color: #7590db;">=</span> showdist
+  
+  showdist <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Distribution</span> <span style="color: #ce537a; font-weight: bold;">Int</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">String</span>
+  showdist dist <span style="color: #7590db;">=</span> unlines <span style="color: #7590db;">$</span> map counter <span style="color: #4f97d7;">[</span>minimum samples<span style="color: #7590db;">..</span>maximum samples<span style="color: #4f97d7;">]</span>
+    <span style="color: #4f97d7; font-weight: bold;">where</span> samples <span style="color: #7590db;">=</span> fst <span style="color: #7590db;">$</span> runState <span style="color: #4f97d7;">(</span>replicateM 50000 dist<span style="color: #4f97d7;">)</span> 1
+          counter n <span style="color: #7590db;">=</span> show n <span style="color: #7590db;">++</span> <span style="color: #2d9574;">":\t "</span> <span style="color: #7590db;">++</span> replicate <span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">(</span>count n samples<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">`div`</span> <span style="color: #bc6ec5;">(</span>3000 <span style="color: #7590db;">`div`</span> range<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> <span style="color: #2d9574;">'#'</span>
+          range <span style="color: #7590db;">=</span> maximum samples <span style="color: #7590db;">-</span> minimum samples <span style="color: #7590db;">+</span> 1
+  
+  count <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">Eq</span> a <span style="color: #7590db;">=&gt;</span> a <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">[</span>a<span style="color: #4f97d7;">]</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Int</span>
+  count x <span style="color: #7590db;">=</span> length <span style="color: #7590db;">.</span> filter <span style="color: #4f97d7;">(</span>x<span style="color: #7590db;">==</span><span style="color: #4f97d7;">)</span>
+  
+  
+  main <span style="color: #7590db;">::</span> <span style="color: #ce537a; font-weight: bold;">IO</span> <span style="color: #4f97d7; font-weight: bold;">()</span>
+  main <span style="color: #7590db;">=</span> return <span style="color: #4f97d7; font-weight: bold;">()</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<hr><p class="date">Last edited 2019-12-27 15:21:41 by Mario Román (<a href="https://github.com/mroman42/cosmoi">code</a>).</p>
+</div>
+</body>
+</html>

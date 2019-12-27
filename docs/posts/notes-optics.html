@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-12-27 Fri 15:16 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Notes on optics</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Mario Román" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" href="../css/default.css" />
+<link rel="stylesheet" href="../css/mathjax_fonts.css" />
+<link rel="stylesheet" href="../css/syntax.css" />
+<div id="header">
+<div id="logo">
+<a hrwef="blog.html">Mario Román</a>
+</div>
+<div id="navigation">
+<a href="/index.html">About</a>
+<a href="/posts/index.html">Blog</a>
+<a href="https://github.com/mroman42/">Github</a>
+</div>
+</div>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Notes on optics</h1>
+
+<div id="outline-container-orgffb516e" class="outline-2">
+<h2 id="orgffb516e">Lawful mixed optics</h2>
+<div class="outline-text-2" id="text-orgffb516e">
+<p>
+A first notion of what a lawful mixed optic should be is to push both
+parts of the optic into the same category and consider lawfulness
+there.
+</p>
+
+<p>
+In the case of monadic lenses for copointed monads, this can give a
+reasonable notion of laws.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgecdd346" class="outline-2">
+<h2 id="orgecdd346">Autonomous lenses</h2>
+<div class="outline-text-2" id="text-orgecdd346">
+<p>
+An interesting consideration is to see what happens if we extend the Optic
+formula on the product to a more symmetric case.
+\[
+\int^{C,D} \mathbf{C}(D \times S, C \times A) \times \mathbf{C}(C \times B, D \times T)
+\]
+In the same way that lenses give teleological categories, this should give
+a category with formal cups and caps. I am interested on this because that
+means it would be a way of constructing models of DisCoCat following this
+idea by <a href="https://arxiv.org/abs/1411.3827">Delpeuch</a>.
+</p>
+
+<p>
+I have now realized that this is in fact the category of learners as described
+by Fong and Johnson.  Can we use learners in DisCoCat?
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc0fb8b5" class="outline-2">
+<h2 id="orgc0fb8b5">Tannakian reconstruction</h2>
+<div class="outline-text-2" id="text-orgc0fb8b5">
+<p>
+The profunctor representation of optics can be seen as a case of
+Tannakian reconstruction for Tambara modules.  That is, functional
+programmers have been for years using Tannakian reconstruction to
+access data structures.  I have written a note with a proof of
+Boisseau and Gibbons' profunctor representation theorem that follows
+the structure of Tannakian reconstruction.
+</p>
+
+<p>
+<b>Bartosz Milewski</b> suggested me to look into Tannakian reconstruction
+and try to apply it to optics.
+</p>
+
+<ul class="org-ul">
+<li><a href="./tannaka.pdf">Tannakian reconstruction of Tambara modules (pdf)</a>.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org94853a2" class="outline-2">
+<h2 id="org94853a2">Kaleidoscopes, monoidal lenses, comonoidal prisms</h2>
+<div class="outline-text-2" id="text-org94853a2">
+<p>
+A <b>kaleidoscope</b> is the optic for applicative functors. Using the free
+applicative construction (from Capriotti-Kaposi, for instance), we can
+show their concrete representation is the following.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">type</span> <span style="color: #ce537a; font-weight: bold;">Kaleidoscope</span> s t a b <span style="color: #7590db;">=</span> <span style="color: #4f97d7; font-weight: bold;">forall</span> n <span style="color: #7590db;">.</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Vec</span> n a <span style="color: #7590db;">-&gt;</span> b<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Vec</span> n s <span style="color: #7590db;">-&gt;</span> t<span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<p>
+If we take lenses where complements are monad algebras or prisms where
+the complements are comonad coalgebras, we get <b>monadic lenses</b> and
+<b>comonadic prisms</b>, that we can write as
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">type</span> <span style="color: #ce537a; font-weight: bold;">MonLens</span> m s t a b <span style="color: #7590db;">=</span> <span style="color: #4f97d7;">(</span>s <span style="color: #7590db;">-&gt;</span> a , m s <span style="color: #7590db;">-&gt;</span> b <span style="color: #7590db;">-&gt;</span> t<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7; font-weight: bold;">type</span> <span style="color: #ce537a; font-weight: bold;">ComonPrism</span> n s t a b <span style="color: #7590db;">=</span> <span style="color: #4f97d7;">(</span>s <span style="color: #7590db;">-&gt;</span> n t <span style="color: #7590db;">+</span> a , b <span style="color: #7590db;">-&gt;</span> t<span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<p>
+I am not sure if these optics are elsewhere in the literature, but I have not
+been able to find them so far.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge917bb3" class="outline-2">
+<h2 id="orge917bb3">The "Glass" optic&#xa0;&#xa0;&#xa0;<span class="tag"><span class="post">post</span></span></h2>
+<div class="outline-text-2" id="text-orge917bb3">
+<p>
+At the intersection between a <b>lens</b> and a <b>grate</b> there should be an
+optic that I have started to call <b>glass</b>.  If the pseudomonoid action
+that describes a lens is  (c × _)  and the one for glass is  (c -&gt; _),
+the action that we want to get should be the one given by the
+coproduct pseudomonoid.
+</p>
+
+<p>
+We rewrite the action of every word <code>c₁d₁ ... cₖdₖ</code> on some object
+<code>a</code> as follows, for some  e,f ∈ <b>C</b>, a bicartesian closed category.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell">  d&#8321; <span style="color: #7590db;">&#215;</span> <span style="color: #4f97d7;">(</span>c&#8321; <span style="color: #7590db;">-&gt;</span> d&#8322; <span style="color: #7590db;">&#215;</span> <span style="color: #bc6ec5;">(</span>c&#8322; <span style="color: #7590db;">-&gt;</span> <span style="color: #7590db;">...</span> x<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>  <span style="color: #7590db;">&#8773;</span>
+  d&#8321; <span style="color: #7590db;">&#215;</span> <span style="color: #4f97d7;">(</span>c&#8321; <span style="color: #7590db;">-&gt;</span> d&#8322;<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">&#215;</span> <span style="color: #4f97d7;">(</span>c&#8321; <span style="color: #7590db;">&#215;</span> c&#8322; <span style="color: #7590db;">-&gt;</span> <span style="color: #7590db;">...</span> x<span style="color: #4f97d7;">)</span>  <span style="color: #7590db;">&#8773;</span>
+  e <span style="color: #7590db;">&#215;</span> <span style="color: #4f97d7;">(</span>f <span style="color: #7590db;">-&gt;</span> x<span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<p>
+And we derive the concrete representation.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell">  <span style="color: #7590db;">&#8707;</span> c,d <span style="color: #7590db;">.</span>  <span style="color: #4f97d7;">(</span>s <span style="color: #7590db;">-&gt;</span> <span style="color: #bc6ec5;">(</span>c <span style="color: #7590db;">&#215;</span> <span style="color: #2d9574;">(</span>d <span style="color: #7590db;">-&gt;</span> a<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">&#215;</span> <span style="color: #4f97d7;">(</span>c <span style="color: #7590db;">&#215;</span> <span style="color: #bc6ec5;">(</span>d <span style="color: #7590db;">-&gt;</span> b<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">-&gt;</span> t<span style="color: #4f97d7;">)</span>  <span style="color: #7590db;">&#8773;</span>
+  <span style="color: #7590db;">&#8707;</span> c,d <span style="color: #7590db;">.</span>  <span style="color: #4f97d7;">(</span>s <span style="color: #7590db;">-&gt;</span> c<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">&#215;</span> <span style="color: #4f97d7;">(</span>s <span style="color: #7590db;">-&gt;</span> <span style="color: #bc6ec5;">(</span>d <span style="color: #7590db;">-&gt;</span> a<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">&#215;</span> <span style="color: #4f97d7;">(</span>c <span style="color: #7590db;">&#215;</span> <span style="color: #bc6ec5;">(</span>d <span style="color: #7590db;">-&gt;</span> b<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">-&gt;</span> t<span style="color: #4f97d7;">)</span>  <span style="color: #7590db;">&#8773;</span>
+  <span style="color: #7590db;">&#8707;</span> d   <span style="color: #7590db;">.</span>  <span style="color: #4f97d7;">(</span>s <span style="color: #7590db;">-&gt;</span> <span style="color: #bc6ec5;">(</span>d <span style="color: #7590db;">-&gt;</span> a<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">&#215;</span> <span style="color: #4f97d7;">(</span>s <span style="color: #7590db;">&#215;</span> <span style="color: #bc6ec5;">(</span>d <span style="color: #7590db;">-&gt;</span> b<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">-&gt;</span> t<span style="color: #4f97d7;">)</span>  <span style="color: #7590db;">&#8773;</span>
+  <span style="color: #7590db;">&#8707;</span> d   <span style="color: #7590db;">.</span>  <span style="color: #4f97d7;">(</span>d <span style="color: #7590db;">-&gt;</span> <span style="color: #bc6ec5;">(</span>s <span style="color: #7590db;">-&gt;</span> a<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">&#215;</span> <span style="color: #4f97d7;">(</span>s <span style="color: #7590db;">&#215;</span> <span style="color: #bc6ec5;">(</span>d <span style="color: #7590db;">-&gt;</span> b<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">-&gt;</span> t<span style="color: #4f97d7;">)</span>  <span style="color: #7590db;">&#8773;</span>
+  <span style="color: #4f97d7;">(</span>s <span style="color: #7590db;">&#215;</span> <span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">(</span>s <span style="color: #7590db;">-&gt;</span> a<span style="color: #2d9574;">)</span> <span style="color: #7590db;">-&gt;</span> b<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">-&gt;</span> t<span style="color: #4f97d7;">)</span>  <span style="color: #7590db;">&#8773;</span>
+  <span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">(</span>s <span style="color: #7590db;">-&gt;</span> a<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">-&gt;</span> b<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> s <span style="color: #7590db;">-&gt;</span> t
+</pre>
+</div>
+
+<p>
+My intuition at the moment is "If from a getter you can create a b, then you can update s
+to t", which apparently also rhymes.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<hr><p class="date">Last edited 2019-12-27 15:16:13 by Mario Román (<a href="https://github.com/mroman42/cosmoi">code</a>).</p>
+</div>
+</body>
+</html>

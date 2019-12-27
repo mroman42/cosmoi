@@ -1,0 +1,61 @@
+#+Title: Evaluación en cálculo lambda
+#+setupfile: ../setup.org
+
+Esta es una recopilación de los enunciados que nos llevan a usar la
+evaluación mediante \beta-reducciones del cálculo lambda como un
+lenguaje de programación.  Los obtuve principalmente del libro de
+Barendregt y de las notas de Peter Selinger cuando buscaba la base
+teórica para implementar [[file:mikrokosmos.html][Mikrokosmos]] Detallo estos mismos
+enunciados recopilando sus demostraciones en [[https://github.com/M42/lambda.notes][M42/lambda.notes]].
+
+* Forma normal
+Una expresión está en /forma normal/ si no se le pueden aplicar más
+\beta-reducciones. La forma normal es /única/ como consecuencia del
+teorema de Church-Rosser.
+
+*Teorema de Chuch-Rosser.* Si a un mismo término se le aplican dos
+cadenas de reducciones distintas, los términos que se obtienen pueden
+a su vez reducirse a un término común. Es decir,
+
+ * si A puede reducirse mediante β-reducciones a otro término
+   B, lo que se nota por  A -{β}-> B,
+ * y A puede reducirse también mediante otras β-reducciones,
+   posiblemente distintas o en distinto orden, a C, como A -{β}-> C,
+ * entonces existe un término D tal que ambos se pueden reducir
+   mediante β-reducciones a él; es decir, tal que B -{β}-> D
+   y C -{β}-> D.
+
+En particular, esto implica que si un término tuviera dos formas
+normales, debería existir otro término al cual se pudieran reducir
+ambas; como son formas normales y no pueden reducirse, esto debe
+implicar que son iguales.
+
+* Divergencia
+Hemos visto que la forma normal es única, pero no que exista o que
+sepamos encontrarla de alguna forma. Puede ocurrir que un término no
+esté en forma normal y sin embargo las reducciones no lo lleven a
+ella.  Por ejemplo, el término Ω = (λ x.x x)(λ x.x x)
+es invariante a β-reducciones y *no llega a forma normal*. O por 
+ejemplo, el término (λ x.x x x)(λ x.x x x) se hace cada vez más grande
+al aplicarle reducciones, decimos que /diverge/.
+
+* Evaluación a izquierda
+Hay expresiones que llegarán a una forma normal o no dependiendo de
+cómo los evaluemos. Por ejemplo, el término =(const id Ω)= llega a
+la forma normal =id= si evaluamos primero la aplicación de =const=,
+pero diverge si empezamos intentando evaluar Ω. 
+Sin embargo, existe una estrategia de reducción que siempre encuentra
+una forma normal si esta existe. Tenemos el siguiente teorema.
+
+ * Si existe una forma normal, la estrategia que reduce a cada paso
+   la aplicación más a la izquierda posible la encuentra.
+
+Y quizá sorprendentemente, existe otra estrategia de reducción que siempre
+encuentra la forma de *no* llegar a la forma normal si esta existiera.
+
+ * Si existe alguna sucesión que no llega a forma normal, la
+   estrategia que reduce a cada paso la aplicación más a la derecha
+   posible la encuentra.
+
+Estas dos formas de evaluación se suelen llamar /call-by-value/ y
+/call-by-name/.

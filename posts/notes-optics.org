@@ -1,0 +1,88 @@
+#+Title: Notes on optics
+#+setupfile: ../setup.org
+
+* Lawful mixed optics
+A first notion of what a lawful mixed optic should be is to push both
+parts of the optic into the same category and consider lawfulness
+there.
+
+In the case of monadic lenses for copointed monads, this can give a
+reasonable notion of laws.
+
+* Autonomous lenses
+An interesting consideration is to see what happens if we extend the Optic
+formula on the product to a more symmetric case.
+\[
+\int^{C,D} \mathbf{C}(D \times S, C \times A) \times \mathbf{C}(C \times B, D \times T)
+\]
+In the same way that lenses give teleological categories, this should give
+a category with formal cups and caps. I am interested on this because that
+means it would be a way of constructing models of DisCoCat following this
+idea by [[https://arxiv.org/abs/1411.3827][Delpeuch]].
+
+I have now realized that this is in fact the category of learners as described
+by Fong and Johnson.  Can we use learners in DisCoCat?
+
+* Tannakian reconstruction
+The profunctor representation of optics can be seen as a case of
+Tannakian reconstruction for Tambara modules.  That is, functional
+programmers have been for years using Tannakian reconstruction to
+access data structures.  I have written a note with a proof of
+Boisseau and Gibbons' profunctor representation theorem that follows
+the structure of Tannakian reconstruction.
+
+*Bartosz Milewski* suggested me to look into Tannakian reconstruction
+and try to apply it to optics.
+
+ * [[./tannaka.pdf][Tannakian reconstruction of Tambara modules (pdf)]].
+
+* Kaleidoscopes, monoidal lenses, comonoidal prisms
+A *kaleidoscope* is the optic for applicative functors. Using the free
+applicative construction (from Capriotti-Kaposi, for instance), we can
+show their concrete representation is the following.
+
+#+BEGIN_SRC haskell
+type Kaleidoscope s t a b = forall n . (Vec n a -> b) -> (Vec n s -> t)
+#+END_SRC
+
+If we take lenses where complements are monad algebras or prisms where
+the complements are comonad coalgebras, we get *monadic lenses* and
+*comonadic prisms*, that we can write as
+
+#+BEGIN_SRC haskell
+type MonLens m s t a b = (s -> a , m s -> b -> t)
+type ComonPrism n s t a b = (s -> n t + a , b -> t)
+#+END_SRC
+
+I am not sure if these optics are elsewhere in the literature, but I have not
+been able to find them so far.
+
+* The "Glass" optic                                                                           :post:
+At the intersection between a *lens* and a *grate* there should be an
+optic that I have started to call *glass*.  If the pseudomonoid action
+that describes a lens is  (c × _)  and the one for glass is  (c -> _),
+the action that we want to get should be the one given by the
+coproduct pseudomonoid.
+
+We rewrite the action of every word =c₁d₁ ... cₖdₖ= on some object
+=a= as follows, for some  e,f ∈ *C*, a bicartesian closed category.
+
+#+BEGIN_SRC haskell
+  d₁ × (c₁ -> d₂ × (c₂ -> ... x))  ≅
+  d₁ × (c₁ -> d₂) × (c₁ × c₂ -> ... x)  ≅
+  e × (f -> x)
+#+END_SRC
+
+And we derive the concrete representation.
+
+#+BEGIN_SRC haskell
+  ∃ c,d .  (s -> (c × (d -> a))) × (c × (d -> b) -> t)  ≅
+  ∃ c,d .  (s -> c) × (s -> (d -> a)) × (c × (d -> b) -> t)  ≅
+  ∃ d   .  (s -> (d -> a)) × (s × (d -> b) -> t)  ≅
+  ∃ d   .  (d -> (s -> a)) × (s × (d -> b) -> t)  ≅
+  (s × ((s -> a) -> b) -> t)  ≅
+  ((s -> a) -> b) -> s -> t
+#+END_SRC
+
+My intuition at the moment is "If from a getter you can create a b, then you can update s
+to t", which apparently also rhymes.
