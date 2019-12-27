@@ -3,8 +3,8 @@
 #+Email: mromang08@gmail.com
 #+Date: 26 December 2019
 #+Creator: <a href="https://mroman42.github.com">@mroman42</a>.
-#+Options: toc:nil date:t num:nil html-style:nil html-postamble:t
 #+setupfile: layouts/main.org
+#+options: toc:nil date:t num:nil html-style:nil html-postamble:t
 #+export_file_name: docs/index.html
 
 
