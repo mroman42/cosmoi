@@ -1,0 +1,3 @@
+* Cosmoi
+
+This is a personal blog based on =org/publish=.
