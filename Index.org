@@ -4,7 +4,7 @@
 #+Date: 26 December 2019
 #+Creator: <a href="https://mroman42.github.com">@mroman42</a>.
 #+Options: toc:nil date:t num:nil html-style:nil html-postamble:t
-#+setupfile: setup.org
+#+setupfile: layout/main.org
 #+export_file_name: docs/index.html
 
 
