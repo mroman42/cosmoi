@@ -1,5 +1,5 @@
 #+Title: Distribuciones discretas con mónadas
-#+setupfile: ../setup.org
+#+setupfile: ../layouts/post.org
 
 * El modelo
 Como parte de una serie de ejemplos sobre uso de mónadas, he escrito

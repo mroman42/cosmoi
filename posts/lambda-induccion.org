@@ -1,5 +1,5 @@
 #+Title: Inducción estructural
-#+setupfile: ../setup.org
+#+setupfile: ../layouts/post.org
 
 Normalmente aplicamos inducción sobre los números naturales, y cuando
 necesitamos aplicar inducción en otro contexto lo hacemos corresponder con los 

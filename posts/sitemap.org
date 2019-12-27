@@ -1,10 +1,10 @@
 #+TITLE: Blog
 
-- [[file:index.org][Blog]]
 - [[file:emacs-aprendiendo.org][Aprendiendo Emacs]]
-- [[file:lambda-evaluacion.org][Evaluación en cálculo lambda]]
-- [[file:mikrokosmos.org][Mikrokosmos]]
-- [[file:notes-optics.org][Notes on optics]]
-- [[file:lambda-induccion.org][Inducción estructural]]
-- [[file:lambda-distribuciones.org][Distribuciones discretas con mónadas]]
 - [[file:emacs-capturando-links.org][Capturando links en org-mode]]
+- [[file:index.org][Blog]]
+- [[file:lambda-distribuciones.org][Distribuciones discretas con mónadas]]
+- [[file:lambda-evaluacion.org][Evaluación en cálculo lambda]]
+- [[file:lambda-induccion.org][Inducción estructural]]
+- [[file:notes-optics.org][Notes on optics]]
+- [[file:mikrokosmos.org][Mikrokosmos]]

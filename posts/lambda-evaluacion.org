@@ -1,5 +1,5 @@
 #+Title: Evaluación en cálculo lambda
-#+setupfile: ../setup.org
+#+setupfile: ../layouts/post.org
 
 Esta es una recopilación de los enunciados que nos llevan a usar la
 evaluación mediante \beta-reducciones del cálculo lambda como un

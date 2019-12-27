@@ -1,5 +1,5 @@
 #+Title: Notes on optics
-#+setupfile: ../setup.org
+#+setupfile: ../layouts/post.org
 
 * Lawful mixed optics
 A first notion of what a lawful mixed optic should be is to push both

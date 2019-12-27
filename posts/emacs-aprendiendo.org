@@ -1,6 +1,6 @@
 #+Title: Aprendiendo Emacs
 #+Date: 25 de mayo, 2018
-#+setupfile: ../setup.org
+#+setupfile: ../layouts/post.org
 
 * Emacs
 

@@ -1,5 +1,5 @@
 #+Title: Capturando links en org-mode
-#+setupfile: ../setup.org
+#+setupfile: ../layouts/post.org
 
 * Capturando links
 El objetivo de este post es describir el proceso que uso para capturar links
