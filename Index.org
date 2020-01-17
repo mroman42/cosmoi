@@ -7,6 +7,7 @@
 #+options: toc:nil date:t num:nil html-style:nil html-postamble:t
 #+export_file_name: docs/index.html
 
+# In order to export the blog, you first need to load publish.el.
 
 Hi! I'm *Mario Román*.  I am studying a PhD at [[https://www.ttu.ee/][Tallinn University of Technology]] 
 under the supervision of [[https://www.ioc.ee/~pawel/][Pawel Sobociński]]; my main interests being
