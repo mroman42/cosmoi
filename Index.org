@@ -45,7 +45,9 @@ unless otherwise specified.
 
 * Talks
 
- * *[[./mfocs-profunctoroptics-presentation.pdf][Profunctor optics: a categorical update]]*. MFoCS dissertation proposals. (/14th June 2019, University of Oxford/)
+ * *[[https://mroman42.github.io/nwpt19-optics-talk/slides.pdf][Profunctor optics: a categorical update]]*. NWPT'19 /(15th November 2019, Taltech)/.
+ * *[[https://mroman42.github.io/syco5-optics-talk/profunctoroptics.pdf][Profunctor optics: a categorical update.]]* SYCO5 /(5th September 2019, Birmingham)/.
+ * *[[./mfocs-profunctoroptics-presentation.pdf][Profunctor optics: a categorical update]]* MFoCS dissertation proposals. (/14th June 2019, University of Oxford/)
  * *[[https://mroman42.github.io/ctlc-slides/slides.pdf][Category Theory and Lambda Calculus]]*, BSc Dissertation defense. /(24th June 2018, [[https://fciencias.ugr.es/en/][Universidad de Granada]])/
  * *[[https://mroman42.github.io/cosmoi/monoidescoloreadosbimonoidescoloreados.pdf][Monoides coloreados, bi(monoides coloreados)]]*. /(26th April 2019, [[https://wpd.ugr.es/~iemath/][IEMath]])/
  * *[[https://mroman42.github.io/libreim-constructiva/constructiva.pdf][Ideas sobre constructivismo y computabilidad]]*. /(21st September 2018, [[https://wpd.ugr.es/~iemath/][IEMath]])/
