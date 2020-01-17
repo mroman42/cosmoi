@@ -6,11 +6,9 @@
 <!-- 2020-01-17 Fri 10:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Blog</title>
+<title>Coinduction</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Mario Román" />
-<meta name="description" content="Blog index"
- />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -244,20 +242,52 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">Blog</h1>
+<h1 class="title">Coinduction</h1>
+<p>
+The following article by Jacobs and Rutten is a really nice
+introduction to the notion of coinduction.  It assumes almost no prior
+knowledge of categories and details algebras, initiality, coalgebras,
+finality, induction and bisimulation.
+</p>
+
 <ul class="org-ul">
-<li><a href="emacs-aprendiendo.html">Aprendiendo Emacs</a></li>
-<li><a href="emacs-capturando-links.html">Capturando links en org-mode</a></li>
-<li><a href="index.html">Blog</a></li>
-<li><a href="lambda-distribuciones.html">Distribuciones discretas con mónadas</a></li>
-<li><a href="lambda-evaluacion.html">Evaluación en cálculo lambda</a></li>
-<li><a href="lambda-induccion.html">Inducción estructural</a></li>
-<li><a href="notes-optics.html">Notes on optics</a></li>
-<li><a href="mikrokosmos.html">Mikrokosmos</a></li>
-<li><a href="dedekindreals.html">Dedekind reals in Agda</a></li>
-<li><a href="orgdrill-spacedrepetition.html">Org-drill and spaced repetition</a></li>
-<li><a href="coinduction.html">Coinduction</a></li>
+<li><a href="http://www.cs.ru.nl/~bart/PAPERS/JR.pdf">A tutorial on (Co)algebras and (Co)induction - Bart Jacobs, Jan Rutten</a></li>
 </ul>
+
+<p>
+Conatural numbers can be implemented in Agda using <a href="https://agda.readthedocs.io/en/v2.5.4.1/language/coinduction.html#coinduction">coinductive records</a>
+as in the following example.  If you are interested in understanding
+coinduction, it might be a good idea to experiment in Agda; I learnt a
+lot writing basic coinductive definitions.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell">  <span style="color: #4f97d7; font-weight: bold;">data</span> <span style="color: #ce537a; font-weight: bold;">Maybe</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">A</span> <span style="color: #ce537a; font-weight: bold;">:</span> <span style="color: #ce537a; font-weight: bold;">Set</span><span style="color: #4f97d7;">)</span> <span style="color: #ce537a; font-weight: bold;">:</span> <span style="color: #ce537a; font-weight: bold;">Set</span> <span style="color: #4f97d7; font-weight: bold;">where</span>
+    <span style="color: #ce537a; font-weight: bold;">Nothing</span> <span style="color: #ce537a; font-weight: bold;">:</span> <span style="color: #ce537a; font-weight: bold;">Maybe</span> <span style="color: #ce537a; font-weight: bold;">A</span>
+    <span style="color: #ce537a; font-weight: bold;">Just</span> <span style="color: #ce537a; font-weight: bold;">:</span> <span style="color: #ce537a; font-weight: bold;">A</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Maybe</span> <span style="color: #ce537a; font-weight: bold;">A</span>
+  
+  record coNat <span style="color: #ce537a; font-weight: bold;">:</span> <span style="color: #ce537a; font-weight: bold;">Set</span> <span style="color: #4f97d7; font-weight: bold;">where</span>
+    coinductive
+    field
+      pred <span style="color: #ce537a; font-weight: bold;">:</span> <span style="color: #ce537a; font-weight: bold;">Maybe</span> coNat
+  open coNat public    
+  
+  coZero <span style="color: #ce537a; font-weight: bold;">:</span> coNat
+  pred coZero <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Nothing</span>
+  
+  coInf <span style="color: #ce537a; font-weight: bold;">:</span> coNat
+  pred coInf <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Just</span> coInf
+  
+  succ <span style="color: #ce537a; font-weight: bold;">:</span> coNat <span style="color: #7590db;">-&gt;</span> coNat
+  pred <span style="color: #4f97d7;">(</span>succ n<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Just</span> n
+  
+  <span style="color: #4f97d7; font-weight: bold;">infixl</span> 20 <span style="color: #4f97d7; font-weight: bold;">_</span><span style="color: #7590db;">+</span><span style="color: #4f97d7; font-weight: bold;">_</span>
+  <span style="color: #4f97d7; font-weight: bold;">_</span><span style="color: #7590db;">+</span><span style="color: #4f97d7; font-weight: bold;">_</span> <span style="color: #ce537a; font-weight: bold;">:</span> coNat <span style="color: #7590db;">-&gt;</span> coNat <span style="color: #7590db;">-&gt;</span> coNat
+  pred <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">+</span> b<span style="color: #4f97d7;">)</span> with pred a
+  pred <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">+</span> b<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">|</span> <span style="color: #ce537a; font-weight: bold;">Nothing</span> <span style="color: #7590db;">=</span> pred b
+  pred <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">+</span> b<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">|</span> <span style="color: #ce537a; font-weight: bold;">Just</span> a' <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Just</span> <span style="color: #4f97d7;">(</span>a' <span style="color: #7590db;">+</span> b<span style="color: #4f97d7;">)</span>
+</pre>
+</div>
 </div>
 <div id="postamble" class="status">
 <hr><p class="date">Last edited 2020-01-17 10:24:46 by Mario Román (<a href="https://github.com/mroman42/cosmoi">code</a>).</p>

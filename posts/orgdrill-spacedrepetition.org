@@ -1,0 +1,23 @@
+#+Title: Org-drill and spaced repetition
+#+Date: 3rd May 2018
+#+setupfile: ../layouts/post.org
+
+When it comes to [[https://www.gwern.net/Spaced-repetition][spaced]] [[https://codual.github.io/2016/07/07/repeticion-espaciada/][repetition]] software, [[https://ankiweb.net/about][Anki]] is probably the most
+popular option. It is free software, provides syncronization with an
+online server, has both desktop and Android applications, and it is
+capable of rendering arbitrary Latex and multimedia. I would recommend
+Anki to anyone starting with spaced repetition.
+
+However, I do not myself use Anki; I have been using [[https://orgmode.org/worg/org-contrib/org-drill.pdf][org-drill]] for a
+few months. The primary reason being Emacs. I really like having all
+the cards in plain text and editing them from the text
+editor. Org-mode has latex and multimedia support, and most of my math
+notes are already there. Its big drawback is that it currently cannot
+be used directly from the mobile phone ([[https://termux.com/][Termux]] is an option, but it
+won't render Latex); a spaced repetition Android app supporting the
+org-drill format would be great.
+
+If you are not yet committed to Anki and you are already confortable
+with Emacs, it could be a good idea to try both before settling on one.
+
+

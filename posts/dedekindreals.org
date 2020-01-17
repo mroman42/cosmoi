@@ -1,0 +1,14 @@
+#+Title: Dedekind reals in Agda
+#+Date: 20th April, 2019
+#+setupfile: ../layouts/post.org
+
+For my Bachelor's dissertation I wrote an implementation of the
+positive Dedekind real numbers in Agda.  The formalization is not
+completely sound, using =--type-in-type= to simplify dealing with
+universes; but it is enough to successfully compile to Haskell code
+and compute the first digits of the binary representation of =sqrt(2)=
+from its definition.
+
+The code is on [[https://github.com/mroman42/dedekind-reals][GitHub]].
+
+

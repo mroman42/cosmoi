@@ -8,3 +8,6 @@
 - [[file:lambda-induccion.org][Inducción estructural]]
 - [[file:notes-optics.org][Notes on optics]]
 - [[file:mikrokosmos.org][Mikrokosmos]]
+- [[file:dedekindreals.org][Dedekind reals in Agda]]
+- [[file:orgdrill-spacedrepetition.org][Org-drill and spaced repetition]]
+- [[file:coinduction.org][Coinduction]]

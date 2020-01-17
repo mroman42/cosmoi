@@ -1,0 +1,42 @@
+#+Title: Coinduction
+#+Date: 15th August 2018
+#+setupfile: ../layouts/post.org
+
+The following article by Jacobs and Rutten is a really nice
+introduction to the notion of coinduction.  It assumes almost no prior
+knowledge of categories and details algebras, initiality, coalgebras,
+finality, induction and bisimulation.
+
+ * [[http://www.cs.ru.nl/~bart/PAPERS/JR.pdf][A tutorial on (Co)algebras and (Co)induction - Bart Jacobs, Jan Rutten]]
+
+Conatural numbers can be implemented in Agda using [[https://agda.readthedocs.io/en/v2.5.4.1/language/coinduction.html#coinduction][coinductive records]]
+as in the following example.  If you are interested in understanding
+coinduction, it might be a good idea to experiment in Agda; I learnt a
+lot writing basic coinductive definitions.
+
+#+BEGIN_SRC haskell
+  data Maybe (A : Set) : Set where
+    Nothing : Maybe A
+    Just : A -> Maybe A
+  
+  record coNat : Set where
+    coinductive
+    field
+      pred : Maybe coNat
+  open coNat public    
+  
+  coZero : coNat
+  pred coZero = Nothing
+  
+  coInf : coNat
+  pred coInf = Just coInf
+  
+  succ : coNat -> coNat
+  pred (succ n) = Just n
+  
+  infixl 20 _+_
+  _+_ : coNat -> coNat -> coNat
+  pred (a + b) with pred a
+  pred (a + b) | Nothing = pred b
+  pred (a + b) | Just a' = Just (a' + b)
+#+END_SRC

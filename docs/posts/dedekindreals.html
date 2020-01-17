@@ -3,14 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-01-17 Fri 10:24 -->
+<!-- 2020-01-17 Fri 10:22 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Blog</title>
+<title>Dedekind reals in Agda</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Mario Román" />
-<meta name="description" content="Blog index"
- />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -244,23 +242,22 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">Blog</h1>
-<ul class="org-ul">
-<li><a href="emacs-aprendiendo.html">Aprendiendo Emacs</a></li>
-<li><a href="emacs-capturando-links.html">Capturando links en org-mode</a></li>
-<li><a href="index.html">Blog</a></li>
-<li><a href="lambda-distribuciones.html">Distribuciones discretas con mónadas</a></li>
-<li><a href="lambda-evaluacion.html">Evaluación en cálculo lambda</a></li>
-<li><a href="lambda-induccion.html">Inducción estructural</a></li>
-<li><a href="notes-optics.html">Notes on optics</a></li>
-<li><a href="mikrokosmos.html">Mikrokosmos</a></li>
-<li><a href="dedekindreals.html">Dedekind reals in Agda</a></li>
-<li><a href="orgdrill-spacedrepetition.html">Org-drill and spaced repetition</a></li>
-<li><a href="coinduction.html">Coinduction</a></li>
-</ul>
+<h1 class="title">Dedekind reals in Agda</h1>
+<p>
+For my Bachelor's dissertation I wrote an implementation of the
+positive Dedekind real numbers in Agda.  The formalization is not
+completely sound, using <code>--type-in-type</code> to simplify dealing with
+universes; but it is enough to successfully compile to Haskell code
+and compute the first digits of the binary representation of <code>sqrt(2)</code>
+from its definition.
+</p>
+
+<p>
+The code is on <a href="https://github.com/mroman42/dedekind-reals">GitHub</a>.
+</p>
 </div>
 <div id="postamble" class="status">
-<hr><p class="date">Last edited 2020-01-17 10:24:46 by Mario Román (<a href="https://github.com/mroman42/cosmoi">code</a>).</p>
+<hr><p class="date">Last edited 2020-01-17 10:22:09 by Mario Román (<a href="https://github.com/mroman42/cosmoi">code</a>).</p>
 </div>
 </body>
 </html>
