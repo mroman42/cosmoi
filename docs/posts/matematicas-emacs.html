@@ -1,0 +1,556 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-01-17 Fri 10:29 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Matemáticas en Emacs</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Mario Román" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" href="../css/default.css" />
+<link rel="stylesheet" href="../css/mathjax_fonts.css" />
+<link rel="stylesheet" href="../css/syntax.css" />
+<div id="header">
+<div id="logo">
+<a hrwef="../index.html">Mario Román</a>
+</div>
+<div id="navigation">
+<a href="../index.html">About</a>
+<a href="../posts/index.html">Blog</a>
+<a href="https://github.com/mroman42/">Github</a>
+</div>
+</div>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Matemáticas en Emacs</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orga3a2ac9">Apuntes a ordenador</a></li>
+<li><a href="#orgad146bf">Ventajas de org-mode</a></li>
+<li><a href="#org999d9ac">Zoom</a></li>
+<li><a href="#org5420e5c">Aumentando la velocidad de escritura</a></li>
+<li><a href="#orge53fc6a">Diagramas conmutativos</a></li>
+<li><a href="#org2e121e3">Cabeceras en Latex</a></li>
+<li><a href="#org0497ba5">Archivos de configuración de org</a></li>
+<li><a href="#orgd837d55">Ejemplos</a></li>
+</ul>
+</div>
+</div>
+<p>
+<i>Actualizado a 06 de agosto de 2017.</i>
+</p>
+
+<div id="outline-container-orga3a2ac9" class="outline-2">
+<h2 id="orga3a2ac9">Apuntes a ordenador</h2>
+<div class="outline-text-2" id="text-orga3a2ac9">
+<p>
+Tomar apuntes de matemáticas con el ordenador es una tarea difícil por
+lo complejo que es transcribir la notación (símbolos, letras en otros
+alfabetos, índices&#x2026;) y la velocidad necesaria. Además, los
+diagramas, dibujos, flechas o anotaciones no textuales que tomamos
+parecen imposibles de transcribir fielmente a un fichero.
+</p>
+
+<p>
+<b><a href="https://www.latex-project.org/about/">Latex</a></b> permite notación matemática pero no facilita la velocidad (al fin y
+al cabo, Latex estaría pensado para edición de libros, no para tomar apuntes).
+<b><a href="https://daringfireball.net/projects/markdown/">Markdown</a></b>, por otro lado, simplifica mucho el poder escribir, pero pierde mucha 
+potencia respecto a Latex. Así que una solución es usar <b><a href="http://orgmode.org/">org-mode</a></b> como lenguaje
+de marcado; es relativamente simple y fácilmente legible, como markdown, mientras
+que permite visualización de latex conforme se edita, programación literaria y
+exportación a latex y html, permitiendo la inclusión de código latex o html arbitrario
+para exportarlo.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgad146bf" class="outline-2">
+<h2 id="orgad146bf">Ventajas de org-mode</h2>
+<div class="outline-text-2" id="text-orgad146bf">
+<p>
+<b>org-mode</b> tiene internamente un lenguaje de marcado similar al de
+markdown, con la ventaja para el usuario de Emacs de que está adaptado
+especialmente al editor. Permite escribir fórmulas en Latex y exportar
+luego a <code>.tex</code> y <code>.pdf</code>, controlando las opciones de Latex.
+</p>
+
+<p>
+Una fórmula en Latex puede escribirse directamente en <b>org-mode</b>
+incluyéndola entre \(\mathtt{\backslash\left( \dots \backslash\right)}\), si está dentro de una línea de texto 
+(como en \(i \ast x = x\)); o entre \(\backslash[\ \dots\ \backslash]\), cuando
+queremos que se muestre aparte del texto como en el siguiente ejemplo
+</p>
+
+<p>
+\[ \sum_{n=0}^\infty \frac{1}{2^n}. \]
+</p>
+
+<p>
+Cuando terminamos de escribirla podemos <a href="http://orgmode.org/worg/org-tutorials/org-latex-preview.html">previsualizarla</a> directamente con
+<code>C-c C-x C-l</code>, como si fuera un editor <a href="https://es.wikipedia.org/wiki/WYSIWYG">WYSIWYG</a>.
+</p>
+
+<p>
+Si vamos a acabar exportando a latex podemos insertar entornos como los
+que ofrece la biblioteca de la AMS con
+</p>
+
+<pre class="example">
+#+begin_theorem
+[texto del teorema]
+#+end_theorem
+</pre>
+
+<p>
+o incluso definir nuestros propios entornos y usarlos después de la misma
+forma. Además, también permite la inclusión de bloques de código con
+</p>
+
+<pre class="example">
+#+begin_src ruby
+[código en ruby]
+#+end_src
+</pre>
+
+<p>
+en la mayoría de lenguajes de programación y algunos especialmente útiles
+para matemáticas como <code>Sage</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org999d9ac" class="outline-2">
+<h2 id="org999d9ac">Zoom</h2>
+<div class="outline-text-2" id="text-org999d9ac">
+<p>
+Un problema menor (y quizá sólo mío) al configurar todo esto es que
+las fórmulas previsualizadas parecen demasiado pequeñas. Aunque estén
+en proporción con el texto, cuesta más leerlas; y cuando aumentamos el
+tamaño del texto con <code>C-x C-+</code>, las fórmulas no se amplían con
+él. Para conseguir que lo hagan hay que incluir el siguiente trozo de
+código en el archivo de configuración de Emacs, mezcla de dos
+respuestas de <a href="http://emacs.stackexchange.com/questions/3387/how-to-enlarge-latex-fragments-in-org-mode-at-the-same-time-as-the-buffer-text">thisirs y Mark</a> en Stack Overflow:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp">  <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defun</span> <span style="color: #bc6ec5; font-weight: bold;">update-org-latex-fragment-scale</span> <span style="color: #bc6ec5;">()</span>
+    <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>text-scale-factor
+           <span style="color: #b1951d;">(</span>expt text-scale-mode-step text-scale-mode-amount<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
+      <span style="color: #2d9574;">(</span>plist-put org-format-latex-options
+                 <span style="color: #4f97d7;">:scale</span> <span style="color: #67b11d;">(</span>* 1.2 text-scale-factor<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
+  <span style="color: #4f97d7;">)</span>
+  <span style="color: #4f97d7;">(</span>add-hook
+   'text-scale-mode-hook
+   'update-org-latex-fragment-scale<span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<p>
+Después de volver a cargar el archivo de configuración, las fórmulas nuevas
+deberían volver a ajustarse con el texto.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5420e5c" class="outline-2">
+<h2 id="org5420e5c">Aumentando la velocidad de escritura</h2>
+<div class="outline-text-2" id="text-org5420e5c">
+<p>
+Mi objetivo principal con todo esto era escribir matemáticas más
+rápidamente, así que <a href="http://emacs.stackexchange.com/questions/26322/math-autocompletion-in-org-mode">pregunté sobre autocompletado</a> y concluí en usar
+<code>latex-math-mode</code>. Esto permite incluir comandos de Latex con atajos
+de teclado. En su configuración original usa el caracter <code>`</code> para
+acceder a ellos, así que <code>`-a</code> escribe <code>\alpha</code>.  Yo he decidido
+cambiar el acento invertido, que ya cuesta dos pulsaciones en el
+teclado en español, por la <code>ç</code>, que no la suelo usar. Además de los
+que incluye el paquete por defecto, se pueden escribir atajos propios.
+</p>
+
+<p>
+Además de <code>latex-math-mode</code>, <code>cdlatex</code> es un modo de Emacs escrito
+por el mismo creador de org-mode, que facilita la escritura rápida
+de símbolos de latex. Puede añadirse a <code>org-mode</code> usando
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">  <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">use-package</span> <span style="color: #a45bad;">cdlatex</span>
+    <span style="color: #4f97d7;">:ensure</span> t<span style="color: #4f97d7;">)</span>
+
+  <span style="color: #4f97d7;">(</span>add-hook 'org-mode-hook 'turn-on-org-cdlatex<span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<p>
+y las instrucciones del paquete pueden encontrarse <a href="https://github.com/cdominik/cdlatex">aquí</a>.
+</p>
+
+<p>
+Por otro lado, empecé a usar <b>yasnippets</b> en Emacs. Son cómodos,
+fáciles de programar, y me permiten simplificar tareas como escribir
+diagramas conmutativos o complejos simpliciales en pocos pasos.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge53fc6a" class="outline-2">
+<h2 id="orge53fc6a">Diagramas conmutativos</h2>
+<div class="outline-text-2" id="text-orge53fc6a">
+<p>
+Ahora estoy escribiendo sobre álgebra homológica y teoría de categorías, así que
+la mayoría de lo que escribo usa secuencias exactas y diagramas conmutativos.
+</p>
+
+<p>
+Para las secuencias exactas, por ejemplo, tengo simplemente
+una plantilla con <code>yasnippet</code>, que me deja 
+incluirlas escribiendo <code>complex_</code> y pulsando <code>&lt;tab&gt;</code>:
+</p>
+
+<pre class="example">
+  # -*- mode: snippet -*-
+  # name: complex
+  # key: complex_
+  #--
+  \begin{aligned*} $1 \overset{$6}\longrightarrow 
+  $2 \overset{$7}\longrightarrow 
+  $3 \overset{$8}\longrightarrow 
+  $4 \overset{$9}\longrightarrow 
+  $5 \end{aligned*}
+</pre>
+
+<p>
+Para los diagramas conmutativos, la solución es un poco más
+compleja. El paquete <b>tikz</b> de Latex es muy útil para escribirlos pero
+tiene una sintaxis es demasiado recargada; así que existe <b>tikz-cd</b>, que
+simplifica esa sintaxis para centrarla en diagramas conmutativos. Para
+usarlo, hay que empezar por incluir en el archivo de configuración
+<code>init.el</code> las siguientes líneas
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp"><span style="color: #4f97d7;">(</span>add-to-list
+  'org-latex-packages-alist '<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">""</span> <span style="color: #2d9574;">"tikz"</span> t<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+
+<span style="color: #4f97d7;">(</span>eval-after-load <span style="color: #2d9574;">"preview"</span>
+  '<span style="color: #bc6ec5;">(</span>add-to-list
+    'preview-default-preamble
+    <span style="color: #2d9574;">"\\PreviewEnvironment{tikzpicture}"</span>
+    t<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<p>
+que pueden modificarse y escribirse de forma análoga si queremos que Emacs
+use internamente otros paquetes de Latex.
+</p>
+
+<p>
+Además en mi caso, tuve que cambiar el programa con el que generaba
+las imágenes. Parece funcionar sólo <b>imagemagick</b> cuando queremos
+usar diagramas conmutativos
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp">     <span style="color: #4f97d7;">(</span>setq org-latex-create-formula-image-program 'imagemagick<span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2e121e3" class="outline-2">
+<h2 id="org2e121e3">Cabeceras en Latex</h2>
+<div class="outline-text-2" id="text-org2e121e3">
+<p>
+Cuando necesitamos funcionalidad adicional que ofrece Latex en bibliotecas aparte,
+como usar <code>tikz-cd</code>, podemos incluirlas en la cabecera del archivo org como:
+</p>
+
+<p>
+Además, si queremos que sea funcionalidad que sólo se use en la exportación de
+latex pero no en la previsualización, podemos incluirla con <code>#+latex_header_extra</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0497ba5" class="outline-2">
+<h2 id="org0497ba5">Archivos de configuración de org</h2>
+<div class="outline-text-2" id="text-org0497ba5">
+<p>
+Para evitar tener que repetir varias veces la misma cabecera en varios
+archivos, podemos usar un sólo archivo para escribir matemáticas y
+fraccionarlo en secciones temáticas. Cuando necesitamos tratar una
+sección, podemos usar la funcionalidad de <i>narrowing</i> de <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Narrowing.html">org</a> para
+tratar sólo una sección. 
+</p>
+
+<p>
+Otra opción es la de tener un sólo archivo de configuración
+<code>math.setup</code> con reglas de la forma
+</p>
+
+<p>
+y cargarlo en cada archivo <code>org</code> con <code>#+SETUPFILE: math.setup</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd837d55" class="outline-2">
+<h2 id="orgd837d55">Ejemplos</h2>
+<div class="outline-text-2" id="text-orgd837d55">
+<p>
+Pueden encontrarse ejemplos de uso en <a href="https://github.com/mroman42/math">este repositorio</a> con mis apuntes
+de matemáticas. Mi archivo de configuración de Emacs está disponible en
+<a href="https://github.com/M42/.emacs.d">mroman42/emacs.d</a>.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<hr><p class="date">Last edited 2020-01-17 10:29:14 by Mario Román (<a href="https://github.com/mroman42/cosmoi">code</a>).</p>
+</div>
+</body>
+</html>

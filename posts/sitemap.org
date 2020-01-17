@@ -11,3 +11,5 @@
 - [[file:dedekindreals.org][Dedekind reals in Agda]]
 - [[file:orgdrill-spacedrepetition.org][Org-drill and spaced repetition]]
 - [[file:coinduction.org][Coinduction]]
+- [[file:monadas.org][Mónadas]]
+- [[file:matematicas-emacs.org][Matemáticas en Emacs]]
