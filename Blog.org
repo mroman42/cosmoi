@@ -435,7 +435,7 @@ were lenses in a compact closed category.  The proof goes as follows.
 The same proof can be used to show that Int(C)≅Optic(C) when C is
 compact closed. Here ~Int~ is the [[https://arxiv.org/abs/1904.11287][Int construction]].
 
-In the general case, after a suggestion by Jules that came from a
+In the general case, after a suggestion by Jules Hedges that came from a
 tweet by Piedeleu; Elena Di Lavore and me wrote down an explicit
 Optic(C)→Int(C) embedding.
 
@@ -1084,22 +1084,6 @@ usar cite:maclane78.
 ** references                                                                     :ignore:noexport:
 bibliographystyle:alpha
 bibliography:Math.bib
-
-* TODO Dedekind reals in Agda                                                                 :post:
-:PROPERTIES:
-:TITLE: Dedekind reals in Agda
-:EXPORT_FILE_NAME: dedekindrealsagda.html
-:INDEX_DATE: <2019-04-20 Fri 14:31>
-:END:
-
-For my Bachelor's dissertation I wrote an implementation of the
-positive Dedekind real numbers in Agda.  The formalization is not
-completely sound, using =--type-in-type= to simplify dealing with
-universes; but it is enough to successfully compile to Haskell code
-and compute the first digits of the binary representation of =sqrt(2)=
-from its definition.
-
-The code is on [[https://github.com/mroman42/dedekind-reals][GitHub]].
 
 
 * TODO Lawvere's fixed point theorem                                                          :post:

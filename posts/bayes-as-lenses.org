@@ -1,0 +1,15 @@
+#+Title: Bayes as lenses
+#+Date: 18th January 2020
+#+setupfile: ../layouts/post.org
+
+Jules Hedges mentioned on Twitter that Bayesian updates could be
+described as two morphisms $\mathbf{C}(S, DA)$ and $\mathbf{C}(DS \times B, DT)$, but it was
+"too much squinting" to make them a lens.
+
+I have not been able to follow if there was any update on that, but in
+case this is still useful to anyone, let us get Bayes update as an optic.
+\begin{aligned}
+& \int^{C \in \mathbf{EM}} \mathbf{EM}(DS , C \times DA) \times \mathbf{Kl}(C \rtimes B, T) \\
+\cong & \\ 
+ & \mathbf{C}(S, DA) \times \mathbf{C}(DS \times B , DT).
+\end{aligned}

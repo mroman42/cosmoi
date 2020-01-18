@@ -6,7 +6,7 @@
 <!-- 2020-01-18 Sat 17:03 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Blog</title>
+<title>Bayes as lenses</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Mario Román" />
 <style type="text/css">
@@ -180,6 +180,19 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+<link rel="stylesheet" href="../css/default.css" />
+<link rel="stylesheet" href="../css/mathjax_fonts.css" />
+<link rel="stylesheet" href="../css/syntax.css" />
+<div id="header">
+<div id="logo">
+<a hrwef="../index.html">Mario Román</a>
+</div>
+<div id="navigation">
+<a href="../index.html">About</a>
+<a href="../posts/index.html">Blog</a>
+<a href="https://github.com/mroman42/">Github</a>
+</div>
+</div>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -226,29 +239,50 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
-<h1 class="title">Blog</h1>
-<ul class="org-ul">
-<li><a href="emacs-aprendiendo.html">Aprendiendo Emacs</a></li>
-<li><a href="emacs-capturando-links.html">Capturando links en org-mode</a></li>
-<li><a href="index.html">Blog</a></li>
-<li><a href="lambda-distribuciones.html">Distribuciones discretas con mónadas</a></li>
-<li><a href="lambda-evaluacion.html">Evaluación en cálculo lambda</a></li>
-<li><a href="lambda-induccion.html">Inducción estructural</a></li>
-<li><a href="notes-optics.html">Notes on optics</a></li>
-<li><a href="mikrokosmos.html">Mikrokosmos</a></li>
-<li><a href="dedekindreals.html">Dedekind reals in Agda</a></li>
-<li><a href="orgdrill-spacedrepetition.html">Org-drill and spaced repetition</a></li>
-<li><a href="coinduction.html">Coinduction</a></li>
-<li><a href="monadas.html">Mónadas</a></li>
-<li><a href="matematicas-emacs.html">Matemáticas en Emacs</a></li>
-<li><a href="bayes-as-lenses.html">Bayes as lenses</a></li>
-</ul>
+<h1 class="title">Bayes as lenses</h1>
+<p>
+Jules Hedges mentioned on Twitter that Bayesian updates could be
+described as two morphisms \(\mathbf{C}(S, DA)\) and \(\mathbf{C}(DS \times B, DT)\), but it was
+"too much squinting" to make them a lens.
+</p>
+
+<p>
+I have not been able to follow if there was any update on that, but in
+case this is still useful to anyone, let us get Bayes update as an optic.
+</p>
+\begin{aligned}
+& \int^{C \in \mathbf{EM}} \mathbf{EM}(DS , C \times DA) \times \mathbf{Kl}(C \rtimes B, T) \\
+\cong & \\ 
+ & \mathbf{C}(S, DA) \times \mathbf{C}(DS \times B , DT).
+\end{aligned}
 </div>
 <div id="postamble" class="status">
-<hr><p class="date">Last edited 2020-01-18 17:03:51 by Mario Román (<a href="https://github.com/mroman42/cosmoi">code</a>).</p>
+<hr><p class="date">Last edited 2020-01-18 17:03:50 by Mario Román (<a href="https://github.com/mroman42/cosmoi">code</a>).</p>
 </div>
 </body>
 </html>

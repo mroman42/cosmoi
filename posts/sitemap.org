@@ -13,3 +13,4 @@
 - [[file:coinduction.org][Coinduction]]
 - [[file:monadas.org][Mónadas]]
 - [[file:matematicas-emacs.org][Matemáticas en Emacs]]
+- [[file:bayes-as-lenses.org][Bayes as lenses]]
