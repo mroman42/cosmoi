@@ -23,19 +23,6 @@ idea by [[https://arxiv.org/abs/1411.3827][Delpeuch]].
 I have now realized that this is in fact the category of learners as described
 by Fong and Johnson.  Can we use learners in DisCoCat?
 
-* Tannakian reconstruction
-The profunctor representation of optics can be seen as a case of
-Tannakian reconstruction for Tambara modules.  That is, functional
-programmers have been for years using Tannakian reconstruction to
-access data structures.  I have written a note with a proof of
-Boisseau and Gibbons' profunctor representation theorem that follows
-the structure of Tannakian reconstruction.
-
-*Bartosz Milewski* suggested me to look into Tannakian reconstruction
-and try to apply it to optics.
-
- * [[./tannaka.pdf][Tannakian reconstruction of Tambara modules (pdf)]].
-
 * Kaleidoscopes, monoidal lenses, comonoidal prisms
 A *kaleidoscope* is the optic for applicative functors. Using the free
 applicative construction (from Capriotti-Kaposi, for instance), we can

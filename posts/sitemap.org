@@ -6,7 +6,6 @@
 - [[file:lambda-distribuciones.org][Distribuciones discretas con mónadas]]
 - [[file:lambda-evaluacion.org][Evaluación en cálculo lambda]]
 - [[file:lambda-induccion.org][Inducción estructural]]
-- [[file:notes-optics.org][Notes on optics]]
 - [[file:mikrokosmos.org][Mikrokosmos]]
 - [[file:dedekindreals.org][Dedekind reals in Agda]]
 - [[file:orgdrill-spacedrepetition.org][Org-drill and spaced repetition]]
@@ -14,3 +13,4 @@
 - [[file:monadas.org][Mónadas]]
 - [[file:matematicas-emacs.org][Matemáticas en Emacs]]
 - [[file:bayes-as-lenses.org][Bayes as lenses]]
+- [[file:notes-optics.org][Notes on optics]]

@@ -13,3 +13,5 @@ case this is still useful to anyone, let us get Bayes update as an optic.
 \cong & \\ 
  & \mathbf{C}(S, DA) \times \mathbf{C}(DS \times B , DT).
 \end{aligned}
+Here $C$ ranges over the Eilenberg-Moore category, but then we forget
+its algebra structure so it can act on the Kleisli category.
