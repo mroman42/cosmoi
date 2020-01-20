@@ -8,3 +8,4 @@ _minted*
 *.pyg
 _site/
 posts/*.html
+posts/ltximg/*
