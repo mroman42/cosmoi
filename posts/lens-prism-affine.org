@@ -1,0 +1,25 @@
+#+Title: Lenses, prisms, affine traversals
+#+Date: 3th February 2020
+#+setupfile: ../layouts/post.org
+
+Lenses and prisms do not compose into affine traversals if one is
+inclined to believe that Haskell composition of Tambara modules is the
+definition of composition of optics for optics of different families.
+I will construct a counterexample that illustrates this fact. I will,
+however, respect the laws of Tambara modules, and not make use of any
+freedoms that the limited expressivity of Haskell's type system would
+give me.  The failure is theoretical, not only a product of this
+particular implementation.
+
+#+BEGIN_SRC haskell
+-- Consider the constantly Bool profunctor.
+data CBool a b = CBool Bool
+class Profunctor CBool where
+  dimap _ _ = id
+
+-- It is a strong profunctor, respecting the laws.
+class Strong CBool where
+  strong = id
+  
+#+END_SRC
+

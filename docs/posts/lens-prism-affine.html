@@ -3,14 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-06 Thu 16:26 -->
+<!-- 2020-02-04 Tue 16:43 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Blog</title>
+<title>Lenses, prisms, affine traversals</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Mario Román" />
-<meta name="description" content="Blog index"
- />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -244,29 +242,33 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">Blog</h1>
-<ul class="org-ul">
-<li><a href="emacs-aprendiendo.html">Aprendiendo Emacs</a></li>
-<li><a href="emacs-capturando-links.html">Capturando links en org-mode</a></li>
-<li><a href="index.html">Blog</a></li>
-<li><a href="lambda-distribuciones.html">Distribuciones discretas con mónadas</a></li>
-<li><a href="lambda-evaluacion.html">Evaluación en cálculo lambda</a></li>
-<li><a href="lambda-induccion.html">Inducción estructural</a></li>
-<li><a href="mikrokosmos.html">Mikrokosmos</a></li>
-<li><a href="dedekindreals.html">Dedekind reals in Agda</a></li>
-<li><a href="orgdrill-spacedrepetition.html">Org-drill and spaced repetition</a></li>
-<li><a href="coinduction.html">Coinduction</a></li>
-<li><a href="monadas.html">Mónadas</a></li>
-<li><a href="matematicas-emacs.html">Matemáticas en Emacs</a></li>
-<li><a href="bayes-as-lenses.html">Bayes as lenses</a></li>
-<li><a href="notes-optics.html">Notes on optics</a></li>
-<li><a href="fox-theorem.html">Fox's theorem</a></li>
-<li><a href="lens-prism-affine.html">Lenses, prisms, affine traversals</a></li>
-<li><a href="academic-writing.html">Academic writing</a></li>
-</ul>
+<h1 class="title">Lenses, prisms, affine traversals</h1>
+<p>
+Lenses and prisms do not compose into affine traversals if one is
+inclined to believe that Haskell composition of Tambara modules is the
+definition of composition of optics for optics of different families.
+I will construct a counterexample that illustrates this fact. I will,
+however, respect the laws of Tambara modules, and not make use of any
+freedoms that the limited expressivity of Haskell's type system would
+give me.  The failure is theoretical, not only a product of this
+particular implementation.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-haskell"><span style="color: #3E8991; font-style: italic;">-- </span><span style="color: #3E8991; font-style: italic;">Consider the constantly Bool profunctor.</span>
+<span style="color: #4f97d7; font-weight: bold;">data</span> <span style="color: #ce537a; font-weight: bold;">CBool</span> a b <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">CBool</span> <span style="color: #ce537a; font-weight: bold;">Bool</span>
+<span style="color: #4f97d7; font-weight: bold;">class</span> <span style="color: #ce537a; font-weight: bold;">Profunctor</span> <span style="color: #ce537a; font-weight: bold;">CBool</span> <span style="color: #4f97d7; font-weight: bold;">where</span>
+  dimap <span style="color: #4f97d7; font-weight: bold;">_</span> <span style="color: #4f97d7; font-weight: bold;">_</span> <span style="color: #7590db;">=</span> id
+
+<span style="color: #3E8991; font-style: italic;">-- </span><span style="color: #3E8991; font-style: italic;">It is a strong profunctor, respecting the laws.</span>
+<span style="color: #4f97d7; font-weight: bold;">class</span> <span style="color: #ce537a; font-weight: bold;">Strong</span> <span style="color: #ce537a; font-weight: bold;">CBool</span> <span style="color: #4f97d7; font-weight: bold;">where</span>
+  strong <span style="color: #7590db;">=</span> id
+  
+</pre>
+</div>
 </div>
 <div id="postamble" class="status">
-<hr><p class="date">Last edited 2020-02-06 16:26:44 by Mario Román (<a href="https://github.com/mroman42/cosmoi">code</a>).</p>
+<hr><p class="date">Last edited 2020-02-04 16:43:44 by Mario Román (<a href="https://github.com/mroman42/cosmoi">code</a>).</p>
 </div>
 </body>
 </html>

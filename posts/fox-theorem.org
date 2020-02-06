@@ -1,0 +1,11 @@
+#+Title: Fox's theorem
+#+Date: 22th January 2020
+#+setupfile: ../layouts/post.org
+
+Fox's theorem says that the forgetful functor $U \colon \mathbf{Cat} \to \mathbf{SymMon}$ 
+from cartesian to symmetric monoidal categories has a right adjoint 
+$\mathbf{Comon} \colon \mathbf{SymMon} \to \mathbf{Cat}$ given by the category of
+cocommutative comonoids.  Dually, commutative monoids have the same correspondence with
+cocartesian categories. A [[https://golem.ph.utexas.edu/category/2018/02/cartesian_bicategories.html][bicategory of relations]] is a cartesian bicategory where every
+object is a Frobenius monoid. What are other instances of this correspondence?
+

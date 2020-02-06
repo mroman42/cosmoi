@@ -14,3 +14,6 @@
 - [[file:matematicas-emacs.org][Matemáticas en Emacs]]
 - [[file:bayes-as-lenses.org][Bayes as lenses]]
 - [[file:notes-optics.org][Notes on optics]]
+- [[file:fox-theorem.org][Fox's theorem]]
+- [[file:lens-prism-affine.org][Lenses, prisms, affine traversals]]
+- [[file:academic-writing.org][Academic writing]]
