@@ -5,7 +5,6 @@
 I plan to collect here resources on academic writing, style, preparing
 talks and so on.
 
-
  * [[https://www.microsoft.com/en-us/research/academic-program/write-great-research-paper/#!other-resources][Write great research papers.]] Collection of links by Simon Peyton Jones.
  * [[https://www.microsoft.com/en-us/research/academic-program/how-to-write-a-great-research-proposal/][How to write a great research proposal.]] Simon Peyton Jones.
  * [[https://www.microsoft.com/en-us/research/academic-program/give-great-research-talk/][How to give a great research talk.]] Simon Peyton Jones.
@@ -104,14 +103,15 @@ All of this is the first page, the one everyone will read.
      If something is not referred here, maybe it should not be on
      the paper.
 
- * *Related work* should not be on the introduction. It distracts
-   your reader from the main idea. The reader knows nothing about
-   the problem. It is better to move this to the end and do it
-   comfortably, where the reader is familiarized with your terms.
+** 5. Related work
+Related work should not be on the introduction. It distracts
+your reader from the main idea. The reader knows nothing about
+the problem. It is better to move this to the end and do it
+comfortably, where the reader is familiarized with your terms.
 
-   * There is a fallacy that says that to make your work look good,
-     you have to make other people's work look bad.  Appreciation is
-     a divisible commodity! do not do that.
+ * There is a fallacy that says that to make your work look good,
+   you have to make other people's work look bad.  Appreciation is
+   a divisible commodity! do not do that.
         
         * Warmly acknowledge people who helped you.
         * Be generous to the competition /"In his inspiring paper..."/,
@@ -144,4 +144,16 @@ ideal would be some expert on the field that wants to read your paper;
 but any other friendly advice is also useful.  Each guinea pig can read
 your paper only one, so use them wisely.
 
+ * You want them to tell you where did they get lost, not only on
+   small orthographic details.  Even discuss a bit with them those
+   details.
 
+ * A good plan is to send your draft to the competition asking if
+   you are describing their work fairly. They have helpful critique.
+
+ * Be grateful for any criticism. This is really, really, really hard;
+   but it is very important. People is putting time into your work.
+   The paper should be such that even Reviewer 2 needs to accept it
+   works.  Thank them warmly.
+
+ * Mention all guinea pigs on your Acknowledgements.

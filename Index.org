@@ -34,7 +34,14 @@ unless otherwise specified.
 
 #+TOC: headlines 1
 
-* Papers
+* Publications
+
+ * *Profunctor optics, a categorical update*. /Bryce Clarke/, /Derek/
+   /Elkins/, /Jeremy Gibbons/, /Fosco Loregian/, /Bartosz Milewski/, /Emily/
+   /Pillmore/, /Mario Román/. ArXiv preprint [[https://arxiv.org/abs/2001.07488][2001.07488]], 2020.
+
+ * *Profunctor optics and traversals*. /Mario Román/. ArXiv preprint
+   [[https://arxiv.org/abs/2001.08045][2001.08045]], 2020.
 
  * *[[http://jose.theoj.org/papers/8324e9aa1019760e987673f55e335f34][Mikrokosmos: an educational lambda interpreter]]*. /Mario Román/. The
    Journal of Open Source Education, 2018.
