@@ -1,17 +1,17 @@
 #+Creator: <a href="https://mroman42.github.com">@mroman42</a>.
 #+options: num:nil toc:1
 
-#+HTML_HEAD: <link rel="stylesheet" href="./css/default.css" />
-#+HTML_HEAD: <link rel="stylesheet" href="./css/mathjax_fonts.css" />
-#+HTML_HEAD: <link rel="stylesheet" href="./css/syntax.css" />
+<link rel="stylesheet" href="./css/default.css" />
+<link rel="stylesheet" href="./css/mathjax_fonts.css" />
+<link rel="stylesheet" href="./css/syntax.css" />
 
-#+HTML_HEAD: <div id="header">
-#+HTML_HEAD:     <div id="logo">
-#+HTML_HEAD:         <a hrwef="./index.html">Mario Román</a>
-#+HTML_HEAD:     </div>
-#+HTML_HEAD:     <div id="navigation">
-#+HTML_HEAD:         <a href="./index.html">About</a>
-#+HTML_HEAD:         <a href="./posts/index.html">Blog</a>
-#+HTML_HEAD:         <a href="https://github.com/mroman42/">Github</a>
-#+HTML_HEAD:     </div>
-#+HTML_HEAD: </div>
+<div id="header">
+    <div id="logo">
+        <a hrwef="./index.html">Mario Román</a>
+    </div>
+    <div id="navigation">
+        <a href="./index.html">About</a>
+        <a href="./posts/index.html">Blog</a>
+        <a href="https://github.com/mroman42/">Github</a>
+    </div>
+</div>

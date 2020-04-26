@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-07 Fri 14:10 -->
+<!-- 2020-04-25 Sat 12:12 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Academic writing</title>
@@ -161,6 +162,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -194,50 +208,28 @@
 </div>
 </div>
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.cacheClassElem = elem.className;
+         elem.cacheClassTarget = target.className;
+         target.className = "code-highlighted";
+         elem.className   = "code-highlighted";
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(elem.cacheClassElem)
+         elem.className = elem.cacheClassElem;
+       if(elem.cacheClassTarget)
+         target.className = elem.cacheClassTarget;
+     }
+    /*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
@@ -247,7 +239,7 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orga4a786e">How to write a great research paper. <i>Simon Peyton Jones.</i></a></li>
+<li><a href="#org6cefba9">How to write a great research paper. <i>Simon Peyton Jones.</i></a></li>
 </ul>
 </div>
 </div>
@@ -263,13 +255,13 @@ talks and so on.
 <li><a href="https://www.math.uchicago.edu/~may/VIGRE/VIGRE2010/piiUJM2up.pdf">Writing a Math Phase Two Paper</a>. Steven L. Kleiman.</li>
 </ul>
 
-<div id="outline-container-orga4a786e" class="outline-2">
-<h2 id="orga4a786e"><a href="https://www.microsoft.com/en-us/research/academic-program/write-great-research-paper/">How to write a great research paper.</a> <i>Simon Peyton Jones.</i></h2>
-<div class="outline-text-2" id="text-orga4a786e">
+<div id="outline-container-org6cefba9" class="outline-2">
+<h2 id="org6cefba9"><a href="https://www.microsoft.com/en-us/research/academic-program/write-great-research-paper/">How to write a great research paper.</a> <i>Simon Peyton Jones.</i></h2>
+<div class="outline-text-2" id="text-org6cefba9">
 </div>
-<div id="outline-container-org3f98fdf" class="outline-3">
-<h3 id="org3f98fdf">1. Don't wait, write.</h3>
-<div class="outline-text-3" id="text-org3f98fdf">
+<div id="outline-container-org63c521d" class="outline-3">
+<h3 id="org63c521d">1. Don&rsquo;t wait, write.</h3>
+<div class="outline-text-3" id="text-org63c521d">
 <p>
 Writing the paper forces you to do the necessary research and
 understand what you want to say. Start writing before the research is
@@ -291,9 +283,9 @@ medium.
 </div>
 </div>
 
-<div id="outline-container-org0406601" class="outline-3">
-<h3 id="org0406601">2. Convey a useful idea</h3>
-<div class="outline-text-3" id="text-org0406601">
+<div id="outline-container-orga2d65d9" class="outline-3">
+<h3 id="orga2d65d9">2. Convey a useful idea</h3>
+<div class="outline-text-3" id="text-orga2d65d9">
 <p>
 Make other people interested on your research; the ideas have to be
 durable and catchy and get people excited about them. Ideas are
@@ -319,9 +311,9 @@ it clear to the authors.  You can even write a section called:
 </div>
 </div>
 
-<div id="outline-container-orgf767eac" class="outline-3">
-<h3 id="orgf767eac">3. Tell a story.</h3>
-<div class="outline-text-3" id="text-orgf767eac">
+<div id="outline-container-orge76a621" class="outline-3">
+<h3 id="orge76a621">3. Tell a story.</h3>
+<div class="outline-text-3" id="text-orge76a621">
 <p>
 Imagine a whiteboard explanation.
 </p>
@@ -410,9 +402,9 @@ as the paper advances, so you should carefully plan the first pages.
 </div>
 </div>
 
-<div id="outline-container-org389bd1e" class="outline-3">
-<h3 id="org389bd1e">4. The introduction</h3>
-<div class="outline-text-3" id="text-org389bd1e">
+<div id="outline-container-orgdd06554" class="outline-3">
+<h3 id="orgdd06554">4. The introduction</h3>
+<div class="outline-text-3" id="text-orgdd06554">
 <p>
 Describe the problem and state your contributions.
 All of this is the first page, the one everyone will read.
@@ -424,7 +416,7 @@ first example should be there, to illustrate the problem.</li>
 
 <li>Avoid a rant about how important is your problem. It seems good
 scholarship, but is demotivating to the reader. Simply put an
-example: "consider this thing, we will solve it in general".  It
+example: &ldquo;consider this thing, we will solve it in general&rdquo;.  It
 is better to describe a small goal, and then actually solve it.</li>
 
 <li><b>Contributions!</b> State the list of contributions first: bullet
@@ -436,8 +428,8 @@ satisfied by the paper.
 <li><p>
 Contributions should be refutable, and with <i>forward</i>
 <i>references(!)</i> to evidence.  You should point to where this is done in the
-paper in parentheses <i>"Exciting claim</i> <i>(Section 3)"</i> instead of
-saying <i>"Section 3</i> <i>introduces&#x2026;"</i>, which is utterly boring.
+paper in parentheses <i>&ldquo;Exciting claim</i> <i>(Section 3)&ldquo;</i> instead of
+saying <i>&ldquo;Section 3</i> <i>introduces&#x2026;&ldquo;</i>, which is utterly boring.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -490,9 +482,9 @@ the paper.
 </div>
 </div>
 
-<div id="outline-container-orgb672283" class="outline-3">
-<h3 id="orgb672283">5. Related work</h3>
-<div class="outline-text-3" id="text-orgb672283">
+<div id="outline-container-org6d7e804" class="outline-3">
+<h3 id="org6d7e804">5. Related work</h3>
+<div class="outline-text-3" id="text-org6d7e804">
 <p>
 Related work should not be on the introduction. It distracts
 your reader from the main idea. The reader knows nothing about
@@ -503,14 +495,14 @@ comfortably, where the reader is familiarized with your terms.
 <ul class="org-ul">
 <li><p>
 There is a fallacy that says that to make your work look good,
-you have to make other people's work look bad.  Appreciation is
+you have to make other people&rsquo;s work look bad.  Appreciation is
 a divisible commodity! do not do that.
 </p>
 
 <ul class="org-ul">
 <li>Warmly acknowledge people who helped you.</li>
-<li>Be generous to the competition <i>"In his inspiring paper&#x2026;"</i>,
-<i>"The lucid work of&#x2026;"</i>.</li>
+<li>Be generous to the competition <i>&ldquo;In his inspiring paper&#x2026;&rdquo;</i>,
+<i>&ldquo;The lucid work of&#x2026;&rdquo;</i>.</li>
 <li>Express your gratitude to other papers.</li>
 <li>Acknowledge weaknesses in your research; unawareness of the
 weaknesses is not helping. This goes at the end of the
@@ -523,9 +515,9 @@ related work.</li>
 </div>
 </div>
 
-<div id="outline-container-orgfce847b" class="outline-3">
-<h3 id="orgfce847b">6. Put your readers first</h3>
-<div class="outline-text-3" id="text-orgfce847b">
+<div id="outline-container-org32e7f50" class="outline-3">
+<h3 id="org32e7f50">6. Put your readers first</h3>
+<div class="outline-text-3" id="text-org32e7f50">
 <p>
 Try not to recapitulate your journey; it was difficult for you to get
 to this point, but the poor reader does not need to suffer that to
@@ -548,9 +540,9 @@ the intuition.
 </div>
 </div>
 
-<div id="outline-container-org42db3ab" class="outline-3">
-<h3 id="org42db3ab">7. Listen to your readers</h3>
-<div class="outline-text-3" id="text-org42db3ab">
+<div id="outline-container-orga440fd2" class="outline-3">
+<h3 id="orga440fd2">7. Listen to your readers</h3>
+<div class="outline-text-3" id="text-orga440fd2">
 <p>
 Get your paper read by as many friendly guinea pigs as possible. The
 ideal would be some expert on the field that wants to read your paper;
@@ -578,7 +570,7 @@ works.  Thank them warmly.</li>
 </div>
 </div>
 <div id="postamble" class="status">
-<hr><p class="date">Last edited 2020-02-07 14:10:17 by Mario Román (<a href="https://github.com/mroman42/cosmoi">code</a>).</p>
+<hr><p class="date">Last edited 2020-04-25 12:12:11 by Mario Román (<a href="https://github.com/mroman42/cosmoi">code</a>).</p>
 </div>
 </body>
 </html>

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-12-27 Fri 15:49 -->
+<!-- 2020-04-25 Sat 12:12 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Capturando links en org-mode</title>
@@ -161,6 +162,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -194,50 +208,28 @@
 </div>
 </div>
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.cacheClassElem = elem.className;
+         elem.cacheClassTarget = target.className;
+         target.className = "code-highlighted";
+         elem.className   = "code-highlighted";
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(elem.cacheClassElem)
+         elem.className = elem.cacheClassElem;
+       if(elem.cacheClassTarget)
+         target.className = elem.cacheClassTarget;
+     }
+    /*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
@@ -247,20 +239,20 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgb97ee57">Capturando links</a></li>
-<li><a href="#org55279a1">Org-capture</a></li>
-<li><a href="#orgf375653">Extensión de firefox</a></li>
-<li><a href="#org0a17340">Cerrando ventanas</a></li>
-<li><a href="#org3811328">Integrándolo en i3</a></li>
-<li><a href="#orgdc94b65">Mostrando los links en el navegador</a></li>
-<li><a href="#org46b2827">Un detalle sin solucionar</a></li>
+<li><a href="#org55b0b33">Capturando links</a></li>
+<li><a href="#org313a0c6">Org-capture</a></li>
+<li><a href="#org0d0db61">Extensión de firefox</a></li>
+<li><a href="#orgf5556c4">Cerrando ventanas</a></li>
+<li><a href="#orgd51d053">Integrándolo en i3</a></li>
+<li><a href="#org56c5d56">Mostrando los links en el navegador</a></li>
+<li><a href="#org15a59ec">Un detalle sin solucionar</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgb97ee57" class="outline-2">
-<h2 id="orgb97ee57">Capturando links</h2>
-<div class="outline-text-2" id="text-orgb97ee57">
+<div id="outline-container-org55b0b33" class="outline-2">
+<h2 id="org55b0b33">Capturando links</h2>
+<div class="outline-text-2" id="text-org55b0b33">
 <p>
 El objetivo de este post es describir el proceso que uso para capturar links
 desde Firefox y almacenarlos en un archivo de org-mode, que puede leerse luego
@@ -269,9 +261,9 @@ desde el propio navegador.
 </div>
 </div>
 
-<div id="outline-container-org55279a1" class="outline-2">
-<h2 id="org55279a1">Org-capture</h2>
-<div class="outline-text-2" id="text-org55279a1">
+<div id="outline-container-org313a0c6" class="outline-2">
+<h2 id="org313a0c6">Org-capture</h2>
+<div class="outline-text-2" id="text-org313a0c6">
 <p>
 La primera parte será activar <code>org-capture</code> y <code>org-protocol</code> en Emacs. <a href="https://www.gnu.org/software/emacs/manual/html_node/org/Capture.html#Capture">org-capture</a>
 puede ser usado también para escribir pequeñas ideas y almacenarlas en ficheros org
@@ -279,7 +271,7 @@ rápidamente; pero, en este caso, lo usaremos sólo para recibir el link desde F
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">  <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">require</span> '<span style="color: #a45bad;">org-protocol</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-emacs-lisp">  <span style="color: #81A1C1;">(</span><span style="color: #B48EAD;">require</span> <span style="color: #81A1C1;">'</span><span style="color: #B48EAD;">org-protocol</span><span style="color: #81A1C1;">)</span>
 </pre>
 </div>
 
@@ -290,10 +282,10 @@ las opciones que usa después:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">  <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">setq</span> org-capture-templates
-        <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">quote</span> <span style="color: #2d9574;">(</span>
-                <span style="color: #67b11d;">(</span><span style="color: #2d9574;">"x"</span> <span style="color: #2d9574;">"org-protocol"</span> entry <span style="color: #b1951d;">(</span>file <span style="color: #2d9574;">"~/links.org"</span><span style="color: #b1951d;">)</span>
-                 <span style="color: #2d9574;">"** %c %?"</span> <span style="color: #4f97d7;">:kill-buffer</span> t <span style="color: #4f97d7;">:prepend</span> t<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-emacs-lisp">  <span style="color: #81A1C1;">(</span><span style="color: #81A1C1;">setq</span> <span style="color: #d9c6d6;">org-capture-templates</span>
+  <span style="color: #B48EAD;">(</span><span style="color: #81A1C1;">quote</span> <span style="color: #A3BE8C;">(</span>
+    <span style="color: #81A1C1;">(</span><span style="color: #A3BE8C;">"x"</span> <span style="color: #A3BE8C;">"org-protocol"</span> entry <span style="color: #B48EAD;">(</span>file <span style="color: #A3BE8C;">"~/links.org"</span><span style="color: #B48EAD;">)</span>
+     <span style="color: #A3BE8C;">"** %c %?"</span> <span style="color: #8FBCBB;">:kill-buffer</span> t <span style="color: #8FBCBB;">:prepend</span> t<span style="color: #81A1C1;">)</span><span style="color: #A3BE8C;">)</span><span style="color: #B48EAD;">)</span><span style="color: #81A1C1;">)</span>
 </pre>
 </div>
 
@@ -305,9 +297,9 @@ queremos insertar el link una vez lo capturemos.
 </div>
 </div>
 
-<div id="outline-container-orgf375653" class="outline-2">
-<h2 id="orgf375653">Extensión de firefox</h2>
-<div class="outline-text-2" id="text-orgf375653">
+<div id="outline-container-org0d0db61" class="outline-2">
+<h2 id="org0d0db61">Extensión de firefox</h2>
+<div class="outline-text-2" id="text-org0d0db61">
 <p>
 El uso de <code>org-protocol</code> desde Firefox puede gestionarse más detalladamente usando
 <a href="http://orgmode.org/worg/org-contrib/org-protocol.html#sec-4">marcadores</a> que activen la captura. En nuestro caso, como sólo necesitamos la configuración
@@ -327,9 +319,9 @@ Una vez activemos la extensión, podremos capturar enlaces pulsando el atajo.
 </div>
 </div>
 
-<div id="outline-container-org0a17340" class="outline-2">
-<h2 id="org0a17340">Cerrando ventanas</h2>
-<div class="outline-text-2" id="text-org0a17340">
+<div id="outline-container-orgf5556c4" class="outline-2">
+<h2 id="orgf5556c4">Cerrando ventanas</h2>
+<div class="outline-text-2" id="text-orgf5556c4">
 <p>
 Un problema menor al usar esta extensión es que crea ventanas de Emacs que no cierra
 al terminar. Otro problema es que suele crear también un buffer inicial al lado de nuestro
@@ -337,16 +329,16 @@ buffer de captura. Podemos usar <b>hooks</b> para forzarlo a corregir ese compor
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">  <span style="color: #4f97d7;">(</span>add-hook 'org-capture-mode-hook 'delete-other-windows<span style="color: #4f97d7;">)</span>
-  <span style="color: #4f97d7;">(</span>add-hook 'org-capture-after-finalize-hook 'delete-frame<span style="color: #4f97d7;">)</span>
+<pre class="src src-emacs-lisp">  <span style="color: #81A1C1;">(</span><span style="color: #8FBCBB;">add-hook</span> <span style="color: #81A1C1;">'</span><span style="color: #d9c6d6;">org-capture-mode-hook</span> <span style="color: #81A1C1;">'</span><span style="color: #8FBCBB;">delete-other-windows</span><span style="color: #81A1C1;">)</span>
+  <span style="color: #81A1C1;">(</span><span style="color: #8FBCBB;">add-hook</span> <span style="color: #81A1C1;">'</span><span style="color: #d9c6d6;">org-capture-after-finalize-hook</span> <span style="color: #81A1C1;">'</span><span style="color: #8FBCBB;">delete-frame</span><span style="color: #81A1C1;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org3811328" class="outline-2">
-<h2 id="org3811328">Integrándolo en i3</h2>
-<div class="outline-text-2" id="text-org3811328">
+<div id="outline-container-orgd51d053" class="outline-2">
+<h2 id="orgd51d053">Integrándolo en i3</h2>
+<div class="outline-text-2" id="text-orgd51d053">
 <p>
 Para los usuarios de i3, puede ser útil poder controlar dónde y cómo se crea la ventana
 de captura de Emacs. Un ejemplo de configuración es la siguiente, que coloca la ventana
@@ -354,17 +346,17 @@ como flotante y en el centro de la pantalla; como si fuera un popup:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash">for_window <span style="color: #4f97d7;">[</span><span style="color: #7590db;">class</span>=<span style="color: #2d9574;">"Emacs"</span> <span style="color: #7590db;">title</span>=<span style="color: #2d9574;">"CAPTURE"</span><span style="color: #4f97d7;">]</span> floating enable
-for_window <span style="color: #4f97d7;">[</span><span style="color: #7590db;">class</span>=<span style="color: #2d9574;">"Emacs"</span> <span style="color: #7590db;">title</span>=<span style="color: #2d9574;">"CAPTURE"</span><span style="color: #4f97d7;">]</span> resize set 1880 480
-for_window <span style="color: #4f97d7;">[</span><span style="color: #7590db;">class</span>=<span style="color: #2d9574;">"Emacs"</span> <span style="color: #7590db;">title</span>=<span style="color: #2d9574;">"CAPTURE"</span><span style="color: #4f97d7;">]</span> move position center
+<pre class="src src-bash">for_window <span style="color: #81A1C1;">[</span><span style="color: #d9c6d6;">class</span>=<span style="color: #A3BE8C;">"Emacs"</span> <span style="color: #d9c6d6;">title</span>=<span style="color: #A3BE8C;">"CAPTURE"</span><span style="color: #81A1C1;">]</span> floating enable
+for_window <span style="color: #81A1C1;">[</span><span style="color: #d9c6d6;">class</span>=<span style="color: #A3BE8C;">"Emacs"</span> <span style="color: #d9c6d6;">title</span>=<span style="color: #A3BE8C;">"CAPTURE"</span><span style="color: #81A1C1;">]</span> resize set <span style="color: #B48EAD; font-weight: bold;">1880</span> <span style="color: #B48EAD; font-weight: bold;">480</span>
+for_window <span style="color: #81A1C1;">[</span><span style="color: #d9c6d6;">class</span>=<span style="color: #A3BE8C;">"Emacs"</span> <span style="color: #d9c6d6;">title</span>=<span style="color: #A3BE8C;">"CAPTURE"</span><span style="color: #81A1C1;">]</span> move position center
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgdc94b65" class="outline-2">
-<h2 id="orgdc94b65">Mostrando los links en el navegador</h2>
-<div class="outline-text-2" id="text-orgdc94b65">
+<div id="outline-container-org56c5d56" class="outline-2">
+<h2 id="org56c5d56">Mostrando los links en el navegador</h2>
+<div class="outline-text-2" id="text-org56c5d56">
 <p>
 Para que además los links se muestren en el navegador, pueden usarse también <b>hooks</b> que
 se activen al guardado para exportar a HTML. En este post de <a href="https://rafaelleru.github.io/2017/01/22/to_read_list_emacs/">@rafaelleru</a> se explica el
@@ -373,9 +365,9 @@ proceso en detalle.
 </div>
 </div>
 
-<div id="outline-container-org46b2827" class="outline-2">
-<h2 id="org46b2827">Un detalle sin solucionar</h2>
-<div class="outline-text-2" id="text-org46b2827">
+<div id="outline-container-org15a59ec" class="outline-2">
+<h2 id="org15a59ec">Un detalle sin solucionar</h2>
+<div class="outline-text-2" id="text-org15a59ec">
 <p>
 En la plantilla de captura, me gustaría poder usar además <code>%^g</code>, que crea un pequeño
 diálogo donde insertar tags al link que se está guardando. El problema con esto es que,
@@ -386,7 +378,7 @@ hasta que ese diálogo no ha terminado, no se ejecutan los hooks y el frame no s
 </div>
 </div>
 <div id="postamble" class="status">
-<hr><p class="date">Last edited 2019-12-27 15:49:42 by Mario Román (<a href="https://github.com/mroman42/cosmoi">code</a>).</p>
+<hr><p class="date">Last edited 2020-04-25 12:12:10 by Mario Román (<a href="https://github.com/mroman42/cosmoi">code</a>).</p>
 </div>
 </body>
 </html>

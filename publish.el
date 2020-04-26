@@ -13,8 +13,22 @@
    '(("posts"
       :base-directory "./posts/"
       :base-extension "org"
-      :publishing-directory "./docs/posts/"
+      :publishing-directory "/ssh:mroman@fookus2.ioc.ee/public_html"
       :recursive t
+      :publishing-function org-html-publish-to-html
+      :headline-levels 4
+      :auto-preamble t
+      :auto-sitemap t
+      :sitemap-title "Blog"
+      :sitemap-sort-files chronologically
+      :sitemap-date-format "%Y-%m-%d"
+      :html-postamble cosmoi-postamble
+      )
+     ("basepages"
+      :base-directory "./"
+      :base-extension "org"
+      :publishing-directory "/ssh:mroman@fookus2.ioc.ee:~/public_html"
+      :recursive nil
       :publishing-function org-html-publish-to-html
       :headline-levels 4
       :auto-preamble t

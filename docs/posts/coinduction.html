@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-01-17 Fri 10:24 -->
+<!-- 2020-04-25 Sat 12:12 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Coinduction</title>
@@ -161,6 +162,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -194,50 +208,28 @@
 </div>
 </div>
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.cacheClassElem = elem.className;
+         elem.cacheClassTarget = target.className;
+         target.className = "code-highlighted";
+         elem.className   = "code-highlighted";
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(elem.cacheClassElem)
+         elem.className = elem.cacheClassElem;
+       if(elem.cacheClassTarget)
+         target.className = elem.cacheClassTarget;
+     }
+    /*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
@@ -262,35 +254,35 @@ lot writing basic coinductive definitions.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell">  <span style="color: #4f97d7; font-weight: bold;">data</span> <span style="color: #ce537a; font-weight: bold;">Maybe</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">A</span> <span style="color: #ce537a; font-weight: bold;">:</span> <span style="color: #ce537a; font-weight: bold;">Set</span><span style="color: #4f97d7;">)</span> <span style="color: #ce537a; font-weight: bold;">:</span> <span style="color: #ce537a; font-weight: bold;">Set</span> <span style="color: #4f97d7; font-weight: bold;">where</span>
-    <span style="color: #ce537a; font-weight: bold;">Nothing</span> <span style="color: #ce537a; font-weight: bold;">:</span> <span style="color: #ce537a; font-weight: bold;">Maybe</span> <span style="color: #ce537a; font-weight: bold;">A</span>
-    <span style="color: #ce537a; font-weight: bold;">Just</span> <span style="color: #ce537a; font-weight: bold;">:</span> <span style="color: #ce537a; font-weight: bold;">A</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #ce537a; font-weight: bold;">Maybe</span> <span style="color: #ce537a; font-weight: bold;">A</span>
+<pre class="src src-haskell">  <span style="color: #81A1C1;">data</span> <span style="color: #8FBCBB;">Maybe</span> (<span style="color: #8FBCBB;">A</span> <span style="color: #8FBCBB;">:</span> <span style="color: #8FBCBB;">Set</span>) <span style="color: #8FBCBB;">:</span> <span style="color: #8FBCBB;">Set</span> <span style="color: #81A1C1;">where</span>
+    <span style="color: #8FBCBB;">Nothing</span> <span style="color: #8FBCBB;">:</span> <span style="color: #8FBCBB;">Maybe</span> <span style="color: #8FBCBB;">A</span>
+    <span style="color: #8FBCBB;">Just</span> <span style="color: #8FBCBB;">:</span> <span style="color: #8FBCBB;">A</span> <span style="color: #d9c6d6;">-&gt;</span> <span style="color: #8FBCBB;">Maybe</span> <span style="color: #8FBCBB;">A</span>
   
-  record coNat <span style="color: #ce537a; font-weight: bold;">:</span> <span style="color: #ce537a; font-weight: bold;">Set</span> <span style="color: #4f97d7; font-weight: bold;">where</span>
+  record coNat <span style="color: #8FBCBB;">:</span> <span style="color: #8FBCBB;">Set</span> <span style="color: #81A1C1;">where</span>
     coinductive
     field
-      pred <span style="color: #ce537a; font-weight: bold;">:</span> <span style="color: #ce537a; font-weight: bold;">Maybe</span> coNat
+      pred <span style="color: #8FBCBB;">:</span> <span style="color: #8FBCBB;">Maybe</span> coNat
   open coNat public    
   
-  coZero <span style="color: #ce537a; font-weight: bold;">:</span> coNat
-  pred coZero <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Nothing</span>
+  coZero <span style="color: #8FBCBB;">:</span> coNat
+  pred coZero <span style="color: #d9c6d6;">=</span> <span style="color: #8FBCBB;">Nothing</span>
   
-  coInf <span style="color: #ce537a; font-weight: bold;">:</span> coNat
-  pred coInf <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Just</span> coInf
+  coInf <span style="color: #8FBCBB;">:</span> coNat
+  pred coInf <span style="color: #d9c6d6;">=</span> <span style="color: #8FBCBB;">Just</span> coInf
   
-  succ <span style="color: #ce537a; font-weight: bold;">:</span> coNat <span style="color: #7590db;">-&gt;</span> coNat
-  pred <span style="color: #4f97d7;">(</span>succ n<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Just</span> n
+  succ <span style="color: #8FBCBB;">:</span> coNat <span style="color: #d9c6d6;">-&gt;</span> coNat
+  pred (succ n) <span style="color: #d9c6d6;">=</span> <span style="color: #8FBCBB;">Just</span> n
   
-  <span style="color: #4f97d7; font-weight: bold;">infixl</span> 20 <span style="color: #4f97d7; font-weight: bold;">_</span><span style="color: #7590db;">+</span><span style="color: #4f97d7; font-weight: bold;">_</span>
-  <span style="color: #4f97d7; font-weight: bold;">_</span><span style="color: #7590db;">+</span><span style="color: #4f97d7; font-weight: bold;">_</span> <span style="color: #ce537a; font-weight: bold;">:</span> coNat <span style="color: #7590db;">-&gt;</span> coNat <span style="color: #7590db;">-&gt;</span> coNat
-  pred <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">+</span> b<span style="color: #4f97d7;">)</span> with pred a
-  pred <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">+</span> b<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">|</span> <span style="color: #ce537a; font-weight: bold;">Nothing</span> <span style="color: #7590db;">=</span> pred b
-  pred <span style="color: #4f97d7;">(</span>a <span style="color: #7590db;">+</span> b<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">|</span> <span style="color: #ce537a; font-weight: bold;">Just</span> a' <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Just</span> <span style="color: #4f97d7;">(</span>a' <span style="color: #7590db;">+</span> b<span style="color: #4f97d7;">)</span>
+  <span style="color: #81A1C1;">infixl</span> <span style="color: #B48EAD; font-weight: bold;">20</span> <span style="color: #81A1C1;">_</span><span style="color: #d9c6d6;">+</span><span style="color: #81A1C1;">_</span>
+  <span style="color: #81A1C1;">_</span><span style="color: #d9c6d6;">+</span><span style="color: #81A1C1;">_</span> <span style="color: #8FBCBB;">:</span> coNat <span style="color: #d9c6d6;">-&gt;</span> coNat <span style="color: #d9c6d6;">-&gt;</span> coNat
+  pred (a <span style="color: #d9c6d6;">+</span> b) with pred a
+  pred (a <span style="color: #d9c6d6;">+</span> b) <span style="color: #d9c6d6;">|</span> <span style="color: #8FBCBB;">Nothing</span> <span style="color: #d9c6d6;">=</span> pred b
+  pred (a <span style="color: #d9c6d6;">+</span> b) <span style="color: #d9c6d6;">|</span> <span style="color: #8FBCBB;">Just</span> a' <span style="color: #d9c6d6;">=</span> <span style="color: #8FBCBB;">Just</span> (a' <span style="color: #d9c6d6;">+</span> b)
 </pre>
 </div>
 </div>
 <div id="postamble" class="status">
-<hr><p class="date">Last edited 2020-01-17 10:24:46 by Mario Román (<a href="https://github.com/mroman42/cosmoi">code</a>).</p>
+<hr><p class="date">Last edited 2020-04-25 12:12:10 by Mario Román (<a href="https://github.com/mroman42/cosmoi">code</a>).</p>
 </div>
 </body>
 </html>

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-12-27 Fri 15:49 -->
+<!-- 2020-04-25 Sat 12:12 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Inducción estructural</title>
@@ -161,6 +162,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -194,50 +208,28 @@
 </div>
 </div>
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.cacheClassElem = elem.className;
+         elem.cacheClassTarget = target.className;
+         target.className = "code-highlighted";
+         elem.className   = "code-highlighted";
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(elem.cacheClassElem)
+         elem.className = elem.cacheClassElem;
+       if(elem.cacheClassTarget)
+         target.className = elem.cacheClassTarget;
+     }
+    /*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
@@ -247,10 +239,10 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org197da78">Conjuntos bien fundados</a></li>
-<li><a href="#org1ac7fa7">Inducción sobre tipos</a></li>
-<li><a href="#org2679706">Ejemplo 1: Naturales</a></li>
-<li><a href="#org28e0de8">Ejemplo 2: Árboles binarios</a></li>
+<li><a href="#org6448e3b">Conjuntos bien fundados</a></li>
+<li><a href="#org67f5b5e">Inducción sobre tipos</a></li>
+<li><a href="#org9f3debc">Ejemplo 1: Naturales</a></li>
+<li><a href="#org3710bd0">Ejemplo 2: Árboles binarios</a></li>
 </ul>
 </div>
 </div>
@@ -266,9 +258,9 @@ estructura de los tipos de datos para simplificar todas esas
 demostraciones.
 </p>
 
-<div id="outline-container-org197da78" class="outline-2">
-<h2 id="org197da78">Conjuntos bien fundados</h2>
-<div class="outline-text-2" id="text-org197da78">
+<div id="outline-container-org6448e3b" class="outline-2">
+<h2 id="org6448e3b">Conjuntos bien fundados</h2>
+<div class="outline-text-2" id="text-org6448e3b">
 <p>
 Vamos a definir las relaciones bien fundadas, que nos permitirán definir
 una inducción generalizada. [1]
@@ -303,9 +295,9 @@ Entonces A = X.
 </div>
 </div>
 
-<div id="outline-container-org1ac7fa7" class="outline-2">
-<h2 id="org1ac7fa7">Inducción sobre tipos</h2>
-<div class="outline-text-2" id="text-org1ac7fa7">
+<div id="outline-container-org67f5b5e" class="outline-2">
+<h2 id="org67f5b5e">Inducción sobre tipos</h2>
+<div class="outline-text-2" id="text-org67f5b5e">
 <p>
 Ahora vamos a aplicar esto a teoría de tipos. Sea un tipo con sus
 constructores. Para todas las instancias constructibles del tipo (es decir,
@@ -351,9 +343,9 @@ Entonces a : A =&gt; P(a).
 </div>
 </div>
 
-<div id="outline-container-org2679706" class="outline-2">
-<h2 id="org2679706">Ejemplo 1: Naturales</h2>
-<div class="outline-text-2" id="text-org2679706">
+<div id="outline-container-org9f3debc" class="outline-2">
+<h2 id="org9f3debc">Ejemplo 1: Naturales</h2>
+<div class="outline-text-2" id="text-org9f3debc">
 <p>
 Nuestro primer ejemplo va a ser obtener la inducción sobre los naturales
 como caso particular. Damos una definición de los naturales en lenguaje
@@ -362,8 +354,8 @@ natural:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell">    <span style="color: #4f97d7; font-weight: bold;">data</span> <span style="color: #ce537a; font-weight: bold;">Nat</span> <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">O</span>
-             <span style="color: #7590db;">|</span> <span style="color: #ce537a; font-weight: bold;">S</span> <span style="color: #ce537a; font-weight: bold;">Nat</span>
+<pre class="src src-haskell">    <span style="color: #81A1C1;">data</span> <span style="color: #8FBCBB;">Nat</span> <span style="color: #d9c6d6;">=</span> <span style="color: #8FBCBB;">O</span>
+             <span style="color: #d9c6d6;">|</span> <span style="color: #8FBCBB;">S</span> <span style="color: #8FBCBB;">Nat</span>
 </pre>
 </div>
 
@@ -384,9 +376,9 @@ lo hemos demostrado para todos los naturales.
 </div>
 </div>
 
-<div id="outline-container-org28e0de8" class="outline-2">
-<h2 id="org28e0de8">Ejemplo 2: Árboles binarios</h2>
-<div class="outline-text-2" id="text-org28e0de8">
+<div id="outline-container-org3710bd0" class="outline-2">
+<h2 id="org3710bd0">Ejemplo 2: Árboles binarios</h2>
+<div class="outline-text-2" id="text-org3710bd0">
 <p>
 Ahora vamos a intentar el ejemplo que motivó esta búsqueda. Definimos un
 árbol binario como un árbol vacío o como un nodo del que surgen dos
@@ -394,8 +386,8 @@ Ahora vamos a intentar el ejemplo que motivó esta búsqueda. Definimos un
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell">    <span style="color: #4f97d7; font-weight: bold;">data</span> <span style="color: #ce537a; font-weight: bold;">Tree</span> a <span style="color: #7590db;">=</span> <span style="color: #ce537a; font-weight: bold;">Empty</span>
-                <span style="color: #7590db;">|</span> <span style="color: #ce537a; font-weight: bold;">Node</span> a <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Tree</span> a<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Tree</span> a<span style="color: #4f97d7;">)</span>
+<pre class="src src-haskell">    <span style="color: #81A1C1;">data</span> <span style="color: #8FBCBB;">Tree</span> a <span style="color: #d9c6d6;">=</span> <span style="color: #8FBCBB;">Empty</span>
+                <span style="color: #d9c6d6;">|</span> <span style="color: #8FBCBB;">Node</span> a (<span style="color: #8FBCBB;">Tree</span> a) (<span style="color: #8FBCBB;">Tree</span> a)
 </pre>
 </div>
 
@@ -429,7 +421,7 @@ demostraciones Coq.
 </div>
 </div>
 <div id="postamble" class="status">
-<hr><p class="date">Last edited 2019-12-27 15:49:41 by Mario Román (<a href="https://github.com/mroman42/cosmoi">code</a>).</p>
+<hr><p class="date">Last edited 2020-04-25 12:12:12 by Mario Román (<a href="https://github.com/mroman42/cosmoi">code</a>).</p>
 </div>
 </body>
 </html>

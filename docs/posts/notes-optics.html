@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-01-20 Mon 09:08 -->
+<!-- 2020-04-25 Sat 12:12 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Notes on optics</title>
@@ -161,6 +162,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -194,50 +208,28 @@
 </div>
 </div>
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.cacheClassElem = elem.className;
+         elem.cacheClassTarget = target.className;
+         target.className = "code-highlighted";
+         elem.className   = "code-highlighted";
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(elem.cacheClassElem)
+         elem.className = elem.cacheClassElem;
+       if(elem.cacheClassTarget)
+         target.className = elem.cacheClassTarget;
+     }
+    /*]]>*///-->
+// @license-end
 </script>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -269,17 +261,17 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgffb516e">Lawful mixed optics</a></li>
-<li><a href="#orgecdd346">Autonomous lenses</a></li>
-<li><a href="#org94853a2">Kaleidoscopes, monoidal lenses, comonoidal prisms</a></li>
-<li><a href="#orge917bb3">The "Glass" optic&#xa0;&#xa0;&#xa0;<span class="tag"><span class="post">post</span></span></a></li>
+<li><a href="#orgb54c06a">Lawful mixed optics</a></li>
+<li><a href="#orgf3cc61d">Autonomous lenses</a></li>
+<li><a href="#orgbead320">Kaleidoscopes, monoidal lenses, comonoidal prisms</a></li>
+<li><a href="#orge936ba8">The &ldquo;Glass&rdquo; optic&#xa0;&#xa0;&#xa0;<span class="tag"><span class="post">post</span></span></a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgffb516e" class="outline-2">
-<h2 id="orgffb516e">Lawful mixed optics</h2>
-<div class="outline-text-2" id="text-orgffb516e">
+<div id="outline-container-orgb54c06a" class="outline-2">
+<h2 id="orgb54c06a">Lawful mixed optics</h2>
+<div class="outline-text-2" id="text-orgb54c06a">
 <p>
 A first notion of what a lawful mixed optic should be is to push both
 parts of the optic into the same category and consider lawfulness
@@ -293,9 +285,9 @@ reasonable notion of laws.
 </div>
 </div>
 
-<div id="outline-container-orgecdd346" class="outline-2">
-<h2 id="orgecdd346">Autonomous lenses</h2>
-<div class="outline-text-2" id="text-orgecdd346">
+<div id="outline-container-orgf3cc61d" class="outline-2">
+<h2 id="orgf3cc61d">Autonomous lenses</h2>
+<div class="outline-text-2" id="text-orgf3cc61d">
 <p>
 An interesting consideration is to see what happens if we extend the Optic
 formula on the product to a more symmetric case.
@@ -315,9 +307,9 @@ by Fong and Johnson.  Can we use learners in DisCoCat?
 </div>
 </div>
 
-<div id="outline-container-org94853a2" class="outline-2">
-<h2 id="org94853a2">Kaleidoscopes, monoidal lenses, comonoidal prisms</h2>
-<div class="outline-text-2" id="text-org94853a2">
+<div id="outline-container-orgbead320" class="outline-2">
+<h2 id="orgbead320">Kaleidoscopes, monoidal lenses, comonoidal prisms</h2>
+<div class="outline-text-2" id="text-orgbead320">
 <p>
 A <b>kaleidoscope</b> is the optic for applicative functors. Using the free
 applicative construction (from Capriotti-Kaposi, for instance), we can
@@ -325,7 +317,7 @@ show their concrete representation is the following.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">type</span> <span style="color: #ce537a; font-weight: bold;">Kaleidoscope</span> s t a b <span style="color: #7590db;">=</span> <span style="color: #4f97d7; font-weight: bold;">forall</span> n <span style="color: #7590db;">.</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Vec</span> n a <span style="color: #7590db;">-&gt;</span> b<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> <span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">Vec</span> n s <span style="color: #7590db;">-&gt;</span> t<span style="color: #4f97d7;">)</span>
+<pre class="src src-haskell"><span style="color: #81A1C1;">type</span> <span style="color: #8FBCBB;">Kaleidoscope</span> s t a b <span style="color: #d9c6d6;">=</span> <span style="color: #81A1C1;">forall</span> n <span style="color: #d9c6d6;">.</span> (<span style="color: #8FBCBB;">Vec</span> n a <span style="color: #d9c6d6;">-&gt;</span> b) <span style="color: #d9c6d6;">-&gt;</span> (<span style="color: #8FBCBB;">Vec</span> n s <span style="color: #d9c6d6;">-&gt;</span> t)
 </pre>
 </div>
 
@@ -336,8 +328,8 @@ the complements are comonad coalgebras, we get <b>monadic lenses</b> and
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell"><span style="color: #4f97d7; font-weight: bold;">type</span> <span style="color: #ce537a; font-weight: bold;">MonLens</span> m s t a b <span style="color: #7590db;">=</span> <span style="color: #4f97d7;">(</span>s <span style="color: #7590db;">-&gt;</span> a , m s <span style="color: #7590db;">-&gt;</span> b <span style="color: #7590db;">-&gt;</span> t<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7; font-weight: bold;">type</span> <span style="color: #ce537a; font-weight: bold;">ComonPrism</span> n s t a b <span style="color: #7590db;">=</span> <span style="color: #4f97d7;">(</span>s <span style="color: #7590db;">-&gt;</span> n t <span style="color: #7590db;">+</span> a , b <span style="color: #7590db;">-&gt;</span> t<span style="color: #4f97d7;">)</span>
+<pre class="src src-haskell"><span style="color: #81A1C1;">type</span> <span style="color: #8FBCBB;">MonLens</span> m s t a b <span style="color: #d9c6d6;">=</span> (s <span style="color: #d9c6d6;">-&gt;</span> a , m s <span style="color: #d9c6d6;">-&gt;</span> b <span style="color: #d9c6d6;">-&gt;</span> t)
+<span style="color: #81A1C1;">type</span> <span style="color: #8FBCBB;">ComonPrism</span> n s t a b <span style="color: #d9c6d6;">=</span> (s <span style="color: #d9c6d6;">-&gt;</span> n t <span style="color: #d9c6d6;">+</span> a , b <span style="color: #d9c6d6;">-&gt;</span> t)
 </pre>
 </div>
 
@@ -348,9 +340,9 @@ been able to find them so far.
 </div>
 </div>
 
-<div id="outline-container-orge917bb3" class="outline-2">
-<h2 id="orge917bb3">The "Glass" optic&#xa0;&#xa0;&#xa0;<span class="tag"><span class="post">post</span></span></h2>
-<div class="outline-text-2" id="text-orge917bb3">
+<div id="outline-container-orge936ba8" class="outline-2">
+<h2 id="orge936ba8">The &ldquo;Glass&rdquo; optic&#xa0;&#xa0;&#xa0;<span class="tag"><span class="post">post</span></span></h2>
+<div class="outline-text-2" id="text-orge936ba8">
 <p>
 At the intersection between a <b>lens</b> and a <b>grate</b> there should be an
 optic that I have started to call <b>glass</b>.  If the pseudomonoid action
@@ -365,9 +357,9 @@ We rewrite the action of every word <code>c₁d₁ ... cₖdₖ</code> on some o
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell">  d&#8321; <span style="color: #7590db;">&#215;</span> <span style="color: #4f97d7;">(</span>c&#8321; <span style="color: #7590db;">-&gt;</span> d&#8322; <span style="color: #7590db;">&#215;</span> <span style="color: #bc6ec5;">(</span>c&#8322; <span style="color: #7590db;">-&gt;</span> <span style="color: #7590db;">...</span> x<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>  <span style="color: #7590db;">&#8773;</span>
-  d&#8321; <span style="color: #7590db;">&#215;</span> <span style="color: #4f97d7;">(</span>c&#8321; <span style="color: #7590db;">-&gt;</span> d&#8322;<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">&#215;</span> <span style="color: #4f97d7;">(</span>c&#8321; <span style="color: #7590db;">&#215;</span> c&#8322; <span style="color: #7590db;">-&gt;</span> <span style="color: #7590db;">...</span> x<span style="color: #4f97d7;">)</span>  <span style="color: #7590db;">&#8773;</span>
-  e <span style="color: #7590db;">&#215;</span> <span style="color: #4f97d7;">(</span>f <span style="color: #7590db;">-&gt;</span> x<span style="color: #4f97d7;">)</span>
+<pre class="src src-haskell">  d&#8321; <span style="color: #d9c6d6;">&#215;</span> (c&#8321; <span style="color: #d9c6d6;">-&gt;</span> d&#8322; <span style="color: #d9c6d6;">&#215;</span> (c&#8322; <span style="color: #d9c6d6;">-&gt;</span> <span style="color: #d9c6d6;">...</span> x))  <span style="color: #d9c6d6;">&#8773;</span>
+  d&#8321; <span style="color: #d9c6d6;">&#215;</span> (c&#8321; <span style="color: #d9c6d6;">-&gt;</span> d&#8322;) <span style="color: #d9c6d6;">&#215;</span> (c&#8321; <span style="color: #d9c6d6;">&#215;</span> c&#8322; <span style="color: #d9c6d6;">-&gt;</span> <span style="color: #d9c6d6;">...</span> x)  <span style="color: #d9c6d6;">&#8773;</span>
+  e <span style="color: #d9c6d6;">&#215;</span> (f <span style="color: #d9c6d6;">-&gt;</span> x)
 </pre>
 </div>
 
@@ -376,24 +368,24 @@ And we derive the concrete representation.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-haskell">  <span style="color: #7590db;">&#8707;</span> c,d <span style="color: #7590db;">.</span>  <span style="color: #4f97d7;">(</span>s <span style="color: #7590db;">-&gt;</span> <span style="color: #bc6ec5;">(</span>c <span style="color: #7590db;">&#215;</span> <span style="color: #2d9574;">(</span>d <span style="color: #7590db;">-&gt;</span> a<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">&#215;</span> <span style="color: #4f97d7;">(</span>c <span style="color: #7590db;">&#215;</span> <span style="color: #bc6ec5;">(</span>d <span style="color: #7590db;">-&gt;</span> b<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">-&gt;</span> t<span style="color: #4f97d7;">)</span>  <span style="color: #7590db;">&#8773;</span>
-  <span style="color: #7590db;">&#8707;</span> c,d <span style="color: #7590db;">.</span>  <span style="color: #4f97d7;">(</span>s <span style="color: #7590db;">-&gt;</span> c<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">&#215;</span> <span style="color: #4f97d7;">(</span>s <span style="color: #7590db;">-&gt;</span> <span style="color: #bc6ec5;">(</span>d <span style="color: #7590db;">-&gt;</span> a<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">&#215;</span> <span style="color: #4f97d7;">(</span>c <span style="color: #7590db;">&#215;</span> <span style="color: #bc6ec5;">(</span>d <span style="color: #7590db;">-&gt;</span> b<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">-&gt;</span> t<span style="color: #4f97d7;">)</span>  <span style="color: #7590db;">&#8773;</span>
-  <span style="color: #7590db;">&#8707;</span> d   <span style="color: #7590db;">.</span>  <span style="color: #4f97d7;">(</span>s <span style="color: #7590db;">-&gt;</span> <span style="color: #bc6ec5;">(</span>d <span style="color: #7590db;">-&gt;</span> a<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">&#215;</span> <span style="color: #4f97d7;">(</span>s <span style="color: #7590db;">&#215;</span> <span style="color: #bc6ec5;">(</span>d <span style="color: #7590db;">-&gt;</span> b<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">-&gt;</span> t<span style="color: #4f97d7;">)</span>  <span style="color: #7590db;">&#8773;</span>
-  <span style="color: #7590db;">&#8707;</span> d   <span style="color: #7590db;">.</span>  <span style="color: #4f97d7;">(</span>d <span style="color: #7590db;">-&gt;</span> <span style="color: #bc6ec5;">(</span>s <span style="color: #7590db;">-&gt;</span> a<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> <span style="color: #7590db;">&#215;</span> <span style="color: #4f97d7;">(</span>s <span style="color: #7590db;">&#215;</span> <span style="color: #bc6ec5;">(</span>d <span style="color: #7590db;">-&gt;</span> b<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">-&gt;</span> t<span style="color: #4f97d7;">)</span>  <span style="color: #7590db;">&#8773;</span>
-  <span style="color: #4f97d7;">(</span>s <span style="color: #7590db;">&#215;</span> <span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">(</span>s <span style="color: #7590db;">-&gt;</span> a<span style="color: #2d9574;">)</span> <span style="color: #7590db;">-&gt;</span> b<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">-&gt;</span> t<span style="color: #4f97d7;">)</span>  <span style="color: #7590db;">&#8773;</span>
-  <span style="color: #4f97d7;">(</span><span style="color: #bc6ec5;">(</span>s <span style="color: #7590db;">-&gt;</span> a<span style="color: #bc6ec5;">)</span> <span style="color: #7590db;">-&gt;</span> b<span style="color: #4f97d7;">)</span> <span style="color: #7590db;">-&gt;</span> s <span style="color: #7590db;">-&gt;</span> t
+<pre class="src src-haskell">  <span style="color: #d9c6d6;">&#8707;</span> c,d <span style="color: #d9c6d6;">.</span>  (s <span style="color: #d9c6d6;">-&gt;</span> (c <span style="color: #d9c6d6;">&#215;</span> (d <span style="color: #d9c6d6;">-&gt;</span> a))) <span style="color: #d9c6d6;">&#215;</span> (c <span style="color: #d9c6d6;">&#215;</span> (d <span style="color: #d9c6d6;">-&gt;</span> b) <span style="color: #d9c6d6;">-&gt;</span> t)  <span style="color: #d9c6d6;">&#8773;</span>
+  <span style="color: #d9c6d6;">&#8707;</span> c,d <span style="color: #d9c6d6;">.</span>  (s <span style="color: #d9c6d6;">-&gt;</span> c) <span style="color: #d9c6d6;">&#215;</span> (s <span style="color: #d9c6d6;">-&gt;</span> (d <span style="color: #d9c6d6;">-&gt;</span> a)) <span style="color: #d9c6d6;">&#215;</span> (c <span style="color: #d9c6d6;">&#215;</span> (d <span style="color: #d9c6d6;">-&gt;</span> b) <span style="color: #d9c6d6;">-&gt;</span> t)  <span style="color: #d9c6d6;">&#8773;</span>
+  <span style="color: #d9c6d6;">&#8707;</span> d   <span style="color: #d9c6d6;">.</span>  (s <span style="color: #d9c6d6;">-&gt;</span> (d <span style="color: #d9c6d6;">-&gt;</span> a)) <span style="color: #d9c6d6;">&#215;</span> (s <span style="color: #d9c6d6;">&#215;</span> (d <span style="color: #d9c6d6;">-&gt;</span> b) <span style="color: #d9c6d6;">-&gt;</span> t)  <span style="color: #d9c6d6;">&#8773;</span>
+  <span style="color: #d9c6d6;">&#8707;</span> d   <span style="color: #d9c6d6;">.</span>  (d <span style="color: #d9c6d6;">-&gt;</span> (s <span style="color: #d9c6d6;">-&gt;</span> a)) <span style="color: #d9c6d6;">&#215;</span> (s <span style="color: #d9c6d6;">&#215;</span> (d <span style="color: #d9c6d6;">-&gt;</span> b) <span style="color: #d9c6d6;">-&gt;</span> t)  <span style="color: #d9c6d6;">&#8773;</span>
+  (s <span style="color: #d9c6d6;">&#215;</span> ((s <span style="color: #d9c6d6;">-&gt;</span> a) <span style="color: #d9c6d6;">-&gt;</span> b) <span style="color: #d9c6d6;">-&gt;</span> t)  <span style="color: #d9c6d6;">&#8773;</span>
+  ((s <span style="color: #d9c6d6;">-&gt;</span> a) <span style="color: #d9c6d6;">-&gt;</span> b) <span style="color: #d9c6d6;">-&gt;</span> s <span style="color: #d9c6d6;">-&gt;</span> t
 </pre>
 </div>
 
 <p>
-My intuition at the moment is "If from a getter you can create a b, then you can update s
-to t", which apparently also rhymes.
+My intuition at the moment is &ldquo;If from a getter you can create a b, then you can update s
+to t&rdquo;, which apparently also rhymes.
 </p>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<hr><p class="date">Last edited 2020-01-20 09:08:57 by Mario Román (<a href="https://github.com/mroman42/cosmoi">code</a>).</p>
+<hr><p class="date">Last edited 2020-04-25 12:12:10 by Mario Román (<a href="https://github.com/mroman42/cosmoi">code</a>).</p>
 </div>
 </body>
 </html>

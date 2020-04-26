@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-07 Fri 14:10 -->
+<!-- 2020-04-25 Sat 12:12 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Blog</title>
@@ -161,6 +162,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -181,77 +195,55 @@
   /*]]>*/-->
 </style>
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.cacheClassElem = elem.className;
+         elem.cacheClassTarget = target.className;
+         target.className = "code-highlighted";
+         elem.className   = "code-highlighted";
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(elem.cacheClassElem)
+         elem.className = elem.cacheClassElem;
+       if(elem.cacheClassTarget)
+         target.className = elem.cacheClassTarget;
+     }
+    /*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
 <div id="content">
 <h1 class="title">Blog</h1>
 <ul class="org-ul">
-<li><a href="emacs-aprendiendo.html">Aprendiendo Emacs</a></li>
-<li><a href="emacs-capturando-links.html">Capturando links en org-mode</a></li>
-<li><a href="index.html">Blog</a></li>
-<li><a href="lambda-distribuciones.html">Distribuciones discretas con mónadas</a></li>
+<li><a href="index.html">index</a></li>
 <li><a href="lambda-evaluacion.html">Evaluación en cálculo lambda</a></li>
+<li><a href="matematicas-emacs.html">Matemáticas en Emacs</a></li>
 <li><a href="lambda-induccion.html">Inducción estructural</a></li>
 <li><a href="mikrokosmos.html">Mikrokosmos</a></li>
-<li><a href="dedekindreals.html">Dedekind reals in Agda</a></li>
-<li><a href="orgdrill-spacedrepetition.html">Org-drill and spaced repetition</a></li>
-<li><a href="coinduction.html">Coinduction</a></li>
 <li><a href="monadas.html">Mónadas</a></li>
-<li><a href="matematicas-emacs.html">Matemáticas en Emacs</a></li>
-<li><a href="bayes-as-lenses.html">Bayes as lenses</a></li>
-<li><a href="notes-optics.html">Notes on optics</a></li>
-<li><a href="fox-theorem.html">Fox's theorem</a></li>
 <li><a href="lens-prism-affine.html">Lenses, prisms, affine traversals</a></li>
+<li><a href="bayes-as-lenses.html">Bayes as lenses</a></li>
 <li><a href="academic-writing.html">Academic writing</a></li>
+<li><a href="dedekindreals.html">Dedekind reals in Agda</a></li>
+<li><a href="lambda-distribuciones.html">Distribuciones discretas con mónadas</a></li>
+<li><a href="notes-optics.html">Notes on optics</a></li>
+<li><a href="emacs-capturando-links.html">Capturando links en org-mode</a></li>
+<li><a href="coinduction.html">Coinduction</a></li>
+<li><a href="orgdrill-spacedrepetition.html">Org-drill and spaced repetition</a></li>
+<li><a href="fox-theorem.html">Fox&rsquo;s theorem</a></li>
+<li><a href="emacs-aprendiendo.html">Aprendiendo Emacs</a></li>
 </ul>
 </div>
 <div id="postamble" class="status">
-<hr><p class="date">Last edited 2020-02-07 14:10:18 by Mario Román (<a href="https://github.com/mroman42/cosmoi">code</a>).</p>
+<hr><p class="date">Last edited 2020-04-25 12:12:11 by Mario Román (<a href="https://github.com/mroman42/cosmoi">code</a>).</p>
 </div>
 </body>
 </html>

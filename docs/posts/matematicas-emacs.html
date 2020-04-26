@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-01-17 Fri 10:29 -->
+<!-- 2020-04-25 Sat 12:12 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Matemáticas en Emacs</title>
@@ -161,6 +162,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -194,50 +208,28 @@
 </div>
 </div>
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.cacheClassElem = elem.className;
+         elem.cacheClassTarget = target.className;
+         target.className = "code-highlighted";
+         elem.className   = "code-highlighted";
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(elem.cacheClassElem)
+         elem.className = elem.cacheClassElem;
+       if(elem.cacheClassTarget)
+         target.className = elem.cacheClassTarget;
+     }
+    /*]]>*///-->
+// @license-end
 </script>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -269,14 +261,14 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orga3a2ac9">Apuntes a ordenador</a></li>
-<li><a href="#orgad146bf">Ventajas de org-mode</a></li>
-<li><a href="#org999d9ac">Zoom</a></li>
-<li><a href="#org5420e5c">Aumentando la velocidad de escritura</a></li>
-<li><a href="#orge53fc6a">Diagramas conmutativos</a></li>
-<li><a href="#org2e121e3">Cabeceras en Latex</a></li>
-<li><a href="#org0497ba5">Archivos de configuración de org</a></li>
-<li><a href="#orgd837d55">Ejemplos</a></li>
+<li><a href="#orgef2de3f">Apuntes a ordenador</a></li>
+<li><a href="#org3c90816">Ventajas de org-mode</a></li>
+<li><a href="#org9ca68a7">Zoom</a></li>
+<li><a href="#org3eaf109">Aumentando la velocidad de escritura</a></li>
+<li><a href="#org930bd5c">Diagramas conmutativos</a></li>
+<li><a href="#orgde94d08">Cabeceras en Latex</a></li>
+<li><a href="#org8dea95a">Archivos de configuración de org</a></li>
+<li><a href="#org8e83040">Ejemplos</a></li>
 </ul>
 </div>
 </div>
@@ -284,9 +276,9 @@ for the JavaScript code in this tag.
 <i>Actualizado a 06 de agosto de 2017.</i>
 </p>
 
-<div id="outline-container-orga3a2ac9" class="outline-2">
-<h2 id="orga3a2ac9">Apuntes a ordenador</h2>
-<div class="outline-text-2" id="text-orga3a2ac9">
+<div id="outline-container-orgef2de3f" class="outline-2">
+<h2 id="orgef2de3f">Apuntes a ordenador</h2>
+<div class="outline-text-2" id="text-orgef2de3f">
 <p>
 Tomar apuntes de matemáticas con el ordenador es una tarea difícil por
 lo complejo que es transcribir la notación (símbolos, letras en otros
@@ -308,9 +300,9 @@ para exportarlo.
 </div>
 </div>
 
-<div id="outline-container-orgad146bf" class="outline-2">
-<h2 id="orgad146bf">Ventajas de org-mode</h2>
-<div class="outline-text-2" id="text-orgad146bf">
+<div id="outline-container-org3c90816" class="outline-2">
+<h2 id="org3c90816">Ventajas de org-mode</h2>
+<div class="outline-text-2" id="text-org3c90816">
 <p>
 <b>org-mode</b> tiene internamente un lenguaje de marcado similar al de
 markdown, con la ventaja para el usuario de Emacs de que está adaptado
@@ -363,9 +355,9 @@ para matemáticas como <code>Sage</code>.
 </div>
 </div>
 
-<div id="outline-container-org999d9ac" class="outline-2">
-<h2 id="org999d9ac">Zoom</h2>
-<div class="outline-text-2" id="text-org999d9ac">
+<div id="outline-container-org9ca68a7" class="outline-2">
+<h2 id="org9ca68a7">Zoom</h2>
+<div class="outline-text-2" id="text-org9ca68a7">
 <p>
 Un problema menor (y quizá sólo mío) al configurar todo esto es que
 las fórmulas previsualizadas parecen demasiado pequeñas. Aunque estén
@@ -377,15 +369,15 @@ respuestas de <a href="http://emacs.stackexchange.com/questions/3387/how-to-enla
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">  <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">defun</span> <span style="color: #bc6ec5; font-weight: bold;">update-org-latex-fragment-scale</span> <span style="color: #bc6ec5;">()</span>
-    <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #2d9574;">(</span><span style="color: #67b11d;">(</span>text-scale-factor
-           <span style="color: #b1951d;">(</span>expt text-scale-mode-step text-scale-mode-amount<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
-      <span style="color: #2d9574;">(</span>plist-put org-format-latex-options
-                 <span style="color: #4f97d7;">:scale</span> <span style="color: #67b11d;">(</span>* 1.2 text-scale-factor<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
-  <span style="color: #4f97d7;">)</span>
-  <span style="color: #4f97d7;">(</span>add-hook
+<pre class="src src-lisp">  (<span style="color: #81A1C1;">defun</span> <span style="color: #8FBCBB;">update-org-latex-fragment-scale</span> ()
+    (<span style="color: #81A1C1;">let</span> ((text-scale-factor
+           (expt text-scale-mode-step text-scale-mode-amount)))
+      (plist-put org-format-latex-options
+                 <span style="color: #8FBCBB;">:scale</span> (* <span style="color: #B48EAD; font-weight: bold;">1.2</span> text-scale-factor)))
+  )
+  (add-hook
    'text-scale-mode-hook
-   'update-org-latex-fragment-scale<span style="color: #4f97d7;">)</span>
+   'update-org-latex-fragment-scale)
 </pre>
 </div>
 
@@ -396,9 +388,9 @@ deberían volver a ajustarse con el texto.
 </div>
 </div>
 
-<div id="outline-container-org5420e5c" class="outline-2">
-<h2 id="org5420e5c">Aumentando la velocidad de escritura</h2>
-<div class="outline-text-2" id="text-org5420e5c">
+<div id="outline-container-org3eaf109" class="outline-2">
+<h2 id="org3eaf109">Aumentando la velocidad de escritura</h2>
+<div class="outline-text-2" id="text-org3eaf109">
 <p>
 Mi objetivo principal con todo esto era escribir matemáticas más
 rápidamente, así que <a href="http://emacs.stackexchange.com/questions/26322/math-autocompletion-in-org-mode">pregunté sobre autocompletado</a> y concluí en usar
@@ -417,10 +409,10 @@ de símbolos de latex. Puede añadirse a <code>org-mode</code> usando
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">  <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">use-package</span> <span style="color: #a45bad;">cdlatex</span>
-    <span style="color: #4f97d7;">:ensure</span> t<span style="color: #4f97d7;">)</span>
+<pre class="src src-emacs-lisp">  <span style="color: #81A1C1;">(</span><span style="color: #81A1C1;">use-package</span> cdlatex
+    <span style="color: #8FBCBB;">:ensure</span> t<span style="color: #81A1C1;">)</span>
 
-  <span style="color: #4f97d7;">(</span>add-hook 'org-mode-hook 'turn-on-org-cdlatex<span style="color: #4f97d7;">)</span>
+  <span style="color: #81A1C1;">(</span><span style="color: #8FBCBB;">add-hook</span> <span style="color: #81A1C1;">'</span><span style="color: #d9c6d6;">org-mode-hook</span> <span style="color: #81A1C1;">'</span><span style="color: #8FBCBB;">turn-on-org-cdlatex</span><span style="color: #81A1C1;">)</span>
 </pre>
 </div>
 
@@ -436,9 +428,9 @@ diagramas conmutativos o complejos simpliciales en pocos pasos.
 </div>
 </div>
 
-<div id="outline-container-orge53fc6a" class="outline-2">
-<h2 id="orge53fc6a">Diagramas conmutativos</h2>
-<div class="outline-text-2" id="text-orge53fc6a">
+<div id="outline-container-org930bd5c" class="outline-2">
+<h2 id="org930bd5c">Diagramas conmutativos</h2>
+<div class="outline-text-2" id="text-org930bd5c">
 <p>
 Ahora estoy escribiendo sobre álgebra homológica y teoría de categorías, así que
 la mayoría de lo que escribo usa secuencias exactas y diagramas conmutativos.
@@ -472,14 +464,14 @@ usarlo, hay que empezar por incluir en el archivo de configuración
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp"><span style="color: #4f97d7;">(</span>add-to-list
-  'org-latex-packages-alist '<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">""</span> <span style="color: #2d9574;">"tikz"</span> t<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-lisp">(add-to-list
+  'org-latex-packages-alist '(<span style="color: #A3BE8C;">""</span> <span style="color: #A3BE8C;">"tikz"</span> t))
 
-<span style="color: #4f97d7;">(</span>eval-after-load <span style="color: #2d9574;">"preview"</span>
-  '<span style="color: #bc6ec5;">(</span>add-to-list
+(eval-after-load <span style="color: #A3BE8C;">"preview"</span>
+  '(add-to-list
     'preview-default-preamble
-    <span style="color: #2d9574;">"\\PreviewEnvironment{tikzpicture}"</span>
-    t<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+    <span style="color: #A3BE8C;">"\\PreviewEnvironment{tikzpicture}"</span>
+    t))
 </pre>
 </div>
 
@@ -495,15 +487,15 @@ usar diagramas conmutativos
 </p>
 
 <div class="org-src-container">
-<pre class="src src-lisp">     <span style="color: #4f97d7;">(</span>setq org-latex-create-formula-image-program 'imagemagick<span style="color: #4f97d7;">)</span>
+<pre class="src src-lisp">     (setq org-latex-create-formula-image-program 'imagemagick)
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org2e121e3" class="outline-2">
-<h2 id="org2e121e3">Cabeceras en Latex</h2>
-<div class="outline-text-2" id="text-org2e121e3">
+<div id="outline-container-orgde94d08" class="outline-2">
+<h2 id="orgde94d08">Cabeceras en Latex</h2>
+<div class="outline-text-2" id="text-orgde94d08">
 <p>
 Cuando necesitamos funcionalidad adicional que ofrece Latex en bibliotecas aparte,
 como usar <code>tikz-cd</code>, podemos incluirlas en la cabecera del archivo org como:
@@ -516,9 +508,9 @@ latex pero no en la previsualización, podemos incluirla con <code>#+latex_heade
 </div>
 </div>
 
-<div id="outline-container-org0497ba5" class="outline-2">
-<h2 id="org0497ba5">Archivos de configuración de org</h2>
-<div class="outline-text-2" id="text-org0497ba5">
+<div id="outline-container-org8dea95a" class="outline-2">
+<h2 id="org8dea95a">Archivos de configuración de org</h2>
+<div class="outline-text-2" id="text-org8dea95a">
 <p>
 Para evitar tener que repetir varias veces la misma cabecera en varios
 archivos, podemos usar un sólo archivo para escribir matemáticas y
@@ -538,9 +530,9 @@ y cargarlo en cada archivo <code>org</code> con <code>#+SETUPFILE: math.setup</c
 </div>
 </div>
 
-<div id="outline-container-orgd837d55" class="outline-2">
-<h2 id="orgd837d55">Ejemplos</h2>
-<div class="outline-text-2" id="text-orgd837d55">
+<div id="outline-container-org8e83040" class="outline-2">
+<h2 id="org8e83040">Ejemplos</h2>
+<div class="outline-text-2" id="text-org8e83040">
 <p>
 Pueden encontrarse ejemplos de uso en <a href="https://github.com/mroman42/math">este repositorio</a> con mis apuntes
 de matemáticas. Mi archivo de configuración de Emacs está disponible en
@@ -550,7 +542,7 @@ de matemáticas. Mi archivo de configuración de Emacs está disponible en
 </div>
 </div>
 <div id="postamble" class="status">
-<hr><p class="date">Last edited 2020-01-17 10:29:14 by Mario Román (<a href="https://github.com/mroman42/cosmoi">code</a>).</p>
+<hr><p class="date">Last edited 2020-04-25 12:12:13 by Mario Román (<a href="https://github.com/mroman42/cosmoi">code</a>).</p>
 </div>
 </body>
 </html>

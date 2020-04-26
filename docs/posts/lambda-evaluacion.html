@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-12-27 Fri 15:49 -->
+<!-- 2020-04-25 Sat 12:12 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Evaluación en cálculo lambda</title>
@@ -161,6 +162,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -194,50 +208,28 @@
 </div>
 </div>
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.cacheClassElem = elem.className;
+         elem.cacheClassTarget = target.className;
+         target.className = "code-highlighted";
+         elem.className   = "code-highlighted";
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(elem.cacheClassElem)
+         elem.className = elem.cacheClassElem;
+       if(elem.cacheClassTarget)
+         target.className = elem.cacheClassTarget;
+     }
+    /*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
@@ -247,9 +239,9 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgdbb9bed">Forma normal</a></li>
-<li><a href="#orgef6fe24">Divergencia</a></li>
-<li><a href="#org4b42b63">Evaluación a izquierda</a></li>
+<li><a href="#org6b30e10">Forma normal</a></li>
+<li><a href="#org9183711">Divergencia</a></li>
+<li><a href="#org21eae65">Evaluación a izquierda</a></li>
 </ul>
 </div>
 </div>
@@ -262,9 +254,9 @@ teórica para implementar <a href="mikrokosmos.html">Mikrokosmos</a> Detallo est
 enunciados recopilando sus demostraciones en <a href="https://github.com/M42/lambda.notes">M42/lambda.notes</a>.
 </p>
 
-<div id="outline-container-orgdbb9bed" class="outline-2">
-<h2 id="orgdbb9bed">Forma normal</h2>
-<div class="outline-text-2" id="text-orgdbb9bed">
+<div id="outline-container-org6b30e10" class="outline-2">
+<h2 id="org6b30e10">Forma normal</h2>
+<div class="outline-text-2" id="text-org6b30e10">
 <p>
 Una expresión está en <i>forma normal</i> si no se le pueden aplicar más
 &beta;-reducciones. La forma normal es <i>única</i> como consecuencia del
@@ -296,9 +288,9 @@ implicar que son iguales.
 </div>
 </div>
 
-<div id="outline-container-orgef6fe24" class="outline-2">
-<h2 id="orgef6fe24">Divergencia</h2>
-<div class="outline-text-2" id="text-orgef6fe24">
+<div id="outline-container-org9183711" class="outline-2">
+<h2 id="org9183711">Divergencia</h2>
+<div class="outline-text-2" id="text-org9183711">
 <p>
 Hemos visto que la forma normal es única, pero no que exista o que
 sepamos encontrarla de alguna forma. Puede ocurrir que un término no
@@ -311,9 +303,9 @@ al aplicarle reducciones, decimos que <i>diverge</i>.
 </div>
 </div>
 
-<div id="outline-container-org4b42b63" class="outline-2">
-<h2 id="org4b42b63">Evaluación a izquierda</h2>
-<div class="outline-text-2" id="text-org4b42b63">
+<div id="outline-container-org21eae65" class="outline-2">
+<h2 id="org21eae65">Evaluación a izquierda</h2>
+<div class="outline-text-2" id="text-org21eae65">
 <p>
 Hay expresiones que llegarán a una forma normal o no dependiendo de
 cómo los evaluemos. Por ejemplo, el término <code>(const id Ω)</code> llega a
@@ -347,7 +339,7 @@ Estas dos formas de evaluación se suelen llamar <i>call-by-value</i> y
 </div>
 </div>
 <div id="postamble" class="status">
-<hr><p class="date">Last edited 2019-12-27 15:49:41 by Mario Román (<a href="https://github.com/mroman42/cosmoi">code</a>).</p>
+<hr><p class="date">Last edited 2020-04-25 12:12:13 by Mario Román (<a href="https://github.com/mroman42/cosmoi">code</a>).</p>
 </div>
 </body>
 </html>
